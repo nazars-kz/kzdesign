@@ -13,7 +13,7 @@ Date: 2026-10-28 · Answers from: Nazar (nazar.s@kz.design)
 | ---------------- | --------------------------------- | --------------------------------------------------------------------------------------- |
 | Home             | `/`                               | design: `index.html` — **first to build**                                               |
 | About us         | `/about-us`                       | design: `about-us.html`                                                                 |
-| Services (3)     | `/saas`, `/mobile`, `/web`        | one template, "services" collection (see Page map)                                      |
+| Services         | `/services`, `/services/saas`, `/services/mobile`, `/services/web` | one template, "services" collection: new services are added in the admin |
 | Cases (list)     | `/cases`                          | design: `cases.html`                                                                    |
 | Case study ×16   | `/cases/<slug>`                   | one template, "cases" collection                                                        |
 | Approach         | `/approach`                       | page will be added later by the client → create an **empty page** now                   |
@@ -29,7 +29,7 @@ Date: 2026-10-28 · Answers from: Nazar (nazar.s@kz.design)
 ## Page map
 
 - **Unique pages:** Home, About us, Cases (list), Approach, Reviews, Contact us, Privacy, Terms, Refund.
-- **Template pages (collections):** Services ×3 (list = none, the nav dropdown and Home tabs read the collection); Cases ×16 (list page `/cases`, item `/cases/<slug>`, added by the client in the admin).
+- **Template pages (collections):** Services (list page `/services`, item `/services/<slug>`; the menu and the Home tabs read the collection, new services are added in the admin); Cases ×16 (list page `/cases`, item `/cases/<slug>`, added by the client in the admin).
 - **Shared sections (one content, many pages):** Testimonials (Home, About, later Reviews), Contact (Home, About, Cases, services), Uniqueness (Home, About), Partners (Home, services marquee).
 - **Shared parts (globals):** header, footer, company details, email, socials, legal links, Clutch link and rating.
 - **Forms:** one Contact form.
@@ -49,7 +49,7 @@ Date: 2026-10-28 · Answers from: Nazar (nazar.s@kz.design)
 | ------------ | --------------------------------------------------------------------------------- | ---------------------------------------- | --------------------------- | ------------------- |
 | Cases        | yes, `/cases/<slug>` (client's choice; old live URLs `/<slug>` get 301 redirects) | tags + filter categories from the design | no (16 cases, filter pills) | n/a (English only)  |
 | Testimonials | no (cards + optional link to a case)                                              | —                                        | slider                      | n/a                 |
-| Services     | yes (`/saas`, `/mobile`, `/web`)                                                  | —                                        | —                           | n/a                 |
+| Services     | yes (`/services/<slug>`; old live URLs `/saas` etc. get 301 redirects)                                                  | —                                        | —                           | n/a                 |
 
 The client adds new cases and testimonials himself. The 14 testimonials from `index.html` are seeded now.
 
