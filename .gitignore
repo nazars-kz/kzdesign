@@ -34,3 +34,6 @@ next-env.d.ts
 # local agent tooling
 /.claude/
 /.lighthouse/
+
+# design sources provided by the client (kept locally)
+/design/
