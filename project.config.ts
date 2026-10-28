@@ -5,17 +5,14 @@
 import { defineProjectConfig } from '@/core/project/define';
 
 export const projectConfig = defineProjectConfig({
-  name: 'Site Starter Demo',
-  supportedLocales: [
-    { code: 'en', label: 'English' },
-    { code: 'uk', label: 'Українська' },
-  ],
+  name: 'K&Z Design',
+  supportedLocales: [{ code: 'en', label: 'English' }],
   defaultLocale: 'en',
   // Writing systems the fonts in src/site/theme/fonts.ts cover (Latn, Latx = Latin extended, Cyrl…).
   // Languages outside this set get a "check with your developer" warning in Settings.
-  fontScripts: ['Latn', 'Cyrl'],
+  fontScripts: ['Latn'],
   // Admin URL: a custom path per project (`/<4 consonants of the domain>-admin`).
-  adminPath: '/stst-admin',
+  adminPath: '/kzds-admin',
   // Public routes outside the content registry (e.g. '/legal', '/blog/:slug'). Others → 404.
   siteRoutes: [],
   // Extra Content-Security-Policy sources for the public site (third-party scripts, embeds…).
@@ -23,7 +20,7 @@ export const projectConfig = defineProjectConfig({
   csp: {},
   brand: {
     // Used for the browser UI theme color until one is set in Settings → Branding.
-    themeColor: '#1d4ed8',
+    themeColor: '#181b22',
   },
 });
 

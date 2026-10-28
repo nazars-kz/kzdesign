@@ -27,6 +27,7 @@ export default defineConfig([
   ...nextVitals,
   ...nextTs,
   globalIgnores([
+    'design/**',
     '.next/**',
     '.next-*/**',
     'out/**',

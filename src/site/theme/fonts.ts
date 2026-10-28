@@ -1,29 +1,36 @@
 /**
  * The ONLY place where the site's fonts are declared (docs/DESIGN_TOKENS.md).
  * Each font exposes a CSS variable that tokens.css maps to --font-heading /
- * --font-body / --font-mono. Self-hosted by next/font, subset, display: swap.
+ * --font-body. Self-hosted by next/font from ./fonts, display: swap.
  *
- * The demo uses one variable font (Inter) for headings and body: a single font
- * download keeps mobile LCP within budget. Use a different family for headings
- * by declaring it here and pointing --font-family-heading at it.
+ * Outfit is the heading font, Satoshi (free, Fontshare) the body font. The
+ * headline font is preloaded because it sets the hero title (LCP text).
  */
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 
-const sans = Inter({
-  subsets: ['latin', 'cyrillic'],
-  variable: '--font-family-body',
+const heading = localFont({
+  src: [
+    { path: './fonts/outfit-300.woff2', weight: '300', style: 'normal' },
+    { path: './fonts/outfit-400.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/outfit-500.woff2', weight: '500', style: 'normal' },
+    { path: './fonts/outfit-600.woff2', weight: '600', style: 'normal' },
+  ],
+  variable: '--font-family-heading',
   display: 'swap',
-  // Not preloaded: on slow mobile connections font preloads compete with the
-  // LCP image. Text swaps in with size-adjusted fallbacks (no CLS).
-  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
 });
 
-const mono = JetBrains_Mono({
-  subsets: ['latin', 'cyrillic'],
-  variable: '--font-family-mono',
+const body = localFont({
+  src: [
+    { path: './fonts/satoshi-300.woff2', weight: '300', style: 'normal' },
+    { path: './fonts/satoshi-400.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/satoshi-500.woff2', weight: '500', style: 'normal' },
+    { path: './fonts/satoshi-700.woff2', weight: '700', style: 'normal' },
+  ],
+  variable: '--font-family-body',
   display: 'swap',
-  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
 });
 
 /** Class names that define the font variables; applied to <html>. */
-export const fontVariables = [sans.variable, mono.variable].join(' ');
+export const fontVariables = [heading.variable, body.variable].join(' ');

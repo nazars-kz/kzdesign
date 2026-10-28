@@ -2,113 +2,114 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
-import { telHref } from '@/core/content/contact-links';
 import { getGlobalContent } from '@/core/content/loader';
-import { localeInfo } from '@/core/i18n/locales';
 import { localizedPath } from '@/core/i18n/routing';
 import type { SiteLogo } from '@/core/media/branding';
 
-import { Container } from '../components/ui/layout';
-import { HEADER_NAV, pagePath } from '../navigation';
-import { LanguageSwitcher } from './language-switcher';
+import { NavLink } from '../components/nav-link';
+import { ButtonLink } from '../components/ui/button';
+import { MAIN_NAV, type NavTarget, pagePath } from '../navigation';
+import { HeaderShell } from './header-shell';
+
+/** The site logo: the one uploaded in Settings → Branding, else the bundled K&Z logo. */
+const FALLBACK_LOGO = { src: '/brand/logo.svg', width: 126, height: 32 } as const;
 
 export async function SiteHeader({
   locale,
   defaultLocale,
-  enabledLocales,
   siteName,
   logo,
 }: {
   locale: string;
   defaultLocale: string;
-  enabledLocales: readonly string[];
   siteName: string;
   logo: SiteLogo | null;
 }) {
   const t = await getTranslations('nav');
   const common = await getTranslations('common');
-  const { contacts } = await getGlobalContent('site', locale);
-  const href = (pageId: string) => localizedPath(pagePath(pageId), locale, defaultLocale);
-  const links = HEADER_NAV.map((item) => ({ href: href(item.pageId), label: t(item.messageKey) }));
-  const switcher = (
-    <LanguageSwitcher
-      locales={enabledLocales.map((code) => ({ code, label: localeInfo(code).label }))}
-      current={locale}
-      defaultLocale={defaultLocale}
-      label={common('language')}
-    />
-  );
+  const { header } = await getGlobalContent('site', locale);
+  const href = ({ pageId, anchor }: NavTarget) =>
+    localizedPath(pagePath(pageId ?? 'home'), locale, defaultLocale) + (anchor ? `#${anchor}` : '');
+  const mark = logo
+    ? {
+        src: logo.src,
+        width: logo.width || FALLBACK_LOGO.width,
+        height: logo.height || FALLBACK_LOGO.height,
+        unoptimized: logo.isSvg,
+      }
+    : { ...FALLBACK_LOGO, unoptimized: true };
 
   return (
-    <header className="sticky top-0 z-header border-thin border-b border-border bg-background">
-      <Container className="flex min-h-16 items-center justify-between gap-6">
-        <Link href={href('home')} className="text-h5 text-foreground">
-          {logo ? (
-            <Image
-              src={logo.src}
-              alt={siteName}
-              width={logo.width || 160}
-              height={logo.height || 40}
-              // SVG logos are served as-is (sanitized on upload); rasters are optimized.
-              unoptimized={logo.isSvg}
-              preload
-              className="h-8 w-auto"
-            />
-          ) : (
-            siteName
-          )}
+    <HeaderShell
+      labels={{ open: common('menu'), close: common('closeMenu') }}
+      logo={
+        <Link
+          href={href({ pageId: 'home' })}
+          className="site-header__logo"
+          aria-label={common('home')}
+        >
+          <Image {...mark} alt={siteName} preload />
         </Link>
-
-        <div className="hidden items-center gap-6 md:flex">
-          <nav aria-label={common('mainNavigation')}>
-            <ul className="flex items-center gap-6">
-              {links.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-nav text-muted-foreground transition-colors duration-fast hover:text-foreground"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          {contacts.phone ? (
-            <a
-              href={telHref(contacts.phone)}
-              className="text-nav text-foreground hover:text-primary"
-              aria-label={`${common('phone')}: ${contacts.phone}`}
-            >
-              {contacts.phone}
-            </a>
-          ) : null}
-          {switcher}
-        </div>
-
-        {/* Mobile menu without JavaScript. */}
-        <details className="group md:hidden">
-          <summary className="flex min-h-11 cursor-pointer list-none items-center rounded-full border-thin border-border px-4 text-label">
-            {common('menu')}
-          </summary>
-          <div className="absolute inset-x-0 top-full border-thin border-b border-border bg-background">
-            <Container className="flex flex-col gap-4 py-6">
-              <nav aria-label={common('mainNavigation')}>
-                <ul className="flex flex-col gap-3">
-                  {links.map((link) => (
-                    <li key={link.href}>
-                      <Link href={link.href} className="text-h5 text-foreground">
-                        {link.label}
-                      </Link>
-                    </li>
+      }
+      nav={
+        <nav className="nav" aria-label={common('mainNavigation')}>
+          {MAIN_NAV.map((item) =>
+            item.children ? (
+              <div key={item.key} className="nav__drop">
+                <NavLink href={href(item)}>
+                  {t(item.key)}
+                  <i className="nav__chev" aria-hidden="true" />
+                </NavLink>
+                <div className="nav__menu">
+                  {item.children.map((child) => (
+                    <Link key={child.key} href={href(child)} className="text-nav">
+                      {t(child.key)}
+                    </Link>
                   ))}
-                </ul>
-              </nav>
-              {switcher}
-            </Container>
-          </div>
-        </details>
-      </Container>
-    </header>
+                </div>
+              </div>
+            ) : (
+              <NavLink key={item.key} href={href(item)}>
+                {t(item.key)}
+              </NavLink>
+            ),
+          )}
+        </nav>
+      }
+      cta={
+        <ButtonLink
+          href={header.cta.href}
+          external={header.cta.external}
+          variant="light"
+          className="site-header__cta"
+        >
+          {header.cta.label}
+        </ButtonLink>
+      }
+      compactCta={
+        <ButtonLink
+          href={header.cta.href}
+          external={header.cta.external}
+          variant="light"
+          className="site-header__cta-compact"
+        >
+          {header.cta.label}
+        </ButtonLink>
+      }
+      menu={
+        <nav aria-label={common('mobileNavigation')}>
+          {MAIN_NAV.flatMap((item) => [
+            <Link key={item.key} href={href(item)}>
+              {t(item.key)}
+            </Link>,
+            ...(item.children ?? []).map((child) => (
+              <Link key={child.key} href={href(child)} className="is-sub">
+                {t(child.key)}
+              </Link>
+            )),
+          ])}
+        </nav>
+      }
+    />
   );
 }

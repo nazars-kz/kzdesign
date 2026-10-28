@@ -1,7 +1,7 @@
 import { createPageRoute } from '@/core/content/page-route';
-import { HomeView } from '@/site/pages/home';
+import { PlaceholderView } from '@/site/pages/placeholder';
 
-const route = createPageRoute('home', HomeView);
+const route = createPageRoute('home', PlaceholderView);
 
 export default route.Page;
 export const generateMetadata = route.generateMetadata;

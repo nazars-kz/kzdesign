@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import { cx } from './cn';
 
-/** Horizontal container: max width and gutters come from tokens. */
+/** Horizontal container: max width and page margin come from tokens. */
 export function Container({
   width = 'content',
   className,
@@ -16,71 +16,37 @@ export function Container({
   return <div className={cx('mx-auto w-full px-gutter', widthClass, className)}>{children}</div>;
 }
 
-/** Vertical rhythm + surface for a page section. */
+/** Vertical rhythm + surface for a page section. `inverse` is a dark band (`on-dark`). */
 export function Section({
   tone = 'default',
   spacing = 'default',
   labelledBy,
+  id,
   className,
   children,
 }: {
-  tone?: 'default' | 'surface' | 'inverse' | 'accent';
-  spacing?: 'default' | 'tight';
+  tone?: 'default' | 'surface' | 'inverse';
+  spacing?: 'default' | 'tight' | 'none';
   /** id of the section heading (accessible name). */
   labelledBy?: string;
+  /** Anchor target (e.g. `services`). */
+  id?: string;
   className?: string;
   children: ReactNode;
 }) {
   const toneClass = {
     default: 'bg-background text-foreground',
     surface: 'bg-surface text-foreground',
-    inverse: 'bg-inverse text-inverse-foreground',
-    accent: 'bg-accent text-accent-foreground',
+    inverse: 'on-dark',
   }[tone];
-  const spacingClass = spacing === 'tight' ? 'py-section-tight' : 'py-section';
+  const spacingClass = { default: 'py-section', tight: 'py-section-tight', none: '' }[spacing];
   return (
-    <section aria-labelledby={labelledBy} className={cx(toneClass, spacingClass, className)}>
+    <section
+      id={id}
+      aria-labelledby={labelledBy}
+      className={cx(toneClass, spacingClass, className)}
+    >
       {children}
     </section>
   );
-}
-
-/** Vertical stack with token spacing. */
-export function Stack({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cx('flex flex-col gap-stack', className)}>{children}</div>;
-}
-
-/** Title + intro block at the start of a section (readable width). */
-export function SectionIntro({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cx('flex max-w-prose flex-col gap-3', className)}>{children}</div>;
-}
-
-/** Container with text and media side by side on large screens. */
-export function SplitContainer({
-  split = true,
-  className,
-  children,
-}: {
-  /** False renders a plain container (e.g. no image). */
-  split?: boolean;
-  className?: string;
-  children: ReactNode;
-}) {
-  return (
-    <Container className={cx(split && 'grid items-center gap-stack lg:grid-cols-2', className)}>
-      {children}
-    </Container>
-  );
-}
-
-/** Rounded, clipped frame for a picture. */
-export function MediaFrame({
-  shadow = 'none',
-  children,
-}: {
-  shadow?: 'none' | 'md' | 'lg';
-  children: ReactNode;
-}) {
-  const shadowClass = { none: undefined, md: 'shadow-md', lg: 'shadow-lg' }[shadow];
-  return <div className={cx('overflow-hidden rounded-xl', shadowClass)}>{children}</div>;
 }

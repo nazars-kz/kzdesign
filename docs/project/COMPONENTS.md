@@ -1,0 +1,63 @@
+# Components: K&Z Design
+
+Kept up to date while building. Layers: tokens → primitives → patterns → sections → page views → layout.
+Every repeated element exists once; variants are typed props; `className` is for placement only.
+
+## Where styles live
+
+- `src/site/theme/tokens.css`: every raw value (colors, type styles, radii, shadows, motion, layout).
+- `src/site/theme/components.css`: styles of primitives, patterns and layout, built only from tokens
+  (`.btn`, `.link-cta`, `.eyebrow`, `.round-btn`, `.plus`, `.nav*`, `.site-header*`, `.site-footer*`, `.socials`).
+- `src/site/theme/sections.css`: styles of page sections, one block per section.
+- React components use these classes through their props and Tailwind token utilities.
+  `pnpm tokens:check` allows raw values only inside `src/site/theme/`.
+
+Dark bands: `<Section tone="inverse">` adds `.on-dark`; eyebrow, link-cta and headings recolor from that one class.
+
+## Primitives (`src/site/components/ui/`)
+
+| Component | File | Variants / props | Used in |
+|---|---|---|---|
+| Heading / Text | `typography.tsx` | Heading: h1–h6, `section-title`; Text: lead, body-lg, body, body-sm, caption, overline, label; tone | everywhere |
+| Container / Section | `layout.tsx` | width content/wide/prose; tone default/surface/inverse; spacing default/tight/none; `id` | every section |
+| Button / ButtonLink / `buttonClasses` | `button.tsx`, `button-styles.ts` | variant `primary` (dark) / `light`; size md 54 / lg 57 / xl 67; arrow slides in on hover (`ButtonArrow`) | header (×2), hero, FAQ, form |
+| LinkCta | `link-cta.tsx` | external; recolors on dark | Services, Cases, Approach, Testimonials |
+| Eyebrow | `eyebrow.tsx` | recolors on dark | every section |
+| Round arrow button | CSS class `round-btn` (+ `--prev`/`--next`) | disabled | Services, Testimonials, case slider (component with state comes with Home) |
+| SiteImage, RichText, form styles | template | | content images, rich text, forms |
+
+## Patterns (`src/site/components/`)
+
+| Component | File | Notes | Used in |
+|---|---|---|---|
+| NavLink (client) | `nav-link.tsx` | `aria-current` for the current page | header, footer |
+| SocialLinks | `social-links.tsx` | icons from `public/icons/<network>.svg` | footer (contact block later) |
+
+## Layout (`src/site/layout/`)
+
+| Component | File | Notes |
+|---|---|---|
+| SiteLayout | `site-layout.tsx` | skip link, header, main, footer |
+| SiteHeader (server) + HeaderShell (client) | `site-header.tsx`, `header-shell.tsx` | compact after 4px scroll, Services drop-down, burger + full-screen menu ≤ 1100px, Esc closes |
+| SiteFooter | `site-footer.tsx` | nav, socials, © line, legal links, cookie settings |
+| 404 | `src/site/pages/not-found.tsx` | |
+| Placeholder page | `src/site/pages/placeholder.tsx` | title + optional rich text, for pages whose content comes later |
+
+## Planned (built with the page that first needs them)
+
+SectionHeader, CaseCard, UniquenessCard, ApproachCard, TestimonialCard + slider, PartnerTile, Accordion (light/dark),
+IndustryCaseItem, TeamRow, AwardsStrip, ServiceTabs, Field + Input + Textarea (outlined / filled), ContactForm,
+CompanyCard, Tag, Chip, Breadcrumbs, Marquee, LeaderCard, FounderCard.
+
+## Architecture notes
+
+- **Services are three pages** (`/saas`, `/mobile`, `/web`) built from one schema factory, not a collection:
+  a collection's item URL must start with its list page path, and the services sit at the site root.
+  Home's "Services" tabs have their own text fields; they link to the three pages.
+- **Cases are a collection** (`/cases/<slug>`); old live URLs `/<slug>` get 301 redirects when the domain moves.
+- **Placeholder pages** (`src/content/pages/placeholders.ts`) are real registered pages (menu, SEO, admin) until their content
+  is delivered; replace an entry with a full page definition when its page is built.
+- **Windows:** `corepack enable` needs admin rights, so run `corepack pnpm …`. If SWC fails with `ERR_SWC_NATIVE_CACHE`, set
+  `SWC_NATIVE_BINDING_CACHE` to a folder in the user profile (e.g. `C:\Users\<you>\.swc-native`).
+- **Template tests** that were written against the demo content (page `team`, collection `blog`, locale `uk`) are adapted
+  after the Home page, when a real page with the needed fields exists.

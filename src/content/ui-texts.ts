@@ -9,47 +9,52 @@
 import { defineUiTexts } from '@/core/ui-texts/model';
 
 import en from '../site/messages/en.json';
-import uk from '../site/messages/uk.json';
 
 export const uiTexts = defineUiTexts({
-  messages: { en, uk },
+  messages: { en },
   namespaces: {
     common: {
       label: 'General',
       texts: {
         skipToContent: 'Skip link at the top of every page',
         menu: 'Menu button on phones',
+        closeMenu: 'Name of the menu button while the menu is open',
         mainNavigation: 'Name of the main menu (read by screen readers)',
-        language: 'Name of the language switcher',
-        home: 'Link to the home page',
-        phone: 'Label of the phone number',
+        mobileNavigation: 'Name of the phone menu (read by screen readers)',
+        home: 'Name of the logo link',
       },
     },
     nav: {
       label: 'Menu',
       texts: {
-        about: 'Menu link: About',
-        team: 'Menu link: Team',
-        contact: 'Menu link: Contact',
-        blog: 'Menu link: Blog',
+        home: 'Menu link: Home',
+        services: 'Menu link: Services',
+        saas: 'Services drop-down: SaaS',
+        mobile: 'Services drop-down: Mobile',
+        web: 'Services drop-down: Web',
+        cases: 'Menu link: Cases',
+        approach: 'Menu link: Approach',
+        aboutUs: 'Menu link: About us',
+        reviews: 'Menu link: Reviews',
+        contactUs: 'Menu link: Contact us',
       },
     },
     footer: {
       label: 'Footer',
       texts: {
-        rights: 'Copyright line',
-        contact: 'Footer heading: contact',
-        follow: 'Footer heading: social networks',
-      },
-    },
-    contact: {
-      label: 'Contact details',
-      texts: {
-        detailsTitle: 'Heading of the contact details',
-        email: 'Label of the email',
-        phone: 'Label of the phone',
-        address: 'Label of the address',
-        hours: 'Label of the opening hours',
+        navigation: 'Name of the footer menu (read by screen readers)',
+        home: 'Footer link: Home',
+        services: 'Footer link: Services',
+        cases: 'Footer link: Cases',
+        approach: 'Footer link: Approach',
+        aboutUs: 'Footer link: About Us',
+        reviews: 'Footer link: Reviews',
+        contactUs: 'Footer link: Contact Us',
+        social: 'Name of the social links (read by screen readers)',
+        legal: 'Name of the legal links (read by screen readers)',
+        privacy: 'Footer link: Privacy Policy',
+        terms: 'Footer link: Terms of Service',
+        refund: 'Footer link: Refund Policy',
       },
     },
     cookie: {
@@ -69,24 +74,6 @@ export const uiTexts = defineUiTexts({
         title: 'Heading of the 404 page',
         body: 'Text of the 404 page',
         back: 'Button on the 404 page',
-      },
-    },
-    blog: {
-      label: 'Blog',
-      texts: {
-        readMore: 'Button on blog cards',
-        published: 'Date line of a post ({date} is the date)',
-        pagination: 'Name of the blog page navigation',
-        previous: 'Pagination: newer posts',
-        next: 'Pagination: older posts',
-        pageOf: 'Pagination: current page ({page} of {count})',
-        empty: 'Message when there are no posts',
-        latestTitle: 'Heading of the latest posts block',
-        allPosts: 'Link to all posts',
-        backToBlog: 'Link back to the blog from a post',
-        preview: 'Notice in the post preview',
-        exitPreview: 'Button to leave the preview',
-        tags: 'Label of a post’s tags',
       },
     },
     forms: {

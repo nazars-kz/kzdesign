@@ -23,205 +23,255 @@
   --shadow-*: initial;
   --ease-*: initial;
 
-  /* ── 1. Primitives ─────────────────────────────────────────────────────── */
-  --color-brand-50: #eff4ff;
-  --color-brand-100: #dbe6fe;
-  --color-brand-200: #bfd3fe;
-  --color-brand-300: #93b4fd;
-  --color-brand-400: #608bfa;
-  --color-brand-500: #3b65f5;
-  --color-brand-600: #2546ea;
-  --color-brand-700: #1d35d7;
-  --color-brand-800: #1e2eae;
-  --color-brand-900: #1e2d89;
-  --color-brand-950: #171e53;
+  /* ── 1. Primitives (K&Z kit: DESIGN_SYSTEM.md §1.1; homepage greys kept as roles) ── */
+  --color-orange-400: #ff9465;
+  --color-orange-500: #fc814a;
+  --color-orange-600: #ff7a00;
 
-  --color-neutral-0: #ffffff;
-  --color-neutral-50: #f8fafc;
-  --color-neutral-100: #f1f5f9;
-  --color-neutral-200: #e2e8f0;
-  --color-neutral-300: #cbd5e1;
-  --color-neutral-400: #94a3b8;
-  --color-neutral-500: #64748b;
-  --color-neutral-600: #475569;
-  --color-neutral-700: #334155;
-  --color-neutral-800: #1e293b;
-  --color-neutral-900: #0f172a;
-  --color-neutral-950: #020617;
+  --color-ink-950: #121212;
+  --color-ink-900: #181b22;
+  --color-ink-850: #20232a;
+  --color-ink-800: #262930;
+  --color-ink-700: #333640;
+  --color-ink-650: #343741;
+  --color-ink-600: #4c4e51;
+  --color-ink-550: #535355;
+  --color-ink-500: #4a4c52;
 
-  --color-green-600: #15803d;
-  --color-amber-600: #b45309;
-  --color-red-600: #b91c1c;
+  --color-gray-50: #f5f5f5;
+  --color-gray-75: #f0f0f0;
+  --color-gray-100: #e4e4e4;
+  --color-gray-150: #e9e9e9;
+  --color-gray-200: #e3e3e3;
+  --color-gray-300: #b9bbbd;
+  --color-white: #ffffff;
+
+  --color-green-500: #22ba5f;
+  --color-amber-500: #d9a136;
+  --color-red-600: #d72929;
+  --color-red-300: #ff6b6b;
 
   /* ── 2. Semantic colors (components use only these) ───────────────────── */
-  --color-background: var(--color-neutral-0);
-  --color-foreground: var(--color-neutral-900);
-  --color-surface: var(--color-neutral-50);
-  --color-surface-muted: var(--color-neutral-100);
-  --color-muted-foreground: var(--color-neutral-600);
-  --color-border: var(--color-neutral-200);
-  --color-primary: var(--color-brand-600);
-  --color-primary-hover: var(--color-brand-700);
-  --color-primary-foreground: var(--color-neutral-0);
-  --color-accent: var(--color-brand-50);
-  --color-accent-foreground: var(--color-brand-800);
-  --color-inverse: var(--color-brand-950);
-  --color-inverse-foreground: var(--color-neutral-0);
-  --color-success: var(--color-green-600);
-  --color-warning: var(--color-amber-600);
+  --color-background: var(--color-white);
+  --color-foreground: var(--color-ink-800);
+  --color-foreground-strong: var(--color-ink-950);
+  --color-foreground-soft: rgb(13 14 15 / 0.8);
+  --color-surface: var(--color-gray-50);
+  --color-surface-muted: var(--color-gray-75);
+  --color-muted-foreground: var(--color-ink-500);
+  --color-border: var(--color-gray-100);
+  --color-border-subtle: var(--color-gray-150);
+  --color-primary: var(--color-orange-500);
+  --color-primary-hover: var(--color-orange-600);
+  --color-primary-foreground: var(--color-ink-950);
+  --color-accent: var(--color-gray-50);
+  --color-accent-foreground: var(--color-ink-800);
+  --color-inverse: var(--color-ink-900);
+  --color-inverse-raised: var(--color-ink-800);
+  --color-inverse-deep: var(--color-ink-850);
+  --color-inverse-hover: var(--color-ink-700);
+  --color-inverse-foreground: var(--color-white);
+  --color-inverse-soft: var(--color-gray-200);
+  --color-inverse-muted: var(--color-gray-300);
+  --color-inverse-subtle: var(--color-ink-550);
+  --color-inverse-border: var(--color-ink-650);
+  --color-inverse-border-strong: var(--color-ink-600);
+  --color-success: var(--color-green-500);
+  --color-warning: var(--color-amber-500);
   --color-danger: var(--color-red-600);
-  --color-focus-ring: var(--color-brand-500);
-  --color-overlay: rgb(2 6 23 / 0.6);
+  --color-danger-on-inverse: var(--color-red-300);
+  --color-focus-ring: var(--color-orange-500);
+  --color-overlay: rgb(24 27 34 / 0.6);
 
   /* ── Font families (variables come from fonts.ts) ─────────────────────── */
-  --font-heading:
-    var(--font-family-heading, var(--font-family-body)), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-family-body), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-family-mono), ui-monospace, monospace;
+  --font-heading: var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: var(--font-family-body), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
   /* ── Layout & shape ───────────────────────────────────────────────────── */
   --spacing: 0.25rem;
-  --spacing-gutter: clamp(1rem, 4vw, 2rem);
-  --spacing-section: clamp(3.5rem, 8vw, 7rem);
-  --spacing-section-tight: clamp(2.5rem, 5vw, 4rem);
-  --spacing-stack: clamp(1.5rem, 3vw, 2.5rem);
+  /* Fluid page margin (60 @1440, 72 @1728, max 75); 40 ≤1100, 16 on phones (overrides below). */
+  --spacing-gutter: clamp(2.5rem, 4.1667vw, 4.6875rem);
+  --spacing-section: 8.75rem;
+  --spacing-section-tight: 5rem;
+  --spacing-stack: 1.5rem;
+  --spacing-header: 5.875rem;
+  --spacing-header-scrolled: 4.25rem;
 
-  --container-content: 72rem;
+  /* Content width: 1850px of content + the page margin on both sides. */
+  --container-content: calc(115.625rem + 2 * var(--spacing-gutter));
   --container-wide: 80rem;
   --container-prose: 42rem;
   --container-banner: 24rem;
 
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
-  --breakpoint-lg: 64rem;
-  --breakpoint-xl: 80rem;
+  --breakpoint-lg: 68.75rem;
+  --breakpoint-xl: 85rem;
 
-  --radius-sm: 0.375rem;
-  --radius-md: 0.625rem;
-  --radius-lg: 1rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
   --radius-xl: 1.5rem;
-  --radius-full: 9999px;
+  --radius-full: 999px;
 
-  --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06);
-  --shadow-md: 0 8px 24px -8px rgb(15 23 42 / 0.15);
-  --shadow-lg: 0 24px 48px -16px rgb(15 23 42 / 0.25);
+  --shadow-sm: 0 5px 50px rgb(0 0 0 / 0.02);
+  --shadow-md: 0 12px 30px rgb(0 0 0 / 0.08);
+  --shadow-lg:
+    0 2px 6px rgb(0 0 0 / 0.06), 0 6px 12px rgb(0 0 0 / 0.05), 0 14px 16px rgb(0 0 0 / 0.03),
+    0 25px 20px rgb(0 0 0 / 0.01);
 
   --aspect-hero: 16 / 10;
   --aspect-portrait: 1 / 1;
   --aspect-media: 4 / 3;
+  --aspect-tile: 203.34 / 96.22;
 
   /* ── Motion ───────────────────────────────────────────────────────────── */
-  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
-  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1.3);
+  --ease-standard: ease;
+  --ease-emphasized: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 :root {
   /* Border widths, z-index layers and durations (used via utilities below). */
   --border-width-thin: 1px;
   --border-width-thick: 2px;
-  --z-header: 40;
-  --z-overlay: 50;
-  --z-skip-link: 60;
-  --duration-fast: 120ms;
-  --duration-normal: 200ms;
-  --duration-slow: 400ms;
+  --z-header: 50;
+  --z-overlay: 60;
+  --z-skip-link: 70;
+  --duration-fast: 200ms;
+  --duration-normal: 250ms;
+  --duration-medium: 350ms;
+  --duration-slow: 450ms;
+  --duration-xslow: 600ms;
+  --duration-image: 800ms;
 
   /* ── 3. Text styles: size / line height / letter spacing / weight / family ── */
-  --type-display-size: clamp(2.75rem, 1.6rem + 4.6vw, 5rem);
-  --type-display-line-height: 1.02;
-  --type-display-letter-spacing: -0.035em;
-  --type-display-weight: 800;
-  --type-display-family: var(--font-heading);
-
-  --type-h1-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
-  --type-h1-line-height: 1.08;
-  --type-h1-letter-spacing: -0.03em;
-  --type-h1-weight: 800;
+  --type-h1-size: 5.5rem;
+  --type-h1-line-height: 1.1;
+  --type-h1-letter-spacing: 0;
+  --type-h1-weight: 600;
   --type-h1-family: var(--font-heading);
 
-  --type-h2-size: clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem);
-  --type-h2-line-height: 1.15;
-  --type-h2-letter-spacing: -0.025em;
-  --type-h2-weight: 700;
+  --type-h2-size: 4rem;
+  --type-h2-line-height: 1.2;
+  --type-h2-letter-spacing: -0.03em;
+  --type-h2-weight: 300;
   --type-h2-family: var(--font-heading);
 
-  --type-h3-size: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
-  --type-h3-line-height: 1.25;
-  --type-h3-letter-spacing: -0.015em;
-  --type-h3-weight: 700;
+  --type-h3-size: 2rem;
+  --type-h3-line-height: 1.2;
+  --type-h3-letter-spacing: 0;
+  --type-h3-weight: 300;
   --type-h3-family: var(--font-heading);
 
-  --type-h4-size: 1.25rem;
-  --type-h4-line-height: 1.35;
-  --type-h4-letter-spacing: -0.01em;
-  --type-h4-weight: 650;
+  --type-h4-size: 1.5rem;
+  --type-h4-line-height: 1.2;
+  --type-h4-letter-spacing: -0.03em;
+  --type-h4-weight: 300;
   --type-h4-family: var(--font-heading);
 
-  --type-h5-size: 1.125rem;
-  --type-h5-line-height: 1.4;
-  --type-h5-letter-spacing: 0;
-  --type-h5-weight: 650;
+  --type-h5-size: 1.25rem;
+  --type-h5-line-height: 1.2;
+  --type-h5-letter-spacing: -0.02em;
+  --type-h5-weight: 300;
   --type-h5-family: var(--font-heading);
 
-  --type-h6-size: 1rem;
-  --type-h6-line-height: 1.45;
-  --type-h6-letter-spacing: 0;
-  --type-h6-weight: 650;
+  --type-h6-size: 1.125rem;
+  --type-h6-line-height: 1.2;
+  --type-h6-letter-spacing: -0.02em;
+  --type-h6-weight: 300;
   --type-h6-family: var(--font-heading);
 
-  --type-lead-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
-  --type-lead-line-height: 1.6;
-  --type-lead-letter-spacing: -0.005em;
-  --type-lead-weight: 400;
-  --type-lead-family: var(--font-body);
+  --type-section-title-size: 1.75rem;
+  --type-section-title-line-height: 1.5;
+  --type-section-title-letter-spacing: -0.01em;
+  --type-section-title-weight: 500;
+  --type-section-title-family: var(--font-heading);
+
+  --type-lead-size: 1.25rem;
+  --type-lead-line-height: 1.5;
+  --type-lead-letter-spacing: 0;
+  --type-lead-weight: 300;
+  --type-lead-family: var(--font-heading);
 
   --type-body-lg-size: 1.125rem;
-  --type-body-lg-line-height: 1.7;
+  --type-body-lg-line-height: 1.5;
   --type-body-lg-letter-spacing: 0;
   --type-body-lg-weight: 400;
   --type-body-lg-family: var(--font-body);
 
   --type-body-size: 1rem;
-  --type-body-line-height: 1.65;
+  --type-body-line-height: 1.5;
   --type-body-letter-spacing: 0;
   --type-body-weight: 400;
   --type-body-family: var(--font-body);
 
   --type-body-sm-size: 0.875rem;
-  --type-body-sm-line-height: 1.55;
+  --type-body-sm-line-height: 1.5;
   --type-body-sm-letter-spacing: 0;
   --type-body-sm-weight: 400;
   --type-body-sm-family: var(--font-body);
 
-  --type-caption-size: 0.8125rem;
-  --type-caption-line-height: 1.45;
-  --type-caption-letter-spacing: 0.005em;
+  --type-caption-size: 0.75rem;
+  --type-caption-line-height: 1.5;
+  --type-caption-letter-spacing: 0;
   --type-caption-weight: 400;
   --type-caption-family: var(--font-body);
 
-  --type-overline-size: 0.8125rem;
-  --type-overline-line-height: 1.3;
-  --type-overline-letter-spacing: 0.12em;
-  --type-overline-weight: 700;
-  --type-overline-family: var(--font-body);
+  --type-overline-size: 0.75rem;
+  --type-overline-line-height: 1.5;
+  --type-overline-letter-spacing: 0;
+  --type-overline-weight: 600;
+  --type-overline-family: var(--font-heading);
 
   --type-label-size: 0.875rem;
   --type-label-line-height: 1.3;
-  --type-label-letter-spacing: 0.01em;
-  --type-label-weight: 600;
+  --type-label-letter-spacing: 0;
+  --type-label-weight: 500;
   --type-label-family: var(--font-body);
 
-  --type-button-size: 0.9375rem;
-  --type-button-line-height: 1;
-  --type-button-letter-spacing: 0.005em;
-  --type-button-weight: 650;
-  --type-button-family: var(--font-body);
+  --type-button-size: 1.125rem;
+  --type-button-line-height: 1.1;
+  --type-button-letter-spacing: 0;
+  --type-button-weight: 600;
+  --type-button-family: var(--font-heading);
 
-  --type-nav-size: 0.9375rem;
-  --type-nav-line-height: 1.2;
+  --type-nav-size: 1rem;
+  --type-nav-line-height: 1.5;
   --type-nav-letter-spacing: 0;
-  --type-nav-weight: 550;
+  --type-nav-weight: 400;
   --type-nav-family: var(--font-body);
+}
+
+/* Two layouts only (no tablet): desktop ≥ 768 and mobile ≤ 767; the nav collapses at 1100. */
+@media (max-width: 68.75rem) {
+  :root {
+    --spacing-gutter: 2.5rem;
+    --type-h1-size: 4rem;
+  }
+}
+@media (max-width: 47.9375rem) {
+  :root {
+    --spacing-gutter: 1rem;
+    --spacing-section: 3.75rem;
+    --spacing-section-tight: 2.5rem;
+    --spacing-header: 6.25rem;
+    --spacing-header-scrolled: 4.5rem;
+    --radius-sm: 0.5rem;
+
+    --type-h1-size: 2rem;
+    --type-h2-size: 2.5rem;
+    --type-h3-size: 1.5rem;
+    --type-h4-size: 1.25rem;
+    --type-h5-size: 1.125rem;
+    --type-h6-size: 1rem;
+    --type-section-title-size: 1.5rem;
+    --type-section-title-line-height: 1.4;
+    --type-lead-size: 1.125rem;
+    --type-lead-family: var(--font-body);
+    --type-lead-weight: 400;
+    --type-body-lg-size: 1rem;
+  }
 }
 
 /* Dark theme (optional): override semantic tokens only.
@@ -232,13 +282,6 @@
 */
 
 /* ── Text style utilities: one class per style ───────────────────────────── */
-@utility text-display {
-  font-family: var(--type-display-family);
-  font-size: var(--type-display-size);
-  line-height: var(--type-display-line-height);
-  letter-spacing: var(--type-display-letter-spacing);
-  font-weight: var(--type-display-weight);
-}
 @utility text-h1 {
   font-family: var(--type-h1-family);
   font-size: var(--type-h1-size);
@@ -280,6 +323,13 @@
   line-height: var(--type-h6-line-height);
   letter-spacing: var(--type-h6-letter-spacing);
   font-weight: var(--type-h6-weight);
+}
+@utility text-section-title {
+  font-family: var(--type-section-title-family);
+  font-size: var(--type-section-title-size);
+  line-height: var(--type-section-title-line-height);
+  letter-spacing: var(--type-section-title-letter-spacing);
+  font-weight: var(--type-section-title-weight);
 }
 @utility text-lead {
   font-family: var(--type-lead-family);
@@ -375,6 +425,15 @@
 }
 @utility duration-normal {
   transition-duration: var(--duration-normal);
+}
+@utility duration-medium {
+  transition-duration: var(--duration-medium);
+}
+@utility duration-xslow {
+  transition-duration: var(--duration-xslow);
+}
+@utility duration-image {
+  transition-duration: var(--duration-image);
 }
 @utility duration-slow {
   transition-duration: var(--duration-slow);

@@ -4,21 +4,22 @@ import { cx } from './cn';
 
 /**
  * Typed typography: every text style is one utility from tokens.css. Components
- * never combine size, leading and tracking themselves.
+ * never combine size, leading and tracking themselves. Colors are inherited, so
+ * the same component works on light and dark bands.
  */
-export type HeadingVariant = 'display' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+export type HeadingVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'section-title';
 export type TextVariant =
   'lead' | 'body-lg' | 'body' | 'body-sm' | 'caption' | 'overline' | 'label';
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 const HEADING_CLASS: Record<HeadingVariant, string> = {
-  display: 'text-display',
   h1: 'text-h1',
   h2: 'text-h2',
   h3: 'text-h3',
   h4: 'text-h4',
   h5: 'text-h5',
   h6: 'text-h6',
+  'section-title': 'text-section-title',
 };
 
 const TEXT_CLASS: Record<TextVariant, string> = {
@@ -48,14 +49,7 @@ export function Heading({
 }) {
   const Tag = `h${level}` as const;
   return (
-    <Tag
-      id={id}
-      className={cx(
-        'text-balance text-foreground',
-        HEADING_CLASS[variant ?? `h${level}`],
-        className,
-      )}
-    >
+    <Tag id={id} className={cx(HEADING_CLASS[variant ?? `h${level}`], className)}>
       {children}
     </Tag>
   );

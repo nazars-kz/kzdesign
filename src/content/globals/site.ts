@@ -1,18 +1,16 @@
 /**
- * DEMO GLOBAL: header & footer content shared by every page (contacts, social
- * links, legal line). See docs/CONTENT_SCHEMA.md § Globals.
+ * GLOBAL: header & footer content shared by every page (header button, company
+ * details, email, social links). Menu and footer link labels are interface
+ * texts (src/site/messages). See docs/CONTENT_SCHEMA.md § Globals.
  */
 import { defineSection } from '@/core/content/define';
 import { f } from '@/core/content/fields';
 import { defineGlobal } from '@/core/content/global';
 
 export const SOCIAL_NETWORKS = [
-  { value: 'facebook', label: 'Facebook' },
-  { value: 'instagram', label: 'Instagram' },
   { value: 'linkedin', label: 'LinkedIn' },
-  { value: 'youtube', label: 'YouTube' },
-  { value: 'telegram', label: 'Telegram' },
-  { value: 'x', label: 'X' },
+  { value: 'dribbble', label: 'Dribbble' },
+  { value: 'behance', label: 'Behance' },
 ] as const;
 
 export const siteGlobals = defineGlobal({
@@ -21,13 +19,31 @@ export const siteGlobals = defineGlobal({
   uiTexts: ['common', 'nav', 'footer', 'cookie', 'notFound'],
   sections: [
     defineSection({
-      id: 'contacts',
-      label: 'Contacts',
-      description: 'Shown in the header, the footer and on the Contact page.',
+      id: 'header',
+      label: 'Header',
+      description: 'The button on the right of the header. Menu labels are in Interface texts.',
       fields: {
-        phone: f.phone({ label: 'Phone', localized: false }),
+        cta: f.link({ label: 'Header button', required: true }),
+      },
+    }),
+    defineSection({
+      id: 'company',
+      label: 'Company details',
+      description: 'Shown in the footer and in the contact block.',
+      fields: {
+        name: f.text({ label: 'Company name', max: 80 }),
+        details: f.textarea({
+          label: 'Full details',
+          max: 400,
+          rows: 4,
+          help: 'Registry code and full address, shown under the contact form.',
+        }),
+        footerLine: f.text({
+          label: 'Footer line',
+          max: 200,
+          help: 'Shown after “© year” at the bottom of the footer; the email is added automatically.',
+        }),
         email: f.email({ label: 'Email', localized: false }),
-        address: f.textarea({ label: 'Address', max: 300, rows: 3 }),
       },
     }),
     defineSection({
@@ -36,7 +52,7 @@ export const siteGlobals = defineGlobal({
       fields: {
         links: f.list({
           label: 'Links',
-          max: 8,
+          max: 6,
           itemLabelField: 'network',
           localized: false,
           of: {
@@ -46,38 +62,39 @@ export const siteGlobals = defineGlobal({
         }),
       },
     }),
-    defineSection({
-      id: 'legal',
-      label: 'Legal line',
-      fields: {
-        line: f.text({ label: 'Legal line', max: 160, help: 'Shown at the bottom of the footer.' }),
-      },
-    }),
   ],
   seed: {
     en: {
-      contacts: {
-        phone: '+380 44 000 00 00',
-        email: 'hello@example.com',
-        address: '1 Example Street\nKyiv, Ukraine',
+      header: {
+        cta: { label: 'Get in touch', href: '/contact-us', external: false },
+      },
+      company: {
+        name: 'K&Zh OÜ',
+        details:
+          'Registry code: 17092851 Kaupmehe tn 7-120, Kesklinna linnaosa, Tallinn, Harju maakond, 10114, Estonia',
+        footerLine: 'K&Zh OÜ · Registry code 17092851 · Kaupmehe tn 7-120, Tallinn, 10114, Estonia',
+        email: 'hello@kz.design',
       },
       social: {
         links: [
           {
             network: 'linkedin',
-            link: { label: 'LinkedIn', href: 'https://www.linkedin.com/', external: true },
+            link: {
+              label: 'LinkedIn',
+              href: 'https://www.linkedin.com/company/kyzh-studio/',
+              external: true,
+            },
           },
           {
-            network: 'instagram',
-            link: { label: 'Instagram', href: 'https://www.instagram.com/', external: true },
+            network: 'dribbble',
+            link: { label: 'Dribbble', href: 'https://dribbble.com/kyzh-studio', external: true },
+          },
+          {
+            network: 'behance',
+            link: { label: 'Behance', href: 'https://www.behance.net/kz_design', external: true },
           },
         ],
       },
-      legal: { line: 'Demo site of the Next.js site starter.' },
-    },
-    uk: {
-      contacts: { address: 'вул. Прикладна, 1\nКиїв, Україна' },
-      legal: { line: 'Демо-сайт стартера на Next.js.' },
     },
   },
 });

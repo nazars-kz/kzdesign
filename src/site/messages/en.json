@@ -2,48 +2,42 @@
   "common": {
     "skipToContent": "Skip to content",
     "menu": "Menu",
+    "closeMenu": "Close menu",
     "mainNavigation": "Main navigation",
-    "language": "Language",
-    "home": "Home",
-    "phone": "Phone"
+    "mobileNavigation": "Mobile navigation",
+    "home": "K&Z Design — home"
   },
   "nav": {
-    "about": "About",
-    "team": "Team",
-    "contact": "Contact",
-    "blog": "Blog"
+    "home": "Home",
+    "services": "Services",
+    "saas": "SaaS",
+    "mobile": "Mobile",
+    "web": "Web",
+    "cases": "Cases",
+    "approach": "Approach",
+    "aboutUs": "About us",
+    "reviews": "Reviews",
+    "contactUs": "Contact us"
   },
   "footer": {
-    "rights": "All rights reserved.",
-    "contact": "Contact",
-    "follow": "Follow us"
-  },
-  "contact": {
-    "detailsTitle": "Contact details",
-    "email": "Email",
-    "phone": "Phone",
-    "address": "Address",
-    "hours": "Opening hours"
+    "navigation": "Footer",
+    "home": "Home",
+    "services": "Services",
+    "cases": "Cases",
+    "approach": "Approach",
+    "aboutUs": "About Us",
+    "reviews": "Reviews",
+    "contactUs": "Contact Us",
+    "social": "Social networks",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "refund": "Refund Policy"
   },
   "notFound": {
     "title": "Page not found",
     "body": "The page you are looking for doesn’t exist or has been moved.",
     "back": "Back to the home page"
-  },
-  "blog": {
-    "readMore": "Read more",
-    "published": "Published {date}",
-    "pagination": "Blog pages",
-    "previous": "Newer posts",
-    "next": "Older posts",
-    "pageOf": "Page {page} of {count}",
-    "empty": "No posts yet.",
-    "latestTitle": "Latest posts",
-    "allPosts": "All posts",
-    "backToBlog": "All posts",
-    "preview": "Preview: this is how the post will look. It may not be published yet.",
-    "exitPreview": "Exit preview",
-    "tags": "Tags"
   },
   "forms": {
     "errors": {
@@ -62,7 +56,7 @@
     "error": "Something went wrong. Please try again.",
     "choose": "Choose…",
     "sendAnother": "Send another message",
-    "confirm": "Please check your message and press “Send message” again to send it."
+    "confirm": "Please check your message and press “Submit” again to send it."
   },
   "cookie": {
     "text": "We use cookies to measure how the site is used and to improve it. You can accept or decline.",

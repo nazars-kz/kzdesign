@@ -2,28 +2,15 @@
  * PROJECT: the project's part of `/storybook` (staff only; docs/CUSTOMIZING.md
  * § Storybook). Core renders the token sections (colors, fonts, text styles,
  * spacing, radii, shadows); the sections exported here show the real
- * components of this site. Add or remove entries as the design grows; keep
- * buttons, form fields and icons complete: it is the project's living style
- * guide.
+ * components of this site. Add entries as pages bring new primitives and
+ * patterns; keep buttons, form fields and icons complete: it is the project's
+ * living style guide.
  */
-import {
-  ArrowRightIcon,
-  ChartColumnIcon,
-  ClockIcon,
-  GlobeIcon,
-  ImageIcon,
-  LayoutTemplateIcon,
-  type LucideIcon,
-  MailIcon,
-  MapPinIcon,
-  PhoneIcon,
-  ShieldCheckIcon,
-  ZapIcon,
-} from 'lucide-react';
 import type { ReactNode } from 'react';
 
 import type { StorybookSection } from '@/core/storybook/slot';
 
+import { ButtonArrow } from './components/ui/button';
 import {
   type ButtonSize,
   buttonClasses,
@@ -31,6 +18,7 @@ import {
   type ButtonVariant,
 } from './components/ui/button-styles';
 import { cx } from './components/ui/cn';
+import { Eyebrow } from './components/ui/eyebrow';
 import {
   choiceClasses,
   controlClasses,
@@ -38,6 +26,7 @@ import {
   textareaClasses,
 } from './components/ui/form-styles';
 import { Container, Section } from './components/ui/layout';
+import { LinkCta } from './components/ui/link-cta';
 import { Heading, Text } from './components/ui/typography';
 
 // ── Shared bits ──────────────────────────────────────────────────────────────
@@ -53,15 +42,9 @@ function Cell({ label, children }: { label: string; children: ReactNode }) {
 
 // ── Buttons ──────────────────────────────────────────────────────────────────
 
-const BUTTON_VARIANTS: readonly ButtonVariant[] = [
-  'primary',
-  'secondary',
-  'tertiary',
-  'ghost',
-  'link',
-];
+const BUTTON_VARIANTS: readonly ButtonVariant[] = ['primary', 'light'];
 const BUTTON_STATES = ['default', 'hover', 'focus', 'disabled'] as const;
-const BUTTON_SIZES: readonly ButtonSize[] = ['sm', 'md', 'lg'];
+const BUTTON_SIZES: readonly ButtonSize[] = ['md', 'lg', 'xl'];
 
 function StateButton({
   variant,
@@ -83,6 +66,7 @@ function StateButton({
       disabled={state === 'disabled'}
     >
       {children}
+      <ButtonArrow />
     </button>
   );
 }
@@ -113,8 +97,9 @@ function Buttons() {
                 </th>
                 {BUTTON_STATES.map((state) => (
                   <td key={state} className="px-2 py-3">
+                    {/* The arrow slides in on hover, so the "hover" column has no forced look: hover it. */}
                     <StateButton variant={variant} state={state}>
-                      Button
+                      Get in touch
                     </StateButton>
                   </td>
                 ))}
@@ -124,43 +109,36 @@ function Buttons() {
         </table>
       </div>
 
-      <div className="flex flex-wrap items-center gap-4 rounded-lg bg-inverse p-6 text-inverse-foreground">
-        <span className="text-label">inverse (on dark)</span>
-        {BUTTON_STATES.map((state) => (
-          <StateButton key={state} variant="inverse" state={state}>
-            Button
-          </StateButton>
-        ))}
-      </div>
-
       <div className="flex flex-wrap items-end gap-6">
         {BUTTON_SIZES.map((size) => (
           <Cell key={size} label={`size ${size}`}>
             <StateButton variant="primary" state="default" size={size}>
-              Button
+              Get in touch
             </StateButton>
           </Cell>
         ))}
       </div>
 
-      <div className="flex flex-wrap items-end gap-6">
-        <Cell label="with icon (leading)">
-          <button type="button" className={buttonClasses('primary')}>
-            <MailIcon aria-hidden className="size-4" />
-            Write to us
-          </button>
+      <div className="flex flex-wrap items-center gap-8">
+        <Cell label="link with arrow (on light)">
+          <LinkCta href="#buttons">See all cases</LinkCta>
         </Cell>
-        <Cell label="with icon (trailing)">
-          <button type="button" className={buttonClasses('secondary')}>
-            Read more
-            <ArrowRightIcon aria-hidden className="size-4" />
-          </button>
-        </Cell>
-        <Cell label="icon link">
-          <a href="#buttons" className={buttonClasses('link')}>
-            All posts
-            <ArrowRightIcon aria-hidden className="size-4" />
-          </a>
+        <Section tone="inverse" spacing="tight" className="rounded-lg px-6">
+          <Cell label="link with arrow (on dark)">
+            <LinkCta href="#buttons">Learn more</LinkCta>
+          </Cell>
+        </Section>
+        <Cell label="round arrow buttons (on dark)">
+          <div className="on-dark flex gap-4 rounded-lg p-4">
+            <button type="button" className="round-btn round-btn--prev" aria-label="Previous" />
+            <button type="button" className="round-btn round-btn--next" aria-label="Next" />
+            <button
+              type="button"
+              className="round-btn round-btn--next"
+              aria-label="Disabled"
+              disabled
+            />
+          </div>
         </Cell>
       </div>
     </div>
@@ -254,19 +232,6 @@ function FormFields() {
           aria-describedby="sb-textarea-error-error"
         />
       </FieldFrame>
-      <FieldFrame id="sb-select" label="Select">
-        <select id="sb-select" className={controlClasses()} defaultValue="">
-          <option value="">Choose…</option>
-          <option value="general">General question</option>
-          <option value="project">New project</option>
-        </select>
-      </FieldFrame>
-      <FieldFrame id="sb-select-disabled" label="Select (disabled)">
-        <select id="sb-select-disabled" className={controlClasses()} disabled>
-          <option>Disabled</option>
-        </select>
-      </FieldFrame>
-
       <fieldset className="flex flex-col gap-3">
         <legend className={cx(LABEL_CLASS, 'mb-2')}>Checkbox</legend>
         {[
@@ -288,66 +253,44 @@ function FormFields() {
           </div>
         ))}
       </fieldset>
-
-      <fieldset className="flex flex-col gap-3">
-        <legend className={cx(LABEL_CLASS, 'mb-2')}>Radio</legend>
-        {[
-          { id: 'sb-radio-a', label: 'First option', disabled: false },
-          { id: 'sb-radio-b', label: 'Second option', disabled: false },
-          { id: 'sb-radio-c', label: 'Disabled option', disabled: true },
-        ].map((item, index) => (
-          <div key={item.id} className="flex items-start gap-3">
-            <input
-              id={item.id}
-              type="radio"
-              name="sb-radio"
-              className={choiceClasses()}
-              defaultChecked={index === 0}
-              disabled={item.disabled}
-            />
-            <label htmlFor={item.id} className="text-body-sm">
-              {item.label}
-            </label>
-          </div>
-        ))}
-      </fieldset>
     </div>
   );
 }
 
 // ── Icons ────────────────────────────────────────────────────────────────────
 
-/** Icon library of the site and the icons it uses (add new ones here). */
-const ICON_LIBRARY = 'lucide-react';
-const ICONS: ReadonlyArray<{ name: string; Icon: LucideIcon }> = [
-  { name: 'ArrowRight', Icon: ArrowRightIcon },
-  { name: 'ChartColumn', Icon: ChartColumnIcon },
-  { name: 'Clock', Icon: ClockIcon },
-  { name: 'Globe', Icon: GlobeIcon },
-  { name: 'Image', Icon: ImageIcon },
-  { name: 'LayoutTemplate', Icon: LayoutTemplateIcon },
-  { name: 'Mail', Icon: MailIcon },
-  { name: 'MapPin', Icon: MapPinIcon },
-  { name: 'Phone', Icon: PhoneIcon },
-  { name: 'ShieldCheck', Icon: ShieldCheckIcon },
-  { name: 'Zap', Icon: ZapIcon },
-];
+/** The site's icons are SVG files in /public/icons (and /public/icons/industries). */
+const ICONS = [
+  'arrow-right',
+  'arrow-right-white',
+  'arrow-case',
+  'arrow-circle',
+  'chevron',
+  'chev-left',
+  'chev-right',
+  'linkedin',
+  'dribbble',
+  'behance',
+  'briefcase',
+  'star-red',
+] as const;
 
 function Icons() {
   return (
     <div className="flex flex-col gap-4">
       <Text>
-        Library: <code>{ICON_LIBRARY}</code>. Decorative icons are hidden from screen readers (
-        <code>aria-hidden</code>); an icon that carries meaning gets a text label.
+        Icon library: SVG files in <code>public/icons</code>. Decorative icons are hidden from
+        screen readers; an icon that carries meaning gets a text label.
       </Text>
       <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-6">
-        {ICONS.map(({ name, Icon }) => (
+        {ICONS.map((name) => (
           <li
             key={name}
-            className="flex flex-col items-center gap-2 rounded-lg border-thin border-border p-4"
+            className="flex flex-col items-center gap-2 rounded-lg border-thin border-border bg-inverse p-4"
           >
-            <Icon aria-hidden className="size-6" />
-            <span className="text-caption text-muted-foreground">{name}</span>
+            {/* eslint-disable-next-line @next/next/no-img-element -- storybook sample of static SVG icons */}
+            <img src={`/icons/${name}.svg`} alt="" className="size-6" />
+            <span className="text-caption text-inverse-muted">{name}</span>
           </li>
         ))}
       </ul>
@@ -357,24 +300,22 @@ function Icons() {
 
 // ── Other primitives ─────────────────────────────────────────────────────────
 
-const TEXT_TONES = ['default', 'muted', 'primary', 'danger'] as const;
-const SECTION_TONES = ['default', 'surface', 'accent', 'inverse'] as const;
-
 function Primitives() {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-2">
-        <h3 className="text-h5">Text tones</h3>
-        {TEXT_TONES.map((tone) => (
-          <Text key={tone} tone={tone}>
-            {tone}: The quick brown fox jumps over the lazy dog.
-          </Text>
-        ))}
+        <h3 className="text-h5">Eyebrow</h3>
+        <Eyebrow>Our Services</Eyebrow>
+        <Section tone="inverse" spacing="tight" className="rounded-lg px-6">
+          <Eyebrow>Our Services</Eyebrow>
+        </Section>
       </div>
 
       <div className="flex flex-col gap-2">
         <h3 className="text-h5">Headings</h3>
-        <Heading level={2}>Heading level 2</Heading>
+        <Heading level={2} variant="section-title">
+          Section title: Check how K&amp;Z keeps partners ahead
+        </Heading>
         <Heading level={3} variant="h5">
           Level 3 styled as h5
         </Heading>
@@ -383,46 +324,14 @@ function Primitives() {
       <div className="flex flex-col gap-2">
         <h3 className="text-h5">Section tones</h3>
         <div className="overflow-hidden rounded-lg border-thin border-border">
-          {SECTION_TONES.map((tone) => (
+          {(['default', 'surface', 'inverse'] as const).map((tone) => (
             <Section key={tone} tone={tone} spacing="tight">
               <Container>
-                <Text
-                  variant="label"
-                  className={tone === 'inverse' ? 'text-inverse-foreground' : ''}
-                >
-                  Section tone: {tone}
-                </Text>
+                <Text variant="label">Section tone: {tone}</Text>
               </Container>
             </Section>
           ))}
         </div>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <h3 className="text-h5">Card</h3>
-        <div className="flex max-w-prose flex-col gap-3 rounded-lg border-thin border-border bg-background p-6 shadow-sm">
-          <span className="inline-flex size-11 items-center justify-center rounded-md bg-accent text-accent-foreground">
-            <ZapIcon aria-hidden className="size-6" />
-          </span>
-          <Heading level={3} variant="h5">
-            Card title
-          </Heading>
-          <Text variant="body-sm" tone="muted">
-            A short text under the title.
-          </Text>
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <h3 className="text-h5">Contact details</h3>
-        <ul className="flex flex-col gap-2">
-          <li className="flex items-center gap-2 text-body-sm">
-            <PhoneIcon aria-hidden className="size-4" /> +380 44 000 00 00
-          </li>
-          <li className="flex items-center gap-2 text-body-sm">
-            <MapPinIcon aria-hidden className="size-4" /> 12 Example Street
-          </li>
-        </ul>
       </div>
     </div>
   );
@@ -433,13 +342,14 @@ export const storybookSections: readonly StorybookSection[] = [
   {
     id: 'buttons',
     title: 'Buttons',
-    description: 'Variants in every state, sizes, with an icon. Hover and focus are forced here.',
+    description:
+      'Pill buttons (the arrow slides in on hover), arrow links and slider arrows. Hover and focus are forced where possible.',
     render: () => <Buttons />,
   },
   {
     id: 'form-fields',
     title: 'Form fields',
-    description: 'Input, textarea, select, checkbox and radio with error and disabled states.',
+    description: 'Input, textarea and checkbox with error and disabled states.',
     render: () => <FormFields />,
   },
   {
@@ -450,7 +360,7 @@ export const storybookSections: readonly StorybookSection[] = [
   {
     id: 'primitives',
     title: 'Other primitives',
-    description: 'Text tones, headings, section tones and patterns the pages are built from.',
+    description: 'Eyebrow, headings and section tones; patterns are added page by page.',
     render: () => <Primitives />,
   },
 ];

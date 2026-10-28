@@ -3,178 +3,189 @@
 
 export const tokens = {
   "color": {
-    "brand50": "#eff4ff",
-    "brand100": "#dbe6fe",
-    "brand200": "#bfd3fe",
-    "brand300": "#93b4fd",
-    "brand400": "#608bfa",
-    "brand500": "#3b65f5",
-    "brand600": "#2546ea",
-    "brand700": "#1d35d7",
-    "brand800": "#1e2eae",
-    "brand900": "#1e2d89",
-    "brand950": "#171e53",
-    "neutral0": "#ffffff",
-    "neutral50": "#f8fafc",
-    "neutral100": "#f1f5f9",
-    "neutral200": "#e2e8f0",
-    "neutral300": "#cbd5e1",
-    "neutral400": "#94a3b8",
-    "neutral500": "#64748b",
-    "neutral600": "#475569",
-    "neutral700": "#334155",
-    "neutral800": "#1e293b",
-    "neutral900": "#0f172a",
-    "neutral950": "#020617",
-    "green600": "#15803d",
-    "amber600": "#b45309",
-    "red600": "#b91c1c",
+    "orange400": "#ff9465",
+    "orange500": "#fc814a",
+    "orange600": "#ff7a00",
+    "ink950": "#121212",
+    "ink900": "#181b22",
+    "ink850": "#20232a",
+    "ink800": "#262930",
+    "ink700": "#333640",
+    "ink650": "#343741",
+    "ink600": "#4c4e51",
+    "ink550": "#535355",
+    "ink500": "#4a4c52",
+    "gray50": "#f5f5f5",
+    "gray75": "#f0f0f0",
+    "gray100": "#e4e4e4",
+    "gray150": "#e9e9e9",
+    "gray200": "#e3e3e3",
+    "gray300": "#b9bbbd",
+    "white": "#ffffff",
+    "green500": "#22ba5f",
+    "amber500": "#d9a136",
+    "red600": "#d72929",
+    "red300": "#ff6b6b",
     "background": "#ffffff",
-    "foreground": "#0f172a",
-    "surface": "#f8fafc",
-    "surfaceMuted": "#f1f5f9",
-    "mutedForeground": "#475569",
-    "border": "#e2e8f0",
-    "primary": "#2546ea",
-    "primaryHover": "#1d35d7",
-    "primaryForeground": "#ffffff",
-    "accent": "#eff4ff",
-    "accentForeground": "#1e2eae",
-    "inverse": "#171e53",
+    "foreground": "#262930",
+    "foregroundStrong": "#121212",
+    "foregroundSoft": "rgb(13 14 15 / 0.8)",
+    "surface": "#f5f5f5",
+    "surfaceMuted": "#f0f0f0",
+    "mutedForeground": "#4a4c52",
+    "border": "#e4e4e4",
+    "borderSubtle": "#e9e9e9",
+    "primary": "#fc814a",
+    "primaryHover": "#ff7a00",
+    "primaryForeground": "#121212",
+    "accent": "#f5f5f5",
+    "accentForeground": "#262930",
+    "inverse": "#181b22",
+    "inverseRaised": "#262930",
+    "inverseDeep": "#20232a",
+    "inverseHover": "#333640",
     "inverseForeground": "#ffffff",
-    "success": "#15803d",
-    "warning": "#b45309",
-    "danger": "#b91c1c",
-    "focusRing": "#3b65f5",
-    "overlay": "rgb(2 6 23 / 0.6)"
+    "inverseSoft": "#e3e3e3",
+    "inverseMuted": "#b9bbbd",
+    "inverseSubtle": "#535355",
+    "inverseBorder": "#343741",
+    "inverseBorderStrong": "#4c4e51",
+    "success": "#22ba5f",
+    "warning": "#d9a136",
+    "danger": "#d72929",
+    "dangerOnInverse": "#ff6b6b",
+    "focusRing": "#fc814a",
+    "overlay": "rgb(24 27 34 / 0.6)"
   },
   "font": {
-    "heading": "var(--font-family-heading)), ui-sans-serif, system-ui, sans-serif",
-    "body": "var(--font-family-body), ui-sans-serif, system-ui, sans-serif",
-    "mono": "var(--font-family-mono), ui-monospace, monospace"
+    "heading": "var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif",
+    "body": "var(--font-family-body), system-ui, -apple-system, 'Segoe UI', sans-serif",
+    "mono": "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace"
   },
   "type": {
-    "display": {
-      "size": "clamp(2.75rem, 1.6rem + 4.6vw, 5rem)",
-      "lineHeight": "1.02",
-      "letterSpacing": "-0.035em",
-      "weight": "800",
-      "family": "var(--font-family-heading)), ui-sans-serif, system-ui, sans-serif"
-    },
     "h1": {
-      "size": "clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem)",
-      "lineHeight": "1.08",
-      "letterSpacing": "-0.03em",
-      "weight": "800",
-      "family": "var(--font-family-heading)), ui-sans-serif, system-ui, sans-serif"
+      "size": "2rem",
+      "lineHeight": "1.1",
+      "letterSpacing": "0",
+      "weight": "600",
+      "family": "var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "h2": {
-      "size": "clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem)",
-      "lineHeight": "1.15",
-      "letterSpacing": "-0.025em",
-      "weight": "700",
-      "family": "var(--font-family-heading)), ui-sans-serif, system-ui, sans-serif"
+      "size": "2.5rem",
+      "lineHeight": "1.2",
+      "letterSpacing": "-0.03em",
+      "weight": "300",
+      "family": "var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "h3": {
-      "size": "clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem)",
-      "lineHeight": "1.25",
-      "letterSpacing": "-0.015em",
-      "weight": "700",
-      "family": "var(--font-family-heading)), ui-sans-serif, system-ui, sans-serif"
+      "size": "1.5rem",
+      "lineHeight": "1.2",
+      "letterSpacing": "0",
+      "weight": "300",
+      "family": "var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "h4": {
       "size": "1.25rem",
-      "lineHeight": "1.35",
-      "letterSpacing": "-0.01em",
-      "weight": "650",
-      "family": "var(--font-family-heading)), ui-sans-serif, system-ui, sans-serif"
+      "lineHeight": "1.2",
+      "letterSpacing": "-0.03em",
+      "weight": "300",
+      "family": "var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "h5": {
       "size": "1.125rem",
-      "lineHeight": "1.4",
-      "letterSpacing": "0",
-      "weight": "650",
-      "family": "var(--font-family-heading)), ui-sans-serif, system-ui, sans-serif"
+      "lineHeight": "1.2",
+      "letterSpacing": "-0.02em",
+      "weight": "300",
+      "family": "var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "h6": {
       "size": "1rem",
-      "lineHeight": "1.45",
-      "letterSpacing": "0",
-      "weight": "650",
-      "family": "var(--font-family-heading)), ui-sans-serif, system-ui, sans-serif"
+      "lineHeight": "1.2",
+      "letterSpacing": "-0.02em",
+      "weight": "300",
+      "family": "var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif"
+    },
+    "sectionTitle": {
+      "size": "1.5rem",
+      "lineHeight": "1.4",
+      "letterSpacing": "-0.01em",
+      "weight": "500",
+      "family": "var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "lead": {
-      "size": "clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem)",
-      "lineHeight": "1.6",
-      "letterSpacing": "-0.005em",
-      "weight": "400",
-      "family": "var(--font-family-body), ui-sans-serif, system-ui, sans-serif"
-    },
-    "bodyLg": {
       "size": "1.125rem",
-      "lineHeight": "1.7",
+      "lineHeight": "1.5",
       "letterSpacing": "0",
       "weight": "400",
-      "family": "var(--font-family-body), ui-sans-serif, system-ui, sans-serif"
+      "family": "var(--font-family-body), system-ui, -apple-system, 'Segoe UI', sans-serif"
+    },
+    "bodyLg": {
+      "size": "1rem",
+      "lineHeight": "1.5",
+      "letterSpacing": "0",
+      "weight": "400",
+      "family": "var(--font-family-body), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "body": {
       "size": "1rem",
-      "lineHeight": "1.65",
+      "lineHeight": "1.5",
       "letterSpacing": "0",
       "weight": "400",
-      "family": "var(--font-family-body), ui-sans-serif, system-ui, sans-serif"
+      "family": "var(--font-family-body), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "bodySm": {
       "size": "0.875rem",
-      "lineHeight": "1.55",
+      "lineHeight": "1.5",
       "letterSpacing": "0",
       "weight": "400",
-      "family": "var(--font-family-body), ui-sans-serif, system-ui, sans-serif"
+      "family": "var(--font-family-body), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "caption": {
-      "size": "0.8125rem",
-      "lineHeight": "1.45",
-      "letterSpacing": "0.005em",
+      "size": "0.75rem",
+      "lineHeight": "1.5",
+      "letterSpacing": "0",
       "weight": "400",
-      "family": "var(--font-family-body), ui-sans-serif, system-ui, sans-serif"
+      "family": "var(--font-family-body), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "overline": {
-      "size": "0.8125rem",
-      "lineHeight": "1.3",
-      "letterSpacing": "0.12em",
-      "weight": "700",
-      "family": "var(--font-family-body), ui-sans-serif, system-ui, sans-serif"
+      "size": "0.75rem",
+      "lineHeight": "1.5",
+      "letterSpacing": "0",
+      "weight": "600",
+      "family": "var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "label": {
       "size": "0.875rem",
       "lineHeight": "1.3",
-      "letterSpacing": "0.01em",
-      "weight": "600",
-      "family": "var(--font-family-body), ui-sans-serif, system-ui, sans-serif"
+      "letterSpacing": "0",
+      "weight": "500",
+      "family": "var(--font-family-body), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "button": {
-      "size": "0.9375rem",
-      "lineHeight": "1",
-      "letterSpacing": "0.005em",
-      "weight": "650",
-      "family": "var(--font-family-body), ui-sans-serif, system-ui, sans-serif"
+      "size": "1.125rem",
+      "lineHeight": "1.1",
+      "letterSpacing": "0",
+      "weight": "600",
+      "family": "var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "nav": {
-      "size": "0.9375rem",
-      "lineHeight": "1.2",
+      "size": "1rem",
+      "lineHeight": "1.5",
       "letterSpacing": "0",
-      "weight": "550",
-      "family": "var(--font-family-body), ui-sans-serif, system-ui, sans-serif"
+      "weight": "400",
+      "family": "var(--font-family-body), system-ui, -apple-system, 'Segoe UI', sans-serif"
     }
   },
   "spacing": {
-    "gutter": "clamp(1rem, 4vw, 2rem)",
-    "section": "clamp(3.5rem, 8vw, 7rem)",
-    "sectionTight": "clamp(2.5rem, 5vw, 4rem)",
-    "stack": "clamp(1.5rem, 3vw, 2.5rem)"
+    "gutter": "1rem",
+    "section": "3.75rem",
+    "sectionTight": "2.5rem",
+    "stack": "1.5rem",
+    "header": "6.25rem",
+    "headerScrolled": "4.5rem"
   },
   "container": {
-    "content": "72rem",
+    "content": "calc(115.625rem + 2 * 1rem)",
     "wide": "80rem",
     "prose": "42rem",
     "banner": "24rem"
@@ -182,39 +193,43 @@ export const tokens = {
   "breakpoint": {
     "sm": "40rem",
     "md": "48rem",
-    "lg": "64rem",
-    "xl": "80rem"
+    "lg": "68.75rem",
+    "xl": "85rem"
   },
   "radius": {
-    "sm": "0.375rem",
-    "md": "0.625rem",
-    "lg": "1rem",
+    "sm": "0.5rem",
+    "md": "0.5rem",
+    "lg": "0.75rem",
     "xl": "1.5rem",
-    "full": "9999px"
+    "full": "999px"
   },
   "shadow": {
-    "sm": "0 1px 2px rgb(15 23 42 / 0.06)",
-    "md": "0 8px 24px -8px rgb(15 23 42 / 0.15)",
-    "lg": "0 24px 48px -16px rgb(15 23 42 / 0.25)"
+    "sm": "0 5px 50px rgb(0 0 0 / 0.02)",
+    "md": "0 12px 30px rgb(0 0 0 / 0.08)",
+    "lg": "0 2px 6px rgb(0 0 0 / 0.06), 0 6px 12px rgb(0 0 0 / 0.05), 0 14px 16px rgb(0 0 0 / 0.03), 0 25px 20px rgb(0 0 0 / 0.01)"
   },
   "aspect": {
     "hero": "16 / 10",
     "portrait": "1 / 1",
-    "media": "4 / 3"
+    "media": "4 / 3",
+    "tile": "203.34 / 96.22"
   },
   "ease": {
-    "standard": "cubic-bezier(0.2, 0, 0, 1)",
-    "emphasized": "cubic-bezier(0.3, 0, 0, 1.3)"
+    "standard": "ease",
+    "emphasized": "cubic-bezier(0.4, 0, 0.2, 1)"
   },
   "duration": {
-    "fast": "120ms",
-    "normal": "200ms",
-    "slow": "400ms"
+    "fast": "200ms",
+    "normal": "250ms",
+    "medium": "350ms",
+    "slow": "450ms",
+    "xslow": "600ms",
+    "image": "800ms"
   },
   "z": {
-    "header": "40",
-    "overlay": "50",
-    "skipLink": "60"
+    "header": "50",
+    "overlay": "60",
+    "skipLink": "70"
   }
 } as const;
 

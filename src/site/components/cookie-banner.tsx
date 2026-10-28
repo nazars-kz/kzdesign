@@ -117,14 +117,14 @@ export function CookieBanner({
           <div className="flex gap-3">
             <button
               type="button"
-              className={buttonClasses('secondary', 'flex-1')}
+              className={buttonClasses('light', 'flex-1')}
               onClick={() => decide('declined')}
             >
               {texts.decline}
             </button>
             <button
               type="button"
-              className={buttonClasses('secondary', 'flex-1')}
+              className={buttonClasses('primary', 'flex-1')}
               onClick={() => decide('accepted')}
             >
               {texts.accept}

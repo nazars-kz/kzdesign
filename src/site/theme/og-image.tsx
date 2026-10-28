@@ -17,8 +17,8 @@ export function OgTemplate({ title, siteName }: OgImageData) {
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: 72,
-        background: `linear-gradient(135deg, ${tokens.color.brand950}, ${tokens.color.brand700})`,
-        color: tokens.color.neutral0,
+        background: `linear-gradient(135deg, ${tokens.color.ink900}, ${tokens.color.ink800})`,
+        color: tokens.color.white,
       }}
     >
       <div style={{ display: 'flex', fontSize: 32, opacity: 0.85 }}>{siteName}</div>
@@ -39,7 +39,7 @@ export function OgTemplate({ title, siteName }: OgImageData) {
           width: 120,
           height: 8,
           borderRadius: 4,
-          background: tokens.color.brand300,
+          background: tokens.color.orange500,
         }}
       />
     </div>
