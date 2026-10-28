@@ -71,6 +71,10 @@ describe('db:clone refusals', () => {
   it('the script refuses before connecting anywhere', () => {
     const env: NodeJS.ProcessEnv = { ...process.env, DATABASE_URL: PROD };
     delete env.NODE_OPTIONS;
+    // The guard refuses first in CI and on hosting; this test is about the overwrite refusal.
+    delete env.CI;
+    delete env.VERCEL_ENV;
+    delete env.NETLIFY;
     const result = spawnSync(
       process.execPath,
       [
