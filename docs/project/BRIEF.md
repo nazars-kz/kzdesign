@@ -73,15 +73,14 @@ The client adds new cases and testimonials himself. The 14 testimonials from `in
 
 ## Database
 
-- Provider: **not chosen yet** (the skill asks every project: Neon recommended / Supabase). Asked on 2026-10-28 after the skill update; answer pending.
+- Provider: **Neon** (chosen by the user on 2026-10-28). One Neon project, branches `production` and `staging`, Neon Object Storage; account owner: to be decided (studio or client).
 - Environments: production (`main`) + staging (`staging`), each with its own database.
-- Supabase only: the user must be warned that staging needs a second project.
 
 ## Team
 
 - Repository: `nazars-kz/kzdesign` (corporate GitHub account, SSH alias `github-kz`).
 - Branches: `main` (live), `staging` (test), `feature/<task>` with pull requests into `staging` (`docs/TEAM.md`, skill `references/team.md`).
-- People working on the project and their GitHub accounts: **to be confirmed** (asked 2026-10-28). Tasks are GitHub issues once `gh` is installed and logged in.
+- People: Nazar (`nazars-kz`) and two more designer-developers (GitHub logins to be added). Tasks are GitHub issues with labels `task` and `status:*` (`team-status.mjs`).
 
 ## Integrations
 

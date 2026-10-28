@@ -1,6 +1,6 @@
 # Deploy status: K&Z Design
 
-Template version: v1.8.2 · Hosting: Vercel · Database: not chosen yet (Neon recommended) ·
+Template version: v1.8.2 · Hosting: Vercel · Database: Neon ·
 Updated: 2026-10-28
 
 Mark each item `yes`, `no` or `unknown`, and how you know (user said / verified).
@@ -8,29 +8,29 @@ Never write secret values here.
 
 ## Repository and branches
 
-| Item                                            | Status | How we know                                                                                                   |
-| ----------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------- |
-| Code committed                                  | yes    | verified: `git log`                                                                                           |
-| GitHub repository created and pushed (`origin`) | yes    | verified: `git@github-kz:nazars-kz/kzdesign.git` (SSH key `~/.ssh/id_ed25519_kzdesign`)                       |
-| `staging` branch created and set as default     | partly | branch created and pushed (verified); default branch not changed yet (needs `gh` or the GitHub settings page) |
-| `main` and `staging` protected (PR + CI)        | no     | needs GitHub admin rights and `gh`; private repos need a paid plan                                            |
-| Hosting site created from the repository        | no     | —                                                                                                             |
-| Branch deploys on for `staging`                 | no     | —                                                                                                             |
+| Item                                            | Status | How we know                                                                             |
+| ----------------------------------------------- | ------ | --------------------------------------------------------------------------------------- |
+| Code committed                                  | yes    | verified: `git log`                                                                     |
+| GitHub repository created and pushed (`origin`) | yes    | verified: `git@github-kz:nazars-kz/kzdesign.git` (SSH key `~/.ssh/id_ed25519_kzdesign`) |
+| `staging` branch created and set as default     | yes    | verified with `gh repo view` (default branch `staging`)                                 |
+| `main` and `staging` protected (PR + CI)        | no     | GitHub refused (HTTP 403): private repositories need GitHub Pro; decision in issue #18  |
+| Hosting site created from the repository        | no     | —                                                                                       |
+| Branch deploys on for `staging`                 | no     | —                                                                                       |
 
 ## Databases
 
-| Item                                               | Production | Staging | How we know         |
-| -------------------------------------------------- | ---------- | ------- | ------------------- |
-| Database created (Neon branch / Supabase project)  | no         | no      | provider not chosen |
-| File storage ready (Neon storage / R2 / Supabase)  | no         | no      | —                   |
-| `DATABASE_URL` set for this environment only       | no         | no      | —                   |
-| `AUTH_SECRET` set (different per environment)      | no         | no      | —                   |
-| Storage variables (`S3_*` or Supabase keys)        | no         | no      | —                   |
-| `PREVIEW_DATABASE_ISOLATED=true` (staging only)    | —          | no      | —                   |
-| No database variables on PR previews               | —          | —       | —                   |
-| Deployed, migration in the build log               | no         | no      | —                   |
-| Admin created                                      | no         | no      | —                   |
-| Dev admin (`admin@localhost.test`) absent/disabled | n/a        | n/a     | local only          |
+| Item                                               | Production | Staging | How we know                      |
+| -------------------------------------------------- | ---------- | ------- | -------------------------------- |
+| Database created (Neon branch)                     | no         | no      | provider chosen: Neon; issue #11 |
+| File storage ready (Neon storage / R2 / Supabase)  | no         | no      | —                                |
+| `DATABASE_URL` set for this environment only       | no         | no      | —                                |
+| `AUTH_SECRET` set (different per environment)      | no         | no      | —                                |
+| Storage variables (`S3_*` or Supabase keys)        | no         | no      | —                                |
+| `PREVIEW_DATABASE_ISOLATED=true` (staging only)    | —          | no      | —                                |
+| No database variables on PR previews               | —          | —       | —                                |
+| Deployed, migration in the build log               | no         | no      | —                                |
+| Admin created                                      | no         | no      | —                                |
+| Dev admin (`admin@localhost.test`) absent/disabled | n/a        | n/a     | local only                       |
 
 ## Launch
 
@@ -47,4 +47,4 @@ Never write secret values here.
 
 ## Next step for the user
 
-Choose the database (Neon or Supabase), install and log in to the GitHub CLI, then I set up `staging`, its protection and the task issues.
+Create the Neon project with the `production` and `staging` branches (issue #11, I guide you step by step), then connect Vercel (issue #12).

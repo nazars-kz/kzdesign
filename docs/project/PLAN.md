@@ -85,7 +85,7 @@ Everything else is a Server Component. `docs/project/COMPONENTS.md` is created w
 | 5   | Empty pages (Approach, Reviews, Contact us, legal ×3)                                          |              |          |                                   |                   |       |                                                             |         |
 | 6   | Full verification (gates, e2e, Lighthouse, audit), Vercel deploy                               |              |          |                                   |                   |       |                                                             |         |
 
-Issue numbers, owners and branches are filled in when the GitHub CLI is set up and the issues are created (`references/team.md` § Who works on what).
+All tasks are GitHub issues (`nazars-kz/kzdesign`, labels `task` + `status:*`); owners and branches are filled in when a task is claimed.
 
 ## Build order
 
