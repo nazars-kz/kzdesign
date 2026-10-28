@@ -27,6 +27,7 @@ export function buttonClasses(
     'btn text-button',
     VARIANT[variant],
     SIZE[options.size ?? 'md'],
+    options.state === 'hover' && 'is-hover',
     options.state === 'focus' && FOCUS,
     className,
   );

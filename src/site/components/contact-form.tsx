@@ -18,6 +18,7 @@ import {
 
 import { ButtonArrow } from './ui/button-arrow';
 import { buttonClasses } from './ui/button-styles';
+import { Checkbox, Field, Input, Select, Textarea } from './ui/field';
 
 export interface ContactFormStrings {
   readonly summaryTitle: string;
@@ -87,7 +88,7 @@ export function ContactForm({
       ) : null}
 
       {config.fields.map((item) => (
-        <Field
+        <FormField
           key={item.name}
           props={form.field(item.name)}
           strings={strings}
@@ -107,7 +108,7 @@ export function ContactForm({
   );
 }
 
-function Field({
+function FormField({
   props,
   strings,
   consentText,
@@ -118,68 +119,44 @@ function Field({
 }) {
   const { field, ids, inputProps, error } = props;
   const { type, required } = field.definition;
-  const errorText = (
-    <p id={ids.error} className="field__error text-caption">
-      {error ?? ''}
-    </p>
-  );
+  const common = {
+    label: field.label,
+    htmlFor: ids.input,
+    required,
+    requiredText: strings.required,
+    errorId: ids.error,
+    error,
+  };
 
   if (type === FormFieldType.Checkbox || type === FormFieldType.Consent) {
     return (
-      <div className="field field--choice">
-        <input {...inputProps} />
-        <label htmlFor={ids.input} className="text-body-sm">
-          {consentText ?? field.label}
-          {required ? <span className="sr-only"> ({strings.required})</span> : null}
-        </label>
-        {errorText}
-      </div>
+      <Checkbox
+        {...inputProps}
+        id={ids.input}
+        label={consentText ?? field.label}
+        errorId={ids.error}
+        error={error}
+      />
     );
   }
-
-  const label = (
-    <>
-      {field.label}
-      {required ? (
-        <>
-          <b aria-hidden="true">*</b>
-          <span className="sr-only"> ({strings.required})</span>
-        </>
-      ) : null}
-    </>
-  );
-
   if (type === FormFieldType.Textarea) {
     return (
-      <div className="field">
-        <label htmlFor={ids.input} className="sr-only">
-          {label}
-        </label>
-        <textarea {...inputProps} placeholder={field.placeholder ?? field.label} rows={2} />
-        {errorText}
-      </div>
+      <Field {...common} hideLabel>
+        <Textarea {...inputProps} placeholder={field.placeholder ?? field.label} />
+      </Field>
     );
   }
-
+  if (type === FormFieldType.Select) {
+    return (
+      <Field {...common}>
+        <Select {...inputProps} placeholder={strings.choose} options={field.options} />
+      </Field>
+    );
+  }
+  // The label sits over the empty input like a placeholder and disappears while typing.
   return (
-    <div className="field">
-      {type === FormFieldType.Select ? (
-        <select {...inputProps}>
-          <option value="">{strings.choose}</option>
-          {field.options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      ) : (
-        // The label sits over the empty input like a placeholder and disappears while typing.
-        <input {...inputProps} placeholder=" " />
-      )}
-      <label htmlFor={ids.input} className="field__label">
-        {label}
-      </label>
-      {errorText}
-    </div>
+    <Field {...common} floating>
+      <Input {...inputProps} placeholder=" " />
+    </Field>
   );
 }

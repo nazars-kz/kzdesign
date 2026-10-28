@@ -57,14 +57,16 @@
   background: var(--color-inverse);
   color: var(--color-inverse-foreground);
 }
-.btn--dark:hover {
+.btn--dark:hover,
+.btn--dark.is-hover {
   background: var(--color-inverse-raised);
 }
 .btn--light {
   background: var(--color-background);
   color: var(--color-foreground-strong);
 }
-.btn--light:hover {
+.btn--light:hover,
+.btn--light.is-hover {
   background: var(--color-inverse);
   color: var(--color-inverse-foreground);
 }
@@ -84,10 +86,12 @@
     margin var(--duration-normal) var(--ease-standard);
 }
 .btn--dark .btn__arrow,
-.btn--light:hover .btn__arrow {
+.btn--light:hover .btn__arrow,
+.btn--light.is-hover .btn__arrow {
   background-image: url('/icons/arrow-right-white.svg');
 }
-.btn:not(:disabled):hover .btn__arrow {
+.btn:not(:disabled):hover .btn__arrow,
+.btn.is-hover .btn__arrow {
   width: 1.375rem;
   margin-left: 0.625rem;
   opacity: 1;
@@ -513,9 +517,6 @@ body.menu-open {
   width: 1.3125rem;
   height: 1.25rem;
 }
-.socials img[data-network='behance'] {
-  height: 0.875rem;
-}
 .site-footer__bottom {
   display: flex;
   justify-content: space-between;
@@ -589,9 +590,7 @@ body.menu-open {
 .field {
   position: relative;
 }
-.field input,
-.field textarea,
-.field select {
+.field__control {
   width: 100%;
   padding: 0.625rem 0;
   border: 0;
@@ -605,23 +604,47 @@ body.menu-open {
   resize: none;
   transition: border-color var(--duration-fast) var(--ease-standard);
 }
-.field textarea {
+textarea.field__control {
   height: 3.625rem;
 }
-.field input:hover,
-.field textarea:hover {
-  border-bottom-color: rgb(255 255 255 / 0.3);
+select.field__control {
+  appearance: none;
 }
-.field input:focus,
-.field textarea:focus {
-  border-bottom-color: rgb(255 255 255 / 0.5);
+select.field__control option {
+  color: var(--color-foreground);
 }
-.field input::placeholder,
-.field textarea::placeholder {
+.field__caption {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
   color: #cbcbcb;
 }
-.field input[aria-invalid='true'],
-.field textarea[aria-invalid='true'] {
+.field__caption b {
+  font-weight: 400;
+  color: var(--color-danger-on-inverse);
+}
+.field__check {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.125rem;
+  accent-color: var(--color-primary);
+}
+.field__control:hover {
+  border-bottom-color: rgb(255 255 255 / 0.3);
+}
+.field__control:focus,
+.field__control.is-focus {
+  border-bottom-color: rgb(255 255 255 / 0.5);
+}
+.field__control::placeholder {
+  color: #cbcbcb;
+}
+.field__control:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.field__control[aria-invalid='true'] {
   border-bottom-color: var(--color-danger-on-inverse);
 }
 .field__label {
@@ -637,7 +660,7 @@ body.menu-open {
   font-weight: 400;
   color: var(--color-danger-on-inverse);
 }
-.field input:not(:placeholder-shown) ~ .field__label {
+.field__control:not(:placeholder-shown) ~ .field__label {
   display: none;
 }
 .field__error {

@@ -10,6 +10,9 @@ import type { ReactNode } from 'react';
 
 import type { StorybookSection } from '@/core/storybook/slot';
 
+import { BurgerButton } from './components/burger-button';
+import { NavLink } from './components/nav-link';
+import { SectionHeader } from './components/section-header';
 import { ButtonArrow } from './components/ui/button-arrow';
 import {
   type ButtonSize,
@@ -17,16 +20,13 @@ import {
   type ButtonState,
   type ButtonVariant,
 } from './components/ui/button-styles';
-import { cx } from './components/ui/cn';
 import { Eyebrow } from './components/ui/eyebrow';
-import {
-  choiceClasses,
-  controlClasses,
-  LABEL_CLASS,
-  textareaClasses,
-} from './components/ui/form-styles';
+import { Checkbox, Field, Input, Select, Textarea } from './components/ui/field';
+import { ICON_NAMES, Icon } from './components/ui/icon';
 import { Container, Section } from './components/ui/layout';
 import { LinkCta } from './components/ui/link-cta';
+import { RoundButton } from './components/ui/round-button';
+import { Tag, TagList } from './components/ui/tag';
 import { Heading, Text } from './components/ui/typography';
 
 // ── Shared bits ──────────────────────────────────────────────────────────────
@@ -37,6 +37,15 @@ function Cell({ label, children }: { label: string; children: ReactNode }) {
       <span className="text-caption text-muted-foreground">{label}</span>
       {children}
     </div>
+  );
+}
+
+/** A dark band for components that live on dark backgrounds. */
+function OnDark({ children }: { children: ReactNode }) {
+  return (
+    <Section tone="inverse" spacing="none" className="rounded-lg p-6">
+      {children}
+    </Section>
   );
 }
 
@@ -76,7 +85,7 @@ function Buttons() {
     <div className="flex flex-col gap-8">
       <div className="overflow-x-auto">
         <table className="w-full min-w-max text-body-sm">
-          <caption className="sr-only">Button variants in every state</caption>
+          <caption className="sr-only">Pill buttons in every state</caption>
           <thead>
             <tr className="text-start text-caption text-muted-foreground">
               <th scope="col" className="py-2 pe-4 text-start">
@@ -97,7 +106,6 @@ function Buttons() {
                 </th>
                 {BUTTON_STATES.map((state) => (
                   <td key={state} className="px-2 py-3">
-                    {/* The arrow slides in on hover, so the "hover" column has no forced look: hover it. */}
                     <StateButton variant={variant} state={state}>
                       Get in touch
                     </StateButton>
@@ -119,25 +127,39 @@ function Buttons() {
         ))}
       </div>
 
-      <div className="flex flex-wrap items-center gap-8">
-        <Cell label="link with arrow (on light)">
+      <div className="flex flex-wrap items-start gap-8">
+        <Cell label="link with arrow (on light) — hover it">
           <LinkCta href="#buttons">See all cases</LinkCta>
         </Cell>
-        <Section tone="inverse" spacing="tight" className="rounded-lg px-6">
-          <Cell label="link with arrow (on dark)">
+        <Cell label="link with arrow (on dark) — hover it">
+          <OnDark>
             <LinkCta href="#buttons">Learn more</LinkCta>
-          </Cell>
-        </Section>
-        <Cell label="round arrow buttons (on dark)">
-          <div className="on-dark flex gap-4 rounded-lg p-4">
-            <button type="button" className="round-btn round-btn--prev" aria-label="Previous" />
-            <button type="button" className="round-btn round-btn--next" aria-label="Next" />
-            <button
-              type="button"
-              className="round-btn round-btn--next"
-              aria-label="Disabled"
-              disabled
+          </OnDark>
+        </Cell>
+        <Cell label="menu link (default, current page)">
+          <div className="flex gap-6">
+            <NavLink href="#buttons">Cases</NavLink>
+            <NavLink href="/">Home</NavLink>
+          </div>
+        </Cell>
+        <Cell label="slider arrows (on dark): default, disabled">
+          <OnDark>
+            <div className="flex gap-4">
+              <RoundButton direction="prev" label="Previous" />
+              <RoundButton direction="next" label="Next" />
+              <RoundButton direction="next" label="Disabled" disabled />
+            </div>
+          </OnDark>
+        </Cell>
+        <Cell label="menu button: closed, open">
+          <div className="flex gap-4">
+            <BurgerButton
+              open={false}
+              label="Menu"
+              controls="storybook"
+              onClick={() => undefined}
             />
+            <BurgerButton open label="Close menu" controls="storybook" onClick={() => undefined} />
           </div>
         </Cell>
       </div>
@@ -147,149 +169,77 @@ function Buttons() {
 
 // ── Form fields ──────────────────────────────────────────────────────────────
 
-function FieldFrame({
-  id,
-  label,
-  help,
-  error,
-  children,
-}: {
-  id: string;
-  label: string;
-  help?: string;
-  error?: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor={id} className={LABEL_CLASS}>
-        {label}
-      </label>
-      {children}
-      {help ? (
-        <Text id={`${id}-help`} variant="caption" tone="muted">
-          {help}
-        </Text>
-      ) : null}
-      {error ? (
-        <Text id={`${id}-error`} variant="caption" tone="danger">
-          {error}
-        </Text>
-      ) : null}
-    </div>
-  );
-}
-
 function FormFields() {
   return (
-    <div className="grid gap-8 md:grid-cols-2">
-      <FieldFrame id="sb-input" label="Input" help="Help text under the field.">
-        <input
-          id="sb-input"
-          className={controlClasses()}
-          placeholder="Placeholder"
-          aria-describedby="sb-input-help"
-        />
-      </FieldFrame>
-      <FieldFrame id="sb-input-focus" label="Input (focus)">
-        <input
-          id="sb-input-focus"
-          className={controlClasses({ focused: true })}
-          defaultValue="Focused"
-        />
-      </FieldFrame>
-      <FieldFrame id="sb-input-error" label="Input (error)" error="Enter a valid email address.">
-        <input
-          id="sb-input-error"
-          className={controlClasses({ invalid: true })}
-          defaultValue="not-an-email"
-          aria-invalid="true"
-          aria-describedby="sb-input-error-error"
-        />
-      </FieldFrame>
-      <FieldFrame id="sb-input-disabled" label="Input (disabled)">
-        <input
-          id="sb-input-disabled"
-          className={controlClasses()}
-          defaultValue="Disabled"
-          disabled
-        />
-      </FieldFrame>
-      <FieldFrame id="sb-textarea" label="Textarea">
-        <textarea
-          id="sb-textarea"
-          className={textareaClasses()}
-          rows={4}
-          placeholder="Tell us more"
-        />
-      </FieldFrame>
-      <FieldFrame id="sb-textarea-error" label="Textarea (error)" error="This is required.">
-        <textarea
-          id="sb-textarea-error"
-          className={textareaClasses({ invalid: true })}
-          rows={4}
-          aria-invalid="true"
-          aria-describedby="sb-textarea-error-error"
-        />
-      </FieldFrame>
-      <fieldset className="flex flex-col gap-3">
-        <legend className={cx(LABEL_CLASS, 'mb-2')}>Checkbox</legend>
-        {[
-          { id: 'sb-check', label: 'Unchecked', checked: false, disabled: false },
-          { id: 'sb-check-on', label: 'Checked', checked: true, disabled: false },
-          { id: 'sb-check-off', label: 'Disabled', checked: false, disabled: true },
-        ].map((item) => (
-          <div key={item.id} className="flex items-start gap-3">
-            <input
-              id={item.id}
-              type="checkbox"
-              className={choiceClasses()}
-              defaultChecked={item.checked}
-              disabled={item.disabled}
-            />
-            <label htmlFor={item.id} className="text-body-sm">
-              {item.label}
-            </label>
-          </div>
-        ))}
-      </fieldset>
-    </div>
+    <OnDark>
+      <div className="grid gap-8 md:grid-cols-2">
+        <Field label="Name" htmlFor="sb-input" required requiredText="required" floating>
+          <Input id="sb-input" placeholder=" " />
+        </Field>
+        <Field label="Email address (filled)" htmlFor="sb-filled" floating>
+          <Input id="sb-filled" placeholder=" " defaultValue="name@example.com" />
+        </Field>
+        <Field label="Focus" htmlFor="sb-focus" floating>
+          <Input id="sb-focus" placeholder=" " defaultValue="Focused" className="is-focus" />
+        </Field>
+        <Field
+          label="Error"
+          htmlFor="sb-error"
+          floating
+          errorId="sb-error-text"
+          error="Enter a valid email address."
+        >
+          <Input
+            id="sb-error"
+            placeholder=" "
+            defaultValue="not-an-email"
+            aria-invalid="true"
+            aria-describedby="sb-error-text"
+          />
+        </Field>
+        <Field label="Disabled" htmlFor="sb-disabled" floating>
+          <Input id="sb-disabled" placeholder=" " defaultValue="Disabled" disabled />
+        </Field>
+        <Field label="Message" htmlFor="sb-textarea" hideLabel>
+          <Textarea id="sb-textarea" placeholder="Message (optional)" />
+        </Field>
+        <Field label="Topic" htmlFor="sb-select">
+          <Select
+            id="sb-select"
+            placeholder="Choose…"
+            options={[
+              { value: 'general', label: 'General question' },
+              { value: 'project', label: 'New project' },
+            ]}
+          />
+        </Field>
+        <div className="flex flex-col gap-3">
+          <Checkbox id="sb-check" label="Unchecked" />
+          <Checkbox id="sb-check-on" label="Checked" defaultChecked />
+          <Checkbox id="sb-check-off" label="Disabled" disabled />
+        </div>
+      </div>
+    </OnDark>
   );
 }
 
 // ── Icons ────────────────────────────────────────────────────────────────────
 
-/** The site's icons are SVG files in /public/icons (and /public/icons/industries). */
-const ICONS = [
-  'arrow-right',
-  'arrow-right-white',
-  'arrow-case',
-  'arrow-circle',
-  'chevron',
-  'chev-left',
-  'chev-right',
-  'linkedin',
-  'dribbble',
-  'behance',
-  'briefcase',
-  'star-red',
-] as const;
-
 function Icons() {
   return (
     <div className="flex flex-col gap-4">
       <Text>
-        Icon library: SVG files in <code>public/icons</code>. Decorative icons are hidden from
-        screen readers; an icon that carries meaning gets a text label.
+        Icon library: SVG files in <code>public/icons</code>, used through the <code>Icon</code>{' '}
+        component. Decorative icons are hidden from screen readers; an icon that carries meaning
+        gets a text label.
       </Text>
       <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-6">
-        {ICONS.map((name) => (
+        {ICON_NAMES.map((name) => (
           <li
             key={name}
             className="flex flex-col items-center gap-2 rounded-lg border-thin border-border bg-inverse p-4"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element -- storybook sample of static SVG icons */}
-            <img src={`/icons/${name}.svg`} alt="" className="size-6" />
+            <Icon name={name} />
             <span className="text-caption text-inverse-muted">{name}</span>
           </li>
         ))}
@@ -298,23 +248,39 @@ function Icons() {
   );
 }
 
-// ── Other primitives ─────────────────────────────────────────────────────────
+// ── Other primitives and patterns ────────────────────────────────────────────
 
 function Primitives() {
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         <h3 className="text-h5">Eyebrow</h3>
         <Eyebrow>Our Services</Eyebrow>
-        <Section tone="inverse" spacing="tight" className="rounded-lg px-6">
+        <OnDark>
           <Eyebrow>Our Services</Eyebrow>
-        </Section>
+        </OnDark>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <h3 className="text-h5">Section header</h3>
+        <SectionHeader eyebrow="Case Studies" title="Check how K&Z keeps partners ahead" />
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <h3 className="text-h5">Tags</h3>
+        <OnDark>
+          <TagList tags={['Sport', 'SaaS', 'Web', 'B2C']} />
+        </OnDark>
+        <Tag>Single tag</Tag>
       </div>
 
       <div className="flex flex-col gap-2">
         <h3 className="text-h5">Headings</h3>
-        <Heading level={2} variant="section-title">
-          Section title: Check how K&amp;Z keeps partners ahead
+        <Heading level={2} variant="h2">
+          Heading 2 (64 px)
+        </Heading>
+        <Heading level={3} variant="section-title">
+          Section title
         </Heading>
         <Heading level={3} variant="h5">
           Level 3 styled as h5
@@ -341,15 +307,16 @@ function Primitives() {
 export const storybookSections: readonly StorybookSection[] = [
   {
     id: 'buttons',
-    title: 'Buttons',
+    title: 'Buttons and links',
     description:
-      'Pill buttons (the arrow slides in on hover), arrow links and slider arrows. Hover and focus are forced where possible.',
+      'Pill buttons in every state and size (the arrow slides in on hover), arrow links, menu links, slider arrows and the menu button.',
     render: () => <Buttons />,
   },
   {
     id: 'form-fields',
     title: 'Form fields',
-    description: 'Input, textarea and checkbox with error and disabled states.',
+    description:
+      'Outlined fields on a dark card: input, textarea, select and checkbox with filled, focus, error and disabled states.',
     render: () => <FormFields />,
   },
   {
@@ -359,8 +326,9 @@ export const storybookSections: readonly StorybookSection[] = [
   },
   {
     id: 'primitives',
-    title: 'Other primitives',
-    description: 'Eyebrow, headings and section tones; patterns are added page by page.',
+    title: 'Other primitives and patterns',
+    description:
+      'Eyebrow, section header, tags, headings and section tones. Cards and sections are added page by page.',
     render: () => <Primitives />,
   },
 ];

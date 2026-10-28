@@ -7,6 +7,7 @@ import type { SitePageContent } from '@/core/content/loader';
 
 import { Accordion } from '../components/accordion';
 import { SectionHeader } from '../components/section-header';
+import { Icon } from '../components/ui/icon';
 import { Container, Section } from '../components/ui/layout';
 
 /** "Industries": an accordion; each industry lists the case studies tagged with it. */
@@ -33,8 +34,7 @@ export async function Industries({
       head: (
         <>
           <span className="accordion__icon" aria-hidden="true">
-            {/* eslint-disable-next-line @next/next/no-img-element -- small static SVG icons */}
-            <img src={`/icons/industries/${industry.key}.svg`} alt="" />
+            <Icon name={`industries/${industry.key}`} />
           </span>
           <span className="accordion__label">{industry.label}</span>
         </>

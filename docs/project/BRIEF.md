@@ -71,9 +71,21 @@ The client adds new cases and testimonials himself. The 14 testimonials from `in
 - Primary button hover: **as on the homepage** (stays dark, arrow slides in).
 - Animations: as in `DESIGN_SYSTEM.md` §3.
 
+## Database
+
+- Provider: **not chosen yet** (the skill asks every project: Neon recommended / Supabase). Asked on 2026-10-28 after the skill update; answer pending.
+- Environments: production (`main`) + staging (`staging`), each with its own database.
+- Supabase only: the user must be warned that staging needs a second project.
+
+## Team
+
+- Repository: `nazars-kz/kzdesign` (corporate GitHub account, SSH alias `github-kz`).
+- Branches: `main` (live), `staging` (test), `feature/<task>` with pull requests into `staging` (`docs/TEAM.md`, skill `references/team.md`).
+- People working on the project and their GitHub accounts: **to be confirmed** (asked 2026-10-28). Tasks are GitHub issues once `gh` is installed and logged in.
+
 ## Integrations
 
-- Analytics: **Google Analytics** and **Hotjar** — to be connected later (template analytics settings / `projectConfig.csp` sources).
+- Analytics: Google Analytics and Hotjar, to be switched on by the team in **Settings → Integrations** (no code and no CSP changes are needed). The cookie banner appears automatically when one is on.
 - Hosting: **Vercel** · Domain: later (`kz.design` expected).
 - Clutch reviews widget on Reviews: later.
 

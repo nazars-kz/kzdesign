@@ -1,8 +1,9 @@
 import { cx } from './ui/cn';
+import { Icon, type IconName } from './ui/icon';
 
 export interface SocialLink {
   readonly key: string;
-  readonly network: string;
+  readonly network: Extract<IconName, 'linkedin' | 'dribbble' | 'behance'>;
   readonly href: string;
   readonly label: string;
 }
@@ -24,8 +25,7 @@ export function SocialLinks({
       {links.map((link) => (
         <li key={link.key}>
           <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
-            {/* eslint-disable-next-line @next/next/no-img-element -- small static SVG icons */}
-            <img src={`/icons/${link.network}.svg`} alt="" data-network={link.network} />
+            <Icon name={link.network} size="sm" />
           </a>
         </li>
       ))}
