@@ -5,6 +5,7 @@ import { type ReactNode, useCallback, useEffect, useId, useState } from 'react';
 
 import { cx } from './ui/cn';
 import { LINK_CTA_CLASS, LinkCtaContent } from './ui/link-cta-parts';
+import { RoundButton } from './ui/round-button';
 
 /** Time a service stays open before the next one (ms); equals `--duration-autoplay` in tokens.css. */
 const AUTOPLAY_MS = 10_000;
@@ -100,18 +101,8 @@ export function ServiceTabs({
         ))}
 
         <div className="services__arrows">
-          <button
-            type="button"
-            className="round-btn round-btn--prev"
-            aria-label={labels.previous}
-            onClick={() => show(current - 1)}
-          />
-          <button
-            type="button"
-            className="round-btn round-btn--next"
-            aria-label={labels.next}
-            onClick={() => show(current + 1)}
-          />
+          <RoundButton direction="prev" label={labels.previous} onClick={() => show(current - 1)} />
+          <RoundButton direction="next" label={labels.next} onClick={() => show(current + 1)} />
         </div>
         <div className="services__tabs" role="tablist" aria-label={labels.tabs}>
           {services.map((service, index) => (

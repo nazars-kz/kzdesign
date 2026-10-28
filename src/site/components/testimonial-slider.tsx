@@ -3,6 +3,7 @@
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
 import { Container } from './ui/layout';
+import { RoundButton } from './ui/round-button';
 
 /** Distance (px) the slider may be off its ends and still count as at the end. */
 const END_TOLERANCE = 2;
@@ -51,17 +52,15 @@ export function TestimonialSlider({
 
   const buttons = (
     <>
-      <button
-        type="button"
-        className="round-btn round-btn--prev"
-        aria-label={labels.previous}
+      <RoundButton
+        direction="prev"
+        label={labels.previous}
         disabled={!canPrevious}
         onClick={() => move(-1)}
       />
-      <button
-        type="button"
-        className="round-btn round-btn--next"
-        aria-label={labels.next}
+      <RoundButton
+        direction="next"
+        label={labels.next}
         disabled={!canNext}
         onClick={() => move(1)}
       />

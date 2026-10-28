@@ -2,6 +2,7 @@
 
 import { type ReactNode, useEffect, useRef, useState } from 'react';
 
+import { BurgerButton } from '../components/burger-button';
 import { cx } from '../components/ui/cn';
 
 /** Scroll distance after which the header becomes compact. */
@@ -71,19 +72,13 @@ export function HeaderShell({
             <div className="site-header__actions">
               {cta}
               {compactCta}
-              <button
-                ref={burger}
-                type="button"
-                className="burger"
-                aria-label={open ? labels.close : labels.open}
-                aria-expanded={open}
-                aria-controls="mobile-menu"
+              <BurgerButton
+                buttonRef={burger}
+                open={open}
+                label={open ? labels.close : labels.open}
+                controls="mobile-menu"
                 onClick={() => setOpen((value) => !value)}
-              >
-                <span />
-                <span />
-                <span />
-              </button>
+              />
             </div>
           </div>
         </div>

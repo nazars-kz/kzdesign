@@ -64,26 +64,28 @@ Layout: SiteHeader (scrolled state, dropdown, burger + full-screen menu), SiteFo
 Client components (and why): header (scroll state, menu open, focus management), AwardsStrip (expand/collapse), ServiceTabs (autoplay/tabs), TestimonialSlider (scroll buttons + disabled state), TestimonialQuote scroll bar, Accordion (open state; native `details` not allowed by the animation spec), TeamRow (mobile accordion), ContactForm (`useSiteForm`).
 Everything else is a Server Component. `docs/project/COMPONENTS.md` is created while building and kept up to date.
 
-## Integrations and CSP
+## Integrations
 
-| Service          | Purpose      | CSP sources                                                                                   |
-| ---------------- | ------------ | --------------------------------------------------------------------------------------------- |
-| Google Analytics | traffic      | later (client connects); add `scriptSrc`/`connectSrc` for googletagmanager / google-analytics |
-| Hotjar           | recordings   | later; `scriptSrc`/`connectSrc` for hotjar                                                    |
-| Clutch widget    | Reviews page | later                                                                                         |
-| Satoshi, images  | self-hosted  | none (downloaded into the project)                                                            |
+| Service               | Purpose      | Where it is switched on                                                          |
+| --------------------- | ------------ | -------------------------------------------------------------------------------- |
+| Google Analytics      | traffic      | Settings → Integrations (the team, later)                                        |
+| Hotjar                | recordings   | Settings → Integrations (the team, later)                                        |
+| Clutch reviews widget | Reviews page | later; needs a `projectConfig.csp` frame/script source when the widget is chosen |
+| Satoshi, images       | self-hosted  | nothing                                                                          |
 
 ## Progress (page by page)
 
-| #   | Page                                                                                     | Asked / confirmed | Built | Checked | User OK |
-| --- | ---------------------------------------------------------------------------------------- | ----------------- | ----- | ------- | ------- |
-| 0   | Foundation (config, demo removal, tokens, primitives, layout, globals, 404, empty pages) | —                 |       |         |         |
-| 1   | Home                                                                                     |                   |       |         |         |
-| 2   | About us                                                                                 |                   |       |         |         |
-| 3   | Cases list + case template (2–3 cases seeded first, then all 16)                         |                   |       |         |         |
-| 4   | Service template (SaaS, Mobile, Web)                                                     |                   |       |         |         |
-| 5   | Empty pages (Approach, Reviews, Contact us, legal ×3)                                    |                   |       |         |         |
-| 6   | Full verification, Lighthouse, Vercel deploy                                             |                   |       |         |         |
+| #   | Page                                                                                           | Task (issue) | Owner    | Branch                            | Asked / confirmed | Built | Checked                                                     | User OK |
+| --- | ---------------------------------------------------------------------------------------------- | ------------ | -------- | --------------------------------- | ----------------- | ----- | ----------------------------------------------------------- | ------- |
+| 0   | Foundation (config, tokens, fonts, primitives, header, footer, 404, placeholder pages, global) | —            | Nazar KZ | `main` (before the team workflow) | —                 | yes   | yes                                                         | yes     |
+| 1   | Home                                                                                           | —            | Nazar KZ | `main` (before the team workflow) | yes               | yes   | yes (1440: 0.17%, 375: 0.85% mismatch; interactions tested) |         |
+| 2   | About us                                                                                       |              |          |                                   |                   |       |                                                             |         |
+| 3   | Cases list + case template (all 16 cases)                                                      |              |          |                                   |                   |       |                                                             |         |
+| 4   | Service template (SaaS, Mobile, Web)                                                           |              |          |                                   |                   |       |                                                             |         |
+| 5   | Empty pages (Approach, Reviews, Contact us, legal ×3)                                          |              |          |                                   |                   |       |                                                             |         |
+| 6   | Full verification (gates, e2e, Lighthouse, audit), Vercel deploy                               |              |          |                                   |                   |       |                                                             |         |
+
+All tasks are GitHub issues (`nazars-kz/kzdesign`, labels `task` + `status:*`); owners and branches are filled in when a task is claimed.
 
 ## Build order
 

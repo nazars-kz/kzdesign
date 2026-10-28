@@ -71,9 +71,21 @@ The client adds new cases and testimonials himself. The 14 testimonials from `in
 - Primary button hover: **as on the homepage** (stays dark, arrow slides in).
 - Animations: as in `DESIGN_SYSTEM.md` §3.
 
+## Database
+
+- Provider: **Neon** (chosen by the user on 2026-10-28). One Neon project, branches `production` and `staging`, Neon Object Storage; account owner: to be decided (studio or client).
+- Environments: production (`main`) + staging (`staging`), each with its own database.
+
+## Team
+
+- Team of three: Nazar KZ — `nazars-kz` — lead (reviews and merges); two designer-developers (names and GitHub logins to be added when they are invited).
+- Repository: https://github.com/nazars-kz/kzdesign (private) · Task board: GitHub issues, labels `task` and `status:*`.
+- Branches: `main` (live), `staging` (test, default branch), `feature/<task>` with pull requests into `staging` (`docs/TEAM.md`, skill `references/team.md`). Branch protection is not available on the free private plan (issue #18).
+- Start-here file for newcomers: `docs/project/README.md`. The designs are committed in `design/`.
+
 ## Integrations
 
-- Analytics: **Google Analytics** and **Hotjar** — to be connected later (template analytics settings / `projectConfig.csp` sources).
+- Analytics: Google Analytics and Hotjar, to be switched on by the team in **Settings → Integrations** (no code and no CSP changes are needed). The cookie banner appears automatically when one is on.
 - Hosting: **Vercel** · Domain: later (`kz.design` expected).
 - Clutch reviews widget on Reviews: later.
 

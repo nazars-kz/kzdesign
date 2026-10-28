@@ -35,5 +35,3 @@ next-env.d.ts
 /.claude/
 /.lighthouse/
 
-# design sources provided by the client (kept locally)
-/design/

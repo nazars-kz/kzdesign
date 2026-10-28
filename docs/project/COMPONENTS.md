@@ -16,15 +16,18 @@ Dark bands: `<Section tone="inverse">` adds `.on-dark`; eyebrow, link-cta and he
 
 ## Primitives (`src/site/components/ui/`)
 
-| Component                             | File                                        | Variants / props                                                                                         | Used in                                                                    |
-| ------------------------------------- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Heading / Text                        | `typography.tsx`                            | Heading: h1–h6, `section-title`; Text: lead, body-lg, body, body-sm, caption, overline, label; tone      | everywhere                                                                 |
-| Container / Section                   | `layout.tsx`                                | width content/wide/prose; tone default/surface/inverse; spacing default/tight/none; `id`                 | every section                                                              |
-| Button / ButtonLink / `buttonClasses` | `button.tsx`, `button-styles.ts`            | variant `primary` (dark) / `light`; size md 54 / lg 57 / xl 67; arrow slides in on hover (`ButtonArrow`) | header (×2), hero, FAQ, form                                               |
-| LinkCta                               | `link-cta.tsx`                              | external; recolors on dark                                                                               | Services, Cases, Approach, Testimonials                                    |
-| Eyebrow                               | `eyebrow.tsx`                               | recolors on dark                                                                                         | every section                                                              |
-| Round arrow button                    | CSS class `round-btn` (+ `--prev`/`--next`) | disabled                                                                                                 | Services, Testimonials, case slider (component with state comes with Home) |
-| SiteImage, RichText, form styles      | template                                    |                                                                                                          | content images, rich text, forms                                           |
+| Component                                | File                             | Variants / props                                                                                                                          | Used in                                        |
+| ---------------------------------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| Heading / Text                           | `typography.tsx`                 | Heading: h1–h6, `section-title`; Text: lead, body-lg, body, body-sm, caption, overline, label; tone                                       | everywhere                                     |
+| Container / Section                      | `layout.tsx`                     | width content/wide/prose; tone default/surface/inverse; spacing default/tight/none; `id`                                                  | every section                                  |
+| Button / ButtonLink / `buttonClasses`    | `button.tsx`, `button-styles.ts` | variant `primary` (dark) / `light`; size md 54 / lg 57 / xl 67; arrow slides in on hover (`ButtonArrow`)                                  | header (×2), hero, FAQ, form                   |
+| LinkCta                                  | `link-cta.tsx`                   | external; recolors on dark                                                                                                                | Services, Cases, Approach, Testimonials        |
+| Eyebrow                                  | `eyebrow.tsx`                    | recolors on dark                                                                                                                          | every section                                  |
+| RoundButton                              | `ui/round-button.tsx`            | direction prev/next; disabled; client-safe                                                                                                | Services tabs, Testimonials, later case slider |
+| Icon                                     | `ui/icon.tsx`                    | typed `name` from `ICON_NAMES`; size sm 20 / md 24 / lg 50; `label` when the icon carries meaning                                         | social links, industries, storybook            |
+| Field, Input, Textarea, Select, Checkbox | `ui/field.tsx`                   | outlined fields on dark (a filled/light variant is not needed by the design yet); floating label, hidden label, error line, required mark | every form (the contact form)                  |
+| BurgerButton                             | `components/burger-button.tsx`   | open / closed                                                                                                                             | header                                         |
+| SiteImage, RichText, form styles         | template                         |                                                                                                                                           | content images, rich text, forms               |
 
 ## Patterns (`src/site/components/`)
 
@@ -45,20 +48,20 @@ Dark bands: `<Section tone="inverse">` adds `.on-dark`; eyebrow, link-cta and he
 
 ## Home components (built with the Home page)
 
-| Component | File | Notes | Used in |
-|---|---|---|---|
-| SectionHeader | `components/section-header.tsx` | eyebrow + title; gap via `--section-header-gap` set by the section | all sections |
-| Tag / TagList | `components/ui/tag.tsx` | CAPS tags | case cards |
-| CaseCard | `components/case-card.tsx` | cover, name, description, tags; heading level prop | Home, Cases list, later case sliders |
-| AwardsStrip (client) | `components/awards-strip.tsx` | expand / collapse, width via CSS variable | Hero |
-| ServiceTabs (client) | `components/service-tabs.tsx` | autoplay 10 s with progress line, pills on phones | Home |
-| Accordion (client) | `components/accordion.tsx` | variants `industries` (dark) / `faq` (light); one open at a time | Industries, FAQ |
-| TestimonialSlider (client) + TestimonialCard + QuoteScroll (client) | `components/testimonial-*.tsx`, `quote-scroll.tsx` | scroll-snap track, arrows with disabled ends, quote with own scroll bar | Testimonials (Home, About, Reviews) |
-| PartnerTile | `components/partner-tile.tsx` | logo, optional case link with hover | Partners |
-| TeamMember (client) | `components/team-member.tsx` | row on desktop, accordion on phones | Contact block |
-| ContactForm / ContactFormBlock | `components/contact-form.tsx`, `contact-form-server.tsx` | outlined fields on dark, submit enabled when valid | Contact block |
-| CompanyCard | `components/company-card.tsx` | from the `site` global | Contact block |
-| ContentLink, Lines, PlainRichText, ButtonArrow, LinkCtaContent | `components/ui/*` | small shared helpers; client components import only the client-safe ones | everywhere |
+| Component                                                           | File                                                     | Notes                                                                    | Used in                              |
+| ------------------------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------ |
+| SectionHeader                                                       | `components/section-header.tsx`                          | eyebrow + title; gap via `--section-header-gap` set by the section       | all sections                         |
+| Tag / TagList                                                       | `components/ui/tag.tsx`                                  | CAPS tags                                                                | case cards                           |
+| CaseCard                                                            | `components/case-card.tsx`                               | cover, name, description, tags; heading level prop                       | Home, Cases list, later case sliders |
+| AwardsStrip (client)                                                | `components/awards-strip.tsx`                            | expand / collapse, width via CSS variable                                | Hero                                 |
+| ServiceTabs (client)                                                | `components/service-tabs.tsx`                            | autoplay 10 s with progress line, pills on phones                        | Home                                 |
+| Accordion (client)                                                  | `components/accordion.tsx`                               | variants `industries` (dark) / `faq` (light); one open at a time         | Industries, FAQ                      |
+| TestimonialSlider (client) + TestimonialCard + QuoteScroll (client) | `components/testimonial-*.tsx`, `quote-scroll.tsx`       | scroll-snap track, arrows with disabled ends, quote with own scroll bar  | Testimonials (Home, About, Reviews)  |
+| PartnerTile                                                         | `components/partner-tile.tsx`                            | logo, optional case link with hover                                      | Partners                             |
+| TeamMember (client)                                                 | `components/team-member.tsx`                             | row on desktop, accordion on phones                                      | Contact block                        |
+| ContactForm / ContactFormBlock                                      | `components/contact-form.tsx`, `contact-form-server.tsx` | outlined fields on dark, submit enabled when valid                       | Contact block                        |
+| CompanyCard                                                         | `components/company-card.tsx`                            | from the `site` global                                                   | Contact block                        |
+| ContentLink, Lines, PlainRichText, ButtonArrow, LinkCtaContent      | `components/ui/*`                                        | small shared helpers; client components import only the client-safe ones | everywhere                           |
 
 Sections (`src/site/sections`): Hero, Services, HomeCases, Uniqueness, Approach, Testimonials, Partners, Industries, Faq, Contact.
 
