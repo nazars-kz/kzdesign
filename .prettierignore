@@ -11,5 +11,3 @@ AGENTS.md
 src/core/auth/data/common-passwords.ts
 src/site/theme/tokens.generated.ts
 design
-# the admin has its own theme; class order there depends on the site stylesheet and would differ from the template
-src/admin

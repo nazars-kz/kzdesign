@@ -5,12 +5,19 @@ import { login } from './support/auth';
 import { openSettingsTab, saveSettingsTab, VISITOR_HEADERS } from './support/settings';
 import { expect, test } from './support/test';
 import { E2E_ADMIN } from './support/users';
+import {
+  FIRST_PAGE_ID,
+  localePath,
+  OTHER_LOCALE,
+  OTHER_LOCALE_LABEL,
+  SAMPLE_PATH,
+} from './support/site';
 
 const GERMAN = 'li[data-language="de"]';
 
 test.describe.serial('languages added by the admin', () => {
   test.afterAll(async ({ browser, baseURL }) => {
-    // Leave the site with its one language, whatever happened above.
+    // Leave the project's languages as they were, whatever happened above.
     const page = await browser.newPage({ baseURL });
     await login(page, E2E_ADMIN);
     const form = await openSettingsTab(page, 'general', 'General');
@@ -43,16 +50,18 @@ test.describe.serial('languages added by the admin', () => {
       .toBe(404);
     expect((await visitor.get('/sitemap.xml')).status()).toBe(200);
     expect(await (await visitor.get('/sitemap.xml')).text()).not.toContain('/de');
-    // The existing language is untouched.
-    expect((await visitor.get('/about-us')).status()).toBe(200);
+    // Existing languages are untouched.
+    expect((await visitor.get(SAMPLE_PATH)).status()).toBe(200);
+    if (OTHER_LOCALE)
+      expect((await visitor.get(localePath(OTHER_LOCALE, SAMPLE_PATH))).status()).toBe(200);
     await visitor.dispose();
 
-    await page.goto(admin('/pages/home?locale=de'));
+    await page.goto(admin(`/pages/${FIRST_PAGE_ID}?locale=de`));
     await expect(page.locator('form[data-hydrated]')).toBeVisible();
     await expect(page).toHaveURL(/locale=de/);
   });
 
-  test('publishing makes it appear in the sitemap', async ({ page, baseURL }) => {
+  test('publishing makes it appear in the switcher and the sitemap', async ({ page, baseURL }) => {
     await login(page, E2E_ADMIN);
     const form = await openSettingsTab(page, 'general', 'General');
     await form.locator(GERMAN).getByRole('button', { name: 'Publish language' }).click();
@@ -69,5 +78,15 @@ test.describe.serial('languages added by the admin', () => {
       .poll(async () => (await (await visitor.get('/sitemap.xml')).text()).includes('/de'))
       .toBe(true);
     await visitor.dispose();
+
+    await page.goto(SAMPLE_PATH);
+    await page
+      .getByRole('button', { name: /^Language:/ })
+      .first()
+      .click();
+    const list = page.getByRole('list', { name: 'Language' }).first();
+    await expect(list.getByRole('link', { name: 'Deutsch' })).toBeVisible();
+    if (OTHER_LOCALE_LABEL)
+      await expect(list.getByRole('link', { name: OTHER_LOCALE_LABEL })).toBeVisible();
   });
 });
