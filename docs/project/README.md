@@ -51,6 +51,14 @@ instead of `pnpm <command>`. If the build fails with `ERR_SWC_NATIVE_CACHE`, set
 **Several GitHub accounts on one computer**: use your own `gh auth login` (the account that was added to the
 repository) and clone with `gh repo clone nazars-kz/kzdesign`. Don't copy another person's SSH settings.
 
+**`team-status.mjs` prints nothing on Windows** (its "run as main script" check compares a Unix-style path). Run it like this
+(replace `<skill>` with the skill folder, forward slashes, and set `GH_REPO=nazars-kz/kzdesign` if your git remote is not a plain
+`github.com` address):
+
+```bash
+node --input-type=module -e "process.argv[1]='/<skill>/scripts/team-status.mjs'; await import('file:///<skill>/scripts/team-status.mjs')"
+```
+
 ## Rules in one place
 
 - Texts and images go into the seeds (`src/content/**`), not only into your local admin.
