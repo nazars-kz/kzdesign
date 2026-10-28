@@ -29,9 +29,6 @@ export const uiTexts = defineUiTexts({
       texts: {
         home: 'Menu link: Home',
         services: 'Menu link: Services',
-        saas: 'Services drop-down: SaaS',
-        mobile: 'Services drop-down: Mobile',
-        web: 'Services drop-down: Web',
         cases: 'Menu link: Cases',
         approach: 'Menu link: Approach',
         aboutUs: 'Menu link: About us',
@@ -66,6 +63,12 @@ export const uiTexts = defineUiTexts({
         decline: 'Button: decline cookies',
         settings: 'Footer link that reopens the banner',
         label: 'Name of the banner (read by screen readers)',
+      },
+    },
+    services: {
+      label: 'Services',
+      texts: {
+        learnMore: 'Link to a service on the Services page',
       },
     },
     notFound: {

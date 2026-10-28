@@ -10,9 +10,6 @@
   "nav": {
     "home": "Home",
     "services": "Services",
-    "saas": "SaaS",
-    "mobile": "Mobile",
-    "web": "Web",
     "cases": "Cases",
     "approach": "Approach",
     "aboutUs": "About us",
@@ -33,6 +30,9 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "refund": "Refund Policy"
+  },
+  "services": {
+    "learnMore": "Learn more"
   },
   "notFound": {
     "title": "Page not found",

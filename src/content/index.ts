@@ -5,13 +5,14 @@
  */
 import { createRegistry } from '@/core/content/registry';
 
+import { services } from './collections/services';
 import { contactForm } from './forms/contact';
 import { siteGlobals } from './globals/site';
 import { placeholderPages } from './pages/placeholders';
 
 export const registry = createRegistry({
   pages: [...placeholderPages],
-  collections: [],
+  collections: [services],
   globals: [siteGlobals],
   forms: [contactForm],
   sharedSections: [],

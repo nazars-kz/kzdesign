@@ -44,9 +44,7 @@ export async function SiteFooter({
             {MAIN_NAV.map((item) => (
               <NavLink key={item.key} href={href(item)}>
                 {t(item.key)}
-                {item.children ? (
-                  <i className="nav__chev nav__chev--up" aria-hidden="true" />
-                ) : null}
+                {item.submenu ? <i className="nav__chev nav__chev--up" aria-hidden="true" /> : null}
               </NavLink>
             ))}
           </nav>

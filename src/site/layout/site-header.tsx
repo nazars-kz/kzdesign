@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
+import { getCollectionList } from '@/core/collections/loader';
 import { getGlobalContent } from '@/core/content/loader';
 import { localizedPath } from '@/core/i18n/routing';
 import type { SiteLogo } from '@/core/media/branding';
@@ -27,9 +28,21 @@ export async function SiteHeader({
 }) {
   const t = await getTranslations('nav');
   const common = await getTranslations('common');
-  const { header } = await getGlobalContent('site', locale);
+  const [{ header }, services] = await Promise.all([
+    getGlobalContent('site', locale),
+    getCollectionList('services', locale),
+  ]);
   const href = ({ pageId, anchor }: NavTarget) =>
     localizedPath(pagePath(pageId ?? 'home'), locale, defaultLocale) + (anchor ? `#${anchor}` : '');
+  /** Sub-items of the Services drop-down: every published service, in the editors' order. */
+  const children = (submenu: 'services' | undefined) =>
+    submenu === 'services'
+      ? services.items.map((item) => ({
+          key: item.slug,
+          label: item.content.navLabel || item.content.title,
+          href: item.href,
+        }))
+      : [];
   const mark = logo
     ? {
         src: logo.src,
@@ -53,17 +66,18 @@ export async function SiteHeader({
       }
       nav={
         <nav className="nav" aria-label={common('mainNavigation')}>
-          {MAIN_NAV.map((item) =>
-            item.children ? (
+          {MAIN_NAV.map((item) => {
+            const sub = children(item.submenu);
+            return sub.length > 0 ? (
               <div key={item.key} className="nav__drop">
                 <NavLink href={href(item)}>
                   {t(item.key)}
                   <i className="nav__chev" aria-hidden="true" />
                 </NavLink>
                 <div className="nav__menu">
-                  {item.children.map((child) => (
-                    <Link key={child.key} href={href(child)} className="text-nav">
-                      {t(child.key)}
+                  {sub.map((child) => (
+                    <Link key={child.key} href={child.href} className="text-nav">
+                      {child.label}
                     </Link>
                   ))}
                 </div>
@@ -72,8 +86,8 @@ export async function SiteHeader({
               <NavLink key={item.key} href={href(item)}>
                 {t(item.key)}
               </NavLink>
-            ),
-          )}
+            );
+          })}
         </nav>
       }
       cta={
@@ -102,9 +116,9 @@ export async function SiteHeader({
             <Link key={item.key} href={href(item)}>
               {t(item.key)}
             </Link>,
-            ...(item.children ?? []).map((child) => (
-              <Link key={child.key} href={href(child)} className="is-sub">
-                {t(child.key)}
+            ...children(item.submenu).map((child) => (
+              <Link key={child.key} href={child.href} className="is-sub">
+                {child.label}
               </Link>
             )),
           ])}

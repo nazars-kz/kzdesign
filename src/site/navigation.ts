@@ -18,7 +18,8 @@ export interface NavTarget {
 
 export interface NavItem extends NavTarget {
   readonly key: 'home' | 'services' | 'cases' | 'approach' | 'aboutUs' | 'reviews' | 'contactUs';
-  readonly children?: readonly (NavTarget & { readonly key: 'saas' | 'mobile' | 'web' })[];
+  /** The drop-down lists the items of the services collection. */
+  readonly submenu?: 'services';
 }
 
 export const MAIN_NAV: readonly NavItem[] = [
@@ -27,11 +28,7 @@ export const MAIN_NAV: readonly NavItem[] = [
     key: 'services',
     pageId: 'home',
     anchor: 'services',
-    children: [
-      { key: 'saas', pageId: 'saas' },
-      { key: 'mobile', pageId: 'mobile' },
-      { key: 'web', pageId: 'web' },
-    ],
+    submenu: 'services',
   },
   { key: 'cases', pageId: 'cases' },
   { key: 'approach', pageId: 'approach' },

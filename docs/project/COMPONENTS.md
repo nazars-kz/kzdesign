@@ -51,9 +51,9 @@ CompanyCard, Tag, Chip, Breadcrumbs, Marquee, LeaderCard, FounderCard.
 
 ## Architecture notes
 
-- **Services are three pages** (`/saas`, `/mobile`, `/web`) built from one schema factory, not a collection:
-  a collection's item URL must start with its list page path, and the services sit at the site root.
-  Home's "Services" tabs have their own text fields; they link to the three pages.
+- **Services are a collection** (`services`, list page `/services`, items `/services/<slug>`): one page template, editors add new
+  services in the admin and they appear in the Services menu, the mobile menu and (later) the Home tabs. The old live URLs
+  `/saas`, `/mobile`, `/web` get 301 redirects when the domain moves.
 - **Cases are a collection** (`/cases/<slug>`); old live URLs `/<slug>` get 301 redirects when the domain moves.
 - **Placeholder pages** (`src/content/pages/placeholders.ts`) are real registered pages (menu, SEO, admin) until their content
   is delivered; replace an entry with a full page definition when its page is built.
