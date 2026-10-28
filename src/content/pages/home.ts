@@ -140,7 +140,7 @@ export const homePage = definePage({
       label: 'Hero',
       fields: {
         badge: f.link({
-          label: 'Badge above the title',
+          label: 'Top badge',
           help: 'The text is the badge label, the address is where it leads.',
         }),
         title: f.textarea({
