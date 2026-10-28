@@ -1,0 +1,73 @@
+/* About us page. Built on design-system/tokens.css + shared homepage styles.
+   Source: live https://www.kz.design/about-us (no Figma layout), measured at 1440 and 375. */
+
+/* ---------- Breadcrumbs ---------- */
+.crumbs { padding-top: 28px; }
+.crumbs ol { display: flex; flex-wrap: wrap; margin: 0; padding: 0; list-style: none;
+  font: var(--fw-bold) var(--fs-body4)/18px var(--font-secondary); text-transform: uppercase; color: var(--x-ink); }
+.crumbs li + li::before { content: "/"; padding: 0 7px; color: var(--x-ink); }
+.crumbs a { color: #535355; transition: color var(--dur-fast); }
+.crumbs a:hover { color: var(--accent-primary); }
+
+/* ---------- Hero ---------- */
+.ab-hero { padding-top: 128px; text-align: center; }
+.ab-hero__title { max-width: 1100px; margin: 0 auto; font: var(--fw-semibold) var(--fs-h1)/var(--lh-h1) var(--font-primary); color: var(--x-ink); }
+.ab-hero__sub { max-width: 812px; margin: 24px auto 0; font: 400 20px/30px var(--font-secondary); color: #535355; }
+
+/* ---------- Leadership ---------- */
+.lead { padding-top: 140px; }
+.lead__inner { border-top: 1px solid var(--x-line-light); border-bottom: 1px solid var(--x-line-light); padding: 51px 0 96px; }
+.lead__intro { margin-top: 35px; max-width: 1150px; font: 400 18px/27px var(--font-secondary); color: var(--accent-secondary); }
+.lead__list { margin-top: 64px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
+.leader { display: flex; gap: 12px; align-items: flex-start; }
+.leader__photo { flex: 0 0 auto; width: 50.2%; max-width: 321px; aspect-ratio: 321 / 388; height: auto; object-fit: cover; background: var(--x-gray-bg); }
+.leader__text { flex: 1 1 0; min-width: 0; max-width: 295px; font: 400 16px/24px var(--font-secondary); color: var(--accent-secondary); }
+.leader__name { margin: 0; font: var(--fw-semibold) 28px/42px var(--font-primary); color: var(--accent-secondary); }
+.leader__name .hl { background: var(--accent-primary); }
+.leader__role, .leader__bio { padding-bottom: 16px; }
+.leader__ex { font-weight: var(--fw-bold); color: var(--x-ink); }
+.lead__cta { margin-top: 53px; display: flex; justify-content: center; }
+.lead__cta .btn { height: 67px; padding: 0 31px; }
+
+/* ---------- Uniqueness on this page sits right under the leadership block ---------- */
+.lead + .uniq { padding-top: 32px; }
+
+/* ---------- What makes us different ---------- */
+.diff { padding: 51px 0 140px; }
+.diff__title { margin-top: 11px; }
+.diff__list { margin-top: 32px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.diff-card { background: var(--accent-secondary); padding: 10px; display: flex; flex-direction: column; }
+.diff-card__anim { aspect-ratio: 301 / 276; width: 100%; overflow: hidden; }
+.diff-card__anim svg { display: block; }
+.diff-card__text { padding: 24px 12px 24px; }
+.diff-card__title { margin: 0; font: var(--fw-regular) 18px/27px var(--font-primary); color: #F5F5F5; }
+.diff-card__text p { margin-top: 16px; font: 400 16px/24px var(--font-secondary); color: #D0D0D1; }
+.diff__more { margin-top: 54px; display: flex; justify-content: center; }
+
+/* ---------- Mobile (≤767, layout 375) ---------- */
+@media (max-width: 767px) {
+  .crumbs { padding-top: 28px; }
+  .ab-hero { padding-top: 102px; }
+  .ab-hero .container { padding-inline: 32px; }
+  .ab-hero__title { font-size: 32px; line-height: 35.2px; }
+  .ab-hero__sub { font-size: 16px; line-height: 24px; }
+
+  .lead { padding-top: 68px; }
+  .lead__inner { padding: 20px 0 64px; }
+  .lead__intro { margin-top: 29px; }
+  .lead__list { margin-top: 64px; grid-template-columns: 1fr; gap: 40px; }
+  .leader { flex-direction: column; gap: 11px; }
+  .leader__photo { width: 100%; max-width: none; aspect-ratio: 343 / 415; }
+  .leader__text { max-width: none; }
+  .leader__name { font-size: 24px; line-height: 36px; }
+  .lead__cta { margin-top: 40px; }
+  .lead__cta .btn { height: 60px; padding: 0 25px; }
+
+  .diff { padding: 51px 0 60px; }
+  .diff__title { font-size: 24px; line-height: 33.6px; }
+  .diff__list { grid-template-columns: 1fr; }
+  .diff-card { padding: 16px; }
+  .diff-card__anim { aspect-ratio: 311 / 285; }
+  .diff-card__text { padding: 20px 0 8px; }
+  .diff__more { margin-top: 40px; }
+}

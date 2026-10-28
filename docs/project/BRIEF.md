@@ -78,9 +78,10 @@ The client adds new cases and testimonials himself. The 14 testimonials from `in
 
 ## Team
 
-- Repository: `nazars-kz/kzdesign` (corporate GitHub account, SSH alias `github-kz`).
-- Branches: `main` (live), `staging` (test), `feature/<task>` with pull requests into `staging` (`docs/TEAM.md`, skill `references/team.md`).
-- People: Nazar (`nazars-kz`) and two more designer-developers (GitHub logins to be added). Tasks are GitHub issues with labels `task` and `status:*` (`team-status.mjs`).
+- Team of three: Nazar KZ — `nazars-kz` — lead (reviews and merges); two designer-developers (names and GitHub logins to be added when they are invited).
+- Repository: https://github.com/nazars-kz/kzdesign (private) · Task board: GitHub issues, labels `task` and `status:*`.
+- Branches: `main` (live), `staging` (test, default branch), `feature/<task>` with pull requests into `staging` (`docs/TEAM.md`, skill `references/team.md`). Branch protection is not available on the free private plan (issue #18).
+- Start-here file for newcomers: `docs/project/README.md`. The designs are committed in `design/`.
 
 ## Integrations
 

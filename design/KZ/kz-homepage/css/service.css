@@ -1,0 +1,133 @@
+/* Service pages template (saas.html, mobile.html, web.html).
+   Built on design-system/tokens.css + shared homepage styles.
+   Source: live https://www.kz.design/saas | /mobile | /web (no Figma layout), measured at 1440 and 375. */
+
+/* ---------- Hero image + breadcrumbs on top ---------- */
+.svc-hero { height: 475px; background: var(--bg-alternate) center / cover no-repeat; }
+.svc-hero .crumbs { padding-top: 28px; }
+.svc-hero .crumbs ol { color: var(--gray-white); }
+.svc-hero .crumbs li + li::before { color: var(--gray-white); }
+.svc-hero .crumbs a { color: var(--x-muted); }
+
+.crumbs ol { display: flex; flex-wrap: wrap; margin: 0; padding: 0; list-style: none;
+  font: var(--fw-bold) var(--fs-body4)/18px var(--font-secondary); text-transform: uppercase; }
+.crumbs li + li::before { content: "/"; padding: 0 7px; }
+.crumbs a { transition: color var(--dur-fast); }
+.crumbs a:hover { color: var(--accent-primary); }
+
+/* ---------- Title ---------- */
+.svc-title { padding-top: 72px; }
+.svc-title h1 { max-width: 700px; margin: 0; font: var(--fw-semibold) var(--fs-h1)/1.5 var(--font-primary); color: var(--x-ink); }
+
+/* ---------- About ---------- */
+.svc-about { padding-top: 100px; }
+.svc-about .container { display: grid; grid-template-columns: 445px minmax(0, 1fr); align-items: start; }
+.svc-about__text p { font: var(--fw-medium) 28px/39.2px var(--font-secondary); color: var(--accent-secondary); }
+.svc-about__text p + p { margin-top: 32px; }
+.svc-founders { margin-top: 128px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 30px; }
+.founder { display: flex; gap: 16px; align-items: flex-start; }
+.founder img { flex: none; width: 94px; height: 113px; object-fit: cover; background: var(--x-gray-bg); }
+.founder__text { max-width: 313px; }
+.founder__name { margin: 0; font: var(--fw-medium) 28px/42px var(--font-secondary); color: var(--x-ink); }
+.founder .eyebrow { margin-top: 8px; }
+.founder__bio { margin-top: 8px; font: 400 16px/24px var(--font-secondary); color: var(--x-ink-3); }
+.founder__ex { margin-top: 24px; font: 400 20px/30px var(--font-secondary); color: var(--x-ink); }
+
+/* ---------- Features (3 cards with illustration) ---------- */
+.svc-features { padding-top: 96px; }
+.svc-features__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.feature { display: flex; flex-direction: column; min-height: 635px; background: radial-gradient(circle, #FFFFFF, #EDF1F9); }
+.feature__text { padding: 24px; }
+.feature__title { margin: 0; font: var(--fw-medium) 28px/42px var(--font-secondary); color: var(--x-ink); }
+.feature__text p { margin-top: 8px; font: 400 16px/24px var(--font-secondary); color: var(--x-ink-3); }
+.feature img { margin-top: auto; width: 100%; height: auto; aspect-ratio: 429 / 383; }
+
+/* ---------- Case studies (2-column grid of the shared case card) ---------- */
+.svc-cases { padding-top: 128px; }
+.svc-cases__title { margin-top: 40px; line-height: 39.2px; }
+.svc-cases__grid { margin-top: 31px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.case--stack .case__body { flex-direction: column; align-items: flex-start; gap: 16px; }
+.case--stack .case__name::after { content: none; }
+.case--stack .case__tags { justify-content: flex-start; }
+.case picture { position: absolute; inset: 0; }
+.case picture img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-image) ease; }
+.case:hover picture img { transform: scale(1.03); }
+.svc-cases__all { margin-top: 60px; display: flex; justify-content: center; }
+
+/* ---------- "Got an idea?" banner ---------- */
+.git { padding: 112px 0; }
+.git__box { position: relative; min-height: 310px; padding: 52px 0 52px 52px; background: var(--bg-alternate) url(https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/697b7ad4989316bcf3531b53_kz-lightning.svg) no-repeat 100% 50%; }
+.git__title { margin: 0; font: 400 40px/48px var(--font-secondary); color: var(--gray-white); }
+.git__box .btn { margin-top: 48px; }
+.git__device { position: absolute; right: 0; top: -120px; width: 677px; max-width: 52%; height: auto; pointer-events: none; }
+
+/* ---------- Process ---------- */
+.svc-process { padding: 96px 0 89px; background: var(--x-gray-bg); }
+.svc-process__title { margin-top: 23px; font: var(--fw-medium) 28px/42px var(--font-secondary); color: var(--x-ink); }
+.svc-process__rows { margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
+.svc-process__row { display: grid; grid-template-columns: repeat(2, minmax(0, 598px)); gap: 16px; }
+.svc-process__row + .svc-process__row { padding-left: 108px; }
+.step { background: var(--bg-default); padding: 20px 24px; }
+.step__head { margin: 0; font: var(--fw-bold) 16px/24px var(--font-primary); text-transform: uppercase; color: var(--x-ink); }
+.step__head span { color: var(--accent-primary); }
+.step p { margin-top: 32px; font: 400 14px/21px var(--font-secondary); color: var(--accent-secondary); }
+.step p b { font-weight: var(--fw-bold); }
+
+/* ---------- Partners marquee ---------- */
+.svc-partners { padding: 56px 0 64px; }
+.svc-partners__title { margin-top: 32px; font: var(--fw-medium) 28px/42px var(--font-primary); color: var(--x-ink); }
+.marquee { margin-top: 24px; overflow: hidden; }
+.marquee__track { display: flex; gap: 10px; width: max-content; will-change: transform; }
+.marquee__track img { flex: none; width: 200px; height: 94px; }
+
+/* ---------- Next service ---------- */
+.svc-next { padding-top: 56px; }
+.svc-next__grid { margin-top: 48px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.svc-next .case { height: 550px; }
+.svc-next .case__desc { max-width: 588px; }
+
+/* ---------- Mobile (≤767, layout 375) ---------- */
+@media (max-width: 767px) {
+  .svc-hero { height: 350px; }
+
+  .svc-title { padding-top: 48px; }
+  .svc-title h1 { font-size: 40px; line-height: 60px; }
+
+  .svc-about { padding-top: 40px; }
+  .svc-about .container { grid-template-columns: 1fr; row-gap: 24px; }
+  .svc-about__text p { font-size: 16px; line-height: 22.4px; }
+  .svc-about__text p + p { margin-top: 12px; }
+  .svc-founders { margin-top: 48px; grid-template-columns: 1fr; row-gap: 32px; }
+  .founder img { width: 74px; height: 89px; }
+  .founder__name { font-size: 24px; line-height: 36px; }
+  .founder__bio { font-size: 14px; line-height: 21px; }
+  .founder__ex { margin-top: 12px; font-size: 16px; line-height: 24px; }
+
+  .svc-features__list { grid-template-columns: 1fr; }
+  .feature { min-height: 0; }
+  .feature__title { font-size: 24px; line-height: 36px; }
+  .feature__text p { margin-top: 8px; }
+  .feature img { margin-top: 30px; aspect-ratio: 343 / 306; }
+
+  .svc-cases__title { margin-top: 42px; line-height: 33.6px; }
+  .svc-cases__grid { margin-top: 29px; grid-template-columns: 1fr; }
+  .svc-cases .case { height: 500px; }
+  .svc-cases__all { margin-top: 44px; }
+
+  .git { padding: 64px 0 72px; }
+  .git__box { min-height: 356px; padding: 52px 16px; background-position: 50% 100%; }
+  .git__title { max-width: 240px; }
+  .git__device { display: none; }
+
+  .svc-process { padding: 40px 0 31px; }
+  .svc-process__title { margin-top: 16px; font-size: 24px; line-height: 36px; }
+  .svc-process__rows { margin-top: 32px; }
+  .svc-process__row { grid-template-columns: 1fr; }
+  .svc-process__row + .svc-process__row { padding-left: 0; }
+
+  .svc-partners__title { margin-top: 42px; font-size: 24px; line-height: 33.6px; }
+  .marquee__track img { width: 150px; height: 70px; }
+
+  .svc-next__grid { grid-template-columns: 1fr; }
+  .svc-next .case { height: 550px; }
+}
