@@ -1,0 +1,26 @@
+# One line ending for everyone: LF in the repository and in every checkout, on Windows, macOS and Linux
+# (otherwise `core.autocrlf` differences between teammates show up as noise in pull requests).
+* text=auto eol=lf
+
+# Files that must never be converted or diffed as text.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.mp4 binary
+*.mov binary
+*.webm binary
+*.glb binary
+*.pdf binary
+*.zip binary
+
+# Windows scripts keep their native line endings.
+*.cmd text eol=crlf
+*.bat text eol=crlf
