@@ -5,8 +5,8 @@ import { login } from './support/auth';
 import { expect, test } from './support/test';
 import { E2E_ADMIN } from './support/users';
 
-/** The demo CTA band is a shared section on Home and About (src/content/shared/cta.ts). */
-const CTA_TITLE = '#field-content-cta-title';
+/** The contact block is a shared section (src/content/shared/contact.ts), used on Home. */
+const TITLE = 'Title: before the arrow';
 const saveButton = (page: Page) => page.getByRole('button', { name: 'Save', exact: true });
 
 async function openEditor(page: Page, path: string): Promise<void> {
@@ -14,11 +14,13 @@ async function openEditor(page: Page, path: string): Promise<void> {
   await expect(page.locator('form[data-hydrated]')).toBeVisible();
 }
 
-/** Opens the shared "Call to action" section (sections start collapsed except the first). */
-async function openCta(page: Page): Promise<void> {
-  const trigger = page.getByRole('button', { name: /^Call to action/ });
-  if ((await page.locator(CTA_TITLE).count()) === 0) await trigger.click();
-  await expect(page.locator(CTA_TITLE)).toBeVisible();
+/** Opens the shared "Contact block" section (sections start collapsed except the first). */
+async function openContactBlock(page: Page): Promise<void> {
+  const field = page.getByRole('textbox', { name: TITLE });
+  if ((await field.count()) === 0) {
+    await page.getByRole('button', { name: /^Contact block/ }).click();
+  }
+  await expect(field).toBeVisible();
 }
 
 async function liveHtml(page: Page, path: string): Promise<string> {
@@ -29,67 +31,56 @@ async function liveHtml(page: Page, path: string): Promise<string> {
 }
 
 test.describe.serial('shared sections', () => {
-  test('a shared section shows in place on every page; editing it from Home updates About', async ({
+  test('a shared section shows in place on its page; editing it updates the live site', async ({
     page,
   }) => {
     await login(page, E2E_ADMIN);
     await openEditor(page, admin('/pages/home'));
-    // All of Home's sections, in site order, with the shared one in place.
+    // Home's sections in site order, with the shared ones in place.
     const headings = page.locator('form h2');
-    await expect(headings).toContainText(['Hero', 'Features', 'Numbers', 'Call to action']);
-    await openCta(page);
-    const cta = page
+    await expect(headings).toContainText(['Hero', 'Our Services', 'Case Studies', 'Contact block']);
+    await openContactBlock(page);
+    const block = page
       .locator('[data-slot="collapsible"]')
-      .filter({ has: page.locator(CTA_TITLE) })
+      .filter({ has: page.getByRole('textbox', { name: TITLE }) })
       .first();
-    await expect(cta.getByText('Shared', { exact: true })).toBeVisible();
-    await expect(cta).toContainText('Also on: About. Changes here update all 2 pages.');
-    await expect(cta.getByRole('link', { name: 'About' })).toHaveAttribute(
-      'href',
-      admin('/pages/about'),
-    );
+    await expect(block.getByText('Shared', { exact: true })).toBeVisible();
 
-    const title = `Shared CTA ${Date.now()}`;
-    await page.locator(CTA_TITLE).fill(title);
+    const title = `Shared contact ${Date.now()}`;
+    await page.getByRole('textbox', { name: TITLE }).fill(title);
     await saveButton(page).click();
     await expect(page.getByText('Saved. The live site updates in a few seconds.')).toBeVisible();
 
-    await openEditor(page, admin('/pages/about'));
-    await openCta(page);
-    await expect(page.locator(CTA_TITLE)).toHaveValue(title);
-    await expect.poll(async () => liveHtml(page, '/about')).toContain(title);
-    expect(await liveHtml(page, '/')).toContain(title);
+    await expect.poll(async () => liveHtml(page, '/')).toContain(title);
 
     // "Every page" lists it for an overview.
     const everyPage = page.getByRole('region', { name: 'Every page' });
-    await expect(everyPage.getByRole('link', { name: /Call to action/ })).toContainText(
-      'Used on 2 pages',
-    );
+    await expect(everyPage.getByRole('link', { name: /Contact block/ })).toBeVisible();
   });
 
-  test('editing the same shared section on two pages at once is a conflict naming it', async ({
+  test('editing the same shared section from two editors at once is a conflict naming it', async ({
     browser,
   }) => {
-    const home = await browser.newPage();
-    const about = await browser.newPage();
-    await login(home, E2E_ADMIN);
-    await login(about, E2E_ADMIN);
-    await openEditor(home, admin('/pages/home'));
-    await openEditor(about, admin('/pages/about'));
-    await openCta(home);
-    await openCta(about);
+    const first = await browser.newPage();
+    const second = await browser.newPage();
+    await login(first, E2E_ADMIN);
+    await login(second, E2E_ADMIN);
+    await openEditor(first, admin('/pages/home'));
+    await openEditor(second, admin('/pages/home'));
+    await openContactBlock(first);
+    await openContactBlock(second);
 
-    await home.locator(CTA_TITLE).fill(`From Home ${Date.now()}`);
-    await saveButton(home).click();
-    await expect(home.getByText('Saved. The live site updates in a few seconds.')).toBeVisible();
+    await first.getByRole('textbox', { name: TITLE }).fill(`From first ${Date.now()}`);
+    await saveButton(first).click();
+    await expect(first.getByText('Saved. The live site updates in a few seconds.')).toBeVisible();
 
-    await about.locator(CTA_TITLE).fill(`From About ${Date.now()}`);
-    await saveButton(about).click();
-    await expect(about.getByText('This was changed by someone else')).toBeVisible();
+    await second.getByRole('textbox', { name: TITLE }).fill(`From second ${Date.now()}`);
+    await saveButton(second).click();
+    await expect(second.getByText('This was changed by someone else')).toBeVisible();
     await expect(
-      about.getByRole('alert').filter({ hasText: 'This was changed by someone else' }),
-    ).toContainText('shared section “Call to action”');
-    await home.close();
-    await about.close();
+      second.getByRole('alert').filter({ hasText: 'This was changed by someone else' }),
+    ).toContainText('shared section “Contact block”');
+    await first.close();
+    await second.close();
   });
 });

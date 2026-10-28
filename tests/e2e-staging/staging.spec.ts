@@ -89,7 +89,7 @@ test.describe.serial('staging safety', () => {
       ]);
       await guest.page.goto('/');
       await expect(guest.page.getByRole('region', { name: 'Cookies' })).toHaveCount(0);
-      await guest.page.goto('/about');
+      await guest.page.goto('/about-us');
       await guest.page.waitForTimeout(2000);
       expect(loaded.filter((url) => url.includes(GA_ID))).toEqual([]);
       await guest.context.close();

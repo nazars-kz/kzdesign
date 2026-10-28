@@ -28,6 +28,7 @@ export const cases = defineCollection({
   itemLabel: 'Case study',
   listPageId: 'cases',
   itemPath: '/cases/:slug',
+  uiTexts: ['preview'],
   fields: {
     order: f.number({
       label: 'Order in the list',

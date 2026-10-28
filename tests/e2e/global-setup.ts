@@ -13,8 +13,10 @@ export default async function globalSetup(config: FullConfig): Promise<void> {
   });
   for (const path of [
     '/',
-    '/about',
-    '/uk/about/team',
+    '/about-us',
+    '/cases',
+    '/cases/touren',
+    '/services/saas',
     admin('/login'),
     admin('/account'),
     '/access',

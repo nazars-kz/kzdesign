@@ -81,6 +81,13 @@ export const uiTexts = defineUiTexts({
         companyEmail: 'Label before the email under the contact form',
       },
     },
+    preview: {
+      label: 'Preview of unpublished items',
+      texts: {
+        notice: 'Notice at the top of a preview',
+        exit: 'Button that leaves the preview',
+      },
+    },
     services: {
       label: 'Services',
       texts: {

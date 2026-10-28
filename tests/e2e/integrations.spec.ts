@@ -130,7 +130,7 @@ test.describe.serial('integrations: analytics and cookie consent', () => {
     await expect(banner).toBeHidden();
     await expect.poll(() => loaded.some((url) => url.includes(GA_ID))).toBe(true);
     // The choice is remembered: no banner on the next page, and the link reopens it.
-    await accepting.page.goto('/about');
+    await accepting.page.goto('/about-us');
     await expect(accepting.page.getByRole('region', { name: 'Cookies' })).toHaveCount(0);
     await accepting.page.getByRole('button', { name: 'Cookie settings' }).click();
     await expect(accepting.page.getByRole('region', { name: 'Cookies' })).toBeVisible();
@@ -145,7 +145,7 @@ test.describe.serial('integrations: analytics and cookie consent', () => {
       .getByRole('region', { name: 'Cookies' })
       .getByRole('button', { name: 'Decline' })
       .click();
-    await declining.page.goto('/about');
+    await declining.page.goto('/about-us');
     await declining.page.waitForTimeout(2000);
     expect(loaded).toEqual([]);
     await expect(declining.page.getByRole('region', { name: 'Cookies' })).toHaveCount(0);

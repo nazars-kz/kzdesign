@@ -24,11 +24,11 @@ test.describe.serial('site gate', () => {
       extraHTTPHeaders: VISITOR_HEADERS,
     });
     await expect
-      .poll(async () => (await visitor.get('/about', { maxRedirects: 0 })).status(), {
+      .poll(async () => (await visitor.get('/about-us', { maxRedirects: 0 })).status(), {
         timeout: 15_000,
       })
       .toBe(503);
-    const response = await visitor.get('/about', { maxRedirects: 0 });
+    const response = await visitor.get('/about-us', { maxRedirects: 0 });
     expect(response.headers()['retry-after']).toBeTruthy();
     expect(await response.text()).toContain('We’ll be back soon');
     expect((await visitor.get(admin('/login'))).status()).toBe(200);
@@ -37,8 +37,8 @@ test.describe.serial('site gate', () => {
     await visitor.dispose();
     expect((await page.request.get('/api/forms/token?form=contact')).status()).toBe(200);
 
-    await page.goto('/about');
-    await expect(page.locator('h1')).toHaveText('About us');
+    await page.goto('/about-us');
+    await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.getByText('The site is paused')).toBeVisible();
 
     await updateSiteStatus(page, { maintenance: false });
@@ -58,13 +58,13 @@ test.describe.serial('site gate', () => {
     await expect
       .poll(
         async () => {
-          await visitorPage.goto('/about');
+          await visitorPage.goto('/about-us');
           return new URL(visitorPage.url()).pathname;
         },
         { timeout: 15_000 },
       )
       .toBe('/access');
-    expect(new URL(visitorPage.url()).searchParams.get('next')).toBe('/about');
+    expect(new URL(visitorPage.url()).searchParams.get('next')).toBe('/about-us');
 
     // A forged site-gate cookie does not grant access.
     const host = new URL(baseURL ?? 'http://localhost').hostname;
@@ -76,15 +76,15 @@ test.describe.serial('site gate', () => {
         path: '/',
       },
     ]);
-    await visitorPage.goto('/contact');
-    await expect(visitorPage).toHaveURL(/\/access\?next=%2Fcontact/);
+    await visitorPage.goto('/contact-us');
+    await expect(visitorPage).toHaveURL(/\/access\?next=%2Fcontact-us/);
 
     // A valid user gets in and lands on the requested page.
     await visitorPage.getByLabel('Email').fill(E2E_MANAGER.email);
     await visitorPage.getByLabel('Password').fill(E2E_MANAGER.password);
     await visitorPage.getByRole('button', { name: 'Sign in' }).click();
-    await expect(visitorPage).toHaveURL(/\/contact$/);
-    const pageResponse = await visitorPage.request.get('/contact');
+    await expect(visitorPage).toHaveURL(/\/contact-us$/);
+    const pageResponse = await visitorPage.request.get('/contact-us');
     expect(pageResponse.headers()['x-robots-tag']).toContain('noindex');
     await visitor.close();
 

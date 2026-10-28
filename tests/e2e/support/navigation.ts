@@ -1,7 +1,7 @@
 import type { Page } from '@playwright/test';
 
 /** Site pages reachable from the header (and the logo back to home). */
-export const SITE_ROUTE_SEQUENCE = ['/about', '/about/team', '/blog', '/contact', '/'];
+export const SITE_ROUTE_SEQUENCE = ['/about-us', '/cases', '/approach', '/contact-us', '/'];
 /** Admin screens reachable from the sidebar and the Pages tree (sub paths of the admin). */
 export const ADMIN_ROUTE_SEQUENCE = [
   '/pages',

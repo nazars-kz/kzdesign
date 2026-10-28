@@ -14,7 +14,7 @@ export function BurgerButton({
   /** id of the menu it opens. */
   controls: string;
   buttonRef?: Ref<HTMLButtonElement>;
-  onClick: () => void;
+  onClick?: () => void;
 }) {
   return (
     <button

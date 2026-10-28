@@ -19,7 +19,7 @@ function collectCspViolations(page: Page): string[] {
 }
 
 test('site responses carry security headers and a CSP', async ({ request }) => {
-  const response = await request.get('/about', {
+  const response = await request.get('/about-us', {
     headers: { 'user-agent': 'Mozilla/5.0 Chrome/150' },
   });
   const headers = response.headers();
@@ -36,16 +36,15 @@ test('admin responses use a nonce-based CSP', async ({ page }) => {
   expect(csp).toMatch(/script-src 'self' 'nonce-[^']+' 'strict-dynamic'/);
 });
 
-test('pages run without CSP violations (site, blog, forms, editor, dashboard)', async ({
+test('pages run without CSP violations (site, case studies, forms, editor, dashboard)', async ({
   page,
 }) => {
   const violations = collectCspViolations(page);
   await page.goto('/');
-  await page.goto('/uk/about/team');
-  await page.goto('/blog');
-  await page.goto('/blog/hello-world');
-  await page.goto('/contact');
   await expect(page.locator('form#form-contact input[name="_t"]')).toBeAttached();
+  await page.goto('/cases/touren');
+  await page.goto('/services/saas');
+  await page.goto('/about-us');
   await login(page, E2E_ADMIN);
   await page.goto(admin('?range=7d'));
   await expect(page.getByRole('heading', { name: 'Traffic' })).toBeVisible();
@@ -53,7 +52,7 @@ test('pages run without CSP violations (site, blog, forms, editor, dashboard)', 
   await expect(page.locator('form[data-hydrated]')).toBeVisible();
   await page.goto(admin('/settings'));
   await expect(page.locator('form[aria-label="General"][data-hydrated]')).toBeVisible();
-  await page.goto(admin('/pages/collections/blog'));
+  await page.goto(admin('/pages/collections/cases'));
   await page.goto(admin('/pages/forms/contact'));
   await expect(page.getByRole('table', { name: 'Requests' })).toBeVisible();
   expect(violations).toEqual([]);

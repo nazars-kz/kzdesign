@@ -28,7 +28,7 @@ test('visiting demo pages records page views and a unique visitor; bots are igno
     locale: 'en-US',
   });
   const visitorPage = await visitor.newPage();
-  for (const path of ['/', '/about']) {
+  for (const path of ['/', '/about-us']) {
     const beacon = visitorPage.waitForRequest(
       (request) => request.url().endsWith('/api/collect') && request.method() === 'POST',
     );
@@ -42,7 +42,7 @@ test('visiting demo pages records page views and a unique visitor; bots are igno
       origin: baseURL ?? '',
       'user-agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
     },
-    data: JSON.stringify({ p: '/contact' }),
+    data: JSON.stringify({ p: '/contact-us' }),
   });
   expect(bot.status()).toBe(204);
 

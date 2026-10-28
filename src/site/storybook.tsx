@@ -153,13 +153,8 @@ function Buttons() {
         </Cell>
         <Cell label="menu button: closed, open">
           <div className="flex gap-4">
-            <BurgerButton
-              open={false}
-              label="Menu"
-              controls="storybook"
-              onClick={() => undefined}
-            />
-            <BurgerButton open label="Close menu" controls="storybook" onClick={() => undefined} />
+            <BurgerButton open={false} label="Menu" controls="storybook" />
+            <BurgerButton open label="Close menu" controls="storybook" />
           </div>
         </Cell>
       </div>

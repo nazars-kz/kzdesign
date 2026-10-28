@@ -8,7 +8,7 @@ import { admin, adminRe } from './support/admin';
 test.describe('simpler admin', () => {
   test('Pages sidebar groups and the Google & sharing tab', async ({ page }) => {
     await login(page, E2E_MANAGER);
-    await page.goto(admin('/pages/about'));
+    await page.goto(admin('/pages/home'));
     const pagesNav = page.getByRole('navigation', { name: 'Pages' });
     for (const group of ['Blog & lists', 'Every page', 'Forms']) {
       await expect(pagesNav.getByRole('region', { name: group })).toBeVisible();

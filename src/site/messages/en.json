@@ -44,6 +44,10 @@
     "testimonialsLabel": "Testimonials",
     "companyEmail": "Email:"
   },
+  "preview": {
+    "notice": "Preview: this is how the page will look. It may not be published yet.",
+    "exit": "Exit preview"
+  },
   "services": {
     "learnMore": "Learn more"
   },

@@ -2,7 +2,6 @@ import { type Page } from '@playwright/test';
 import { expect, test } from './support/test';
 
 import { login } from './support/auth';
-import { testPng } from './support/images';
 import { E2E_ADMIN, E2E_MANAGER } from './support/users';
 import { admin } from './support/admin';
 
@@ -24,30 +23,19 @@ async function liveH1(page: Page, path: string): Promise<string> {
 }
 
 test.describe.serial('pages editor', () => {
-  test('editing text and an image in uk updates /uk without touching en', async ({ page }) => {
+  test('editing the text of a page updates only that page', async ({ page }) => {
     await login(page, E2E_MANAGER);
-    await openEditor(page, admin('/pages/about?locale=uk'));
-    await expect(page.getByRole('heading', { name: 'About', level: 1 })).toBeVisible();
+    await openEditor(page, admin('/pages/about'));
+    await expect(page.getByRole('heading', { name: 'About us', level: 1 })).toBeVisible();
 
-    const title = `Про нас ${Date.now()}`;
+    const title = `About the team ${Date.now()}`;
     await heroTitle(page).fill(title);
-    await page
-      .getByLabel('Image: upload image')
-      .first()
-      .setInputFiles(await testPng('#ff6600'));
-    await expect(page.getByText('Image uploaded.')).toBeVisible();
     await expect(page.getByText('Unsaved changes')).toBeVisible();
     await saveButton(page).click();
     await expect(page.getByText('Saved. The live site updates in a few seconds.')).toBeVisible();
 
-    await expect.poll(() => liveH1(page, '/uk/about')).toBe(title);
-    expect(await liveH1(page, '/about')).toBe('About us');
-
-    await page.goto('/uk/about');
-    const image = page.locator('main img').first();
-    await expect(image).toHaveAttribute('src', /api%2Fmedia%2Fimages|\/api\/media\/images/);
-    await page.goto('/about');
-    await expect(page.locator('main img').first()).toHaveAttribute('src', /seed|api%2Fmedia/);
+    await expect.poll(() => liveH1(page, '/about-us')).toBe(title);
+    expect(await liveH1(page, '/approach')).toBe('Our approach');
   });
 
   test('a concurrent edit is detected', async ({ browser }) => {
@@ -55,8 +43,8 @@ test.describe.serial('pages editor', () => {
     const second = await browser.newPage();
     await login(first, E2E_ADMIN);
     await login(second, E2E_ADMIN);
-    await openEditor(first, admin('/pages/contact'));
-    await openEditor(second, admin('/pages/contact'));
+    await openEditor(first, admin('/pages/contact-us'));
+    await openEditor(second, admin('/pages/contact-us'));
 
     await heroTitle(first).fill('Contact (first editor)');
     await saveButton(first).click();
@@ -65,14 +53,14 @@ test.describe.serial('pages editor', () => {
     await heroTitle(second).fill('Contact (second editor)');
     await saveButton(second).click();
     await expect(second.getByText('This was changed by someone else')).toBeVisible();
-    expect(await liveH1(second, '/contact')).toBe('Contact (first editor)');
+    expect(await liveH1(second, '/contact-us')).toBe('Contact (first editor)');
     await first.close();
     await second.close();
   });
 
   test('a revision can be restored', async ({ page }) => {
     await login(page, E2E_ADMIN);
-    await openEditor(page, admin('/pages/contact'));
+    await openEditor(page, admin('/pages/contact-us'));
     await expect(heroTitle(page)).toHaveValue('Contact (first editor)');
 
     await heroTitle(page).fill('Temporary title');
@@ -86,15 +74,15 @@ test.describe.serial('pages editor', () => {
     await page.getByRole('button', { name: 'Restore this version' }).click();
     await expect(page.getByText('Revision restored.')).toBeVisible();
     await expect(heroTitle(page)).toHaveValue('Contact (first editor)');
-    await expect.poll(() => liveH1(page, '/contact')).toBe('Contact (first editor)');
+    await expect.poll(() => liveH1(page, '/contact-us')).toBe('Contact (first editor)');
   });
 
   test('validation errors are shown on fields and nothing is saved', async ({ page }) => {
     await login(page, E2E_ADMIN);
-    await openEditor(page, admin('/pages/team'));
+    await openEditor(page, admin('/pages/privacy-policy'));
     await heroTitle(page).fill('');
     await saveButton(page).click();
     await expect(page.getByText('This field is required.').first()).toBeVisible();
-    expect(await liveH1(page, '/about/team')).toBe('Our team');
+    expect(await liveH1(page, '/privacy-policy')).toBe('Privacy Policy');
   });
 });
