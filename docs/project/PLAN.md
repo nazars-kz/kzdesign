@@ -1,0 +1,88 @@
+# Plan: K&Z Design website
+
+Template version: v1.8.2 · Locales: en (default, only) · Hosting: Vercel · Admin path: `/kzds-admin`
+Mode: **B, page by page**. Specs: `docs/project/DESIGN_ANALYSIS.md`, `docs/project/BRIEF.md`, design sources in `design/KZ/kz-homepage/` (`design-system/DESIGN_SYSTEM.md` is binding).
+
+## Page map
+| id | path | parent | label | sections / notes |
+|----|------|--------|-------|------------------|
+| home | `/` | — | Home | hero, services, cases (teasers), uniqueness (shared), approach, testimonials (shared), partners (shared), industries, faq, contact (shared) |
+| about | `/about-us` | — | About us | hero + breadcrumbs, story/leaders, differences (Lottie), uniqueness (shared), testimonials (shared), contact (shared) |
+| cases | `/cases` | — | Cases | hero, filter pills, case list (collection), contact (shared) |
+| case item | `/cases/<slug>` | cases | (collection `cases`) | details, feedback, desktop+mobile images, other cases, CTA block |
+| service item | `/saas`, `/mobile`, `/web` | — | (collection `services`) | hero, about, founders (SaaS), cases, features, process, partners marquee, idea banner, next service, testimonials, contact |
+| approach | `/approach` | — | Our approach | empty placeholder (client adds later) |
+| reviews | `/reviews` | — | Reviews | empty placeholder (Clutch widget later) |
+| contact-us | `/contact-us` | — | Contact us | empty placeholder (+ contact form section later) |
+| privacy-policy | `/privacy-policy` | — | Privacy Policy | empty |
+| terms-of-service | `/terms-of-service` | — | Terms of Service | empty |
+| refund-policy | `/cancellation-and-refund-policy` | — | Refund Policy | empty |
+| 404, maintenance | — | — | — | site style |
+
+### Home: sections and fields (seed = verbatim text from `index.html`)
+| section | fields |
+|---------|--------|
+| hero | badgeLabel, badgeLink, title (2 lines), subtitle (rich text with highlighted phrase), cta (label, link), awardsLabel, awards[] (image, alt) ×5, clutch logo |
+| services | eyebrow, services read from collection `services` (tab label, short title, description, items[] 5–6, learn-more link) |
+| cases | eyebrow, title, items = 4 picked cases (reference to collection `cases`), seeAll link |
+| uniqueness (shared) | eyebrow, title, cards[] ×3 (title, bullets[], quote with bold parts, person (name, role, avatar), image) |
+| approach | eyebrow, title, text, link, cards[] ×4 (title, image, link) |
+| testimonials (shared) | eyebrow, title, items from collection `testimonials`, readReviews link, clutch strip (rating text, count, link) |
+| partners (shared) | eyebrow, title, tiles[] ×24 (logo, name, optional case reference) |
+| industries | eyebrow, title, text, items[] ×12 (icon, label, text, cases[] references) |
+| faq | eyebrow, title, subtitle, cta, items[] ×18 (question, answer) |
+| contact (shared) | title (with lightning icon), lead, team[] ×2 (photo, name, role, bio), form texts, company details (from global) |
+
+## Collections, globals, forms
+| Kind | id | Purpose | Fields | Routes / where shown |
+|------|----|---------|--------|----------------------|
+| collection | cases | 16 case studies | title (may have a line break), slug, shortDescription, tags[] (visible), categories[] (filter), coverDesktop, coverMobile?, details[] (Industry/Platform/Year), feedback? (lead, paragraphs, photo, flag, device image), imagesDesktop[], imagesMobile[], otherCases[] (refs, 8), homeThumb (Industries), meta | `/cases`, `/cases/:slug`, Home teasers, service pages, Industries, Partners, Testimonials |
+| collection | testimonials | 14 reviews | name, flag (image), role, project, photo, quote (rich text paragraphs), case? (ref to cases), caseSoon (bool) | Home slider, About, Reviews |
+| collection | services | SaaS, Mobile, Web | slug (`saas`…), tabLabel, title, description, items[], heroImage, aboutParagraphs[], showFounders, caseList (refs), ideaDeviceImage, nextService (ref), meta | `/saas`…, Home tabs, nav dropdown |
+| global | site | layout chrome | nav (labels + links), headerCta, company (legal name, registry, address), email, socials[] (LinkedIn, Dribbble, Behance), legalLinks[], clutch (url, rating, count) | header, footer, contact section, mobile menu |
+| shared section | uniqueness, testimonials, partners, contact | see Home table | | Home, About, services |
+| form | contact | contact requests | name* , email* , message | Contact section → inline success ("Thank you!") ; admin inbox only |
+
+Missing core features: none known. To verify while building: (1) reference fields between collections (cases ↔ testimonials/partners/industries) — if absent, use slug text fields + a lookup helper; (2) 301 redirects `/<slug>` → `/cases/<slug>` (not needed until the domain moves to this site; decide then, `next.config.ts` is not core).
+
+## Tokens (from `design-system/tokens.css`, kit names kept)
+- Colors: brand orange `#FC814A` (+darker `#FF7A00`, lighter `#FF9465`), secondary `#262930` (+`#181B22`, `#303642`), content high/medium/low (+alternate on dark), bg default/secondary/alternate, outlines on white/dark, semantic negative/positive/warning/notification; homepage-only `--x-*` greys mapped to kit roles where the doc says so.
+- Fonts: Outfit 300/400/500/600 self-hosted (`next/font/local`), Satoshi 400/500 (Body 4 only) self-hosted.
+- Text styles: h1 600 88/32, h2 300 64/40 (−3%), h3 300 32/24, h4 300 24/20, h5, h6, sub1–sub4, body1–body4 (+medium/semibold), caps, caps-light; homepage section title (`h-section`) and button/nav labels as project styles.
+- Layout: container 1850 max, page margin `clamp(40px, 4.1667vw, 75px)` / 16 mobile, section padding 140/60, compact 80/40, header 94→68 (mobile 100→72), radii 4/8/12/999 (+1.5), shadows default/menu, motion durations 200/250/350/450/600/800 ms, breakpoints 767 and 1100 (burger).
+
+## Components (bottom-up build order)
+Primitives (`src/site/components/ui/`, extending the template's): Button/ButtonLink (primary dark, light, with arrow reveal, sizes md/lg), LinkCta (circle + underline, light/dark), TextLink, RoundArrowButton (prev/next, disabled), IconButton, Eyebrow (K&Z mark, light/dark), Heading/Text styles, Tag, Chip, Field + Input + Textarea (outlined/filled, states), Icon set, Breadcrumbs, Avatar, Container/Section.
+Patterns (`src/site/components/`): SectionHeader, CaseCard (large/small/stack), UniquenessCard, ApproachCard, TestimonialCard, PartnerTile, Accordion (light/dark), IndustryCaseItem, TeamRow/LeaderCard/FounderCard, AwardsStrip, ServiceTabs, ContactCard (company), ContactForm, Marquee.
+Sections (`src/site/sections/`): Hero, Services, CasesTeaser, Uniqueness, Approach, Testimonials, Partners, Industries, Faq, ContactSection.
+Layout: SiteHeader (scrolled state, dropdown, burger + full-screen menu), SiteFooter, 404, maintenance.
+Client components (and why): header (scroll state, menu open, focus management), AwardsStrip (expand/collapse), ServiceTabs (autoplay/tabs), TestimonialSlider (scroll buttons + disabled state), TestimonialQuote scroll bar, Accordion (open state; native `details` not allowed by the animation spec), TeamRow (mobile accordion), ContactForm (`useSiteForm`).
+Everything else is a Server Component. `docs/project/COMPONENTS.md` is created while building and kept up to date.
+
+## Integrations and CSP
+| Service | Purpose | CSP sources |
+|---------|---------|-------------|
+| Google Analytics | traffic | later (client connects); add `scriptSrc`/`connectSrc` for googletagmanager / google-analytics |
+| Hotjar | recordings | later; `scriptSrc`/`connectSrc` for hotjar |
+| Clutch widget | Reviews page | later |
+| Satoshi, images | self-hosted | none (downloaded into the project) |
+
+## Progress (page by page)
+| # | Page | Asked / confirmed | Built | Checked | User OK |
+|---|------|-------------------|-------|---------|---------|
+| 0 | Foundation (config, demo removal, tokens, primitives, layout, globals, 404, empty pages) | — | | | |
+| 1 | Home | | | | |
+| 2 | About us | | | | |
+| 3 | Cases list + case template (2–3 cases seeded first, then all 16) | | | | |
+| 4 | Service template (SaaS, Mobile, Web) | | | | |
+| 5 | Empty pages (Approach, Reviews, Contact us, legal ×3) | | | | |
+| 6 | Full verification, Lighthouse, Vercel deploy | | | | |
+
+## Build order
+1. Config (`/kzds-admin`, `siteRoutes`, English only), demo removal, download external images and Satoshi into `public/` / seeds
+2. Tokens and fonts
+3. Primitives (all from the inventory), then patterns
+4. Layout: header, footer, mobile menu, 404, maintenance, global `site`
+5. Empty pages (so the menu has no broken links)
+6. Page by page: Home → About → Cases → Services (each: confirm understanding → build → check → hand over)
+7. Verification and deploy
