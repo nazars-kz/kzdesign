@@ -7,35 +7,25 @@ import { updateSiteStatus, VISITOR_HEADERS, waitForPublicSite } from './support/
 import { E2E_ADMIN } from './support/users';
 
 test.describe.serial('SEO and i18n', () => {
-  test('pages carry canonical, hreflang, OG tags and JSON-LD', async ({ page }) => {
-    await page.goto('/cases/touren');
-    await expect(page).toHaveTitle('Touren');
-    const head = page.locator('head');
-    await expect(head.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/cases\/touren$/);
-    await expect(head.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute(
-      'href',
-      /\/cases\/touren$/,
+  test('pages carry canonical, hreflang, OG tags and JSON-LD', async ({ baseURL }) => {
+    // Read from the server's HTML: the head crawlers get, whatever the browser streams.
+    const visitor = await request.newContext({ baseURL, extraHTTPHeaders: VISITOR_HEADERS });
+    const html = await (await visitor.get('/cases/touren')).text();
+    expect(html).toMatch(/<title>Touren<\/title>/);
+    expect(html).toMatch(/<link rel="canonical" href="[^"]*\/cases\/touren"\/?>/);
+    expect(html).toMatch(/<link rel="alternate" hrefLang="en" href="[^"]*\/cases\/touren"\/?>/);
+    expect(html).toMatch(
+      /<link rel="alternate" hrefLang="x-default" href="[^"]*\/cases\/touren"\/?>/,
     );
-    await expect(head.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute(
-      'href',
-      /\/cases\/touren$/,
-    );
-    await expect(head.locator('meta[property="og:title"]')).toHaveAttribute('content', 'Touren');
-    await expect(head.locator('meta[property="og:image"]')).toHaveAttribute(
-      'content',
-      /^https?:\/\//,
-    );
-    const jsonLd = JSON.parse(
-      (await page.locator('script[type="application/ld+json"]').first().textContent()) ?? '{}',
-    );
-    expect(JSON.stringify(jsonLd)).toContain('BreadcrumbList');
+    expect(html).toMatch(/<meta property="og:title" content="Touren"\/?>/);
+    expect(html).toMatch(/<meta property="og:image" content="https?:\/\/[^"]+"\/?>/);
+    const jsonLd = /<script type="application\/ld\+json"[^>]*>([^<]*)<\/script>/.exec(html)?.[1];
+    expect(jsonLd).toContain('BreadcrumbList');
 
     // A page without its own picture falls back to the generated social image.
-    await page.goto('/privacy-policy');
-    await expect(page.locator('head meta[property="og:image"]')).toHaveAttribute(
-      'content',
-      /\/og\/en\/[^/]+\.png$/,
-    );
+    const policy = await (await visitor.get('/privacy-policy')).text();
+    expect(policy).toMatch(/<meta property="og:image" content="[^"]*\/og\/en\/[^"/]+\.png"\/?>/);
+    await visitor.dispose();
   });
 
   test('unknown URLs return the 404 page with status 404', async ({ baseURL }) => {

@@ -64,13 +64,15 @@ test.describe('storybook', () => {
         await expect(page.getByRole('heading', { name: title, level: 2 })).toBeVisible();
       }
       const buttons = page.getByRole('table', { name: 'Button variants in every state' });
-      for (const variant of ['primary', 'secondary', 'tertiary', 'ghost', 'link']) {
+      for (const variant of ['primary', 'light']) {
         await expect(buttons.getByRole('rowheader', { name: variant })).toBeVisible();
       }
-      await expect(buttons.getByRole('button', { name: 'Button', disabled: true })).toHaveCount(5);
+      await expect(
+        buttons.getByRole('button', { name: 'Get in touch', disabled: true }),
+      ).toHaveCount(2);
       await expect(page.getByLabel('Input (error)')).toHaveAttribute('aria-invalid', 'true');
       await expect(page.getByLabel('Input (disabled)')).toBeDisabled();
-      await expect(page.getByText('lucide-react')).toBeVisible();
+      await expect(page.getByText('Icon library')).toBeVisible();
     });
   }
 });

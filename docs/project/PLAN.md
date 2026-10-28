@@ -1,6 +1,6 @@
 # Plan: K&Z Design website
 
-Template version: v1.8.2 · Locales: en (default, only) · Hosting: Vercel · Admin path: `/kzds-admin`
+Template version: v1.8.3 · Locales: en (default, only) · Hosting: Vercel · Admin path: `/kzds-admin`
 Mode: **B, page by page**. Specs: `docs/project/DESIGN_ANALYSIS.md`, `docs/project/BRIEF.md`, design sources in `design/KZ/kz-homepage/` (`design-system/DESIGN_SYSTEM.md` is binding).
 
 ## Page map
@@ -75,17 +75,32 @@ Everything else is a Server Component. `docs/project/COMPONENTS.md` is created w
 
 ## Progress (page by page)
 
-| #   | Page                                                                                           | Task (issue) | Owner    | Branch                            | Asked / confirmed | Built | Checked                                                     | User OK |
-| --- | ---------------------------------------------------------------------------------------------- | ------------ | -------- | --------------------------------- | ----------------- | ----- | ----------------------------------------------------------- | ------- |
-| 0   | Foundation (config, tokens, fonts, primitives, header, footer, 404, placeholder pages, global) | —            | Nazar KZ | `main` (before the team workflow) | —                 | yes   | yes                                                         | yes     |
-| 1   | Home                                                                                           | —            | Nazar KZ | `main` (before the team workflow) | yes               | yes   | yes (1440: 0.17%, 375: 0.85% mismatch; interactions tested) |         |
-| 2   | About us                                                                                       |              |          |                                   |                   |       |                                                             |         |
-| 3   | Cases list + case template (all 16 cases)                                                      |              |          |                                   |                   |       |                                                             |         |
-| 4   | Service template (SaaS, Mobile, Web)                                                           |              |          |                                   |                   |       |                                                             |         |
-| 5   | Empty pages (Approach, Reviews, Contact us, legal ×3)                                          |              |          |                                   |                   |       |                                                             |         |
-| 6   | Full verification (gates, e2e, Lighthouse, audit), Vercel deploy                               |              |          |                                   |                   |       |                                                             |         |
+| #   | Page                                                                                           | Task (issue)      | Owner    | Branch                            | Asked / confirmed | Built | Checked                                                     | User OK |
+| --- | ---------------------------------------------------------------------------------------------- | ----------------- | -------- | --------------------------------- | ----------------- | ----- | ----------------------------------------------------------- | ------- |
+| 0   | Foundation (config, tokens, fonts, primitives, header, footer, 404, placeholder pages, global) | —                 | Nazar KZ | `main` (before the team workflow) | —                 | yes   | yes                                                         | yes     |
+| 1   | Home                                                                                           | —                 | Nazar KZ | `main` (before the team workflow) | yes               | yes   | yes (1440: 0.17%, 375: 0.85% mismatch; interactions tested) |         |
+| 2   | About us                                                                                       | #5                |          |                                   |                   |       |                                                             |         |
+| 3   | Cases list + case template (all 16 cases)                                                      | #6                |          |                                   |                   |       |                                                             |         |
+| 4   | Service template (SaaS, Mobile, Web)                                                           | #7                |          |                                   |                   |       |                                                             |         |
+| 5   | Empty pages (Approach, Reviews, Contact us, legal ×3)                                          | #8, #9            |          |                                   |                   |       |                                                             |         |
+| 6   | Full verification (gates, e2e, Lighthouse, audit), Vercel deploy                               | #16, #17, #11–#15 |          |                                   |                   |       |                                                             |         |
 
-All tasks are GitHub issues (`nazars-kz/kzdesign`, labels `task` + `status:*`); owners and branches are filled in when a task is claimed.
+All tasks are GitHub issues (`nazars-kz/kzdesign`, labels `task` + `status:*` + a kind label); owners and branches are filled in when a task is claimed.
+
+### Stages and kinds (skill `references/project-plan.md`)
+
+The 8 stages are GitHub milestones (`team-task.mjs setup`): 1 Підготовка проєкту · 2 Дизайн-система · 3 Сторінки (чернетка) · 4 Перегляд чернетки · 5 Виправлення · 6 Фінальний перегляд · 7 Запуск · 8 Після запуску. Kinds are labels: Підготовка, Дизайн-система, Сторінка, Частина сторінки, Перегляд, Виправлення, Запуск, Оновлення.
+
+| Stage | Cards                                                                                                                    |
+| ----- | ------------------------------------------------------------------------------------------------------------------------ |
+| 1     | #4 (skill update), #16 (e2e), #18 (branch protection), #20 (line endings)                                                |
+| 2     | #1 (foundation: tokens, primitives, header, footer)                                                                      |
+| 3     | #2 Home, #3 Services collection, #5 About us, #6 Cases, #7 Service template, #8 Approach/Reviews/Contact, #9 legal texts |
+| 4     | #10 text errors to the client; a review card per page is created when the page is on staging                             |
+| 6     | #17 final check                                                                                                          |
+| 7     | #11 Neon, #12 Vercel, #13 domain, #14 analytics and mail, #15 SEO titles                                                 |
+
+New remarks from reviewers become fix cards (stage 5) linked to the page card; see the skill's `project-plan.md` §4–5.
 
 ## Build order
 

@@ -5,7 +5,7 @@ links. Everything below was decided with the client: don't ask these questions a
 
 - **Site**: marketing website of K&Z Design (UX/UI design agency) · Domain: `kz.design` (to be connected later)
 - **Languages**: en (only) · **Database**: Neon · **Hosting**: Vercel
-- **Template**: web-admin-panel v1.8.2 · Admin path: `/kzds-admin`
+- **Template**: web-admin-panel v1.8.3 · Admin path: `/kzds-admin`
 - **Team**: Nazar KZ — `nazars-kz` — lead (reviews and merges); two more designer-developers (names and GitHub logins are added here when they join)
 - **Branches**: `main` = live site, `staging` = test site (no URL yet), work in
   `feature/<task>` → pull request into `staging`. Never commit to `main` or `staging`.

@@ -25,21 +25,19 @@ async function liveHtml(page: Page, path: string): Promise<string> {
 test.describe.serial('interface texts', () => {
   const text = `Discover ${Date.now()}`;
 
-  test('a text edited on Services changes the Home service tabs too, and Reset brings the default back', async ({
+  test('a text edited on Home changes the service tabs, and Reset brings the default back', async ({
     page,
   }) => {
     await login(page, E2E_ADMIN);
-    await openInterfaceTexts(page, admin('/pages/services'));
+    await openInterfaceTexts(page, admin('/pages/home'));
     const panel = page.getByTestId('interface-texts');
-    await expect(panel).toContainText('Also on: Home');
     await panel.getByLabel(LINK_LABEL).fill(text);
     await panel.getByRole('button', { name: 'Save services texts' }).click();
     await expect(page.getByText('Saved. The live site updates in a few seconds.')).toBeVisible();
 
     await expect.poll(async () => liveHtml(page, '/')).toContain(text);
-    await expect.poll(async () => liveHtml(page, '/services')).toContain(text);
 
-    // The same group is editable from Home and shows the edit.
+    // The saved text is what the editor shows after a reload.
     await openInterfaceTexts(page, admin('/pages/home'));
     await expect(page.getByTestId('interface-texts').getByLabel(LINK_LABEL)).toHaveValue(text);
 

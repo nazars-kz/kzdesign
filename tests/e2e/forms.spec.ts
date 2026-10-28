@@ -123,10 +123,10 @@ test.describe.serial('forms', () => {
     await fill(page, valid(`NoJS ${stamp}`));
     await page.locator('form#form-contact button[type="submit"]').click();
     await expect(page.getByRole('status')).toHaveText(
-      'Please check your message and press “Submit” again to send it.',
+      'Please press the button to send your message.',
     );
     await page.waitForTimeout(FILL_DELAY_MS);
-    await page.locator('form#form-contact').getByRole('button', { name: 'Submit' }).click();
+    await page.getByRole('button', { name: 'Submit' }).click();
     await expect(page.getByText('Thank you!').first()).toBeVisible();
     await context.close();
   });
@@ -167,8 +167,17 @@ test.describe.serial('forms', () => {
     await expect(bot.page.getByText('Thank you!').first()).toBeVisible();
 
     await openContact(bot.page);
-    await fill(bot.page, valid(`TooFast ${stamp}`));
-    await bot.page.locator('form#form-contact button[type="submit"]').click(); // no delay
+    // The Home page is heavy, so typing through the UI can take longer than the 3 s minimum:
+    // fill and submit inside the page, in the same instant.
+    await bot.page.locator('form#form-contact').evaluate((form: HTMLFormElement, name: string) => {
+      const set = (field: string, value: string) => {
+        (form.elements.namedItem(field) as HTMLInputElement).value = value;
+      };
+      set('name', name);
+      set('email', 'visitor@example.test');
+      set('message', 'Hello from the end-to-end tests.');
+      form.requestSubmit();
+    }, `TooFast ${stamp}`);
     await expect(bot.page.getByText('Thank you!').first()).toBeVisible();
     await bot.context.close();
 

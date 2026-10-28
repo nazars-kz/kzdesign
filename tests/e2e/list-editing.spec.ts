@@ -75,14 +75,9 @@ test.describe('list editing', () => {
     await page.getByRole('button', { name: 'Save', exact: true }).click();
     await expect(page.getByText(/Saved/).first()).toBeVisible();
     await page.reload();
-    await expect(page.locator('[data-list-display="tags"]').getByRole('listitem')).toHaveText([
-      'sport',
-      'Saas',
-      'Web',
-      'navigation',
-      'b2c',
-      'Product',
-    ]);
+    await expect(
+      page.locator('[data-list-display="tags"]').first().getByRole('listitem'),
+    ).toHaveText(['sport', 'Saas', 'Web', 'navigation', 'b2c', 'Product']);
     // The site receives plain strings.
     const html = await (await page.request.get('/cases')).text();
     expect(html).toContain('Product');

@@ -6,7 +6,7 @@ import { SiteLayout } from '@/site/layout/site-layout';
 
 export default async function PagesLayout({ children, params }: LayoutProps<'/[locale]'>) {
   const { locale } = await params;
-  const [settings, { defaultLocale }, logo] = await Promise.all([
+  const [settings, { defaultLocale, enabledLocales }, logo] = await Promise.all([
     getSiteSettings(),
     getLocaleSettings(),
     getSiteLogo(),
@@ -15,6 +15,7 @@ export default async function PagesLayout({ children, params }: LayoutProps<'/[l
     <SiteLayout
       locale={locale}
       defaultLocale={defaultLocale}
+      enabledLocales={enabledLocales}
       siteName={settings.general.siteName}
       logo={logo}
     >

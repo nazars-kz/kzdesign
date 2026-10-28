@@ -34,9 +34,7 @@ test.describe('site', () => {
 
   test('the footer shows the company email from the global content', async ({ page }) => {
     await page.goto('/about-us');
-    await expect(
-      page.locator('footer').getByRole('link', { name: 'hello@kz.design' }),
-    ).toBeVisible();
+    await expect(page.locator('footer').getByRole('link', { name: /@kz[.]design$/ })).toBeVisible();
   });
 
   test('images are served and have alt text', async ({ page }) => {

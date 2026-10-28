@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { getCollectionList } from '@/core/collections/loader';
 import { getGlobalContent } from '@/core/content/loader';
+import { localeInfo } from '@/core/i18n/locales';
 import { localizedPath } from '@/core/i18n/routing';
 import type { SiteLogo } from '@/core/media/branding';
 
@@ -11,6 +12,7 @@ import { NavLink } from '../components/nav-link';
 import { ButtonLink } from '../components/ui/button';
 import { MAIN_NAV, type NavTarget, pagePath } from '../navigation';
 import { HeaderShell } from './header-shell';
+import { LanguageSwitcher } from './language-switcher';
 
 /** The site logo: the one uploaded in Settings → Branding, else the bundled K&Z logo. */
 const FALLBACK_LOGO = { src: '/brand/logo.svg', width: 126, height: 32 } as const;
@@ -18,11 +20,13 @@ const FALLBACK_LOGO = { src: '/brand/logo.svg', width: 126, height: 32 } as cons
 export async function SiteHeader({
   locale,
   defaultLocale,
+  enabledLocales,
   siteName,
   logo,
 }: {
   locale: string;
   defaultLocale: string;
+  enabledLocales: readonly string[];
   siteName: string;
   logo: SiteLogo | null;
 }) {
@@ -89,6 +93,14 @@ export async function SiteHeader({
             );
           })}
         </nav>
+      }
+      languages={
+        <LanguageSwitcher
+          locales={enabledLocales.map((code) => ({ code, label: localeInfo(code).label }))}
+          current={locale}
+          defaultLocale={defaultLocale}
+          label={common('language')}
+        />
       }
       cta={
         <ButtonLink

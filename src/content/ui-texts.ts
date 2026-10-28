@@ -21,6 +21,7 @@ export const uiTexts = defineUiTexts({
         closeMenu: 'Name of the menu button while the menu is open',
         mainNavigation: 'Name of the main menu (read by screen readers)',
         mobileNavigation: 'Name of the phone menu (read by screen readers)',
+        language: 'Name of the language switcher (read by screen readers)',
         home: 'Name of the logo link',
       },
     },

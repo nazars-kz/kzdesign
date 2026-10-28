@@ -12,7 +12,7 @@ import {
   visitor,
 } from './support/integrations';
 import { openSettingsTab, saveSettingsTab, VISITOR_HEADERS } from './support/settings';
-import { DEMO_PRESENT, HAS_FORMS, SAMPLE_PATH } from './support/site';
+import { HAS_FORMS, SAMPLE_PATH } from './support/site';
 import { expect, test } from './support/test';
 import { E2E_ADMIN } from './support/users';
 
@@ -251,7 +251,7 @@ test.describe.serial('integrations: email for forms', () => {
     page,
     browser,
   }) => {
-    test.skip(!DEMO_PRESENT, 'Submits the demo contact form.');
+    test.skip(!HAS_FORMS, 'Submits the contact form.');
     await login(page, E2E_ADMIN);
     const form = await openSettingsTab(page, 'requests', 'Requests');
     await form.getByLabel('Default recipients').fill('team@example.test');

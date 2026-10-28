@@ -17,6 +17,7 @@ const BURGER_QUERY = '(max-width: 1100px)';
 export function HeaderShell({
   logo,
   nav,
+  languages,
   cta,
   compactCta,
   menu,
@@ -24,6 +25,7 @@ export function HeaderShell({
 }: {
   logo: ReactNode;
   nav: ReactNode;
+  languages: ReactNode;
   cta: ReactNode;
   compactCta: ReactNode;
   menu: ReactNode;
@@ -70,6 +72,7 @@ export function HeaderShell({
             {logo}
             {nav}
             <div className="site-header__actions">
+              {languages}
               {cta}
               {compactCta}
               <BurgerButton

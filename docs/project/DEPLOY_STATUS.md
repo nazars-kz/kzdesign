@@ -1,6 +1,6 @@
 # Deploy status: K&Z Design
 
-Template version: v1.8.2 · Hosting: Vercel · Database: Neon ·
+Template version: v1.8.3 · Hosting: Vercel · Database: Neon ·
 Updated: 2026-10-28
 
 Mark each item `yes`, `no` or `unknown`, and how you know (user said / verified).
