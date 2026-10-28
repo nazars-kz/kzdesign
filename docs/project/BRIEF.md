@@ -9,20 +9,20 @@ Date: 2026-10-28 · Answers from: Nazar (nazar.s@kz.design)
 
 ## Pages (confirmed)
 
-| Page             | Path                              | Notes                                                                                   |
-| ---------------- | --------------------------------- | --------------------------------------------------------------------------------------- |
-| Home             | `/`                               | design: `index.html` — **first to build**                                               |
-| About us         | `/about-us`                       | design: `about-us.html`                                                                 |
-| Services         | `/services`, `/services/saas`, `/services/mobile`, `/services/web` | one template, "services" collection: new services are added in the admin |
-| Cases (list)     | `/cases`                          | design: `cases.html`                                                                    |
-| Case study ×16   | `/cases/<slug>`                   | one template, "cases" collection                                                        |
-| Approach         | `/approach`                       | page will be added later by the client → create an **empty page** now                   |
-| Reviews          | `/reviews`                        | later; will contain a **Clutch reviews widget** (client adds it later) → empty page now |
-| Contact us       | `/contact-us`                     | later, with the contact form → empty page now                                           |
-| Privacy Policy   | `/privacy-policy`                 | texts provided later → empty page now                                                   |
-| Terms of Service | `/terms-of-service`               | texts provided later → empty page now                                                   |
-| Refund Policy    | `/cancellation-and-refund-policy` | texts provided later → empty page now                                                   |
-| 404, maintenance | —                                 | in the site's style                                                                     |
+| Page             | Path                                                               | Notes                                                                                   |
+| ---------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
+| Home             | `/`                                                                | design: `index.html` — **first to build**                                               |
+| About us         | `/about-us`                                                        | design: `about-us.html`                                                                 |
+| Services         | `/services`, `/services/saas`, `/services/mobile`, `/services/web` | one template, "services" collection: new services are added in the admin                |
+| Cases (list)     | `/cases`                                                           | design: `cases.html`                                                                    |
+| Case study ×16   | `/cases/<slug>`                                                    | one template, "cases" collection                                                        |
+| Approach         | `/approach`                                                        | page will be added later by the client → create an **empty page** now                   |
+| Reviews          | `/reviews`                                                         | later; will contain a **Clutch reviews widget** (client adds it later) → empty page now |
+| Contact us       | `/contact-us`                                                      | later, with the contact form → empty page now                                           |
+| Privacy Policy   | `/privacy-policy`                                                  | texts provided later → empty page now                                                   |
+| Terms of Service | `/terms-of-service`                                                | texts provided later → empty page now                                                   |
+| Refund Policy    | `/cancellation-and-refund-policy`                                  | texts provided later → empty page now                                                   |
+| 404, maintenance | —                                                                  | in the site's style                                                                     |
 
 "Empty page" = real page in the admin (title, SEO fields, header/footer in place) with a placeholder section the client fills later. Header, footer and Home links point to these internal pages (no more links to the live kz.design).
 
@@ -49,7 +49,7 @@ Date: 2026-10-28 · Answers from: Nazar (nazar.s@kz.design)
 | ------------ | --------------------------------------------------------------------------------- | ---------------------------------------- | --------------------------- | ------------------- |
 | Cases        | yes, `/cases/<slug>` (client's choice; old live URLs `/<slug>` get 301 redirects) | tags + filter categories from the design | no (16 cases, filter pills) | n/a (English only)  |
 | Testimonials | no (cards + optional link to a case)                                              | —                                        | slider                      | n/a                 |
-| Services     | yes (`/services/<slug>`; old live URLs `/saas` etc. get 301 redirects)                                                  | —                                        | —                           | n/a                 |
+| Services     | yes (`/services/<slug>`; old live URLs `/saas` etc. get 301 redirects)            | —                                        | —                           | n/a                 |
 
 The client adds new cases and testimonials himself. The 14 testimonials from `index.html` are seeded now.
 

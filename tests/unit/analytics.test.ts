@@ -65,7 +65,7 @@ describe('collection, rollups and retention', () => {
     expect(await view('/', '1.1.1.1', MAC_CHROME, 'https://www.google.com/search?q=x')).toBe(
       'recorded',
     );
-    expect(await view('/uk/about', '1.1.1.1')).toBe('recorded');
+    expect(await view('/uk/about-us', '1.1.1.1')).toBe('recorded');
     expect(await view('/about', '2.2.2.2', IPHONE)).toBe('recorded');
     expect(await view('/', '3.3.3.3', 'Googlebot/2.1')).toBe('ignored');
     expect(
@@ -82,7 +82,7 @@ describe('collection, rollups and retention', () => {
     const rows = await db.select().from(analyticsEvents);
     expect(rows).toHaveLength(3);
     expect(JSON.stringify(rows)).not.toContain('1.1.1.1');
-    expect(rows.find((row) => row.path === '/uk/about')).toMatchObject({
+    expect(rows.find((row) => row.path === '/uk/about-us')).toMatchObject({
       pageId: 'about',
       locale: 'uk',
     });

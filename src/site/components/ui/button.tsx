@@ -3,14 +3,10 @@ import type { ReactNode } from 'react';
 
 import { localizeHref } from '@/core/i18n/href';
 
+import { ButtonArrow } from './button-arrow';
 import { buttonClasses, type ButtonSize, type ButtonVariant } from './button-styles';
 
 export type { ButtonSize, ButtonVariant } from './button-styles';
-
-/** The arrow that slides in on hover (decorative). */
-export function ButtonArrow() {
-  return <span className="btn__arrow" aria-hidden="true" />;
-}
 
 /** Native button (form submits, actions) with the shared button styles. */
 export function Button({

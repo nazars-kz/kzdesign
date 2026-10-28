@@ -10,6 +10,7 @@ import {
   SeedScope,
   syncContent,
 } from '@/core/content/sync';
+import { richTextFromParagraphs } from '@/core/content/rich-text';
 import type { ContentRecord } from '@/core/content/values';
 import { auditLog, contentSeedState, media, pageContent, pageRevisions } from '@/core/db/schema';
 import type { Database } from '@/core/db/types';
@@ -18,14 +19,19 @@ import { AuditAction } from '@/core/security/audit';
 import { createTestDb } from '../support/db';
 import { memoryStorage } from '../support/storage';
 
-const PAGE = 'team';
+const PAGE = 'about';
+const IMAGE_PAGE = 'home';
+const IMAGE_FIELD = 'hero.awards';
+const SEED_IMAGE = 'award-badge-1.png';
 const page = registry.byId(PAGE);
 if (!page) throw new Error('demo page missing');
 const intro = page.sections.find((section) => section.id === 'intro');
 if (!intro) throw new Error('intro section missing');
 const titleField = intro.fields.title;
-const leadField = intro.fields.lead;
+const leadField = intro.fields.body;
 if (!titleField || !leadField) throw new Error('intro fields missing');
+
+const CLIENT_BODY = richTextFromParagraphs('Written by the client');
 
 async function row(db: Database, locale: string): Promise<ContentRecord> {
   const [found] = await db
@@ -41,7 +47,7 @@ async function simulateOlderSeed(db: Database): Promise<void> {
   await db
     .update(pageContent)
     .set({
-      data: { ...current, intro: { title: 'Old seed title', lead: 'Written by the client' } },
+      data: { ...current, intro: { title: 'Old seed title', body: CLIENT_BODY } },
     })
     .where(and(eq(pageContent.pageId, PAGE), eq(pageContent.locale, 'en')));
   const [state] = await db
@@ -60,7 +66,7 @@ async function simulateOlderSeed(db: Database): Promise<void> {
       hashes: {
         ...state?.hashes,
         'intro.title': seedValueHash(titleField!, 'Old seed title'),
-        'intro.lead': seedValueHash(leadField!, 'Old seed lead'),
+        'intro.body': seedValueHash(leadField!, richTextFromParagraphs('Old seed body')),
       },
     })
     .where(
@@ -90,7 +96,7 @@ describe('content:sync with seed provenance', () => {
       .select()
       .from(contentSeedState)
       .where(eq(contentSeedState.documentKey, PAGE));
-    expect(states.map((state) => state.locale).sort()).toEqual(['_shared', 'en', 'uk']);
+    expect(states.map((state) => state.locale).sort()).toEqual(['en']);
   });
 
   it('a second sync with the same code changes nothing', async () => {
@@ -107,8 +113,8 @@ describe('content:sync with seed provenance', () => {
     const report = await syncContent(db, storage);
     expect(report.updated).toEqual([`${PAGE}:en:intro.title`]);
     const en = await row(db, 'en');
-    expect(en.intro?.title).toBe('Our team');
-    expect(en.intro?.lead).toBe('Written by the client');
+    expect(en.intro?.title).toBe('About us');
+    expect(en.intro?.body).toEqual(CLIENT_BODY);
     expect(await row(db, 'uk')).toEqual(ukBefore);
 
     // Restorable: the state before and after, as system revisions.
@@ -135,7 +141,7 @@ describe('content:sync with seed provenance', () => {
   });
 
   it('re-imports a changed seed image; the old one stays in the library', async () => {
-    const [seeded] = await db.select().from(media).where(eq(media.seedAsset, 'team-1.webp'));
+    const [seeded] = await db.select().from(media).where(eq(media.seedAsset, SEED_IMAGE));
     expect(seeded?.seedAssetHash).toMatch(/^[0-9a-f]{64}$/);
     // Same file name, other bytes: what a teammate replacing the seed image looks like.
     await db
@@ -143,17 +149,19 @@ describe('content:sync with seed provenance', () => {
       .set({ seedAssetHash: 'f'.repeat(64) })
       .where(eq(media.id, seeded!.id));
     const report = { assetsImported: [] as string[] };
-    const ids = await importSeedAssets(db, storage, page, report);
-    expect(report.assetsImported).toContain('team-1.webp (changed)');
-    expect(ids.get('team-1.webp')).not.toBe(seeded!.id);
+    const imagePage = registry.byId(IMAGE_PAGE);
+    if (!imagePage) throw new Error('image page missing');
+    const ids = await importSeedAssets(db, storage, imagePage, report);
+    expect(report.assetsImported).toContain(`${SEED_IMAGE} (changed)`);
+    expect(ids.get(SEED_IMAGE)).not.toBe(seeded!.id);
     const [old] = await db.select().from(media).where(eq(media.id, seeded!.id));
     expect(old?.seedAsset).toBeNull();
   });
 
   it('untouched images follow the re-imported seed image', async () => {
     const report = await syncContent(db, storage);
-    // The people list (photos) and nothing the client edited.
-    expect(report.updated).toContain(`${PAGE}:en:members.people`);
-    expect(report.updated).not.toContain(`${PAGE}:en:intro.lead`);
+    // The awards (images) and nothing the client edited.
+    expect(report.updated).toContain(`${IMAGE_PAGE}:en:${IMAGE_FIELD}`);
+    expect(report.updated).not.toContain(`${PAGE}:en:intro.body`);
   });
 });

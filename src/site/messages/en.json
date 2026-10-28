@@ -31,6 +31,19 @@
     "terms": "Terms of Service",
     "refund": "Refund Policy"
   },
+  "home": {
+    "viewCaseStudy": "View case study",
+    "caseSoon": "Case study is coming soon",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "moreAwards": "Show all awards",
+    "fewerAwards": "Show fewer awards",
+    "previousService": "Previous service",
+    "nextService": "Next service",
+    "servicesTabs": "Services",
+    "testimonialsLabel": "Testimonials",
+    "companyEmail": "Email:"
+  },
   "services": {
     "learnMore": "Learn more"
   },

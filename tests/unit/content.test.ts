@@ -57,11 +57,24 @@ describe('content types', () => {
   it('infers resolved content from the schema', () => {
     type Home = ResolvedPageContent<typeof homePage.sections>;
     expectTypeOf<Home['hero']['title']>().toEqualTypeOf<string>();
-    expectTypeOf<Home['hero']['image']>().toEqualTypeOf<ResolvedImage | null>();
-    expectTypeOf<Home['features']['items'][number]['icon']>().toEqualTypeOf<
-      'layout' | 'shield' | 'globe' | 'chart' | 'zap' | 'image'
+    expectTypeOf<
+      Home['approach']['cards'][number]['image']
+    >().toEqualTypeOf<ResolvedImage | null>();
+    expectTypeOf<Home['industries']['items'][number]['key']>().toEqualTypeOf<
+      | 'healthcare'
+      | 'logistics'
+      | 'fintech'
+      | 'hr'
+      | 'ai'
+      | 'energy'
+      | 'sales'
+      | 'proptech'
+      | 'social'
+      | 'marketing'
+      | 'retail'
+      | 'web3'
     >();
-    expectTypeOf<Home['stats']['items'][number]['value']>().toEqualTypeOf<number>();
+    expectTypeOf<Home['faq']['initiallyOpen']>().toEqualTypeOf<number>();
   });
 
   it('rejects seeds that do not match the schema (compile time)', () => {
@@ -208,14 +221,12 @@ describe('content storage', () => {
 });
 
 describe('registry', () => {
-  it('builds the demo page tree', () => {
+  it('builds the page tree', () => {
     const tree = registry.tree();
     expect(tree.map((node) => node.page.id)).toEqual(
       registry.pages.filter((page) => page.parent === null).map((page) => page.id),
     );
-    expect(tree.find((node) => node.page.id === 'about')?.children.map((n) => n.page.id)).toEqual([
-      'team',
-    ]);
+    expect(tree.every((node) => node.children.length === 0)).toBe(true);
   });
 
   it('rejects duplicate ids, unknown parents and cycles', () => {

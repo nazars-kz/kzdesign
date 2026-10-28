@@ -26,6 +26,8 @@ const body = localFont({
     { path: './fonts/satoshi-400.woff2', weight: '400', style: 'normal' },
     { path: './fonts/satoshi-500.woff2', weight: '500', style: 'normal' },
     { path: './fonts/satoshi-700.woff2', weight: '700', style: 'normal' },
+    { path: './fonts/satoshi-300-italic.woff2', weight: '300', style: 'italic' },
+    { path: './fonts/satoshi-700-italic.woff2', weight: '700', style: 'italic' },
   ],
   variable: '--font-family-body',
   display: 'swap',

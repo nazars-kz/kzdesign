@@ -5,15 +5,21 @@
  */
 import { createRegistry } from '@/core/content/registry';
 
+import { cases } from './collections/cases';
 import { services } from './collections/services';
 import { contactForm } from './forms/contact';
 import { siteGlobals } from './globals/site';
+import { homePage } from './pages/home';
 import { placeholderPages } from './pages/placeholders';
+import { contactShared } from './shared/contact';
+import { partnersShared } from './shared/partners';
+import { testimonialsShared } from './shared/testimonials';
+import { uniquenessShared } from './shared/uniqueness';
 
 export const registry = createRegistry({
-  pages: [...placeholderPages],
-  collections: [services],
+  pages: [homePage, ...placeholderPages],
+  collections: [services, cases],
   globals: [siteGlobals],
   forms: [contactForm],
-  sharedSections: [],
+  sharedSections: [uniquenessShared, testimonialsShared, partnersShared, contactShared],
 });

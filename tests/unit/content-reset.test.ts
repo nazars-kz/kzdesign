@@ -49,7 +49,7 @@ const { createUserWithPassword } = await import('@/core/auth/server/users');
 const { auditLog, pageContent } = await import('@/core/db/schema');
 const { AuditAction } = await import('@/core/security/audit');
 
-const target = { kind: DocumentKind.Page, id: 'team' };
+const target = { kind: DocumentKind.Page, id: 'home' };
 
 describe('Reset to code defaults', () => {
   let db: Database;
@@ -71,12 +71,12 @@ describe('Reset to code defaults', () => {
   afterAll(() => close());
 
   async function editTitle(title: string): Promise<void> {
-    const where = and(eq(pageContent.pageId, 'team'), eq(pageContent.locale, 'en'));
+    const where = and(eq(pageContent.pageId, 'home'), eq(pageContent.locale, 'en'));
     const [row] = await db.select().from(pageContent).where(where);
     const data = row!.data as Record<string, Record<string, unknown>>;
     await db
       .update(pageContent)
-      .set({ data: { ...data, intro: { ...data.intro, title } }, version: row!.version + 1 })
+      .set({ data: { ...data, hero: { ...data.hero, title } }, version: row!.version + 1 })
       .where(where);
   }
 
@@ -96,26 +96,28 @@ describe('Reset to code defaults', () => {
   it('lists the fields that will change and resets them as a normal, audited save', async () => {
     session.role = Role.Manager;
     await editTitle('Edited title');
-    const preview = await previewCodeDefaultsAction({ target, locale: 'en', sectionId: 'intro' });
-    expect(preview.ok && preview.data.changes).toEqual([{ section: 'Intro', field: 'Title' }]);
+    const preview = await previewCodeDefaultsAction({ target, locale: 'en', sectionId: 'hero' });
+    expect(preview.ok && preview.data.changes).toEqual([{ section: 'Hero', field: 'Title' }]);
 
     const result = await resetToCodeDefaultsAction({
       target,
       locale: 'en',
-      sectionId: 'intro',
+      sectionId: 'hero',
       versions: { shared: 1, localized: 2, seo: 0 },
     });
     expect(result.ok).toBe(true);
     const [row] = await db
       .select()
       .from(pageContent)
-      .where(and(eq(pageContent.pageId, 'team'), eq(pageContent.locale, 'en')));
-    expect((row?.data as { intro: { title: string } }).intro.title).toBe('Our team');
+      .where(and(eq(pageContent.pageId, 'home'), eq(pageContent.locale, 'en')));
+    expect((row?.data as { hero: { title: string } }).hero.title).toBe(
+      'Your reliable\nUX/UI design partner',
+    );
     const [entry] = await db
       .select()
       .from(auditLog)
       .where(eq(auditLog.action, AuditAction.ContentReset));
-    expect(entry?.target).toBe('page:team:en');
+    expect(entry?.target).toBe('page:home:en');
   });
 
   it('detects a conflict like any save', async () => {

@@ -10,7 +10,7 @@ import type { ReactNode } from 'react';
 
 import type { StorybookSection } from '@/core/storybook/slot';
 
-import { ButtonArrow } from './components/ui/button';
+import { ButtonArrow } from './components/ui/button-arrow';
 import {
   type ButtonSize,
   buttonClasses,

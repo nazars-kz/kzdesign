@@ -7,9 +7,9 @@ import { cx } from './cn';
  * never combine size, leading and tracking themselves. Colors are inherited, so
  * the same component works on light and dark bands.
  */
-export type HeadingVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'section-title';
+export type HeadingVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'section-title' | 'plain';
 export type TextVariant =
-  'lead' | 'body-lg' | 'body' | 'body-sm' | 'caption' | 'overline' | 'label';
+  'lead' | 'body-lg' | 'body' | 'body-sm' | 'caption' | 'overline' | 'label' | 'plain';
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 const HEADING_CLASS: Record<HeadingVariant, string> = {
@@ -20,6 +20,8 @@ const HEADING_CLASS: Record<HeadingVariant, string> = {
   h5: 'text-h5',
   h6: 'text-h6',
   'section-title': 'text-section-title',
+  /** No text style: the component's own CSS sets it (bespoke headings of the design). */
+  plain: '',
 };
 
 const TEXT_CLASS: Record<TextVariant, string> = {
@@ -30,6 +32,7 @@ const TEXT_CLASS: Record<TextVariant, string> = {
   caption: 'text-caption',
   overline: 'text-overline',
   label: 'text-label',
+  plain: '',
 };
 
 export function Heading({

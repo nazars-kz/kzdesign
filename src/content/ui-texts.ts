@@ -65,6 +65,22 @@ export const uiTexts = defineUiTexts({
         label: 'Name of the banner (read by screen readers)',
       },
     },
+    home: {
+      label: 'Home page',
+      texts: {
+        viewCaseStudy: 'Link to a case study (testimonials, partners, industries)',
+        caseSoon: 'Note when a case study is not published yet',
+        previousSlide: 'Testimonials slider: previous button (read by screen readers)',
+        nextSlide: 'Testimonials slider: next button (read by screen readers)',
+        moreAwards: 'Awards: button that shows all badges (read by screen readers)',
+        fewerAwards: 'Awards: button that hides extra badges (read by screen readers)',
+        previousService: 'Services tabs: previous button (read by screen readers)',
+        nextService: 'Services tabs: next button (read by screen readers)',
+        servicesTabs: 'Name of the services tabs (read by screen readers)',
+        testimonialsLabel: 'Name of the testimonials slider (read by screen readers)',
+        companyEmail: 'Label before the email under the contact form',
+      },
+    },
     services: {
       label: 'Services',
       texts: {

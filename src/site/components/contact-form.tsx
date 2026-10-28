@@ -3,9 +3,10 @@
 /**
  * PROJECT: visual layer of a site form. The core engine (`useSiteForm`) does
  * validation, accessibility wiring, submission and spam protection; this
- * component only renders it with the site's primitives and design tokens.
+ * component only renders it with the site's primitives and design tokens
+ * (outlined fields on a dark card, as in the "Let's take your product" block).
  */
-import { type ReactNode, useRef } from 'react';
+import { type ReactNode, useRef, useState } from 'react';
 
 import type { SiteFormConfig } from '@/core/forms/config';
 import { FormFieldType } from '@/core/forms/define';
@@ -15,9 +16,8 @@ import {
   useSiteForm,
 } from '@/core/forms/use-site-form';
 
+import { ButtonArrow } from './ui/button-arrow';
 import { buttonClasses } from './ui/button-styles';
-import { choiceClasses, controlClasses, LABEL_CLASS, textareaClasses } from './ui/form-styles';
-import { Heading, Text } from './ui/typography';
 
 export interface ContactFormStrings {
   readonly summaryTitle: string;
@@ -43,35 +43,35 @@ export function ContactForm({
 }) {
   const summaryRef = useRef<HTMLDivElement>(null);
   const form = useSiteForm({ config, messages, summaryRef });
+  // The button enables once the required fields are valid (checked natively on every input).
+  const [ready, setReady] = useState(false);
 
   if (form.succeeded) {
     return (
-      <div role="status" className="flex flex-col gap-3 rounded-lg bg-surface p-6">
-        <Heading level={2} variant="h4">
-          {config.successTitle}
-        </Heading>
-        <Text>{config.successMessage}</Text>
+      <div role="status" className="form-card form-success">
+        <p className="text-h5">{config.successTitle}</p>
+        <p className="text-body-lg">{config.successMessage}</p>
       </div>
     );
   }
 
   return (
-    <form {...form.formProps} className="flex flex-col gap-6" aria-busy={form.pending || undefined}>
+    <form
+      {...form.formProps}
+      className="form"
+      aria-busy={form.pending || undefined}
+      onInput={(event) => setReady(event.currentTarget.checkValidity())}
+    >
       {form.hiddenFields}
       {security}
 
       {form.summary.length > 0 ? (
-        <div
-          ref={summaryRef}
-          tabIndex={-1}
-          role="alert"
-          className="flex flex-col gap-2 rounded-md border-thick border-danger p-4"
-        >
-          <Text variant="label">{strings.summaryTitle}</Text>
-          <ul className="flex flex-col gap-1">
+        <div ref={summaryRef} tabIndex={-1} role="alert" className="form__summary">
+          <p className="text-label">{strings.summaryTitle}</p>
+          <ul>
             {form.summary.map((item) => (
               <li key={item.href}>
-                <a href={item.href} className="text-body-sm text-danger underline">
+                <a href={item.href}>
                   {item.label}: {item.message}
                 </a>
               </li>
@@ -81,9 +81,9 @@ export function ContactForm({
       ) : null}
 
       {form.notice ? (
-        <Text role="alert" tone={form.notice.kind === 'error' ? 'danger' : 'primary'}>
+        <p role="alert" className="form__notice text-body-sm">
           {form.notice.text}
-        </Text>
+        </p>
       ) : null}
 
       {config.fields.map((item) => (
@@ -95,11 +95,14 @@ export function ContactForm({
         />
       ))}
 
-      <div>
-        <button type="submit" className={buttonClasses('primary')} disabled={form.pending}>
-          {form.pending ? strings.sending : config.submitLabel}
-        </button>
-      </div>
+      <button
+        type="submit"
+        className={buttonClasses('light', 'form__submit', { size: 'xl' })}
+        disabled={form.pending || !ready}
+      >
+        {form.pending ? strings.sending : config.submitLabel}
+        <ButtonArrow />
+      </button>
     </form>
   );
 }
@@ -115,59 +118,53 @@ function Field({
 }) {
   const { field, ids, inputProps, error } = props;
   const { type, required } = field.definition;
-  const help = field.help ? (
-    <Text id={ids.help} variant="caption" tone="muted">
-      {field.help}
-    </Text>
-  ) : null;
-  // One line is always reserved, so inline validation never shifts the layout under the pointer.
   const errorText = (
-    <Text id={ids.error} variant="caption" tone="danger" className="min-h-5">
+    <p id={ids.error} className="field__error text-caption">
       {error ?? ''}
-    </Text>
+    </p>
   );
 
   if (type === FormFieldType.Checkbox || type === FormFieldType.Consent) {
     return (
-      <div className="flex flex-col gap-1">
-        <div className="flex items-start gap-3">
-          <input {...inputProps} className={choiceClasses()} />
-          <label htmlFor={ids.input} className="text-body-sm">
-            {consentText ?? field.label}
-            {required ? <span className="sr-only"> ({strings.required})</span> : null}
-          </label>
-        </div>
-        {help}
+      <div className="field field--choice">
+        <input {...inputProps} />
+        <label htmlFor={ids.input} className="text-body-sm">
+          {consentText ?? field.label}
+          {required ? <span className="sr-only"> ({strings.required})</span> : null}
+        </label>
         {errorText}
       </div>
     );
   }
 
   const label = (
-    <label htmlFor={ids.input} className={LABEL_CLASS}>
+    <>
       {field.label}
       {required ? (
-        <span className="text-danger" aria-hidden="true">
-          {' '}
-          *
-        </span>
+        <>
+          <b aria-hidden="true">*</b>
+          <span className="sr-only"> ({strings.required})</span>
+        </>
       ) : null}
-      {required ? <span className="sr-only"> ({strings.required})</span> : null}
-    </label>
+    </>
   );
 
+  if (type === FormFieldType.Textarea) {
+    return (
+      <div className="field">
+        <label htmlFor={ids.input} className="sr-only">
+          {label}
+        </label>
+        <textarea {...inputProps} placeholder={field.placeholder ?? field.label} rows={2} />
+        {errorText}
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col gap-2">
-      {label}
-      {type === FormFieldType.Textarea ? (
-        <textarea
-          {...inputProps}
-          placeholder={field.placeholder}
-          rows={6}
-          className={textareaClasses({ invalid: Boolean(error) })}
-        />
-      ) : type === FormFieldType.Select ? (
-        <select {...inputProps} className={controlClasses({ invalid: Boolean(error) })}>
+    <div className="field">
+      {type === FormFieldType.Select ? (
+        <select {...inputProps}>
           <option value="">{strings.choose}</option>
           {field.options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -176,13 +173,12 @@ function Field({
           ))}
         </select>
       ) : (
-        <input
-          {...inputProps}
-          placeholder={field.placeholder}
-          className={controlClasses({ invalid: Boolean(error) })}
-        />
+        // The label sits over the empty input like a placeholder and disappears while typing.
+        <input {...inputProps} placeholder=" " />
       )}
-      {help}
+      <label htmlFor={ids.input} className="field__label">
+        {label}
+      </label>
       {errorText}
     </div>
   );

@@ -83,17 +83,7 @@ export const servicesPage = definePlaceholderPage({
     'UX/UI design services of K&Z Design: SaaS web apps, mobile apps and websites for digital product businesses.',
 });
 
-export const homePage = definePlaceholderPage({
-  id: 'home',
-  path: '/',
-  label: 'Home',
-  title: 'Your reliable UX/UI design partner',
-  description:
-    'We partner with digital product businesses to help them grow, go from seeds to Series D, and retain clients with our expertise in user experience & digital product design.',
-});
-
 export const placeholderPages = [
-  homePage,
   aboutPage,
   casesPage,
   approachPage,

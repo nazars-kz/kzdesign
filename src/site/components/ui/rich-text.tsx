@@ -61,3 +61,16 @@ export function RichText({ doc, className }: { doc: RichTextDoc; className?: str
     </div>
   );
 }
+
+const inlineComponents: RichTextComponents = {
+  paragraph: ({ children }: { children: ReactNode }) => <p>{children}</p>,
+};
+
+/** Rich text without any text style: bold and italic keep their marks, the parent's CSS decides the look. */
+export function PlainRichText({ doc, className }: { doc: RichTextDoc; className?: string }) {
+  return (
+    <div className={className}>
+      <RichTextRenderer doc={doc} components={inlineComponents} />
+    </div>
+  );
+}

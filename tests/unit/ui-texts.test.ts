@@ -160,9 +160,9 @@ describe('usage check', () => {
       .filter((name) => /\.tsx?$/.test(name))
       .map((name) => ({ file: name, source: fs.readFileSync(path.join(dir, name), 'utf8') }));
     const usages = findMessageUsages(files);
-    expect(usages.some((usage) => usage.namespace === 'blog' && usage.key === 'readMore')).toBe(
-      true,
-    );
+    expect(
+      usages.some((usage) => usage.namespace === 'home' && usage.key === 'viewCaseStudy'),
+    ).toBe(true);
     const problems = checkUiTexts({
       catalog,
       files,
@@ -172,8 +172,8 @@ describe('usage check', () => {
         'footer',
         'cookie',
         'notFound',
-        'blog',
-        'contact',
+        'home',
+        'services',
         'forms',
       ]),
     });

@@ -163,7 +163,7 @@ export const tokens = {
     },
     "button": {
       "size": "1.125rem",
-      "lineHeight": "1.1",
+      "lineHeight": "1.1111",
       "letterSpacing": "0",
       "weight": "600",
       "family": "var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif"
@@ -224,7 +224,8 @@ export const tokens = {
     "medium": "350ms",
     "slow": "450ms",
     "xslow": "600ms",
-    "image": "800ms"
+    "image": "800ms",
+    "autoplay": "10s"
   },
   "z": {
     "header": "50",

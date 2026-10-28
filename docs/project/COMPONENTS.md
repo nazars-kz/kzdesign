@@ -16,38 +16,55 @@ Dark bands: `<Section tone="inverse">` adds `.on-dark`; eyebrow, link-cta and he
 
 ## Primitives (`src/site/components/ui/`)
 
-| Component | File | Variants / props | Used in |
-|---|---|---|---|
-| Heading / Text | `typography.tsx` | Heading: h1–h6, `section-title`; Text: lead, body-lg, body, body-sm, caption, overline, label; tone | everywhere |
-| Container / Section | `layout.tsx` | width content/wide/prose; tone default/surface/inverse; spacing default/tight/none; `id` | every section |
-| Button / ButtonLink / `buttonClasses` | `button.tsx`, `button-styles.ts` | variant `primary` (dark) / `light`; size md 54 / lg 57 / xl 67; arrow slides in on hover (`ButtonArrow`) | header (×2), hero, FAQ, form |
-| LinkCta | `link-cta.tsx` | external; recolors on dark | Services, Cases, Approach, Testimonials |
-| Eyebrow | `eyebrow.tsx` | recolors on dark | every section |
-| Round arrow button | CSS class `round-btn` (+ `--prev`/`--next`) | disabled | Services, Testimonials, case slider (component with state comes with Home) |
-| SiteImage, RichText, form styles | template | | content images, rich text, forms |
+| Component                             | File                                        | Variants / props                                                                                         | Used in                                                                    |
+| ------------------------------------- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Heading / Text                        | `typography.tsx`                            | Heading: h1–h6, `section-title`; Text: lead, body-lg, body, body-sm, caption, overline, label; tone      | everywhere                                                                 |
+| Container / Section                   | `layout.tsx`                                | width content/wide/prose; tone default/surface/inverse; spacing default/tight/none; `id`                 | every section                                                              |
+| Button / ButtonLink / `buttonClasses` | `button.tsx`, `button-styles.ts`            | variant `primary` (dark) / `light`; size md 54 / lg 57 / xl 67; arrow slides in on hover (`ButtonArrow`) | header (×2), hero, FAQ, form                                               |
+| LinkCta                               | `link-cta.tsx`                              | external; recolors on dark                                                                               | Services, Cases, Approach, Testimonials                                    |
+| Eyebrow                               | `eyebrow.tsx`                               | recolors on dark                                                                                         | every section                                                              |
+| Round arrow button                    | CSS class `round-btn` (+ `--prev`/`--next`) | disabled                                                                                                 | Services, Testimonials, case slider (component with state comes with Home) |
+| SiteImage, RichText, form styles      | template                                    |                                                                                                          | content images, rich text, forms                                           |
 
 ## Patterns (`src/site/components/`)
 
-| Component | File | Notes | Used in |
-|---|---|---|---|
-| NavLink (client) | `nav-link.tsx` | `aria-current` for the current page | header, footer |
-| SocialLinks | `social-links.tsx` | icons from `public/icons/<network>.svg` | footer (contact block later) |
+| Component        | File               | Notes                                   | Used in                      |
+| ---------------- | ------------------ | --------------------------------------- | ---------------------------- |
+| NavLink (client) | `nav-link.tsx`     | `aria-current` for the current page     | header, footer               |
+| SocialLinks      | `social-links.tsx` | icons from `public/icons/<network>.svg` | footer (contact block later) |
 
 ## Layout (`src/site/layout/`)
 
-| Component | File | Notes |
-|---|---|---|
-| SiteLayout | `site-layout.tsx` | skip link, header, main, footer |
+| Component                                  | File                                  | Notes                                                                                        |
+| ------------------------------------------ | ------------------------------------- | -------------------------------------------------------------------------------------------- |
+| SiteLayout                                 | `site-layout.tsx`                     | skip link, header, main, footer                                                              |
 | SiteHeader (server) + HeaderShell (client) | `site-header.tsx`, `header-shell.tsx` | compact after 4px scroll, Services drop-down, burger + full-screen menu ≤ 1100px, Esc closes |
-| SiteFooter | `site-footer.tsx` | nav, socials, © line, legal links, cookie settings |
-| 404 | `src/site/pages/not-found.tsx` | |
-| Placeholder page | `src/site/pages/placeholder.tsx` | title + optional rich text, for pages whose content comes later |
+| SiteFooter                                 | `site-footer.tsx`                     | nav, socials, © line, legal links, cookie settings                                           |
+| 404                                        | `src/site/pages/not-found.tsx`        |                                                                                              |
+| Placeholder page                           | `src/site/pages/placeholder.tsx`      | title + optional rich text, for pages whose content comes later                              |
+
+## Home components (built with the Home page)
+
+| Component | File | Notes | Used in |
+|---|---|---|---|
+| SectionHeader | `components/section-header.tsx` | eyebrow + title; gap via `--section-header-gap` set by the section | all sections |
+| Tag / TagList | `components/ui/tag.tsx` | CAPS tags | case cards |
+| CaseCard | `components/case-card.tsx` | cover, name, description, tags; heading level prop | Home, Cases list, later case sliders |
+| AwardsStrip (client) | `components/awards-strip.tsx` | expand / collapse, width via CSS variable | Hero |
+| ServiceTabs (client) | `components/service-tabs.tsx` | autoplay 10 s with progress line, pills on phones | Home |
+| Accordion (client) | `components/accordion.tsx` | variants `industries` (dark) / `faq` (light); one open at a time | Industries, FAQ |
+| TestimonialSlider (client) + TestimonialCard + QuoteScroll (client) | `components/testimonial-*.tsx`, `quote-scroll.tsx` | scroll-snap track, arrows with disabled ends, quote with own scroll bar | Testimonials (Home, About, Reviews) |
+| PartnerTile | `components/partner-tile.tsx` | logo, optional case link with hover | Partners |
+| TeamMember (client) | `components/team-member.tsx` | row on desktop, accordion on phones | Contact block |
+| ContactForm / ContactFormBlock | `components/contact-form.tsx`, `contact-form-server.tsx` | outlined fields on dark, submit enabled when valid | Contact block |
+| CompanyCard | `components/company-card.tsx` | from the `site` global | Contact block |
+| ContentLink, Lines, PlainRichText, ButtonArrow, LinkCtaContent | `components/ui/*` | small shared helpers; client components import only the client-safe ones | everywhere |
+
+Sections (`src/site/sections`): Hero, Services, HomeCases, Uniqueness, Approach, Testimonials, Partners, Industries, Faq, Contact.
 
 ## Planned (built with the page that first needs them)
 
-SectionHeader, CaseCard, UniquenessCard, ApproachCard, TestimonialCard + slider, PartnerTile, Accordion (light/dark),
-IndustryCaseItem, TeamRow, AwardsStrip, ServiceTabs, Field + Input + Textarea (outlined / filled), ContactForm,
-CompanyCard, Tag, Chip, Breadcrumbs, Marquee, LeaderCard, FounderCard.
+Breadcrumbs, Marquee, LeaderCard, FounderCard, FeatureCard, ProcessStep, filter pills (Cases list).
 
 ## Architecture notes
 
