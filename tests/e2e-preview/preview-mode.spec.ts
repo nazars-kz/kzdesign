@@ -1,26 +1,27 @@
 import { expect, test } from '@playwright/test';
 import { admin } from '../e2e/support/admin';
 
-/** A production build with no database variables: demo site from seeds, admin setup guide. */
+/** A production build with no database variables: the site from the seeds, admin setup guide. */
 test.describe('preview mode (no DATABASE_URL)', () => {
-  test('serves the demo pages, posts and images from seeds, never indexable', async ({
+  test('serves the pages, case studies and images from seeds, never indexable', async ({
     page,
     request,
   }) => {
-    for (const path of ['/', '/about', '/uk/about', '/blog', '/blog/hello-world']) {
+    for (const path of ['/', '/about-us', '/cases', '/cases/touren', '/services/saas']) {
       const response = await page.goto(path);
       expect(response?.status(), path).toBe(200);
       expect(response?.headers()['x-robots-tag'], path).toContain('noindex');
       await expect(page.locator('h1'), path).toHaveCount(1);
     }
     await page.goto('/');
-    const hero = page.locator('main img').first();
-    await expect(hero).toBeVisible();
-    expect(await hero.getAttribute('src')).toContain('seed-assets');
-    expect(await hero.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+    const badge = page.locator('main img[src*="seed-assets"]').first();
+    await badge.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() => badge.evaluate((image: HTMLImageElement) => image.naturalWidth))
+      .toBeGreaterThan(0);
 
-    await page.goto('/blog');
-    await expect(page.getByRole('link', { name: /Hello, world/ }).first()).toBeVisible();
+    await page.goto('/cases');
+    await expect(page.getByRole('link', { name: /Touren/ }).first()).toBeVisible();
 
     const robots = await (await request.get('/robots.txt')).text();
     expect(robots).toMatch(/Disallow: \/\s*$/m);
@@ -46,15 +47,20 @@ test.describe('preview mode (no DATABASE_URL)', () => {
     expect((await request.post('/api/media')).status()).toBe(404);
   });
 
-  test('forms render but say they are not connected yet', async ({ page, request, baseURL }) => {
-    await page.goto('/contact');
-    await expect(page.locator('form#form-contact')).toBeVisible();
+  test('the contact form renders but says it is not connected yet', async ({
+    page,
+    request,
+    baseURL,
+  }) => {
+    await page.goto('/');
+    const form = page.locator('form#form-contact');
+    await form.scrollIntoViewIfNeeded();
+    await expect(form).toBeVisible();
     await page.waitForLoadState('networkidle'); // hydrated (the timing token request fails: 503)
-    await page.locator('#contact-consent').check();
     await page.locator('#contact-name').fill('Preview Visitor');
     await page.locator('#contact-email').fill('visitor@example.test');
     await page.locator('#contact-message').fill('Hello from preview mode.');
-    await page.locator('form#form-contact button[type="submit"]').click();
+    await form.locator('button[type="submit"]').click();
     await expect(page.getByText('This form isn’t connected yet', { exact: false })).toBeVisible();
 
     const response = await request.post('/api/forms/submit', {

@@ -13,7 +13,7 @@ export const services = defineCollection({
   itemLabel: 'Service',
   listPageId: 'services',
   itemPath: '/services/:slug',
-  uiTexts: ['services'],
+  uiTexts: ['services', 'preview'],
   fields: {
     order: f.number({
       label: 'Order',

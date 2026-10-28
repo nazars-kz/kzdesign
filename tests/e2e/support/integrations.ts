@@ -37,13 +37,12 @@ export async function visitor(browser: Browser) {
 }
 
 export async function submitContact(page: Page, name: string) {
-  await page.goto('/contact');
+  await page.goto('/');
   await expect(page.locator('form#form-contact input[name="_t"]')).toBeAttached();
-  await page.locator('#contact-consent').check();
   await page.locator('#contact-name').fill(name);
   await page.locator('#contact-email').fill('visitor@example.test');
   await page.locator('#contact-message').fill('Hello from the integrations test.');
   await page.waitForTimeout(FILL_DELAY_MS);
   await page.locator('form#form-contact button[type="submit"]').click();
-  await expect(page.getByRole('heading', { name: 'Thank you!' })).toBeVisible();
+  await expect(page.getByText('Thank you!').first()).toBeVisible();
 }

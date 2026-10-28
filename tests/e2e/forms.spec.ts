@@ -35,19 +35,16 @@ interface ContactInput {
   readonly name?: string;
   readonly email?: string;
   readonly message?: string;
-  readonly consent?: boolean;
 }
 
-/** Opens the contact page; with JavaScript, waits for the hydrated form's timing token. */
-async function openContact(page: Page, pathname = '/contact', javaScript = true): Promise<void> {
+/** Opens the page with the contact form (the Home contact block); with JavaScript, waits for the hydrated form's timing token. */
+async function openContact(page: Page, pathname = '/', javaScript = true): Promise<void> {
   await page.goto(pathname);
   await expect(page.locator('form#form-contact')).toBeVisible();
   if (javaScript) await expect(page.locator('form#form-contact input[name="_t"]')).toBeAttached();
 }
 
 async function fill(page: Page, input: ContactInput): Promise<void> {
-  // Consent first: inline re-validation of the text fields resizes the error summary.
-  if (input.consent) await page.locator('#contact-consent').check();
   if (input.name !== undefined) await page.locator('#contact-name').fill(input.name);
   if (input.email !== undefined) await page.locator('#contact-email').fill(input.email);
   if (input.message !== undefined) await page.locator('#contact-message').fill(input.message);
@@ -62,7 +59,6 @@ const valid = (name: string): ContactInput => ({
   name,
   email: 'visitor@example.test',
   message: 'Hello from the end-to-end tests.',
-  consent: true,
 });
 
 /** Submissions in the admin inbox whose data contains `search` (all statuses). */
@@ -113,7 +109,7 @@ test.describe.serial('forms', () => {
     browser,
   }) => {
     const { context, page } = await visitor(browser, { javaScriptEnabled: false });
-    await openContact(page, '/contact', false);
+    await openContact(page, '/', false);
     const posts: string[] = [];
     page.on('request', (request) => {
       if (request.method() === 'POST') posts.push(request.url());
@@ -130,28 +126,26 @@ test.describe.serial('forms', () => {
       'Please press the button to send your message.',
     );
     await page.waitForTimeout(FILL_DELAY_MS);
-    await page.getByRole('button', { name: 'Send message' }).click();
-    await expect(page.getByRole('heading', { name: 'Thank you!' })).toBeVisible();
+    await page.getByRole('button', { name: 'Submit' }).click();
+    await expect(page.getByText('Thank you!').first()).toBeVisible();
     await context.close();
   });
 
-  test('with JavaScript: localized accessible errors, focus on the summary, success', async ({
+  test('with JavaScript: the button waits for a valid name and email, then the form succeeds', async ({
     browser,
   }) => {
     const { context, page } = await visitor(browser);
-    await openContact(page, '/uk/contact');
-    await page.locator('form#form-contact button[type="submit"]').click();
-    const summary = page.getByRole('alert').filter({ hasText: 'Виправте, будь ласка' });
-    await expect(summary).toBeVisible();
-    await expect(summary).toBeFocused();
-    const name = page.locator('#contact-name');
-    await expect(name).toHaveAttribute('aria-invalid', 'true');
-    await expect(name).toHaveAttribute('aria-describedby', /contact-name-error/);
-    await expect(page.locator('#contact-name-error')).toHaveText('Це поле обов’язкове.');
-
+    await openContact(page);
+    const submitButton = page.locator('form#form-contact button[type="submit"]');
+    await expect(submitButton).toBeDisabled();
+    await page.locator('#contact-name').fill(`Script ${stamp}`);
+    await expect(submitButton).toBeDisabled();
+    await page.locator('#contact-email').fill('not-an-email');
+    await expect(submitButton).toBeDisabled();
     await fill(page, valid(`Script ${stamp}`));
+    await expect(submitButton).toBeEnabled();
     await submit(page);
-    await expect(page.getByRole('heading', { name: 'Дякуємо!' })).toBeVisible();
+    await expect(page.getByText('Thank you!').first()).toBeVisible();
     await context.close();
   });
 
@@ -170,12 +164,21 @@ test.describe.serial('forms', () => {
     await fill(bot.page, valid(`Honeypot ${stamp}`));
     await bot.page.locator('input[name="website"]').fill('https://spam.example', { force: true });
     await submit(bot.page);
-    await expect(bot.page.getByRole('heading', { name: 'Thank you!' })).toBeVisible();
+    await expect(bot.page.getByText('Thank you!').first()).toBeVisible();
 
     await openContact(bot.page);
-    await fill(bot.page, valid(`TooFast ${stamp}`));
-    await bot.page.locator('form#form-contact button[type="submit"]').click(); // no delay
-    await expect(bot.page.getByRole('heading', { name: 'Thank you!' })).toBeVisible();
+    // The Home page is heavy, so typing through the UI can take longer than the 3 s minimum:
+    // fill and submit inside the page, in the same instant.
+    await bot.page.locator('form#form-contact').evaluate((form: HTMLFormElement, name: string) => {
+      const set = (field: string, value: string) => {
+        (form.elements.namedItem(field) as HTMLInputElement).value = value;
+      };
+      set('name', name);
+      set('email', 'visitor@example.test');
+      set('message', 'Hello from the end-to-end tests.');
+      form.requestSubmit();
+    }, `TooFast ${stamp}`);
+    await expect(bot.page.getByText('Thank you!').first()).toBeVisible();
     await bot.context.close();
 
     await login(page, E2E_ADMIN);
@@ -190,7 +193,7 @@ test.describe.serial('forms', () => {
       await openContact(page);
       await fill(page, valid(`Limit ${stamp} ${attempt}`));
       await submit(page);
-      await expect(page.getByRole('heading', { name: 'Thank you!' })).toBeVisible();
+      await expect(page.getByText('Thank you!').first()).toBeVisible();
     }
     await openContact(page);
     await fill(page, valid(`Limit ${stamp} 6`));
@@ -214,7 +217,7 @@ test.describe.serial('forms', () => {
       await openContact(guest);
       await fill(guest, valid(name));
       await submit(guest);
-      await expect(guest.getByRole('heading', { name: 'Thank you!' })).toBeVisible();
+      await expect(guest.getByText('Thank you!').first()).toBeVisible();
       await context.close();
 
       // Unread count in the Pages sidebar.
@@ -261,7 +264,7 @@ test.describe.serial('forms', () => {
     await openContact(guest);
     await fill(guest, valid(name));
     await submit(guest);
-    await expect(guest.getByRole('heading', { name: 'Thank you!' })).toBeVisible();
+    await expect(guest.getByText('Thank you!').first()).toBeVisible();
     await context.close();
     await page.goto(`${ADMIN}/pages/forms/contact?status=all&q=${encodeURIComponent(name)}`);
     await expect(page.getByText('webhook: failed')).toBeVisible();

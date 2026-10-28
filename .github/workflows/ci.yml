@@ -26,6 +26,7 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm lint
       - run: pnpm format:check
+      # GitHub Actions sets CI=true: script tests must not depend on it (tests/support/script.ts).
       - run: pnpm test
       - run: pnpm content:check
       - run: pnpm tokens:check

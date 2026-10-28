@@ -85,7 +85,7 @@ function Buttons() {
     <div className="flex flex-col gap-8">
       <div className="overflow-x-auto">
         <table className="w-full min-w-max text-body-sm">
-          <caption className="sr-only">Pill buttons in every state</caption>
+          <caption className="sr-only">Button variants in every state</caption>
           <thead>
             <tr className="text-start text-caption text-muted-foreground">
               <th scope="col" className="py-2 pe-4 text-start">
@@ -153,13 +153,8 @@ function Buttons() {
         </Cell>
         <Cell label="menu button: closed, open">
           <div className="flex gap-4">
-            <BurgerButton
-              open={false}
-              label="Menu"
-              controls="storybook"
-              onClick={() => undefined}
-            />
-            <BurgerButton open label="Close menu" controls="storybook" onClick={() => undefined} />
+            <BurgerButton open={false} label="Menu" controls="storybook" />
+            <BurgerButton open label="Close menu" controls="storybook" />
           </div>
         </Cell>
       </div>
@@ -183,7 +178,7 @@ function FormFields() {
           <Input id="sb-focus" placeholder=" " defaultValue="Focused" className="is-focus" />
         </Field>
         <Field
-          label="Error"
+          label="Input (error)"
           htmlFor="sb-error"
           floating
           errorId="sb-error-text"
@@ -197,7 +192,7 @@ function FormFields() {
             aria-describedby="sb-error-text"
           />
         </Field>
-        <Field label="Disabled" htmlFor="sb-disabled" floating>
+        <Field label="Input (disabled)" htmlFor="sb-disabled" floating>
           <Input id="sb-disabled" placeholder=" " defaultValue="Disabled" disabled />
         </Field>
         <Field label="Message" htmlFor="sb-textarea" hideLabel>

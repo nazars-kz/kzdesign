@@ -24,9 +24,9 @@ test('changing a single token restyles every element that uses it', async ({ pag
   const before = await styles();
   await page.evaluate(() => {
     const root = document.documentElement.style;
-    root.setProperty('--color-primary', 'rgb(12, 34, 56)');
-    root.setProperty('--type-display-size', '20px');
-    root.setProperty('--type-display-letter-spacing', '2px');
+    root.setProperty('--color-inverse', 'rgb(12, 34, 56)');
+    root.setProperty('--type-h1-size', '20px');
+    root.setProperty('--type-h1-letter-spacing', '2px');
     root.setProperty('--font-body', 'monospace');
   });
   // Buttons animate color changes (motion tokens): wait for transitions to settle.

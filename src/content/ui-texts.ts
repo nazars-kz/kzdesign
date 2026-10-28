@@ -21,6 +21,7 @@ export const uiTexts = defineUiTexts({
         closeMenu: 'Name of the menu button while the menu is open',
         mainNavigation: 'Name of the main menu (read by screen readers)',
         mobileNavigation: 'Name of the phone menu (read by screen readers)',
+        language: 'Name of the language switcher (read by screen readers)',
         home: 'Name of the logo link',
       },
     },
@@ -79,6 +80,13 @@ export const uiTexts = defineUiTexts({
         servicesTabs: 'Name of the services tabs (read by screen readers)',
         testimonialsLabel: 'Name of the testimonials slider (read by screen readers)',
         companyEmail: 'Label before the email under the contact form',
+      },
+    },
+    preview: {
+      label: 'Preview of unpublished items',
+      texts: {
+        notice: 'Notice at the top of a preview',
+        exit: 'Button that leaves the preview',
       },
     },
     services: {

@@ -45,7 +45,9 @@ export function ContactForm({
   const summaryRef = useRef<HTMLDivElement>(null);
   const form = useSiteForm({ config, messages, summaryRef });
   // The button enables once the required fields are valid (checked natively on every input).
+  // Without JavaScript it stays enabled: the browser validates and posts the form itself.
   const [ready, setReady] = useState(false);
+  const hydrated = 'noValidate' in form.formProps;
 
   if (form.succeeded) {
     return (
@@ -99,7 +101,7 @@ export function ContactForm({
       <button
         type="submit"
         className={buttonClasses('light', 'form__submit', { size: 'xl' })}
-        disabled={form.pending || !ready}
+        disabled={form.pending || (hydrated && !ready)}
       >
         {form.pending ? strings.sending : config.submitLabel}
         <ButtonArrow />

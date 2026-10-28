@@ -10,12 +10,14 @@ import { SiteHeader } from './site-header';
 export async function SiteLayout({
   locale,
   defaultLocale,
+  enabledLocales,
   siteName,
   logo,
   children,
 }: {
   locale: string;
   defaultLocale: string;
+  enabledLocales: readonly string[];
   siteName: string;
   logo: SiteLogo | null;
   children: ReactNode;
@@ -29,7 +31,13 @@ export async function SiteLayout({
       >
         {t('skipToContent')}
       </a>
-      <SiteHeader locale={locale} defaultLocale={defaultLocale} siteName={siteName} logo={logo} />
+      <SiteHeader
+        locale={locale}
+        defaultLocale={defaultLocale}
+        enabledLocales={enabledLocales}
+        siteName={siteName}
+        logo={logo}
+      />
       <main id="main" tabIndex={-1} className="focus:outline-none">
         {children}
       </main>

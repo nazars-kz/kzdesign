@@ -5,6 +5,7 @@
     "closeMenu": "Close menu",
     "mainNavigation": "Main navigation",
     "mobileNavigation": "Mobile navigation",
+    "language": "Language",
     "home": "K&Z Design — home"
   },
   "nav": {
@@ -43,6 +44,10 @@
     "servicesTabs": "Services",
     "testimonialsLabel": "Testimonials",
     "companyEmail": "Email:"
+  },
+  "preview": {
+    "notice": "Preview: this is how the page will look. It may not be published yet.",
+    "exit": "Exit preview"
   },
   "services": {
     "learnMore": "Learn more"
