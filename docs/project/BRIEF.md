@@ -66,7 +66,7 @@ The client adds new cases and testimonials himself. The 14 testimonials from `in
 ## Design decisions
 
 - Mobile: from the CSS (≤ 767), no tablet layout.
-- Fonts: Outfit (self-hosted, files in the design folder) + Satoshi (free from Fontshare, download and self-host with permission, granted).
+- Fonts: Google Sans Flex (variable, self-hosted, files in the design folder; replaced Outfit on 2026-10-28) + Satoshi (free from Fontshare, download and self-host with permission, granted).
 - Images: hotlinked images from `cdn.prod.website-files.com` are downloaded into the project (permission granted).
 - Primary button hover: **as on the homepage** (stays dark, arrow slides in).
 - Animations: as in `DESIGN_SYSTEM.md` §3.

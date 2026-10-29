@@ -38,6 +38,7 @@ export async function ButtonLink({
   external = false,
   variant = 'primary',
   size,
+  drawer,
   className,
   children,
 }: {
@@ -45,6 +46,8 @@ export async function ButtonLink({
   external?: boolean;
   variant?: ButtonVariant;
   size?: ButtonSize;
+  /** Opens the contact panel on that tab (the link stays as the no-JavaScript fallback). */
+  drawer?: 'book' | 'message';
   className?: string;
   children: ReactNode;
 }) {
@@ -58,7 +61,12 @@ export async function ButtonLink({
     );
   }
   return (
-    <Link href={await localizeHref(href)} className={classes}>
+    <Link
+      href={await localizeHref(href)}
+      className={classes}
+      data-drawer={drawer}
+      aria-haspopup={drawer ? 'dialog' : undefined}
+    >
       {children}
       <ButtonArrow />
     </Link>

@@ -3,6 +3,7 @@
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
 import { Container } from './ui/layout';
+import { useDragScroll } from './ui/use-drag-scroll';
 import { RoundButton } from './ui/round-button';
 
 /** Distance (px) the slider may be off its ends and still count as at the end. */
@@ -23,12 +24,14 @@ export function TestimonialSlider({
 }: {
   heading: ReactNode;
   footer: ReactNode;
-  labels: { previous: string; next: string; region: string };
+  labels: { previous: string; next: string; region: string; drag: string };
   children: ReactNode;
 }) {
   const track = useRef<HTMLDivElement>(null);
   const [canPrevious, setCanPrevious] = useState(false);
   const [canNext, setCanNext] = useState(true);
+
+  useDragScroll(track, labels.drag);
 
   const update = useCallback(() => {
     const element = track.current;

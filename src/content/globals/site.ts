@@ -16,7 +16,7 @@ export const SOCIAL_NETWORKS = [
 export const siteGlobals = defineGlobal({
   id: 'site',
   label: 'Header & footer',
-  uiTexts: ['common', 'nav', 'footer', 'cookie', 'notFound'],
+  uiTexts: ['common', 'nav', 'footer', 'contact', 'cookie', 'notFound'],
   sections: [
     defineSection({
       id: 'header',
@@ -24,6 +24,23 @@ export const siteGlobals = defineGlobal({
       description: 'The button on the right of the header. Menu labels are in Interface texts.',
       fields: {
         cta: f.link({ label: 'Header button', required: true }),
+      },
+    }),
+    defineSection({
+      id: 'menu',
+      label: 'Menu',
+      description:
+        'The second menu of the header (the “=” button). The Services menu is built from the Services collection.',
+      fields: {
+        more: f.list({
+          label: 'Cards of the “=” menu',
+          max: 4,
+          itemLabelField: 'link',
+          of: {
+            link: f.link({ label: 'Title and link', required: true }),
+            image: f.image({ label: 'Picture', localized: false, recommendedSize: '640×400' }),
+          },
+        }),
       },
     }),
     defineSection({
@@ -37,6 +54,11 @@ export const siteGlobals = defineGlobal({
           max: 400,
           rows: 4,
           help: 'Registry code and full address, shown under the contact form.',
+        }),
+        footerClaim: f.text({
+          label: 'Footer claim',
+          max: 120,
+          help: 'The line under the logo in the footer.',
         }),
         footerLine: f.text({
           label: 'Footer line',
@@ -68,8 +90,21 @@ export const siteGlobals = defineGlobal({
       header: {
         cta: { label: 'Get in touch', href: '/contact-us', external: false },
       },
+      menu: {
+        more: [
+          {
+            link: { label: 'Approach', href: '/approach', external: false },
+            image: { asset: 'approach-uxui.png', alt: 'Approach' },
+          },
+          {
+            link: { label: 'About us', href: '/about-us', external: false },
+            image: { asset: 'menu-about.webp', alt: 'About us' },
+          },
+        ],
+      },
       company: {
         name: 'K&Zh OÜ',
+        footerClaim: 'No calls with sales. Contact us and get to chat with our CEO.',
         details:
           'Registry code: 17092851 Kaupmehe tn 7-120, Kesklinna linnaosa, Tallinn, Harju maakond, 10114, Estonia',
         footerLine: 'K&Zh OÜ · Registry code 17092851 · Kaupmehe tn 7-120, Tallinn, 10114, Estonia',

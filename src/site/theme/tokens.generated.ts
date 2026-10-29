@@ -109,7 +109,7 @@ export const tokens = {
       "size": "1.5rem",
       "lineHeight": "1.4",
       "letterSpacing": "-0.01em",
-      "weight": "500",
+      "weight": "400",
       "family": "var(--font-family-heading), system-ui, -apple-system, 'Segoe UI', sans-serif"
     },
     "lead": {

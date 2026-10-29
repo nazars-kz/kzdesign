@@ -23,6 +23,7 @@ export async function Testimonials({
           previous: t('previousSlide'),
           next: t('nextSlide'),
           region: t('testimonialsLabel'),
+          drag: t('drag'),
         }}
         heading={<SectionHeader eyebrow={content.eyebrow} title={content.title} id="testi-title" />}
         footer={

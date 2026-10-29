@@ -37,7 +37,12 @@ export function Faq({ content }: { content: SitePageContent<'home'>['faq'] }) {
           />
           <div className="faq__after">
             <p className="faq__sub text-body-lg">{content.subtitle}</p>
-            <ButtonLink href={content.ctaAfter.href} external={content.ctaAfter.external} size="lg">
+            <ButtonLink
+              href={content.ctaAfter.href}
+              external={content.ctaAfter.external}
+              size="lg"
+              drawer="book"
+            >
               {content.ctaAfter.label}
             </ButtonLink>
           </div>

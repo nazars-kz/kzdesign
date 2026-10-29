@@ -4,6 +4,7 @@ import { type ReactNode, useEffect, useRef, useState } from 'react';
 
 import { BurgerButton } from '../components/burger-button';
 import { cx } from '../components/ui/cn';
+import { MegaProvider } from './mega-menu';
 
 /** Scroll distance after which the header becomes compact. */
 const SCROLL_THRESHOLD = 4;
@@ -20,6 +21,8 @@ export function HeaderShell({
   languages,
   cta,
   compactCta,
+  more,
+  mega,
   menu,
   labels,
 }: {
@@ -28,6 +31,10 @@ export function HeaderShell({
   languages: ReactNode;
   cta: ReactNode;
   compactCta: ReactNode;
+  /** The round “=” button that opens the second mega menu. */
+  more: ReactNode;
+  /** The mega menu panels (inside the header, under its bar). */
+  mega: ReactNode;
   menu: ReactNode;
   labels: { open: string; close: string };
 }) {
@@ -65,7 +72,7 @@ export function HeaderShell({
   }, [open]);
 
   return (
-    <>
+    <MegaProvider>
       <header className={cx('site-header', scrolled && 'is-scrolled')}>
         <div className="mx-auto w-full max-w-content px-gutter">
           <div className="site-header__inner">
@@ -75,6 +82,7 @@ export function HeaderShell({
               {languages}
               {cta}
               {compactCta}
+              {more}
               <BurgerButton
                 buttonRef={burger}
                 open={open}
@@ -85,6 +93,7 @@ export function HeaderShell({
             </div>
           </div>
         </div>
+        {mega}
       </header>
       <div
         id="mobile-menu"
@@ -96,6 +105,6 @@ export function HeaderShell({
       >
         {menu}
       </div>
-    </>
+    </MegaProvider>
   );
 }

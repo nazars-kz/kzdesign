@@ -2,7 +2,7 @@
 
 Sources (all in `design/KZ/`, git-ignored):
 
-- `kz-homepage/` — 25 ready HTML pages + `css/` (`style.css`, `about.css`, `service.css`, `cases.css`, `case.css`), `js/` (`main.js`, `about.js`, `service.js`, `cases.js`, `case.js`, `vendor/lottie_svg.min.js`), `assets/`, `fonts/` (Outfit 300/400/500/600), `tools/` (Python page generators, reference only).
+- `kz-homepage/` — since 2026-10-29 `index.html` in the root and the other pages in `pages/` (cases in `pages/cases/`): 25 ready HTML pages + `css/` (`style.css`, `about.css`, `service.css`, `cases.css`, `case.css`), `js/` (`main.js`, `about.js`, `service.js`, `cases.js`, `case.js`, `vendor/lottie_svg.min.js`), `assets/`, `fonts/` (Google Sans Flex variable font since 2026-10-28; Outfit files remain unused), `tools/` (Python page generators, reference only).
 - `kz-homepage/design-system/` — `DESIGN_SYSTEM.md` (v1.2, tokens, component inventory, motion table, SEO rules), `tokens.css`, `components.css`, `fonts.css`, `index.html` (living style guide). **This is the main spec; it wins over guesses.**
 - `KZ/logo.svg`, `icon.svg`, `KZ Showreel.mp4`, `Partners/*.png` (24 logos, originals), `Кейси/*.png` (4 case covers), `kz-logo-3d/` (GLB + three.js demo + renders; not used by the pages seen so far).
 
@@ -101,7 +101,7 @@ Homepage-only `--x-*` greys (10 values, listed in the doc) — to be mapped to k
 
 ### Typography
 
-Primary **Outfit** (self-hosted 300/400/500/600, replaces Nekst), secondary **Satoshi** (Body 4 only, now from Fontshare CDN → self-host). H1 600 88/32 · H2 300 64/40 (−3%) · H3 300 32/24 · H4 300 24/20 · Sub 1–4 · Body 1–4 · CAPS 12/18 600. Line heights 110–150%. Buttons/links/eyebrows weight 600.
+Primary **Google Sans Flex** (variable 100–1000, self-hosted, replaced Outfit on 2026-10-28; before that Nekst), secondary **Satoshi** (Body 4 only, now from Fontshare CDN → self-host). H1 600 88/32 · H2 300 64/40 (−3%) · H3 300 32/24 · H4 300 24/20 · Sub 1–4 · Body 1–4 · CAPS 12/18 600. Line heights 110–150%. Buttons/links/eyebrows weight 600.
 
 ### Layout
 
@@ -190,3 +190,22 @@ Header compact on scroll; burger full-screen menu ≤ 1100; awards expand/collap
 6. Hosting (Netlify/Vercel), domain, analytics.
 7. Hotlinked images: OK to download them from the old site, or do they have the originals?
 8. Commit identity (name/email) for the corporate GitHub account.
+
+## Design update 2026-10-29 (design-system v1.3): what changed and where it is built
+
+Compared file by file with the previous design folder (`design/KZ/kz-homepage` → `design/kz-homepage`). Home first; the other pages follow one by one.
+
+| Change in the design                                                                                                                                                                                                                                | Built on Home | Notes                                                                                                                                               |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Font: Google Sans Flex instead of Outfit; new text style **Section title** 40/48 (mobile 24/33.6), weight 400, replaces H3 32 / 28 for titles under an eyebrow                                                                                      | yes           | `fonts.ts`, `tokens.css` (`--type-section-title-*`)                                                                                                 |
+| Headings never end with a full stop                                                                                                                                                                                                                 | yes           | Approach title seed                                                                                                                                 |
+| Header: Services is a button with a **mega menu** of image cards (SaaS web apps, Mobile apps, Websites); a round **"=" button** holds Approach and About us; the page is dimmed while a panel is open; nav links are light pills on hover / current | yes           | `mega-menu.tsx`; cards read the services collection (`menuTitle`, `menuImage`) and the global `site → menu`; burger menu and footer keep every link |
+| **Contact drawer**: every "Get in touch" opens a panel from the right with tabs _Book a call_ (day → time → details → sent) and _Send a message_ (needs / budget chips, source, NDA, privacy)                                                       | yes           | `components/contact/`; forms `booking` and `project`; texts in Interface texts → Contact panel                                                      |
+| Home **contact block** uses the same panel embedded (_Send a message_ first: Name, Email address, Message; _Book a call_ second)                                                                                                                    | yes           | form `contact` for the message, `booking` for calls                                                                                                 |
+| **Footer**: brand + claim + button, columns Services / Company / Contact with socials, legal row                                                                                                                                                    | yes           | `site-footer.tsx`                                                                                                                                   |
+| **Drag to scroll** on the Testimonials slider with a round "Drag" cursor (mouse only)                                                                                                                                                               | yes           | `use-drag-scroll.ts`                                                                                                                                |
+| Cards rounded 8px; case covers keep their proportions; uniqueness cards **stack** while scrolling; Approach / Industries / FAQ layouts and hover motions; industry icons from the K&Z icon pack (no circle)                                         | yes           | `sections.css`; icons in `public/icons/industries`                                                                                                  |
+| Light button hover stays light (never dark)                                                                                                                                                                                                         | yes           | `components.css`                                                                                                                                    |
+| Pages moved to `pages/`, new pages Reviews, Contact us, Approach; 3D logo on About and case CTA; Lottie hovers; Clutch widget on Reviews; mobile case filter; sticky filter on Cases                                                                | **not yet**   | built with their pages (issues #5–#9)                                                                                                               |
+
+Open points from the design: the booking has **no calendar behind it** (availability is mocked: Mon–Fri 10:00–17:30 Tallinn, 30-minute slots). On the site the request lands in the admin inbox (form `booking`: start time in UTC and the visitor's time zone) and the team confirms by email; a real calendar (Cal.com / Google Calendar) is a separate task. The option lists of the drawer (needs, budgets, "How did you hear about us?") are placeholders in the design; they are editable in the admin.

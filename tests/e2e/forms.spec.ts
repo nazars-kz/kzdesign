@@ -40,6 +40,8 @@ interface ContactInput {
 /** Opens the page with the contact form (the Home contact block); with JavaScript, waits for the hydrated form's timing token. */
 async function openContact(page: Page, pathname = '/', javaScript = true): Promise<void> {
   await page.goto(pathname);
+  // The Home page is long: let its images settle so the form doesn't move under the pointer.
+  await page.waitForLoadState('networkidle');
   await expect(page.locator('form#form-contact')).toBeVisible();
   if (javaScript) await expect(page.locator('form#form-contact input[name="_t"]')).toBeAttached();
 }
@@ -74,12 +76,14 @@ async function inboxCount(page: Page, search: string): Promise<number> {
 async function configureDelivery(page: Page, options: { email: boolean; webhook: boolean }) {
   await setDeveloperMode(page, true);
   const form = await openSettingsTab(page, 'requests', 'Requests');
+  // Every form has its own block; these tests use the contact form's.
+  const contact = form.getByRole('group', { name: /^Contact form/ });
   // Email goes to the listed recipients; an empty list sends no email.
-  await form.getByLabel('Send requests to').fill(options.email ? 'inbox@example.test' : '');
-  const webhook = form.getByRole('switch', { name: 'Webhook (CRM, Zapier, Make)' });
+  await contact.getByLabel('Send requests to').fill(options.email ? 'inbox@example.test' : '');
+  const webhook = contact.getByRole('switch', { name: 'Webhook (CRM, Zapier, Make)' });
   if ((await webhook.getAttribute('aria-checked')) !== String(options.webhook))
     await webhook.click();
-  await form.getByLabel('Webhook URL').fill(WEBHOOK_URL);
+  await contact.getByLabel('Webhook URL').fill(WEBHOOK_URL);
   if (await page.getByRole('region', { name: 'Unsaved changes' }).isVisible()) {
     await saveSettingsTab(page);
   }
@@ -162,22 +166,29 @@ test.describe.serial('forms', () => {
     const bot = await visitor(browser);
     await openContact(bot.page);
     await fill(bot.page, valid(`Honeypot ${stamp}`));
-    await bot.page.locator('input[name="website"]').fill('https://spam.example', { force: true });
+    await bot.page
+      .locator('form#form-contact input[name="website"]')
+      .fill('https://spam.example', { force: true });
     await submit(bot.page);
     await expect(bot.page.getByText('Thank you!').first()).toBeVisible();
 
     await openContact(bot.page);
-    // The Home page is heavy, so typing through the UI can take longer than the 3 s minimum:
-    // fill and submit inside the page, in the same instant.
-    await bot.page.locator('form#form-contact').evaluate((form: HTMLFormElement, name: string) => {
-      const set = (field: string, value: string) => {
-        (form.elements.namedItem(field) as HTMLInputElement).value = value;
-      };
-      set('name', name);
-      set('email', 'visitor@example.test');
-      set('message', 'Hello from the end-to-end tests.');
-      form.requestSubmit();
-    }, `TooFast ${stamp}`);
+    // The Home page is heavy and its form is hydrated seconds before the test types, so get a
+    // fresh timing token, fill and submit inside the page in the same instant.
+    await bot.page
+      .locator('form#form-contact')
+      .evaluate(async (form: HTMLFormElement, name: string) => {
+        const response = await fetch('/api/forms/token?form=contact', { cache: 'no-store' });
+        const { token } = (await response.json()) as { token: string };
+        const set = (field: string, value: string) => {
+          (form.elements.namedItem(field) as HTMLInputElement).value = value;
+        };
+        set('_t', token);
+        set('name', name);
+        set('email', 'visitor@example.test');
+        set('message', 'Hello from the end-to-end tests.');
+        form.requestSubmit();
+      }, `TooFast ${stamp}`);
     await expect(bot.page.getByText('Thank you!').first()).toBeVisible();
     await bot.context.close();
 
@@ -188,6 +199,7 @@ test.describe.serial('forms', () => {
   });
 
   test('a visitor is rate limited after five submissions', async ({ browser }) => {
+    test.setTimeout(180_000); // six submissions, each loads the long Home page and waits 3 s
     const { context, page } = await visitor(browser);
     for (let attempt = 1; attempt <= 5; attempt += 1) {
       await openContact(page);
@@ -223,7 +235,10 @@ test.describe.serial('forms', () => {
       // Unread count in the Pages sidebar.
       await page.goto(admin('/pages/forms/contact'));
       await expect(
-        page.getByRole('region', { name: 'Forms' }).getByLabel(/[1-9][0-9]* new/),
+        page
+          .getByRole('region', { name: 'Forms' })
+          .getByLabel(/[1-9][0-9]* new/)
+          .first(),
       ).toBeVisible();
 
       // The dev mail provider wrote the email.

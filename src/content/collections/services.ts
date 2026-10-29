@@ -28,6 +28,17 @@ export const services = defineCollection({
       max: 40,
       help: 'Short name shown in the Services menu and in the breadcrumbs, e.g. “SaaS”.',
     }),
+    menuTitle: f.text({
+      label: 'Menu: card title',
+      max: 40,
+      help: 'Title on the card of the Services menu and in the footer, e.g. “SaaS web apps”.',
+    }),
+    menuImage: f.image({
+      label: 'Menu: card picture',
+      localized: false,
+      recommendedSize: '640×400',
+      help: 'Cover of the card in the Services menu.',
+    }),
     title: f.text({ label: 'Page title (H1)', required: true, max: 120 }),
     description: f.textarea({
       label: 'Short description',
@@ -65,6 +76,8 @@ export const services = defineCollection({
         en: {
           order: 1,
           navLabel: 'SaaS',
+          menuTitle: 'SaaS web apps',
+          menuImage: { asset: 'menu-saas.webp', alt: 'SaaS web apps' },
           title: 'SaaS, Web App, Software',
           description:
             'Business needs and industry specifics driven SaaS, web app and software design with strong information architecture and design system foundation.',
@@ -90,6 +103,8 @@ export const services = defineCollection({
         en: {
           order: 2,
           navLabel: 'Mobile',
+          menuTitle: 'Mobile apps',
+          menuImage: { asset: 'menu-mobile.webp', alt: 'Mobile apps' },
           title: 'Mobile apps',
           description:
             'User flow and employee performance driven mobile app design for your B2B product. User-centered mobile experience to reach App Store and Google Play top.',
@@ -114,6 +129,8 @@ export const services = defineCollection({
         en: {
           order: 3,
           navLabel: 'Web',
+          menuTitle: 'Websites',
+          menuImage: { asset: 'menu-web.webp', alt: 'Websites' },
           title: 'Websites',
           description:
             'Conversion and brand positioning driven web design to help leads and visitors find the fastest way to actions necessary for your business.',
