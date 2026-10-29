@@ -1,0 +1,65 @@
+/* Approach page. Built on tokens.css + shared styles (breadcrumbs from about.css pattern, industries/testimonials/contact from style.css).
+   Source: live https://www.kz.design/approach (no Figma layout), measured at 1440 and 375. */
+
+/* ---------- Breadcrumbs ---------- */
+.crumbs { padding-top: 28px; }
+.crumbs ol { display: flex; flex-wrap: wrap; margin: 0; padding: 0; list-style: none;
+  font: var(--fw-bold) var(--fs-body4)/18px var(--font-secondary); text-transform: uppercase; color: var(--x-ink); }
+.crumbs li + li::before { content: "/"; padding: 0 7px; }
+.crumbs a { color: #535355; transition: color var(--dur-fast); }
+.crumbs a:hover { color: var(--accent-primary); }
+
+/* ---------- Hero ---------- */
+.ap-hero { padding: 120px 0 76px; }
+.ap-hero__title { margin: 0; font: var(--fw-semibold) var(--fs-h1)/1.1 var(--font-primary); color: var(--x-ink); }
+.ap-hero__row { margin-top: 24px; display: flex; justify-content: space-between; gap: 32px; align-items: flex-start; }
+.ap-hero__sub { max-width: 644px; font: 400 20px/28px var(--font-secondary); color: #535355; }
+.ap-pills { margin-top: 54px; display: flex; flex-wrap: wrap; gap: 8px; }
+.ap-pills a { padding: 9px 23px; border: 1px solid var(--x-line-light); border-radius: 34px; font: 400 18px/27px var(--font-primary); color: var(--accent-secondary);
+  transition: border-color var(--dur-fast), color var(--dur-fast); }
+.ap-pills a:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+.ap-quote { flex: 0 0 504px; margin: 0 140px 0 0; padding: 20px; border-radius: var(--radius-middle); background: var(--x-gray-bg); }
+.ap-quote blockquote { font: italic 400 16px/24px var(--font-secondary); color: var(--accent-secondary); }
+.ap-quote blockquote b { font-weight: var(--fw-bold); }
+.ap-quote .who { margin-top: 22px; display: flex; gap: 0; align-items: center; }
+.ap-quote .who img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex: none; }
+.ap-quote .who b { display: block; font: var(--fw-bold) 18px/27px var(--font-secondary); color: var(--accent-secondary); }
+.ap-quote .who span { font: 400 20px/30px var(--font-secondary); color: var(--accent-secondary); }
+
+/* ---------- Phases ---------- */
+.phase { scroll-margin-top: 80px; }
+.phase + .phase { margin-top: 140px; }
+.phase__inner { padding-bottom: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; border-top: 1px solid var(--x-gray-bg); }
+.phase__text { padding-top: 53px; }
+.phase__intro { margin-top: 28px; font: 400 16px/24px var(--font-secondary); color: #535355; }
+.phase__visual { margin-top: 41px; height: 565px; background: var(--bg-alternate); overflow: hidden; }
+.phase--rev .phase__text { order: 2; }
+.phase--rev .phase__visual { order: 1; }
+
+.phase-acc { margin-top: 40px; }
+.phase-acc .acc-row { border-bottom: 1px solid #D0D0D1; }
+.phase-acc .acc-row__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 0; text-align: left;
+  font: var(--fw-medium) 20px/30px var(--font-secondary); color: var(--accent-secondary); cursor: pointer; }
+.phase-acc .plus { margin-right: 0; color: var(--accent-secondary); }
+.phase-acc .acc-row__label span { white-space: nowrap; }
+.phase-acc .acc-row__body p { max-width: 597px; padding-bottom: 20px; font: 400 16px/24px var(--font-secondary); color: #535355; }
+
+.ap-industries { margin-top: 140px; }
+
+/* ---------- Mobile (≤767, layout 375) ---------- */
+@media (max-width: 767px) {
+  .ap-hero { padding: 60px 16px 60px; }
+  .phase__inner { padding-bottom: 0; }
+  .ap-hero__title { font-size: 32px; line-height: 35.2px; }
+  .ap-hero__row { margin-top: 12px; flex-direction: column; gap: 0; }
+  .ap-hero__sub { font-size: 18px; line-height: 28px; }
+  .ap-pills { margin-top: 24px; justify-content: center; }
+  .ap-pills a { padding: 8px 20px; font-size: 16px; line-height: 24px; }
+  .ap-quote { flex: none; width: 100%; margin: 64px 0 0; }
+
+  .phase + .phase { margin-top: 0; }
+  .phase__inner { grid-template-columns: 1fr; }
+  .phase--rev .phase__text, .phase--rev .phase__visual { order: initial; }
+  .phase__visual { margin: 40px 0 64px; height: 304px; }
+  .phase-acc .acc-row__head { font-size: 18px; line-height: 27px; }
+}

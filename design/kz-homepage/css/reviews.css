@@ -1,0 +1,27 @@
+/* Reviews page (tools/build_reviews.py). Source: live https://www.kz.design/reviews.
+   Reviews themselves are the Clutch widget (type 5); the page only frames it. */
+.rv-hero { padding-top: 96px; text-align: center; }
+.rv-hero__title { margin: 0; font: var(--fw-semibold) var(--fs-h1)/var(--lh-h1) var(--font-primary); color: var(--x-ink); }
+.rv-hero__sub { max-width: 812px; margin: 24px auto 0; font: 400 20px/30px var(--font-secondary); color: #535355; }
+
+.rv-list { padding-top: 80px; }
+.rv-widget { max-width: 1100px; margin: 0 auto; min-height: 400px; }
+.rv-widget iframe { display: block; width: 100% !important; border: 0; }
+
+.rv-cta { padding: 120px 0 140px; }
+.rv-cta__card { padding: 80px 40px; border-radius: var(--radius-middle); background: var(--x-gray-bg); text-align: center; display: flex; flex-direction: column; align-items: center; }
+.rv-cta__mark { width: 39px; height: 12px; }
+.rv-cta__title { margin: 24px 0 0; max-width: 760px; font: var(--fw-regular) var(--fs-section)/var(--lh-section) var(--font-primary); letter-spacing: -0.01em; color: var(--x-ink); }
+.rv-cta__sub { margin-top: 16px; max-width: 570px; font: 400 20px/30px var(--font-secondary); color: #535355; }
+.rv-cta__card .btn { margin-top: 40px; }
+
+@media (max-width: 767px) {
+  .rv-hero { padding-top: 56px; }
+  .rv-hero__title { font-size: 40px; line-height: 44px; }
+  .rv-hero__sub { font-size: 16px; line-height: 24px; }
+  .rv-list { padding-top: 40px; }
+  .rv-cta { padding: 60px 0; }
+  .rv-cta__card { padding: 48px 20px; }
+  .rv-cta__title { font-size: 24px; line-height: 32px; }
+  .rv-cta__sub { font-size: 16px; line-height: 24px; }
+}
