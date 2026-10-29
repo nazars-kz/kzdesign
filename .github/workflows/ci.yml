@@ -114,7 +114,9 @@ jobs:
       # marked production, like a staging site connected to the live one (tests/e2e-staging).
       - name: Restart as staging
         run: |
-          pkill -f "next start" || true
+          # `next start` renames its process (next-server), so pkill by command line misses it: free the port instead
+          kill $(lsof -t -i:3100) 2>/dev/null || true
+          sleep 2
           E2E_DATABASE_MARKER=production pnpm e2e:prepare
           DEPLOYMENT_ENVIRONMENT=staging STAGING_MAIL_TO=staging-team@example.test pnpm start --port 3100 > server-staging.log 2>&1 &
       - run: npx --yes wait-on@8 http://localhost:3100 --timeout 120000

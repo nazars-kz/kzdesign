@@ -5,7 +5,7 @@ export const SITE_ROUTE_SEQUENCE = ['/about-us', '/cases', '/approach', '/contac
 /** Admin screens reachable from the sidebar and the Pages tree (sub paths of the admin). */
 export const ADMIN_ROUTE_SEQUENCE = [
   '/pages',
-  '/pages/home',
+  '/pages/about',
   '/managers',
   '/settings',
   '/security',
