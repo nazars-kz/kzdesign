@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 
 import type { SiteLogo } from '@/core/media/branding';
 
+import { ContactDrawerMount } from '../components/contact/contact-panel-server';
 import { SiteFooter } from './site-footer';
 import { SiteHeader } from './site-header';
 
@@ -42,6 +43,7 @@ export async function SiteLayout({
         {children}
       </main>
       <SiteFooter locale={locale} defaultLocale={defaultLocale} siteName={siteName} />
+      <ContactDrawerMount locale={locale} />
     </>
   );
 }

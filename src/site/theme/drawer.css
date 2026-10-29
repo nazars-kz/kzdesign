@@ -1,0 +1,931 @@
+/* Contact panel (drawer and embedded block): ported from design/kz-homepage/css/drawer.css.
+   The design's variables are scoped to the panel so nothing else is affected. */
+.dw {
+  --bg-alternate: #181b22;
+  --content-high-alt: #fff;
+  --content-medium-alt: rgb(255 255 255 / 0.8);
+  --content-low-alt: rgb(255 255 255 / 0.5);
+  --outline-on-dark: rgb(255 255 255 / 0.1);
+  --x-border-on-dark: #4c4e51;
+  --x-line-dark: #343741;
+  --x-dark-3: #20232a;
+  --x-hover-on-dark: #333640;
+  --x-muted: #b9bbbd;
+  --x-soft: #e3e3e3;
+  --x-ink: #121212;
+  --gray-white: #fff;
+  --accent-primary: #fc814a;
+  --accent-primary-darker: #ff7a00;
+  --accent-secondary: #262930;
+  --accent-secondary-lighter: #303642;
+  --semantic-positive: #22ba5f;
+  --semantic-negative: #d72929;
+  --radius-large: 0.75rem;
+  --radius-middle: 0.5rem;
+  --radius-small: 0.25rem;
+  --radius-infinite: 999px;
+  --dur-fast: 200ms;
+  --dur-base: 250ms;
+  --dur-slow: 450ms;
+  --dw-dur-xslow: 600ms;
+  --ease-standard: ease;
+  --ease-emphasized: cubic-bezier(0.4, 0, 0.2, 1);
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --font-primary: var(--font-heading);
+  --font-secondary: var(--font-body);
+  --f-body: var(--font-body);
+}
+
+.dw {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  visibility: hidden;
+  pointer-events: none;
+}
+.dw.is-open {
+  visibility: visible;
+  pointer-events: auto;
+}
+.dw__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(24, 27, 34, 0.55);
+  backdrop-filter: blur(0.25rem);
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-standard);
+}
+.dw.is-open .dw__overlay {
+  opacity: 1;
+}
+.dw.is-closing {
+  visibility: visible;
+}
+
+.dw__panel {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  width: min(37.5rem, calc(100vw - 1.5rem));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-alternate);
+  color: var(--content-high-alt);
+  border: 1px solid var(--outline-on-dark);
+  border-radius: var(--radius-large);
+  box-shadow: 0 1.5rem 5rem rgba(0, 0, 0, 0.35);
+  transform: translateX(calc(100% + 1.5rem));
+  transition: transform var(--dw-dur-xslow) var(--ease-emphasized);
+  font-family: var(--font-secondary);
+}
+.dw.is-open .dw__panel {
+  transform: none;
+}
+
+/* ---------- Top bar: tabs + close ---------- */
+.dw__top {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+.dw__tabs {
+  display: flex;
+  padding: 0.25rem;
+  border-radius: var(--radius-infinite);
+  background: var(--accent-secondary);
+}
+.dw__tab {
+  height: 2.5rem;
+  padding: 0 1.125rem;
+  border-radius: var(--radius-infinite);
+  color: var(--content-medium-alt);
+  font: var(--fw-semibold) 0.9375rem/1 var(--font-primary);
+  transition:
+    background var(--dur-fast),
+    color var(--dur-fast);
+}
+.dw__tab:hover {
+  color: var(--content-high-alt);
+}
+.dw__tab[aria-selected='true'] {
+  background: var(--gray-white);
+  color: var(--x-ink);
+}
+.dw__close {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--x-border-on-dark);
+  color: var(--content-high-alt);
+  transition: border-color var(--dur-fast);
+}
+.dw__close:hover {
+  border-color: var(--content-high-alt);
+}
+.dw__close svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* ---------- Panes / steps ---------- */
+.dw__pane {
+  flex: 1;
+  min-height: 0;
+  display: none;
+  flex-direction: column;
+}
+.dw__pane.is-active {
+  display: flex;
+}
+.dw__step {
+  flex: 1;
+  min-height: 0;
+  display: none;
+  flex-direction: column;
+}
+.dw__step.is-active {
+  display: flex;
+  animation: dwIn var(--dur-slow) var(--ease-standard);
+}
+@keyframes dwIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.dw__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.5rem 1.5rem 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--x-border-on-dark) transparent;
+}
+.dw__foot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--x-line-dark);
+  background: var(--bg-alternate);
+}
+.dw__sum {
+  min-width: 0;
+}
+.dw__sum b {
+  display: block;
+  font: var(--fw-semibold) 1rem/1.375rem var(--font-primary);
+  color: var(--content-high-alt);
+}
+.dw__sum span {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--x-muted);
+}
+.dw__sum.is-empty b {
+  font-weight: var(--fw-regular);
+  color: var(--x-muted);
+}
+
+/* Button inside the drawer: white pill (homepage .btn--light), hover stays visible on the dark panel */
+.dw .btn--light {
+  height: 3.375rem;
+  flex: none;
+}
+.dw .btn--light:hover {
+  background: var(--accent-secondary);
+  border-color: var(--x-border-on-dark);
+  color: var(--content-high-alt);
+}
+.dw .btn--light:not(.btn--mobile):hover {
+  background: var(--accent-secondary);
+  border-color: var(--x-border-on-dark);
+  color: var(--content-high-alt);
+}
+.dw .btn--light:not(.btn--mobile):hover .btn__arrow {
+  background-image: url('/icons/arrow-right-white.svg');
+}
+.dw .btn--light[disabled] {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ---------- Content blocks ---------- */
+.dw-person {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.dw-person__ava {
+  position: relative;
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+}
+.dw-person__ava img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.dw-person__ava::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 1px;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--semantic-positive);
+  border: 2px solid var(--bg-alternate);
+}
+.dw-person b {
+  display: block;
+  font: var(--fw-semibold) 1rem/1.375rem var(--font-primary);
+}
+.dw-person span {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--x-muted);
+}
+
+.dw-title {
+  margin: 1.75rem 0 0;
+  font: var(--fw-medium) 2rem/2.5rem var(--font-primary);
+  letter-spacing: -0.02em;
+}
+.dw-lead {
+  margin-top: 0.625rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--x-muted);
+}
+.dw-lead a {
+  color: var(--content-high-alt);
+  text-decoration: underline;
+  text-underline-offset: 0.1875rem;
+}
+.dw-lead a:hover {
+  color: var(--accent-primary);
+}
+.dw-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-top: 1rem;
+}
+/* plain facts, not controls: no border, no pill */
+.dw-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--x-soft);
+}
+.dw-meta svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--accent-primary);
+}
+
+.dw-label {
+  display: block;
+  margin: 2rem 0 0.875rem;
+  font: var(--fw-semibold) 0.75rem/1.125rem var(--font-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--content-low-alt);
+}
+.dw-label i {
+  font-style: normal;
+  font-weight: var(--fw-regular);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ---------- Calendar ---------- */
+.dw-cal {
+  padding: 1rem;
+  border: 1px solid var(--x-line-dark);
+  border-radius: var(--radius-large);
+  background: var(--x-dark-3);
+}
+.dw-cal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.dw-cal__month {
+  font: var(--fw-semibold) 1rem/1.375rem var(--font-primary);
+}
+.dw-cal__nav {
+  display: flex;
+  gap: 0.5rem;
+}
+.dw-cal__nav button {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--x-border-on-dark);
+  transition:
+    border-color var(--dur-fast),
+    opacity var(--dur-fast);
+}
+.dw-cal__nav button:hover {
+  border-color: var(--content-high-alt);
+}
+.dw-cal__nav button[disabled] {
+  opacity: 0.3;
+  pointer-events: none;
+}
+.dw-cal__nav svg {
+  width: 1rem;
+  height: 1rem;
+}
+.dw-cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.25rem;
+}
+.dw-cal__wd {
+  padding: 0.375rem 0;
+  text-align: center;
+  font: var(--fw-semibold) 0.6875rem/1rem var(--font-primary);
+  text-transform: uppercase;
+  color: var(--content-low-alt);
+}
+.dw-day {
+  position: relative;
+  height: 2.75rem;
+  border-radius: var(--radius-middle);
+  font: var(--fw-medium) 0.9375rem/1 var(--font-primary);
+  color: var(--content-high-alt);
+  background: rgba(255, 255, 255, 0.06);
+  transition:
+    background var(--dur-fast),
+    color var(--dur-fast);
+}
+.dw-day:hover {
+  background: var(--x-hover-on-dark);
+}
+.dw-day[disabled] {
+  background: none;
+  color: var(--content-low-alt);
+  opacity: 0.45;
+  pointer-events: none;
+}
+.dw-day.is-today::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0.375rem;
+  width: 0.25rem;
+  height: 0.25rem;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+}
+.dw-day[aria-pressed='true'] {
+  background: var(--gray-white);
+  color: var(--x-ink);
+}
+.dw-cal__blank {
+  height: 2.75rem;
+}
+
+/* ---------- Time slots ---------- */
+.dw-when {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 2rem 0 0.875rem;
+}
+.dw-when b {
+  display: block;
+  font: var(--fw-medium) 1.25rem/1.75rem var(--font-primary);
+}
+.dw-when span {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--x-muted);
+}
+.dw-seg {
+  flex: none;
+  display: flex;
+  padding: 0.1875rem;
+  border-radius: var(--radius-infinite);
+  border: 1px solid var(--x-line-dark);
+}
+.dw-seg button {
+  height: 1.75rem;
+  padding: 0 0.625rem;
+  border-radius: var(--radius-infinite);
+  font: var(--fw-semibold) 0.75rem/1 var(--font-primary);
+  color: var(--x-muted);
+}
+.dw-seg button[aria-pressed='true'] {
+  background: var(--accent-secondary-lighter);
+  color: var(--content-high-alt);
+}
+.dw-slots {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.dw-slot {
+  height: 2.75rem;
+  border-radius: var(--radius-infinite);
+  border: 1px solid var(--x-border-on-dark);
+  font: var(--fw-medium) 0.9375rem/1 var(--font-primary);
+  color: var(--content-high-alt);
+  transition:
+    border-color var(--dur-fast),
+    background var(--dur-fast),
+    color var(--dur-fast);
+}
+.dw-slot:hover {
+  border-color: var(--content-high-alt);
+}
+.dw-slot[disabled] {
+  border-color: var(--x-line-dark);
+  color: var(--content-low-alt);
+  text-decoration: line-through;
+  pointer-events: none;
+}
+.dw-slot[aria-pressed='true'] {
+  background: var(--gray-white);
+  border-color: var(--gray-white);
+  color: var(--x-ink);
+}
+.dw-empty {
+  padding: 1.25rem;
+  border: 1px dashed var(--x-border-on-dark);
+  border-radius: var(--radius-large);
+  text-align: center;
+  color: var(--x-muted);
+  font-size: 0.9375rem;
+}
+
+/* ---------- Details step ---------- */
+.dw-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font: var(--fw-semibold) 0.9375rem/1.375rem var(--font-primary);
+  color: var(--x-muted);
+  transition: color var(--dur-fast);
+}
+.dw-back:hover {
+  color: var(--content-high-alt);
+}
+.dw-back svg {
+  width: 1rem;
+  height: 1rem;
+}
+.dw-card {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--x-line-dark);
+  border-radius: var(--radius-large);
+  background: var(--x-dark-3);
+}
+.dw-card > b {
+  display: block;
+  font: var(--fw-semibold) 1.125rem/1.625rem var(--font-primary);
+}
+.dw-card ul {
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+.dw-card li {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.9375rem;
+  line-height: 1.375rem;
+  color: var(--x-soft);
+}
+.dw-card li svg {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  color: var(--accent-primary);
+}
+.dw-card li em {
+  font-style: normal;
+  color: var(--x-muted);
+}
+
+.dw-fields {
+  display: grid;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.dw .field textarea {
+  height: 5.25rem;
+}
+.dw .field select {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")
+    no-repeat right 2px center / 1rem;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font: 1rem/1.62rem var(--f-body);
+  padding: 0.625rem 1.5rem 0.625rem 0;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--dur-fast);
+}
+.dw .field select:focus {
+  border-bottom-color: rgba(255, 255, 255, 0.5);
+}
+.dw .field select.is-empty {
+  color: #cbcbcb;
+}
+.dw .field select option {
+  background: var(--bg-alternate);
+  color: #fff;
+}
+.dw .field.is-error input {
+  border-bottom-color: var(--semantic-negative);
+}
+
+/* ---------- Message tab ---------- */
+.dw-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.dw-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.5rem;
+  padding: 0 1rem 0 0.875rem;
+  border: 1px solid var(--x-border-on-dark);
+  border-radius: var(--radius-infinite);
+  font: 400 0.9375rem/1 var(--font-secondary);
+  color: var(--content-high-alt);
+  transition:
+    border-color var(--dur-fast),
+    color var(--dur-fast),
+    background var(--dur-fast);
+}
+.dw-chip:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+.dw-chip svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  transition: transform var(--dur-base);
+}
+.dw-chip[aria-pressed='true'],
+.dw-chip[aria-pressed='true']:hover {
+  background: var(--gray-white);
+  border-color: var(--gray-white);
+  color: var(--x-ink);
+}
+.dw-chip[aria-pressed='true'] svg {
+  transform: rotate(45deg);
+}
+.dw-chips--single .dw-chip {
+  padding: 0 1rem;
+}
+
+.dw-more {
+  margin-top: 0.5rem;
+}
+.dw-more__btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem;
+  border: 1px dashed var(--x-border-on-dark);
+  border-radius: var(--radius-middle);
+  color: var(--x-muted);
+  font-size: 1rem;
+  text-align: left;
+  transition:
+    border-color var(--dur-fast),
+    color var(--dur-fast);
+}
+.dw-more__btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--content-high-alt);
+}
+.dw-more__btn i {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent-primary);
+  color: var(--gray-white);
+}
+.dw-more__btn i svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.dw-more.is-open .dw-more__btn {
+  display: none;
+}
+.dw-more .field {
+  display: none;
+}
+.dw-more.is-open .field {
+  display: block;
+}
+
+.dw-checks {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+.dw-check {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  font-size: 0.9375rem;
+  line-height: 1.375rem;
+  color: var(--x-soft);
+  cursor: pointer;
+}
+.dw-check input {
+  position: absolute;
+  opacity: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+}
+.dw-check i {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 1px;
+  border: 1px solid var(--x-border-on-dark);
+  border-radius: var(--radius-small);
+  display: grid;
+  place-items: center;
+  transition:
+    background var(--dur-fast),
+    border-color var(--dur-fast);
+}
+.dw-check i svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  opacity: 0;
+  color: var(--gray-white);
+}
+.dw-check input:checked + i {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+.dw-check input:checked + i svg {
+  opacity: 1;
+}
+.dw-check input:focus-visible + i {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+.dw-check a {
+  color: var(--content-high-alt);
+  text-decoration: underline;
+  text-underline-offset: 0.1875rem;
+}
+.dw-check a:hover {
+  color: var(--accent-primary);
+}
+.dw-check b {
+  color: #ff6b6b;
+  font-weight: 400;
+}
+
+.dw-replies {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--x-muted);
+}
+.dw-replies::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--semantic-positive);
+}
+
+/* ---------- Sent state ---------- */
+.dw-done {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.5rem 1.5rem 4rem;
+}
+.dw-done__icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent-primary);
+}
+.dw-done__icon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--gray-white);
+}
+.dw-done .dw-title {
+  margin-top: 1.75rem;
+}
+.dw-done .btn {
+  margin-top: 2rem;
+}
+/* Success step action (as live): orange pill */
+.dw .btn--accent {
+  height: 3.375rem;
+  flex: none;
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--gray-white);
+}
+.dw .btn--accent:hover {
+  background: var(--accent-primary-darker);
+  border-color: var(--accent-primary-darker);
+}
+
+/* Focus */
+.dw button:focus-visible,
+.dw a:focus-visible,
+.dw select:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+html.dw-lock,
+html.dw-lock body {
+  overflow: hidden;
+}
+
+/* ---------- Mobile (≤767): full screen ---------- */
+@media (max-width: 47.9375rem) {
+  .dw__panel {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+  .dw__top {
+    padding: 1rem;
+  }
+  .dw__tab {
+    padding: 0 0.875rem;
+    font-size: 0.875rem;
+  }
+  .dw__scroll {
+    padding: 0.25rem 1rem 1.5rem;
+  }
+  .dw__foot {
+    padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+  }
+  .dw .btn--light {
+    height: 3.125rem;
+    padding: 0 1.25rem;
+  }
+  .dw-title {
+    margin-top: 1.5rem;
+    font-size: 1.625rem;
+    line-height: 2rem;
+  }
+  .dw-slots {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .dw-day,
+  .dw-cal__blank {
+    height: 2.5rem;
+  }
+  .dw-cal {
+    padding: 0.75rem;
+  }
+  .dw-when {
+    flex-wrap: wrap;
+  }
+  .dw-done {
+    padding: 1rem 1rem 3rem;
+  }
+}
+@media (max-width: 23.75rem) {
+  .dw__foot .dw__sum span {
+    display: none;
+  }
+}
+
+/* ---------- Embedded form (Contact us page): same component, no overlay, no close button ---------- */
+.dw--inline {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  visibility: visible;
+  pointer-events: auto;
+}
+.dw--inline .dw__overlay,
+.dw--inline .dw__close {
+  display: none;
+}
+.dw--inline .dw__panel {
+  position: relative;
+  inset: auto;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  transform: none;
+  transition: none;
+  box-shadow: none;
+  border-radius: var(--radius-middle);
+  background: rgba(38, 41, 48, 0.6);
+  backdrop-filter: blur(0.5rem);
+}
+.dw--inline .dw__scroll {
+  flex: none;
+  overflow: visible;
+}
+/* the page scrolls, the footer with the main button stays in view */
+.dw--inline .dw__foot {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  background: #1f2229;
+  border-radius: 0 0 var(--radius-middle) var(--radius-middle);
+}
+@media (max-width: 47.9375rem) {
+  .dw--inline .dw__panel {
+    border: 1px solid var(--outline-on-dark);
+    border-radius: var(--radius-middle);
+  }
+}
+/* embedded default form: Name / Email address / Message, like the original contact form */
+.dw--inline .dw-fields--simple {
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+.dw--inline .dw-fields--simple textarea {
+  height: 6rem;
+}
+
+.dw-title--first {
+  margin-top: 0.5rem;
+}
+.dw-fields--after-card {
+  margin-top: 1.5rem;
+}
+.dw-fields--after-chips {
+  margin-top: 1.75rem;
+}

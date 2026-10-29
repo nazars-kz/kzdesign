@@ -1,0 +1,72 @@
+/* Cases list page. Built on tokens.css + shared styles (case card from style.css, breadcrumbs from service.css).
+   Source: live https://www.kz.design/cases (no Figma layout), measured at 1440 and 375. */
+
+/* ---------- Hero ---------- */
+.cs-hero { position: relative; min-height: 838px; overflow: hidden; }
+.cs-hero__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cs-hero .crumbs, .cs-hero__body { position: relative; }
+.cs-hero .crumbs { padding-top: 28px; }
+.cs-hero .crumbs ol, .cs-hero .crumbs li + li::before { color: var(--gray-white); }
+.cs-hero .crumbs a { color: var(--x-muted); }
+.cs-hero__body { padding-top: 60px; padding-bottom: 80px; }
+.cs-hero__title { margin: 24px 0 0; font: var(--fw-semibold) var(--fs-h1)/1.1 var(--font-primary); color: var(--gray-white); }
+.cs-hero__foot { margin-top: 230px; display: flex; align-items: flex-start; justify-content: space-between; gap: 40px; }
+.cs-hero__sub { max-width: 440px; font: 400 20px/30px var(--font-secondary); color: var(--x-soft); }
+.cs-stats { display: flex; gap: 36px; }
+.cs-stat__label { font: var(--fw-bold) 12px/18px var(--font-secondary); text-transform: uppercase; color: var(--gray-white); }
+.cs-stat__num { margin-top: 11px; font: var(--fw-bold) 64px/61px var(--font-primary); color: var(--x-muted); }
+.cs-stat:last-child .cs-stat__num { color: var(--accent-primary); }
+
+/* ---------- Filters ---------- */
+.cs-filters { padding-top: 24px; display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { height: 40px; padding: 8px 24px; border-radius: 50px; border: 0; outline: 1px solid var(--x-muted); outline-offset: -1px;
+  background: transparent; font: 400 16px/24px var(--font-secondary); color: var(--x-ink); cursor: pointer;
+  transition: background var(--dur-fast), color var(--dur-fast), outline-color var(--dur-fast); }
+.pill:hover { outline-color: var(--accent-secondary-darker); }
+.pill.is-active { background: var(--accent-secondary-darker); outline-color: var(--accent-secondary-darker); color: var(--gray-white); }
+.pill:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
+
+/* ---------- Mobile dropdown filter (≤767): replaces the pills ---------- */
+.cs-select { display: none; position: relative; margin-top: 20px; }
+.cs-select__btn { width: 100%; height: 52px; padding: 0 20px; border-radius: var(--radius-infinite); background: var(--x-gray-bg);
+  display: flex; align-items: center; justify-content: space-between; font: 400 16px/24px var(--font-secondary); color: var(--x-ink); }
+.cs-select__chev { width: 14px; height: 8px; transform: rotate(180deg); transition: transform var(--dur-base); background: url(../assets/chevron.svg) no-repeat center / contain; }
+.cs-select.is-open .cs-select__chev { transform: none; }
+.cs-select__list { position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 8px); margin: 0; padding: 8px; list-style: none;
+  background: var(--gray-white); border: 1px solid var(--x-line-light); border-radius: var(--radius-large); box-shadow: 0 16px 40px rgba(0,0,0,.12);
+  max-height: 60vh; overflow-y: auto; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity var(--dur-fast), transform var(--dur-fast), visibility 0s var(--dur-fast); }
+.cs-select.is-open .cs-select__list { opacity: 1; visibility: visible; transform: none; transition: opacity var(--dur-fast), transform var(--dur-fast); }
+.cs-select__list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 0 12px; border-radius: var(--radius-middle);
+  font: 400 16px/24px var(--font-secondary); color: var(--x-ink); cursor: pointer; }
+.cs-select__list li:hover, .cs-select__list li:focus { background: var(--x-gray-bg); outline: none; }
+.cs-select__list li[aria-selected="true"] { font-weight: 500; }
+.cs-select__list li[aria-selected="true"] span:first-child::after { content: ""; display: inline-block; width: 6px; height: 6px; margin-left: 8px; vertical-align: middle; border-radius: 50%; background: var(--accent-primary); }
+.cs-select__n { font-size: 14px; color: var(--content-low); }
+
+/* ---------- Sticky filter bar: pills (desktop) / dropdown (mobile) stay under the header while the list scrolls ---------- */
+.cs-filters, .cs-select { position: sticky; top: var(--hdr-stuck, 68px); z-index: 40; }
+.cs-filters::before, .cs-select::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: -100vmax; right: -100vmax; background: var(--gray-white); } /* white band runs edge to edge */
+.cs-filters { padding-bottom: 16px; }
+.cs-filters::after, .cs-select::after { content: ""; position: absolute; left: -100vmax; right: -100vmax; bottom: -1px; height: 1px; background: var(--x-line-light, #EBEBEB); opacity: 0; transition: opacity var(--dur-fast); }
+.cs-filters.is-stuck::after, .cs-select.is-stuck::after { opacity: 1; }
+.cs-list__items { scroll-margin-top: calc(var(--hdr-stuck, 68px) + var(--bar-h, 80px) + 16px); }
+
+/* ---------- List ---------- */
+.cs-list { padding-bottom: 140px; overflow-x: clip; } /* clip (not hidden) keeps the filter bar sticky */
+.cs-list__items { margin-top: 24px; }
+.cs-list__items .case[hidden] { display: none; }
+
+/* ---------- Mobile (≤767, layout 375) ---------- */
+@media (max-width: 767px) {
+  .cs-hero { min-height: 558px; }
+  .cs-hero__body { padding-top: 72px; padding-bottom: 24px; }
+  .cs-hero__title { margin-top: 30px; font-size: 40px; line-height: 44px; }
+  .cs-hero__foot { margin-top: 14px; flex-direction: column; gap: 32px; }
+  .cs-hero__sub { max-width: none; font-size: 18px; line-height: 27px; }
+  .cs-stats { width: 100%; justify-content: space-between; gap: 12px; }
+  .cs-stat__num { font-size: 36px; line-height: 32px; font-weight: var(--fw-semibold); }
+  .cs-filters { display: none; }
+  .cs-select { display: block; --hdr-stuck: 72px; margin-top: 8px; padding: 12px 0; }
+  .cs-list__items { margin-top: 8px; }
+  .cs-list { padding-bottom: 60px; }
+}

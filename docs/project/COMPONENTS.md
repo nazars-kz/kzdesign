@@ -81,3 +81,14 @@ Breadcrumbs, Marquee, LeaderCard, FounderCard, FeatureCard, ProcessStep, filter 
   `SWC_NATIVE_BINDING_CACHE` to a folder in the user profile (e.g. `C:\Users\<you>\.swc-native`).
 - **Template tests** that were written against the demo content (page `team`, collection `blog`, locale `uk`) are adapted
   after the Home page, when a real page with the needed fields exists.
+
+## Added with the design update 2026-10-29
+
+| Component                                                          | File                                          | Notes                                                                                               |
+| ------------------------------------------------------------------ | --------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Mega menu (`MegaProvider`, `MegaTrigger`, `MegaPanel`, `MegaCard`) | `src/site/layout/mega-menu.tsx`               | one open panel at a time; Esc, click outside, resize close it; dims the page                        |
+| Language switcher                                                  | `src/site/layout/language-switcher.tsx`       | drop-down, hidden while the site has one language                                                   |
+| Footer link                                                        | `src/site/layout/footer-link.tsx`             | current page orange and underlined                                                                  |
+| Contact panel (`ContactPanel`, `ContactDrawer`, `ContactInline`)   | `src/site/components/contact/`                | tabs, calendar, chips; the drawer opens from any `data-drawer` element (`ButtonLink drawer="book"`) |
+| Booking time helpers                                               | `src/site/components/contact/booking-time.ts` | mocked availability; replace `slotsFor` with a real calendar                                        |
+| Drag-to-scroll hook                                                | `src/site/components/ui/use-drag-scroll.ts`   | round cursor, snap to the nearest card                                                              |

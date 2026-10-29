@@ -195,7 +195,7 @@ test.describe.serial('integrations: email for forms', () => {
     if (HAS_FORMS) {
       const form = await openSettingsTab(page, 'requests', 'Requests');
       await form.getByLabel('Default recipients').fill('');
-      await form.getByLabel('Send requests to').fill('');
+      await form.getByLabel('Send requests to').first().fill('');
       if (await page.getByRole('region', { name: 'Unsaved changes' }).isVisible())
         await saveSettingsTab(page);
     }
@@ -238,7 +238,7 @@ test.describe.serial('integrations: email for forms', () => {
     await login(page, E2E_ADMIN);
     const form = await openSettingsTab(page, 'requests', 'Requests');
     await form.getByLabel('Default recipients').fill('');
-    await form.getByLabel('Send requests to').fill('');
+    await form.getByLabel('Send requests to').first().fill('');
     if (await page.getByRole('region', { name: 'Unsaved changes' }).isVisible())
       await saveSettingsTab(page);
     await page.reload();
@@ -255,7 +255,7 @@ test.describe.serial('integrations: email for forms', () => {
     await login(page, E2E_ADMIN);
     const form = await openSettingsTab(page, 'requests', 'Requests');
     await form.getByLabel('Default recipients').fill('team@example.test');
-    await form.getByLabel('Send requests to').fill('');
+    await form.getByLabel('Send requests to').first().fill('');
     await saveSettingsTab(page);
     await expect(page.getByTestId('no-recipients-warning')).toHaveCount(0);
 
@@ -273,7 +273,7 @@ test.describe.serial('integrations: email for forms', () => {
       .toBe(true);
 
     const own = await openSettingsTab(page, 'requests', 'Requests');
-    await own.getByLabel('Send requests to').fill('owner@example.test');
+    await own.getByLabel('Send requests to').first().fill('owner@example.test');
     await saveSettingsTab(page);
     const second = await visitor(browser);
     await submitContact(second.page, 'Own recipients test');

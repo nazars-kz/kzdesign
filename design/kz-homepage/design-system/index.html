@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>K&amp;Z Design System</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+<style>
+  /* Style-guide page chrome only (not part of the system) */
+  body { margin: 0; }
+  .sg-nav { position: sticky; top: 0; z-index: 10; background: var(--bg-default); border-bottom: 1px solid var(--outline-on-white); }
+  .sg-nav .container { display: flex; gap: 20px; align-items: center; height: 60px; overflow-x: auto; white-space: nowrap; }
+  .sg-nav b { font-weight: var(--fw-semibold); margin-right: 12px; }
+  .sg-nav a { color: var(--content-medium); text-decoration: none; font-size: 14px; }
+  .sg-nav a:hover { color: var(--accent-primary); }
+  .sg-sec { padding: 72px 0; border-bottom: 1px solid var(--outline-on-white); }
+  .sg-sec h2 { margin: 16px 0 8px; }
+  .sg-sec > .container > p.lead { color: var(--content-medium); max-width: 720px; margin: 0 0 40px; }
+  .sg-h3 { margin: 40px 0 16px; color: var(--content-low); }
+  .sg-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+  .sw { border: 1px solid var(--outline-on-white); border-radius: var(--radius-large); overflow: hidden; background: var(--bg-default); }
+  .sw i { display: block; height: 84px; background: var(--c); border-bottom: 1px solid var(--outline-on-white); }
+  .sw div { padding: 10px 12px 12px; font-size: 13px; line-height: 1.45; }
+  .sw b { display: block; font-weight: var(--fw-semibold); font-size: 14px; }
+  .sw code, .sg-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: var(--content-medium); }
+  .checker { background-image: linear-gradient(45deg,#ddd 25%,transparent 25%),linear-gradient(-45deg,#ddd 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ddd 75%),linear-gradient(-45deg,transparent 75%,#ddd 75%); background-size: 12px 12px; background-position: 0 0,0 6px,6px -6px,-6px 0; }
+  .sw--dark i { box-shadow: inset 0 0 0 999px var(--c); background: var(--bg-alternate); }
+  .type-row { display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: baseline; padding: 18px 0; border-top: 1px solid var(--outline-on-white); }
+  .type-row .meta { font-size: 13px; color: var(--content-low); line-height: 1.5; }
+  .type-row .meta b { display: block; color: var(--content-high); font-weight: var(--fw-semibold); font-size: 14px; }
+  .type-row .sample { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sg-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .sg-table th, .sg-table td { text-align: left; padding: 10px 12px; border-top: 1px solid var(--outline-on-white); vertical-align: top; }
+  .sg-table th { font-weight: var(--fw-semibold); color: var(--content-low); font-size: 12px; text-transform: uppercase; }
+  .sg-wrap { overflow-x: auto; }
+  .matrix { display: grid; grid-template-columns: 140px repeat(4, minmax(160px, 1fr)); gap: 16px 24px; align-items: center; }
+  .matrix > .h { font-size: 12px; text-transform: uppercase; color: var(--content-low); font-weight: var(--fw-semibold); }
+  .panel { padding: 32px; border-radius: var(--radius-large); border: 1px solid var(--outline-on-white); margin-bottom: 24px; overflow-x: auto; }
+  .panel.on-dark { border-color: transparent; }
+  .on-dark .matrix > .h { color: var(--content-low-alt); }
+  .radii { display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-end; }
+  .radii div { width: 140px; height: 140px; border: 2px solid var(--accent-primary); display: grid; place-items: center; font-size: 14px; color: var(--content-medium); background: var(--bg-default); }
+  .shadow-demo { background: var(--bg-secondary); padding: 64px; border-radius: var(--radius-large); display: flex; justify-content: center; }
+  .shadow-demo .card { width: 320px; height: 200px; display: grid; place-items: center; text-align: center; }
+  .grid-demo { position: relative; height: 140px; margin-top: 16px; }
+  .grid-demo .grid { height: 100%; }
+  .grid-demo .grid span { background: rgba(252, 129, 74, .14); border-inline: 1px solid rgba(252, 129, 74, .35); }
+  .grid-demo .grid span:nth-child(n+13) { display: none; }
+  .space-row { display: flex; align-items: center; gap: 16px; font-size: 13px; padding: 4px 0; }
+  .space-row i { display: block; height: 16px; background: var(--accent-primary); border-radius: 2px; }
+  .space-row code { width: 110px; }
+  .fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px 32px; }
+  .row { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
+  .note { padding: 16px 20px; border-radius: var(--radius-middle); background: rgba(217, 161, 54, .12); border-left: 3px solid var(--semantic-warning); font-size: 14px; line-height: 1.5; margin: 16px 0; max-width: 900px; }
+  @media (max-width: 767px) {
+    .type-row { grid-template-columns: 1fr; gap: 6px; }
+    .type-row .sample { white-space: normal; }
+    .panel { padding: 20px; }
+  }
+</style>
+</head>
+<body class="ds">
+
+<!-- Inline icon sprite (24×24, from the kit's arrow icons) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="currentColor" d="M14.435 18.82c-.19 0-.38-.07-.53-.22a.754.754 0 0 1 0-1.06L19.445 12l-5.54-5.54a.754.754 0 0 1 0-1.06c.29-.29.77-.29 1.06 0l6.07 6.07c.29.29.29.77 0 1.06l-6.07 6.07c-.15.15-.34.22-.53.22Z"/><path fill="currentColor" d="M20.33 12.75H3.5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h16.83c.41 0 .75.34.75.75s-.34.75-.75.75Z"/></symbol>
+  <symbol id="i-chev-l" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M15 19 8 12l7-7"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></symbol>
+</svg>
+
+<nav class="sg-nav"><div class="container">
+  <b>K&amp;Z Design System</b>
+  <a href="#colors">Colours</a><a href="#type">Typography</a><a href="#layout">Grid &amp; spacing</a><a href="#radius">Radius &amp; shadow</a>
+  <a href="#buttons">Buttons</a><a href="#fields">Text fields</a><a href="#patterns">Patterns</a><a href="#motion">Motion</a>
+</div></nav>
+
+<!-- ============ COLOURS ============ -->
+<section class="sg-sec" id="colors"><div class="container">
+  <span class="eyebrow">Foundations</span>
+  <h2 class="t-h2">Colours</h2>
+  <p class="lead t-body1">Figma collection “Colour Palette”, mode Light. In code always use the semantic role (Content / Background / Outline), never the raw hex.</p>
+
+  <h3 class="t-h6 sg-h3">Accent / Brand</h3>
+  <div class="sg-swatches">
+    <div class="sw" style="--c:var(--accent-primary)"><i></i><div><b>primary</b><code>--accent-primary</code><br>#FC814A</div></div>
+    <div class="sw" style="--c:var(--accent-primary-darker)"><i></i><div><b>primary-darker</b><code>--accent-primary-darker</code><br>#FF7A00 · hover</div></div>
+    <div class="sw" style="--c:var(--accent-primary-lighter)"><i></i><div><b>primary-lighter</b><code>--accent-primary-lighter</code><br>#FF9465 · field hover</div></div>
+    <div class="sw" style="--c:var(--accent-secondary)"><i></i><div><b>secondary</b><code>--accent-secondary</code><br>#262930</div></div>
+    <div class="sw" style="--c:var(--accent-secondary-darker)"><i></i><div><b>secondary-darker</b><code>--accent-secondary-darker</code><br>#181B22</div></div>
+    <div class="sw" style="--c:var(--accent-secondary-lighter)"><i></i><div><b>secondary-lighter</b><code>--accent-secondary-lighter</code><br>#303642</div></div>
+  </div>
+
+  <h3 class="t-h6 sg-h3">Grayscale / Content (text &amp; icons)</h3>
+  <div class="sg-swatches">
+    <div class="sw" style="--c:var(--content-high)"><i></i><div><b>Content/high</b><code>--content-high</code><br>#181B22</div></div>
+    <div class="sw" style="--c:var(--content-medium)"><i class="checker" style="box-shadow:inset 0 0 0 999px var(--c)"></i><div><b>Content/medium</b><code>--content-medium</code><br>#181B22 · 80%</div></div>
+    <div class="sw" style="--c:var(--content-low)"><i class="checker" style="box-shadow:inset 0 0 0 999px var(--c)"></i><div><b>Content/low</b><code>--content-low</code><br>#181B22 · 50%</div></div>
+    <div class="sw sw--dark" style="--c:var(--content-high-alt)"><i style="box-shadow:inset 0 0 0 30px var(--bg-alternate), inset 0 0 0 999px var(--c)"></i><div><b>high-alternate</b><code>--content-high-alt</code><br>#FFFFFF</div></div>
+    <div class="sw sw--dark" style="--c:var(--content-medium-alt)"><i></i><div><b>medium-alternate</b><code>--content-medium-alt</code><br>#FFF · 80%</div></div>
+    <div class="sw sw--dark" style="--c:var(--content-low-alt)"><i></i><div><b>low-alternate</b><code>--content-low-alt</code><br>#FFF · 50%</div></div>
+  </div>
+
+  <h3 class="t-h6 sg-h3">Grayscale / Background &amp; Outline</h3>
+  <div class="sg-swatches">
+    <div class="sw" style="--c:var(--bg-default)"><i></i><div><b>Background/default</b><code>--bg-default</code><br>#FFFFFF</div></div>
+    <div class="sw" style="--c:var(--bg-secondary)"><i></i><div><b>Background/secondary</b><code>--bg-secondary</code><br>#F2F2F2</div></div>
+    <div class="sw" style="--c:var(--bg-alternate)"><i></i><div><b>Background/alternate</b><code>--bg-alternate</code><br>#181B22 · dark sections</div></div>
+    <div class="sw" style="--c:var(--bg-accent-primary)"><i></i><div><b>accent-primary</b><code>--bg-accent-primary</code><br>#FC814A</div></div>
+    <div class="sw" style="--c:var(--bg-accent-secondary)"><i></i><div><b>accent-secondary</b><code>--bg-accent-secondary</code><br>#262930</div></div>
+    <div class="sw" style="--c:var(--outline-on-white)"><i></i><div><b>Outline/on-white</b><code>--outline-on-white</code><br>#181B22 · 10%</div></div>
+    <div class="sw sw--dark" style="--c:var(--outline-on-dark)"><i></i><div><b>Outline/on-dark</b><code>--outline-on-dark</code><br>#FFF · 10%</div></div>
+  </div>
+
+  <h3 class="t-h6 sg-h3">Semantic</h3>
+  <div class="sg-swatches">
+    <div class="sw" style="--c:var(--semantic-negative)"><i></i><div><b>negative</b><code>--semantic-negative</code><br>#D72929 · error</div></div>
+    <div class="sw" style="--c:var(--semantic-positive)"><i></i><div><b>positive</b><code>--semantic-positive</code><br>#22BA5F · success</div></div>
+    <div class="sw" style="--c:var(--semantic-warning)"><i></i><div><b>warning</b><code>--semantic-warning</code><br>#D9A136</div></div>
+    <div class="sw" style="--c:var(--semantic-notification)"><i></i><div><b>notification</b><code>--semantic-notification</code><br>#267DE3 · info</div></div>
+  </div>
+
+  <h3 class="t-h6 sg-h3">Homepage-only (not in the kit, <code class="sg-code">--x-*</code>)</h3>
+  <div class="note">These come from the homepage layouts. Use them only when porting existing screens. For new screens, use the kit token in the “→” column of DESIGN_SYSTEM.md.</div>
+  <div class="sg-swatches">
+    <div class="sw" style="--c:var(--x-ink)"><i></i><div><b>#121212</b><code>--x-ink</code> → content-high</div></div>
+    <div class="sw" style="--c:var(--x-dark-3)"><i></i><div><b>#20232A</b><code>--x-dark-3</code></div></div>
+    <div class="sw" style="--c:var(--x-line-dark)"><i></i><div><b>#343741</b><code>--x-line-dark</code> → outline-on-dark</div></div>
+    <div class="sw" style="--c:var(--x-line-light)"><i></i><div><b>#E4E4E4</b><code>--x-line-light</code> → outline-on-white</div></div>
+    <div class="sw" style="--c:var(--x-muted)"><i></i><div><b>#B9BBBD</b><code>--x-muted</code> → content-medium-alt</div></div>
+    <div class="sw" style="--c:var(--x-gray-bg)"><i></i><div><b>#F5F5F5</b><code>--x-gray-bg</code> → bg-secondary</div></div>
+    <div class="sw" style="--c:var(--x-hover-on-dark)"><i></i><div><b>#333640</b><code>--x-hover-on-dark</code></div></div>
+    <div class="sw" style="--c:var(--x-border-on-dark)"><i></i><div><b>#4C4E51</b><code>--x-border-on-dark</code></div></div>
+  </div>
+</div></section>
+
+<!-- ============ TYPOGRAPHY ============ -->
+<section class="sg-sec" id="type"><div class="container">
+  <span class="eyebrow">Foundations</span>
+  <h2 class="t-h2">Typography</h2>
+  <p class="lead t-body1">Primary font Google Sans Flex (replaces Nekst; Google Sans Flex was used before), secondary Satoshi (Body 4 only). Sizes follow the Typography collection modes Desktop and Mobile (no tablet layout). Resize the window below 768 to see them switch.</p>
+
+  <div class="type-row"><div class="meta"><b>Headings/H1</b>SemiBold · 88/32 · lh 110%</div><div class="sample t-h1">We design digital products</div></div>
+  <div class="type-row"><div class="meta"><b>Headings/H2</b>Light · 64/40 · lh 120% · −3%</div><div class="sample t-h2">Section title</div></div>
+  <div class="type-row"><div class="meta"><b>Headings/Section title</b>Regular 400 · 40/24 · lh 48</div><div class="sample t-section">We are not design outsource, we are your detached product design department</div></div>
+  <div class="type-row"><div class="meta"><b>Headings/H3</b>Light · 32/24 · lh 120%</div><div class="sample t-h3">Card or block title</div></div>
+  <div class="type-row"><div class="meta"><b>Headings/H4</b>Light · 24/20 · lh 120% · −3%</div><div class="sample t-h4">Accordion question</div></div>
+  <div class="type-row"><div class="meta"><b>Headings/H5</b>Light · 20/18 · lh 120% · −2%</div><div class="sample t-h5">Small title</div></div>
+  <div class="type-row"><div class="meta"><b>Headings/H6</b>Light · 18/16 · lh 120% · −2%</div><div class="sample t-h6">Smallest title</div></div>
+  <div class="type-row"><div class="meta"><b>Subheadings/Sub 1</b>Regular · 24/20 · lh 150%</div><div class="sample t-sub1">Subheading one</div></div>
+  <div class="type-row"><div class="meta"><b>Subheadings/Sub 2</b>Light · 20/18 · lh 150%</div><div class="sample t-sub2">Subheading two</div></div>
+  <div class="type-row"><div class="meta"><b>Subheadings/Sub 3</b>Light · 18/16 · lh 140%</div><div class="sample t-sub3">Subheading three</div></div>
+  <div class="type-row"><div class="meta"><b>Subheadings/Sub 4</b>Regular · 16 · lh 140%</div><div class="sample t-sub4">Subheading four</div></div>
+  <div class="type-row"><div class="meta"><b>Body 1</b>Light / Medium / SemiBold · 18/16 · lh 140%</div><div class="sample t-body1">Regular, <span class="w-medium">Medium</span>, <span class="w-semibold">Semibold</span> body text</div></div>
+  <div class="type-row"><div class="meta"><b>Body 2</b>Light / Medium (−2%) / SemiBold · 16 · lh 140%</div><div class="sample t-body2">Regular, <span class="w-medium">Medium</span>, <span class="w-semibold">Semibold</span> body text</div></div>
+  <div class="type-row"><div class="meta"><b>Body 3</b>Light / Medium / SemiBold · 14 · lh 140% · −2%</div><div class="sample t-body3">Regular, <span class="w-medium">Medium</span>, <span class="w-semibold">Semibold</span> body text</div></div>
+  <div class="type-row"><div class="meta"><b>Body 4</b>Satoshi Regular / Medium · 12 · lh 150% · −2%</div><div class="sample t-body4">Regular, <span class="w-medium">Medium</span> caption text</div></div>
+  <div class="type-row"><div class="meta"><b>Body 4 CAPS</b>Google Sans Flex SemiBold · 12/18 · uppercase</div><div class="sample t-caps">Eyebrow label</div></div>
+  <div class="type-row"><div class="meta"><b>Body 4 CAPS-light</b>Google Sans Flex Light · 14/21</div><div class="sample t-caps-light">Light caption</div></div>
+</div></section>
+
+<!-- ============ GRID & SPACING ============ -->
+<section class="sg-sec" id="layout"><div class="container">
+  <span class="eyebrow">Foundations</span>
+  <h2 class="t-h2">Grid &amp; spacing</h2>
+  <p class="lead t-body1">Desktop: 12 columns, gap 24. Page margin is fluid like the live site: 60 @1440, 72 @1728, max 75; content stretches up to 1850. Mobile/2 Col: 2 columns, offset 16, gap 15. No tablet layout: desktop shrinks fluidly down to 768.</p>
+  <div class="grid-demo"><div class="grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+
+  <h3 class="t-h6 sg-h3">Spacing scale (4px base)</h3>
+  <div class="space-row"><code>--space-4</code><i style="width:4px"></i>4</div>
+  <div class="space-row"><code>--space-8</code><i style="width:8px"></i>8</div>
+  <div class="space-row"><code>--space-12</code><i style="width:12px"></i>12</div>
+  <div class="space-row"><code>--space-16</code><i style="width:16px"></i>16</div>
+  <div class="space-row"><code>--space-24</code><i style="width:24px"></i>24</div>
+  <div class="space-row"><code>--space-32</code><i style="width:32px"></i>32</div>
+  <div class="space-row"><code>--space-40</code><i style="width:40px"></i>40</div>
+  <div class="space-row"><code>--space-64</code><i style="width:64px"></i>64</div>
+  <div class="space-row"><code>--space-72</code><i style="width:72px"></i>72</div>
+  <div class="space-row"><code>--space-96</code><i style="width:96px"></i>96</div>
+  <div class="space-row"><code>--space-128</code><i style="width:128px"></i>128</div>
+  <div class="space-row"><code>--section-y</code><i style="width:var(--section-y)"></i>section padding (140 / 60)</div>
+</div></section>
+
+<!-- ============ RADIUS & SHADOW ============ -->
+<section class="sg-sec" id="radius"><div class="container">
+  <span class="eyebrow">Foundations</span>
+  <h2 class="t-h2">Radius &amp; shadow</h2>
+  <p class="lead t-body1">Collection “Corner Radius”: small 4 (8 on mobile), middle 8, large 12, infinite 999. Effect style Shadows/Default.</p>
+  <div class="radii">
+    <div style="border-radius:var(--radius-small)">small</div>
+    <div style="border-radius:var(--radius-middle)">middle</div>
+    <div style="border-radius:var(--radius-large)">large</div>
+    <div style="border-radius:var(--radius-infinite); width:220px; height:64px">infinite</div>
+  </div>
+  <h3 class="t-h6 sg-h3">Shadows/Default · 0 5 50 rgba(0,0,0,.02)</h3>
+  <div class="shadow-demo"><div class="card"><div><div class="t-body1 w-semibold">Basic card</div><div class="t-body3" style="color:var(--content-low)">z-depth 1</div></div></div></div>
+</div></section>
+
+<!-- ============ BUTTONS ============ -->
+<section class="sg-sec" id="buttons"><div class="container">
+  <span class="eyebrow">Components</span>
+  <h2 class="t-h2">Buttons</h2>
+  <p class="lead t-body1">Figma component set “Button”: Type × State × Alternate. Hover over the live buttons in the first column; the other columns show each state.</p>
+
+  <div class="panel">
+    <div class="matrix">
+      <div class="h">Type</div><div class="h">Idle (live)</div><div class="h">Hover</div><div class="h">Active</div><div class="h">Disabled</div>
+      <div class="t-body3 w-semibold">Primary</div>
+      <a class="btn btn--primary" href="#buttons">Get in touch</a>
+      <span class="btn btn--primary is-hover">Get in touch</span>
+      <span class="btn btn--primary is-active">Get in touch</span>
+      <span class="btn btn--primary is-disabled">Get in touch</span>
+      <div class="t-body3 w-semibold">Primary · Alternate</div>
+      <a class="btn btn--primary-alt" href="#buttons">Get in touch</a>
+      <span class="btn btn--primary-alt is-hover">Get in touch</span>
+      <span class="btn btn--primary-alt is-active">Get in touch</span>
+      <span class="btn btn--primary-alt is-disabled">Get in touch</span>
+      <div class="t-body3 w-semibold">Secondary</div>
+      <a class="link-cta" href="#buttons"><span class="link-cta__label">See all cases</span><span class="link-cta__circle"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></a>
+      <span class="link-cta is-hover"><span class="link-cta__label">See all cases</span><span class="link-cta__circle"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></span>
+      <span class="link-cta is-hover"><span class="link-cta__label">See all cases</span><span class="link-cta__circle"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></span>
+      <span class="link-cta is-disabled"><span class="link-cta__label">See all cases</span><span class="link-cta__circle"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></span>
+      <div class="t-body3 w-semibold">Tertiary</div>
+      <a class="link" href="#buttons">Read more <span class="icon"><svg><use href="#i-arrow"/></svg></span></a>
+      <span class="link is-hover">Read more <span class="icon"><svg><use href="#i-arrow"/></svg></span></span>
+      <span class="link is-hover">Read more <span class="icon"><svg><use href="#i-arrow"/></svg></span></span>
+      <span class="link is-disabled">Read more <span class="icon"><svg><use href="#i-arrow"/></svg></span></span>
+      <div class="t-body3 w-semibold">Icon</div>
+      <div><button class="icon-btn" aria-label="Next"><span class="icon"><svg><use href="#i-arrow"/></svg></span></button></div>
+      <div><span class="icon-btn is-hover"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></div>
+      <div><span class="icon-btn is-hover"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></div>
+      <div><span class="icon-btn is-disabled"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></div>
+    </div>
+  </div>
+
+  <div class="panel on-dark">
+    <div class="matrix">
+      <div class="h">Alternate (on dark)</div><div class="h">Idle (live)</div><div class="h">Hover</div><div class="h">Active</div><div class="h">Disabled</div>
+      <div class="t-body3 w-semibold">Primary · Alternate</div>
+      <a class="btn btn--primary-alt" href="#buttons">Get in touch</a>
+      <span class="btn btn--primary-alt is-hover">Get in touch</span>
+      <span class="btn btn--primary-alt is-active">Get in touch</span>
+      <span class="btn btn--primary-alt is-disabled">Get in touch</span>
+      <div class="t-body3 w-semibold">Secondary</div>
+      <a class="link-cta" href="#buttons"><span class="link-cta__label">See all cases</span><span class="link-cta__circle"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></a>
+      <span class="link-cta is-hover"><span class="link-cta__label">See all cases</span><span class="link-cta__circle"><span class="icon" style="color:var(--content-high-alt)"><svg><use href="#i-arrow"/></svg></span></span></span>
+      <span class="link-cta is-hover"><span class="link-cta__label">See all cases</span><span class="link-cta__circle"><span class="icon" style="color:var(--content-high-alt)"><svg><use href="#i-arrow"/></svg></span></span></span>
+      <span class="link-cta is-disabled"><span class="link-cta__label">See all cases</span><span class="link-cta__circle"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></span>
+      <div class="t-body3 w-semibold">Tertiary</div>
+      <a class="link" href="#buttons">Read more <span class="icon"><svg><use href="#i-arrow"/></svg></span></a>
+      <span class="link is-hover">Read more <span class="icon"><svg><use href="#i-arrow"/></svg></span></span>
+      <span class="link is-hover">Read more <span class="icon"><svg><use href="#i-arrow"/></svg></span></span>
+      <span class="link is-disabled">Read more <span class="icon"><svg><use href="#i-arrow"/></svg></span></span>
+      <div class="t-body3 w-semibold">Icon</div>
+      <div><button class="icon-btn icon-btn--alt" aria-label="Next"><span class="icon"><svg><use href="#i-arrow"/></svg></span></button></div>
+      <div><span class="icon-btn icon-btn--alt is-hover"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></div>
+      <div><span class="icon-btn icon-btn--alt is-hover"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></div>
+      <div><span class="icon-btn is-disabled" style="background:var(--outline-on-dark)"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></div>
+    </div>
+  </div>
+
+  <h3 class="t-h6 sg-h3">Homepage variant: arrow reveal (<code class="sg-code">.btn--reveal</code>)</h3>
+  <div class="note">The homepage (live site and layout 13220:4376) uses a different hover from the kit: the dark button stays dark (#262930) and an arrow slides in. The kit’s Primary hover turns the button white. Which one is the standard is postponed (buttons are not a priority now).</div>
+  <div class="row">
+    <a class="btn btn--primary btn--reveal" href="#buttons">Book a call <span class="icon icon--24"><svg><use href="#i-arrow"/></svg></span></a>
+    <a class="btn btn--primary-alt btn--reveal" href="#buttons">Get in touch <span class="icon icon--24"><svg><use href="#i-arrow"/></svg></span></a>
+  </div>
+</div></section>
+
+<!-- ============ TEXT FIELDS ============ -->
+<section class="sg-sec" id="fields"><div class="container">
+  <span class="eyebrow">Components</span>
+  <h2 class="t-h2">Text fields</h2>
+  <p class="lead t-body1">Figma component set “Input”: Filled (light background) and Outlined (dark background) × Idle, Hover, Focus, Filled (success), Error, Disabled.</p>
+  <div class="panel">
+    <div class="fields">
+      <label class="field"><span class="field__label">Name <b>*</b></span><input class="field__control" placeholder="Enter your name"><span class="field__help">Idle (live: hover, focus)</span></label>
+      <label class="field is-hover"><span class="field__label">Name <b>*</b></span><input class="field__control" placeholder="Enter your name"><span class="field__help">Hover</span></label>
+      <label class="field is-focus"><span class="field__label">Name <b>*</b></span><input class="field__control" value="John"><span class="field__help">Focus</span></label>
+      <label class="field is-success"><span class="field__label">Email <b>*</b></span><input class="field__control" value="john@company.com"><span class="field__help">Looks good</span></label>
+      <label class="field is-error"><span class="field__label">Email <b>*</b></span><input class="field__control" value="john@"><span class="field__help">Enter a valid email</span></label>
+      <label class="field is-disabled"><span class="field__label">Company</span><input class="field__control" placeholder="Not available" disabled><span class="field__help">Disabled</span></label>
+    </div>
+  </div>
+  <div class="panel on-dark">
+    <div class="fields">
+      <label class="field field--outlined"><span class="field__label">Name <b>*</b></span><input class="field__control" placeholder="Enter your name"><span class="field__help">Idle (live)</span></label>
+      <label class="field field--outlined is-hover"><span class="field__label">Name <b>*</b></span><input class="field__control" placeholder="Enter your name"><span class="field__help">Hover</span></label>
+      <label class="field field--outlined is-focus"><span class="field__label">Name <b>*</b></span><input class="field__control" value="John"><span class="field__help">Focus</span></label>
+      <label class="field field--outlined is-success"><span class="field__label">Email <b>*</b></span><input class="field__control" value="john@company.com"><span class="field__help">Looks good</span></label>
+      <label class="field field--outlined is-error"><span class="field__label">Email <b>*</b></span><input class="field__control" value="john@"><span class="field__help">Enter a valid email</span></label>
+      <label class="field field--outlined"><span class="field__label">Message</span><textarea class="field__control" rows="2" placeholder="Tell us about your project"></textarea><span class="field__help">Textarea</span></label>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ PATTERNS ============ -->
+<section class="sg-sec" id="patterns"><div class="container">
+  <span class="eyebrow">Patterns</span>
+  <h2 class="t-h2">Patterns from the homepage</h2>
+  <p class="lead t-body1">Repeated blocks every new page should reuse. Full inventory with variants is in DESIGN_SYSTEM.md.</p>
+
+  <h3 class="t-h6 sg-h3">Section header (eyebrow + title + action)</h3>
+  <div class="sec-head">
+    <div class="sec-head__text"><span class="eyebrow">Our cases</span><h3 class="t-h2" style="margin:0">Products we helped to launch</h3></div>
+    <a class="link-cta" href="#patterns"><span class="link-cta__label">See all cases</span><span class="link-cta__circle"><span class="icon"><svg><use href="#i-arrow"/></svg></span></span></a>
+  </div>
+
+  <h3 class="t-h6 sg-h3">Tag · Chip · Slider arrows</h3>
+  <div class="panel on-dark">
+    <div class="row">
+      <span class="tag">SaaS</span><span class="tag">Fintech</span>
+      <a class="chip" href="#patterns">Case name</a><a class="chip" href="#patterns">Another case</a>
+      <button class="round-btn" aria-label="Previous" disabled><span class="icon"><svg><use href="#i-chev-l"/></svg></span></button>
+      <button class="round-btn" aria-label="Next"><span class="icon"><svg><use href="#i-chev-r"/></svg></span></button>
+    </div>
+  </div>
+
+  <h3 class="t-h6 sg-h3">Accordion (FAQ, Industries) · one open at a time</h3>
+  <div class="js-acc">
+    <div class="acc is-open"><button class="acc__head" aria-expanded="true">First item is open by default<span class="acc__plus"></span></button><div class="acc__body"><div><p class="acc__inner t-body1" style="margin:0;color:var(--content-medium)">Body text. Rows animate open with grid-template-rows 0fr → 1fr over --dur-medium.</p></div></div></div>
+    <div class="acc"><button class="acc__head" aria-expanded="false">Second item<span class="acc__plus"></span></button><div class="acc__body"><div><p class="acc__inner t-body1" style="margin:0;color:var(--content-medium)">Opening this closes the first one.</p></div></div></div>
+    <div class="acc"><button class="acc__head" aria-expanded="false">Third item<span class="acc__plus"></span></button><div class="acc__body"><div><p class="acc__inner t-body1" style="margin:0;color:var(--content-medium)">Content.</p></div></div></div>
+  </div>
+</div></section>
+
+<!-- ============ MOTION ============ -->
+<section class="sg-sec" id="motion"><div class="container">
+  <span class="eyebrow">Foundations</span>
+  <h2 class="t-h2">Motion</h2>
+  <p class="lead t-body1">Durations as tokens. All motion is switched off under prefers-reduced-motion.</p>
+  <div class="sg-wrap"><table class="sg-table">
+    <tr><th>Token</th><th>Value</th><th>Used for</th></tr>
+    <tr><td><code class="sg-code">--dur-fast</code></td><td>200ms</td><td>colour/border on links, chips, fields, icon buttons</td></tr>
+    <tr><td><code class="sg-code">--dur-base</code></td><td>250ms</td><td>buttons, arrow reveal, chevrons, circle shrink</td></tr>
+    <tr><td><code class="sg-code">--dur-medium</code></td><td>350ms</td><td>underline grow, accordion open</td></tr>
+    <tr><td><code class="sg-code">--dur-slow</code></td><td>450ms</td><td>tab content fade / fade-up</td></tr>
+    <tr><td><code class="sg-code">--dur-xslow</code></td><td>600ms, emphasized easing</td><td>awards strip expand</td></tr>
+    <tr><td><code class="sg-code">--dur-image</code></td><td>800ms</td><td>case image zoom 1.03</td></tr>
+    <tr><td><code class="sg-code">--svc-autoplay</code></td><td>10s, linear</td><td>Services progress line, then next tab</td></tr>
+  </table></div>
+</div></section>
+
+<script>
+  document.querySelectorAll('.js-acc').forEach(function (acc) {
+    acc.addEventListener('click', function (e) {
+      var head = e.target.closest('.acc__head'); if (!head) return;
+      var item = head.parentElement, open = !item.classList.contains('is-open');
+      acc.querySelectorAll('.acc.is-open').forEach(function (o) { if (o !== item) { o.classList.remove('is-open'); o.firstElementChild.setAttribute('aria-expanded', 'false'); } });
+      item.classList.toggle('is-open', open); head.setAttribute('aria-expanded', String(open));
+    });
+  });
+</script>
+</body>
+</html>

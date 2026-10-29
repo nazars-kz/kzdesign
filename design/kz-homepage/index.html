@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>K&amp;Z Design — Your reliable UX/UI design partner</title>
+  <meta name="description" content="We partner with digital product businesses to help them grow, go from seeds to Series D, and retain clients with our expertise in user experience & digital product design.">
+  <link rel="icon" href="assets/mark-orange.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preload" href="fonts/google-sans-flex-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,301,400,500,700,701&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design-system/tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/drawer.css">
+</head>
+<body>
+
+<!-- ================= Header ================= -->
+<header class="header" id="top">
+  <div class="container header__inner">
+    <a class="header__logo" href="index.html" aria-label="K&amp;Z Design — home"><img src="assets/logo.svg" alt="K&amp;Z Design" width="126" height="32"></a>
+
+    <nav class="nav" aria-label="Main">
+      <a class="nav__link is-active" href="index.html">Home</a>
+      <button class="nav__link nav__trigger" type="button" data-mega="services" aria-expanded="false" aria-controls="mega-services">Services <i class="nav__chev"></i></button>
+      <a class="nav__link" href="pages/cases.html">Cases</a>
+      <a class="nav__link" href="pages/reviews.html">Reviews</a>
+      <a class="nav__link" href="pages/contact-us.html">Contact us</a>
+    </nav>
+
+    <div class="header__actions">
+      <a class="btn btn--light" href="pages/contact-us.html">Get in touch<i class="btn__arrow"></i></a>
+      <a class="btn btn--light btn--mobile" href="pages/contact-us.html">Get in touch</a>
+      <button class="header__more" type="button" data-mega="more" aria-expanded="false" aria-controls="mega-more" aria-label="More pages: Approach, About us"><i class="header__more-ico"></i></button>
+      <button class="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+
+  <!-- Mega menus (desktop): Services and the "=" button -->
+  <div class="mega" id="mega-services" data-mega-panel="services">
+    <div class="container">
+      <div class="mega__panel mega__panel--3">
+        <a class="mega-card" href="pages/saas.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/697cd990b77be5223711d6ca_ssp-03.webp" alt="" loading="lazy"><span class="mega-card__title">SaaS web apps</span><span class="mega-card__go" aria-hidden="true"></span></a>
+        <a class="mega-card" href="pages/mobile.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/697cca226ec98cb3f81230e7_ssp-01.webp" alt="" loading="lazy"><span class="mega-card__title">Mobile apps</span><span class="mega-card__go" aria-hidden="true"></span></a>
+        <a class="mega-card" href="pages/web.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/697cd7c7159209b33a8d0f0c_ssp-02.webp" alt="" loading="lazy"><span class="mega-card__title">Websites</span><span class="mega-card__go" aria-hidden="true"></span></a>
+      </div>
+    </div>
+  </div>
+  <div class="mega" id="mega-more" data-mega-panel="more">
+    <div class="container">
+      <div class="mega__panel mega__panel--2">
+        <a class="mega-card" href="pages/approach.html"><img src="assets/approach-uxui.png" alt="" loading="lazy"><span class="mega-card__title">Approach</span><span class="mega-card__go" aria-hidden="true"></span></a>
+        <a class="mega-card" href="pages/about-us.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/6718e8a461870fe18218cdc5_image%20(13).webp" alt="" loading="lazy"><span class="mega-card__title">About us</span><span class="mega-card__go" aria-hidden="true"></span></a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" aria-hidden="true">
+  <nav aria-label="Mobile">
+    <a href="index.html">Home</a>
+    <a href="#services">Services</a>
+    <a class="sub" href="pages/saas.html">SaaS</a>
+    <a class="sub" href="pages/mobile.html">Mobile</a>
+    <a class="sub" href="pages/web.html">Web</a>
+    <a href="pages/cases.html">Cases</a>
+    <a href="pages/approach.html">Approach</a>
+    <a href="pages/about-us.html">About us</a>
+    <a href="pages/reviews.html">Reviews</a>
+    <a href="pages/contact-us.html">Contact us</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ================= Hero ================= -->
+<section class="hero">
+  <div class="container">
+    <a class="hero__badge" href="https://clutch.co/profile/kz-design" target="_blank" rel="noopener">
+      <img src="assets/clutch-logo.svg" alt="Clutch" width="64" height="18">
+      <span>Top UX company 2023/24/25</span>
+    </a>
+    <h1 class="hero__title">Your reliable<br>UX/UI design partner</h1>
+    <p class="hero__sub">We partner with digital product businesses to help them grow, go from seeds to Series D, and retain clients with our expertise in <mark>user experience &amp; digital product design.</mark></p>
+    <div class="hero__cta"><a class="btn btn--dark" href="pages/contact-us.html" data-drawer="book">Get in touch<i class="btn__arrow"></i></a></div>
+
+    <div class="awards">
+      <p class="awards__label">Top UX company 2023/25</p>
+      <div class="awards__row">
+        <img class="awards__clutch" src="assets/clutch-logo.svg" alt="Clutch" width="72" height="21">
+        <div class="awards__viewport">
+          <div class="awards__track">
+            <img src="assets/badge-1.png" alt="Clutch — Top User Experience Company 2025" width="148" height="159">
+            <img src="assets/badge-2.png" alt="Clutch — Top User Experience Company 2023" width="123" height="159">
+            <img src="assets/badge-3.png" alt="Clutch — Top Company 2024" width="123" height="159">
+            <img src="assets/badge-4.png" alt="Clutch — Top UX Strategy Company 2024" width="123" height="159">
+            <img class="b-small" src="assets/badge-5.png" alt="Clutch Champion Spring 2024" width="123" height="100">
+          </div>
+          <div class="awards__fade"></div>
+        </div>
+        <button class="awards__next" type="button" aria-label="More awards"><img src="assets/arrow-circle.svg" alt=""></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Services ================= -->
+<section class="services dark" id="services">
+  <div class="container services__inner">
+    <div class="services__left">
+      <p class="eyebrow">Our Services</p>
+
+      <div class="services__pills" role="tablist">
+        <button type="button" data-tab="0" class="is-active">Saas</button>
+        <button type="button" data-tab="1">Apps</button>
+        <button type="button" data-tab="2">Web</button>
+      </div>
+
+      <div class="svc-text is-active" data-panel="0">
+        <h2 class="services__title">SaaS web apps</h2>
+        <p class="services__desc">Business needs &amp; industry specifics driven design with strong information architecture &amp; design system foundation that creates the best solution for your users and easy big deals for your sales team.</p>
+      </div>
+      <div class="svc-text" data-panel="1">
+        <h2 class="services__title">Mobile apps</h2>
+        <p class="services__desc">User flow &amp; employee performance driven mobile app design for your B2B product. User-centered and conversion-optimized mobile experience for your product to reach App Store &amp; Google Play top for B2C.</p>
+      </div>
+      <div class="svc-text" data-panel="2">
+        <h2 class="services__title">Websites</h2>
+        <p class="services__desc">Conversion &amp; brand positioning driven web design for your website to help leads &amp; visitors find the fastest way to actions necessary for your business</p>
+      </div>
+
+      <div class="services__arrows">
+        <button class="round-btn round-btn--prev" type="button" data-dir="-1" aria-label="Previous service"></button>
+        <button class="round-btn round-btn--next" type="button" data-dir="1" aria-label="Next service"></button>
+      </div>
+      <div class="services__tabs" role="tablist">
+        <button class="services__tab is-active" type="button" data-tab="0">SaaS web apps</button>
+        <button class="services__tab" type="button" data-tab="1">Mobile apps</button>
+        <button class="services__tab" type="button" data-tab="2">Websites</button>
+      </div>
+      <div class="services__more services__more--desk">
+        <a class="link-arrow js-svc-link" href="pages/saas.html"><span class="link-arrow__text">Learn more</span><span class="link-arrow__icon"></span></a>
+      </div>
+    </div>
+
+    <div class="services__items">
+      <div class="svc-panel is-active" data-panel="0">
+        <div class="svc-item"><span class="svc-item__n">01</span>Web Application UX design</div>
+        <div class="svc-item"><span class="svc-item__n">02</span>Software design</div>
+        <div class="svc-item"><span class="svc-item__n">03</span>User Flows optimization</div>
+        <div class="svc-item"><span class="svc-item__n">04</span>Design System UI design</div>
+        <div class="svc-item"><span class="svc-item__n">05</span>Dashboard &amp; Analytics design</div>
+        <div class="svc-item"><span class="svc-item__n">06</span>User research &amp; prototype testing</div>
+      </div>
+      <div class="svc-panel" data-panel="1">
+        <div class="svc-item"><span class="svc-item__n">01</span>Mobile app design</div>
+        <div class="svc-item"><span class="svc-item__n">02</span>Wireframing</div>
+        <div class="svc-item"><span class="svc-item__n">03</span>Clickable prototype</div>
+        <div class="svc-item"><span class="svc-item__n">04</span>Conversion optimization</div>
+        <div class="svc-item"><span class="svc-item__n">05</span>User testing &amp; data analysis</div>
+      </div>
+      <div class="svc-panel" data-panel="2">
+        <div class="svc-item"><span class="svc-item__n">01</span>Landing page</div>
+        <div class="svc-item"><span class="svc-item__n">02</span>Corporate website</div>
+        <div class="svc-item"><span class="svc-item__n">03</span>Conversion optimization</div>
+        <div class="svc-item"><span class="svc-item__n">04</span>Marketing website</div>
+        <div class="svc-item"><span class="svc-item__n">05</span>Sitemap creation</div>
+      </div>
+    </div>
+
+    <div class="services__more services__more--mob">
+      <a class="link-arrow js-svc-link" href="pages/saas.html"><span class="link-arrow__text">Learn more</span><span class="link-arrow__icon"></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Case studies ================= -->
+<section class="cases" id="cases">
+  <div class="container">
+    <div class="cases__head">
+      <p class="eyebrow">Case Studies</p>
+      <h2 class="h-section cases__title">Check how K&amp;Z keeps partners ahead in the digital landscape</h2>
+    </div>
+
+    <div class="cases__list">
+      <a class="case" href="pages/cases/touren.html">
+        <img src="assets/case-touren.jpg" alt="Touren mobile app" loading="lazy" width="1320" height="637">
+        <div class="case__shade"></div>
+        <div class="case__body">
+          <div><h3 class="case__name">Touren</h3><p class="case__desc">Off-road navigation &amp; community platform</p></div>
+          <div class="case__tags"><span>Sport</span><span>Saas</span><span>Web</span><span>Navigation</span><span>B2C</span></div>
+        </div>
+      </a>
+      <a class="case" href="pages/cases/onground.html">
+        <img src="assets/case-onground.jpg" alt="Onground dashboard" loading="lazy" width="1320" height="637">
+        <div class="case__shade"></div>
+        <div class="case__body">
+          <div><h3 class="case__name">Onground</h3><p class="case__desc">Private jet cleaning platform</p></div>
+          <div class="case__tags"><span>SaaS</span><span>Web</span><span>UI/UX design</span></div>
+        </div>
+      </a>
+      <a class="case" href="pages/cases/brightgate.html">
+        <img src="assets/case-brightgate.jpg" alt="Brightgate learning management system" loading="lazy" width="1320" height="637">
+        <div class="case__shade"></div>
+        <div class="case__body">
+          <div><h3 class="case__name">Brightgate</h3><p class="case__desc">Learning management System</p></div>
+          <div class="case__tags"><span>SaaS</span><span>Web</span><span>UX/UI Design</span></div>
+        </div>
+      </a>
+      <a class="case" href="pages/cases/hr-hub.html">
+        <img src="assets/case-hrhub.jpg" alt="HR Hub schedule screen" loading="lazy" width="1320" height="637">
+        <div class="case__shade"></div>
+        <div class="case__body">
+          <div><h3 class="case__name">HR Hub</h3><p class="case__desc">SaaS web &amp; mobile app for employee management</p></div>
+          <div class="case__tags"><span>HR</span><span>ERP</span><span>SaaS</span><span>B2B</span><span>Web</span><span>Mobile</span></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="cases__all">
+      <a class="link-arrow" href="pages/cases.html"><span class="link-arrow__text">See all cases</span><span class="link-arrow__icon"></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Uniqueness ================= -->
+<section class="uniq dark">
+  <div class="container">
+    <p class="eyebrow">Uniqueness</p>
+    <h2 class="h-section uniq__title">We are not design outsource, we are your detached product design department</h2>
+
+    <div class="uniq__list">
+      <article class="u-card">
+        <div class="u-card__text">
+          <h3 class="u-card__title">No middlemen. Only design people</h3>
+          <ul class="u-card__bullets">
+            <li>No sales, no project managers, no business analysts – you always speak with designers. We believe that best products are born by direct communication between product and design sides</li>
+            <li>Why no BAs? Because we believe that if designer himself doesn’t understand the business he is designing for - he’ll never do anything good</li>
+          </ul>
+          <blockquote class="u-card__quote">“From the very beginning, the team took the time to ensure they <b>fully understood</b> the problem we were solving. <b>This set the foundation</b> for the design process.“</blockquote>
+          <div class="person"><img src="assets/av-kwabena.png" alt="" width="48" height="48"><div><p class="person__name">Kwabena Osei-Larbi</p><p class="person__role">Founder, 2step</p></div></div>
+        </div>
+        <div class="u-card__media"><img src="assets/uni-3.jpg" alt="Client in the center, connected directly to designers" loading="lazy"></div>
+      </article>
+
+      <article class="u-card">
+        <div class="u-card__text">
+          <h3 class="u-card__title">Communication &amp; Updates</h3>
+          <ul class="u-card__bullets">
+            <li>Daily updates on what is done today + requests/questions/blockers</li>
+            <li>Recurring meetings (at least 1 meeting per week for active design phase)</li>
+            <li>Dedicated communication channel + Figma comments</li>
+          </ul>
+          <blockquote class="u-card__quote">“The quality of the work is top-notch, while the communication and responses <b>were excellent</b>.“</blockquote>
+          <div class="person"><img src="assets/av-benn.png" alt="" width="48" height="48"><div><p class="person__name">Benn Eames</p><p class="person__role">CEO of VidSprint</p></div></div>
+        </div>
+        <div class="u-card__media"><img src="assets/uni-2.png" alt="Daily updates timeline with Figma, Slack and Google Meet" loading="lazy"></div>
+      </article>
+
+      <article class="u-card">
+        <div class="u-card__text">
+          <h3 class="u-card__title">Designs created to be developed</h3>
+          <ul class="u-card__bullets">
+            <li>Design system based on the libraries Devs use (Tailwind, Material ui, Shadcn, etc)</li>
+            <li>Figma files organized by flows with inline documentation</li>
+            <li>Development handoff Q/A sessions</li>
+            <li>Ongoing development support: Q/A, materials provision, post-dev testing</li>
+            <li>Direct design-development communication - no middle-man needed</li>
+          </ul>
+          <blockquote class="u-card__quote">“Our developers were provided a <b>GREAT UI design</b> in Figma that was easy to implement. They have a fantastic <b>ability to listen</b> to our business problems and process flows...“</blockquote>
+          <div class="person"><img src="assets/av-mike.png" alt="" width="48" height="48"><div><p class="person__name">Mike Hapner</p><p class="person__role">CTO, Valorian Solutions</p></div></div>
+        </div>
+        <div class="u-card__media"><img class="contain" src="assets/uni-1.png" alt="Figma components and documentation handed off to code" loading="lazy"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Approach ================= -->
+<section class="approach">
+  <div class="container">
+    <div>
+      <p class="eyebrow">Our Approach</p>
+      <h2 class="h-section approach__title">With a business-first approach to UX/UI Design, we help you win users, increase revenue, reduce churn and look cool</h2>
+      <p class="approach__text">We tackle the most complex UX/UI challenges. Whether you're adding new features, launching a new product, or improving an existing one, we got you covered and help your business thrive.</p>
+      <div class="approach__link"><a class="link-arrow" href="pages/approach.html"><span class="link-arrow__text">Learn more about our processes</span><span class="link-arrow__icon"></span></a></div>
+    </div>
+    <div class="approach__grid">
+      <a class="a-card" href="https://www.kz.design/approach#discovery"><span class="a-card__title">Discovery</span><img src="assets/approach-discovery.png" alt="" loading="lazy"></a>
+      <a class="a-card" href="https://www.kz.design/approach#strategy"><span class="a-card__title">Strategy</span><img src="assets/approach-strategy.png" alt="" loading="lazy"></a>
+      <a class="a-card" href="https://www.kz.design/approach#design"><span class="a-card__title">UX/UI Design</span><img src="assets/approach-uxui.png" alt="" loading="lazy"></a>
+      <a class="a-card" href="https://www.kz.design/approach#prototyping"><span class="a-card__title">Prototyping</span><img src="assets/approach-prototyping.png" alt="" loading="lazy"></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Testimonials ================= -->
+<section class="testi dark" id="reviews">
+  <div class="container testi__head">
+    <div>
+      <p class="eyebrow">Testimonials</p>
+      <h2 class="h-section testi__title">Testimonials from Our Partners</h2>
+    </div>
+    <div class="testi__nav">
+      <button class="round-btn round-btn--prev js-testi-prev" type="button" aria-label="Previous slide" disabled></button>
+      <button class="round-btn round-btn--next js-testi-next" type="button" aria-label="Next slide"></button>
+    </div>
+  </div>
+
+  <div class="testi__viewport">
+    <div class="testi__track">
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="assets/t-mike.jpg" alt="Mike Hapner" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Mike Hapner <img src="assets/flag-us.png" alt="USA"></p>
+            <p class="t-card__role">CTO, Valorian Solutions</p>
+            <p class="t-card__proj">SaaS Web &amp; Mobile apps for industrial service providers</p>
+          </div>
+        </div>
+        <div class="t-card__quote">
+          <div class="t-card__scroll"><div class="t-card__text"><p>Our developers were provided a GREAT UI design in Figma that was easy to implement.</p><p>They have a fantastic ability to listen to our business problems and process flows and quickly turn them into something beautiful to implement in the user interface.</p><p>Everyone loves working with the K&amp;Z team.</p></div><div class="t-card__bar"><i></i></div></div>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="assets/t-andrei.jpg" alt="Andrei Sota" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Andrei Sota <img src="assets/flag-uk.png" alt="UK"></p>
+            <p class="t-card__role">Founder &amp; CEO, Signal Sigma</p>
+            <p class="t-card__proj">Investment Fintech SaaS</p>
+          </div>
+        </div>
+        <div class="t-card__quote has-case">
+          <div class="t-card__scroll"><div class="t-card__text"><p>Post-launch, user engagement metrics showed a 40% increase in average session duration, reflecting the intuitive and engaging design of the frontend.</p><p>User onboarding completion rates improved by 25%, thanks to the streamlined UX that made complex financial tools accessible to both novice and expert users.</p><p>The app’s Net Promoter Score (NPS) jumped to 85, indicating high user satisfaction with the interface and functionality.</p><p>Development efficiency also saw a boost, with a 30% reduction in frontend implementation time due to the detailed Figma layouts and clear documentation provided by K&amp;Z Design.</p><p>What stood out most about K&amp;Z Design was their ability to combine creative excellence with pragmatic execution. I was particularly struck by how they balanced my vision with their expertise, knowing exactly when to push boundaries for innovation and when to reel things in for practicality. The handoff from Figma layouts to code was seamless.</p></div><div class="t-card__bar"><i></i></div></div>
+          <a class="t-card__case" href="pages/cases/signal-sigma.html"><img src="assets/t-signal-case.jpg" alt="" loading="lazy"><div>Signal Sigma<span>View case study <i></i></span></div></a>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/67ae1496ff1f5c71d6df7e57_Frame%201632528944%20(2).webp" alt="Mark Feinberg" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Mark Feinberg <img src="assets/flag-us.png" alt="USA"></p>
+            <p class="t-card__role">Chief Executive Officer, National Quality Systems</p>
+            <p class="t-card__proj">Trauma center software and staffing web &amp; mobile platform</p>
+          </div>
+        </div>
+        <div class="t-card__quote has-case">
+          <div class="t-card__scroll"><div class="t-card__text"><p>They understood our vision and helped bring it to life through exceptional UI/UX design.</p><p>Their contribution to putting together the logic behind the user workflow was invaluable. Deliverables were delivered on time, demonstrating a commitment to quality. Their management and communication were on point, making the collaboration smooth and effective.</p><p>I highly recommend K&amp;Z Design Agency for anyone seeking top-notch design and workflow solutions.</p></div><div class="t-card__bar"><i></i></div></div>
+          <a class="t-card__case" href="pages/cases/mynqs.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/6900d783a03eefd18b565657_my-nqs-logo.webp" alt="" loading="lazy"><div>MyNQS<span>View case study <i></i></span></div></a>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="assets/testi/reece.jpg" alt="Reece Samani" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Reece Samani <img src="assets/flag-uk.png" alt="UK"></p>
+            <p class="t-card__role">Forbes 30 Under 30, Founder &amp; Director, Signature Pharmacy &amp; Locum App</p>
+            <p class="t-card__proj">Multiple SaaS for Pharmacy Management</p>
+          </div>
+        </div>
+        <div class="t-card__quote has-case">
+          <div class="t-card__scroll"><div class="t-card__text"><p>System design looked better and completed the job more efficiently.</p><p>They delivered items on time and they were very responsive to details and feedback</p><p>I was impressed with their attention to detail!</p><p>They had a unique but effective approach to design work. They have a good eye for design and know what looks good.</p></div><div class="t-card__bar"><i></i></div></div>
+          <a class="t-card__case" href="pages/cases/signature-pharmacy.html"><img src="assets/testi/th-signature.jpg" alt="" loading="lazy"><div>Signature Pharmacy<span>View case study <i></i></span></div></a>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/67f657f1d2248d187c7fc3bd_418d1166e6a3452a9498b2d641e8514d_Frame%201632528976.webp" alt="Joe" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Joe <img src="assets/flag-us.png" alt="USA"></p>
+            <p class="t-card__role">COO, Persuasion System</p>
+            <p class="t-card__proj">Healthcare CRM</p>
+          </div>
+        </div>
+        <div class="t-card__quote has-case">
+          <div class="t-card__scroll"><div class="t-card__text"><p>We hired K&amp;Z Design to design a web platform for us in Figma, and we couldn&#x27;t be happier with the results.</p><p>From the start, they demonstrated a strong understanding of our needs and provided valuable insights that improved our initial concept. The design process was smooth and efficient, with clear communication and timely updates.</p><p>The final product exceeded our expectations. The user interface is intuitive and visually appealing, showcasing their attention to detail and expertise in web design. They were always responsive to feedback and made revisions quickly, ensuring that the final design aligned perfectly with our vision.</p></div><div class="t-card__bar"><i></i></div></div>
+          <a class="t-card__case" href="pages/cases/persuasion-systems.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/6900d7c883d829a65ca9e783_ps-logo.webp" alt="" loading="lazy"><div>Persuasion Systems<span>View case study <i></i></span></div></a>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="assets/testi/yashar.jpg" alt="Yashar Behzadi" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Yashar Behzadi <img src="assets/flag-us.png" alt="USA"></p>
+            <p class="t-card__role">CEO &amp; Founder at Synthesis AI</p>
+            <p class="t-card__proj">Multiple AI powered SaaS web apps</p>
+          </div>
+        </div>
+        <div class="t-card__quote">
+          <div class="t-card__scroll"><div class="t-card__text"><p>I appreciated that their designs were functional, easy to use, and covered all of our required functionality.</p><p>They were responsive to feedback and always willing to make revisions to ensure the final product met our expectations.</p></div><div class="t-card__bar"><i></i></div></div>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="assets/testi/kwabena.jpg" alt="Kwabena Osei-Larbi" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Kwabena Osei-Larbi <img src="assets/flag-us.png" alt="USA"></p>
+            <p class="t-card__role">Founder, 2step</p>
+            <p class="t-card__proj">Mobile app for event organization for dancers</p>
+          </div>
+        </div>
+        <div class="t-card__quote has-case">
+          <div class="t-card__scroll"><div class="t-card__text"><p>Couldn&#x27;t be happier with the work K&amp;Z did.</p><p>From the very beginning, the team took the time to ensure they fully understood the problem we were solving. This set the foundation for the design process and ensured we were on the same page from the start. This made everything more efficient: there was minimal rework, and the design team&#x27;s first attempts were always very close to what I envisioned.</p><p>The quality and professionalism of their work, and the speed of their revisions, were exceptional. The team pays close attention to detail, and it showed in the end product, which was delivered on schedule.</p><p>Overall, I&#x27;m really glad we chose to work with them. They brought the project to life better than we could have imagined, and I would highly recommend them. Planning to work with them again on future design needs</p></div><div class="t-card__bar"><i></i></div></div>
+          <div class="t-card__case is-soon"><span class="t-card__soon-ico"></span><div><span>Case study is coming soon</span></div></div>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="assets/testi/denis-s.jpg" alt="Denis Salatin" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Denis Salatin <img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/67ae18e408fc0c4baf6d2416_%F0%9F%87%A6%F0%9F%87%AA.webp" alt="UAE"></p>
+            <p class="t-card__role">CEO, Lumitech</p>
+            <p class="t-card__proj">Custom Software Development Company</p>
+          </div>
+        </div>
+        <div class="t-card__quote">
+          <div class="t-card__scroll"><div class="t-card__text"><p>We completed 10+ project together. They&#x27;re extremely professional.</p><p>Exceptional analysis skills. They&#x27;ve just looked at clients&#x27; requirements which was only a few sentences and translated it into prototypes and later a high-fidelity UI/UX design. They lead the design process and communicate extremely efficient.</p></div><div class="t-card__bar"><i></i></div></div>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="assets/testi/sideeq.jpg" alt="Sideeq Youssef" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Sideeq Youssef <img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/67ae18e3965ed49f816455b2_%F0%9F%87%B8%F0%9F%87%A6.webp" alt="Saudi Arabia"></p>
+            <p class="t-card__role">CEO, IT Company</p>
+            <p class="t-card__proj">SaaS for Marketing Management</p>
+          </div>
+        </div>
+        <div class="t-card__quote">
+          <div class="t-card__scroll"><div class="t-card__text"><p>They truly excelled on our project.</p><p>K&amp;Z Design did an outstanding job managing and delivering our project. Their team is highly professional and demonstrates a deep understanding of their craft. We were particularly impressed by their structured approach to project management</p></div><div class="t-card__bar"><i></i></div></div>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="assets/testi/benn.jpg" alt="Benn Eames" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Benn Eames <img src="assets/flag-uk.png" alt="UK"></p>
+            <p class="t-card__role">CEO of VidSprint</p>
+            <p class="t-card__proj">SaaS Web App for Marketing Agency</p>
+          </div>
+        </div>
+        <div class="t-card__quote has-case">
+          <div class="t-card__scroll"><div class="t-card__text"><p>The quality of the work is top-notch, while the communication and responses were excellent.</p><p>Genuinely I would find it hard to think of any improvements</p></div><div class="t-card__bar"><i></i></div></div>
+          <a class="t-card__case" href="pages/cases/vidsprint.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/6846bbcb214ed46f969bc4a9_6fa185092d609a0a157384111b13df95_Frame%201632528944%20%283%29.jpg" alt="" loading="lazy"><div>VidSprint<span>View case study <i></i></span></div></a>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="assets/testi/andy.jpg" alt="Andy Jennings" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Andy Jennings <img src="assets/flag-us.png" alt="USA"></p>
+            <p class="t-card__role">President at Playback Rewards</p>
+            <p class="t-card__proj">Mobile app - rewards platform for mobile game players</p>
+          </div>
+        </div>
+        <div class="t-card__quote">
+          <div class="t-card__scroll"><div class="t-card__text"><p>I honestly would say that all of their work, from start to finish, has been top-notch.</p><p>Their ability to take work with varying level of specifications was impressive. They quickly tackled new work and delivered quality finished results all while keeping communication and expectations clear</p></div><div class="t-card__bar"><i></i></div></div>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/67d93bed1a3b16c3bb1884f1_04f47985cfdb8951045dd4d63417c316_Frame%2016325d28944.webp" alt="Dylan Halliday" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Dylan Halliday <img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/67d93cfdc72e0e95f5ca2ee6_Flag%20Australia.png" alt="Australia"></p>
+            <p class="t-card__role">CTO, Pound Group Pty Ltd</p>
+            <p class="t-card__proj">Buyer Agency Real Estate CRM</p>
+          </div>
+        </div>
+        <div class="t-card__quote">
+          <div class="t-card__scroll"><div class="t-card__text"><p>Love the team, would use them again</p><p>The project led to a cleaner, more intuitive UI that improved user navigation and overall experience. The interactive prototypes helped refine workflows before development, saving time and effort. The design system also made it easier to scale and maintain consistency. Overall, the team’s work made a big difference in usability and functionality.</p><p>From the start, I had a good feeling about the team—their roles were well-defined, and they had a solid, professional approach to communication. They managed the project efficiently, keeping everything on track and delivering on time. Whenever we had feedback or adjustments, they were responsive and easy to work with, making sure our needs were met without any hassle.</p></div><div class="t-card__bar"><i></i></div></div>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="assets/testi/denis-b.jpg" alt="Denis Bondar" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Denis Bondar <img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/67ae18df833229a33d9e3132_%F0%9F%87%B1%F0%9F%87%BA.webp" alt="Luxembourg"></p>
+            <p class="t-card__role">Founder, Touren App</p>
+            <p class="t-card__proj">Mobile app for bike trails</p>
+          </div>
+        </div>
+        <div class="t-card__quote has-case">
+          <div class="t-card__scroll"><div class="t-card__text"><p>An excellent UX/UI designers from K&amp;Z!</p><p>Delivered a beautifully crafted, user-friendly mobile app design that exceeded expectations.</p><p>Communicative, detail-oriented, and quick to incorporate feedback. Highly recommend for any app design projects!</p></div><div class="t-card__bar"><i></i></div></div>
+          <a class="t-card__case" href="pages/cases/touren.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/6846ba8d4799a4056d89f237_7c3e6e88bc3a778901c20edc284eff8e_Frame%201632528944.jpg" alt="" loading="lazy"><div>Touren<span>View case study <i></i></span></div></a>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="assets/testi/matthieu.jpg" alt="Matthieu Salvy" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Matthieu Salvy <img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/67ae18dd3553beb4d24eea8c_%F0%9F%87%A8%F0%9F%87%AD.webp" alt="Switzerland"></p>
+            <p class="t-card__role">Founder, GettingDigit</p>
+            <p class="t-card__proj">CRM platform for complex workflow management</p>
+          </div>
+        </div>
+        <div class="t-card__quote has-case">
+          <div class="t-card__scroll"><div class="t-card__text"><p>K&amp;Z are an absolute pleasure to work with.</p><p>Knowledgable, flexible, collaborative, they have achieved in record times an excellent work.</p></div><div class="t-card__bar"><i></i></div></div>
+          <div class="t-card__case is-soon"><span class="t-card__soon-ico"></span><div><span>Case study is coming soon</span></div></div>
+        </div>
+      </article>
+      <article class="t-card">
+        <div class="t-card__photo">
+          <img src="assets/testi/julian.jpg" alt="Julian Rodriguez" loading="lazy">
+          <div class="t-card__who">
+            <p class="t-card__name">Julian Rodriguez <img src="assets/flag-us.png" alt="USA"></p>
+            <p class="t-card__role">CEO, Momento AI</p>
+            <p class="t-card__proj">Blockchain social media web &amp; mobile app</p>
+          </div>
+        </div>
+        <div class="t-card__quote has-case">
+          <div class="t-card__scroll"><div class="t-card__text"><p>I’m impressed with their ability to adapt.</p><p>They were a full design team for us, consistently delivering all required materials.</p></div><div class="t-card__bar"><i></i></div></div>
+          <a class="t-card__case" href="pages/cases/momento.html"><img src="assets/testi/th-momento.jpg" alt="" loading="lazy"><div>Momento AI<span>View case study <i></i></span></div></a>
+        </div>
+      </article>
+    </div>
+    <div class="testi__fade-l"></div>
+    <div class="testi__fade-r"></div>
+  </div>
+
+  <div class="container">
+    <div class="testi__mnav">
+      <button class="round-btn round-btn--prev js-testi-prev" type="button" aria-label="Previous slide" disabled></button>
+      <button class="round-btn round-btn--next js-testi-next" type="button" aria-label="Next slide"></button>
+    </div>
+    <div class="testi__foot">
+      <a class="link-arrow" href="pages/reviews.html"><span class="link-arrow__text">Read our reviews</span><span class="link-arrow__icon"></span></a>
+      <a class="clutch-rev" href="https://clutch.co/profile/kz-design#reviews" target="_blank" rel="noopener" aria-label="Reviewed on Clutch — 59 reviews">
+        <span class="clutch-rev__label">Reviewed on</span>
+        <img class="clutch-rev__logo" src="assets/clutch-white.svg" alt="Clutch">
+        <span class="clutch-rev__stars"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="clutch-rev__count">59 reviews</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Partners ================= -->
+<section class="partners">
+  <div class="container">
+    <p class="eyebrow">Partners</p>
+    <h2 class="h-section partners__title">Partners who trust us their user experience</h2>
+    <div class="partners__grid">
+      <a class="p-tile is-case" href="pages/cases/mynqs.html"><img src="assets/partners/p01.png" alt="NQS" loading="lazy"><span class="p-tile__hover">View case study <i></i></span></a>
+      <div class="p-tile"><img src="assets/partners/p02.png" alt="Coptain" loading="lazy"></div>
+      <a class="p-tile is-case" href="pages/cases/signature-pharmacy.html"><img src="assets/partners/p03.png" alt="Signature Pharmacy" loading="lazy"><span class="p-tile__hover">View case study <i></i></span></a>
+      <div class="p-tile"><img src="assets/partners/p04.png" alt="Lopic" loading="lazy"></div>
+      <a class="p-tile is-case" href="pages/cases/filmtoro.html"><img src="assets/partners/p05.png" alt="Filmtoro" loading="lazy"><span class="p-tile__hover">View case study <i></i></span></a>
+      <div class="p-tile"><img src="assets/partners/p06.png" alt="TrustSpace" loading="lazy"></div>
+      <div class="p-tile"><img src="assets/partners/p07.png" alt="Valorian" loading="lazy"></div>
+      <a class="p-tile is-case" href="pages/cases/vidsprint.html"><img src="assets/partners/p08.png" alt="VidSprint" loading="lazy"><span class="p-tile__hover">View case study <i></i></span></a>
+      <div class="p-tile"><img src="assets/partners/p09.png" alt="AI Hub" loading="lazy"></div>
+      <div class="p-tile"><img src="assets/partners/p10.png" alt="Amunet" loading="lazy"></div>
+      <div class="p-tile"><img src="assets/partners/p11.png" alt="lifedata" loading="lazy"></div>
+      <a class="p-tile is-case" href="pages/cases/persuasion-systems.html"><img src="assets/partners/p12.jpg" alt="Persuasion Systems" loading="lazy"><span class="p-tile__hover">View case study <i></i></span></a>
+      <div class="p-tile"><img src="assets/partners/p13.png" alt="Lucidmark" loading="lazy"></div>
+      <div class="p-tile"><img src="assets/partners/p14.png" alt="stack" loading="lazy"></div>
+      <div class="p-tile"><img src="assets/partners/p15.png" alt="TACH" loading="lazy"></div>
+      <div class="p-tile"><img src="assets/partners/p16.png" alt="Hardcopy" loading="lazy"></div>
+      <div class="p-tile"><img src="assets/partners/p17.png" alt="playback" loading="lazy"></div>
+      <a class="p-tile is-case" href="pages/cases/momento.html"><img src="assets/partners/p18.png" alt="Momento" loading="lazy"><span class="p-tile__hover">View case study <i></i></span></a>
+      <div class="p-tile"><img src="assets/partners/p19.png" alt="Lumitech" loading="lazy"></div>
+      <div class="p-tile"><img src="assets/partners/p20.png" alt="myfuel" loading="lazy"></div>
+      <a class="p-tile is-case" href="pages/cases/touren.html"><img src="assets/partners/p21.png" alt="Touren" loading="lazy"><span class="p-tile__hover">View case study <i></i></span></a>
+      <a class="p-tile is-case" href="pages/cases/onground.html"><img src="assets/partners/p22.png" alt="Onground" loading="lazy"><span class="p-tile__hover">View case study <i></i></span></a>
+      <div class="p-tile"><img src="assets/partners/p23.png" alt="Mach Labs" loading="lazy"></div>
+      <div class="p-tile"><img src="assets/partners/p24.png" alt="SONIK" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Industries ================= -->
+<section class="industries dark">
+  <div class="container">
+    <div class="industries__intro">
+      <p class="eyebrow">Industries</p>
+      <h2 class="h-section industries__title">We specialize in designing products that make users happy with their problems solved</h2>
+      <p class="industries__text">By focusing on strategic design, we help our partners in various industries achieve their business goals and drive long-term success.</p>
+    </div>
+
+    <div class="industries__list js-accordion">
+      <div class="acc-row is-open"><button class="acc-row__head" type="button"><span class="acc-row__icon"><img src="assets/icons/industries/line-on-dark/healthcare.svg" alt=""></span><span class="acc-row__label">Healthcare</span><i class="plus"></i></button><div class="acc-row__body"><div><p>We cured confusion and inefficiency in web interfaces and mobile applications for doctors and clinic managers. We brought great AI experience to streamline clunky processes and manage unstructured medical data. Everything is always with a focus on data security and compliance.</p><div class="ind-cases"><a class="ind-case" href="pages/cases/listen-upp.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517e474f0974f3c1ff2e22_Frame%201632528944%20(4).jpg" alt=""><span><b>Listen Upp</b><em>View case study</em></span></a><a class="ind-case" href="pages/cases/persuasion-systems.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f214a8bb776096fd1c9_image%2062%20(1).jpg" alt=""><span><b>Persuasion Systems</b><em>View case study</em></span></a><a class="ind-case" href="pages/cases/signature-pharmacy.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f14a0aa865a97e7a3a2_image.jpg" alt=""><span><b>Signature Pharmacy</b><em>View case study</em></span></a><a class="ind-case" href="pages/cases/mynqs.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/6900d51a27cb21d3c8b516d1_myn-mob.webp" alt=""><span><b>MyNQS</b><em>View case study</em></span></a></div></div></div></div>
+      <div class="acc-row"><button class="acc-row__head" type="button"><span class="acc-row__icon"><img src="assets/icons/industries/line-on-dark/logistics-software.svg" alt=""></span><span class="acc-row__label">Logistics Software</span><i class="plus"></i></button><div class="acc-row__body"><div><p>We covered with a strong UX the entire cycle of transportation: fleet management, workforce, orders, routes and trips, scheduling, warehouse management, tracking, last-mile delivery, economics, and documentation</p><div class="ind-cases"><a class="ind-case" href="pages/cases/signature-pharmacy.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f14a0aa865a97e7a3a2_image.jpg" alt=""><span><b>Signature Pharmacy</b><em>View case study</em></span></a></div></div></div></div>
+      <div class="acc-row"><button class="acc-row__head" type="button"><span class="acc-row__icon"><img src="assets/icons/industries/line-on-dark/fintech.svg" alt=""></span><span class="acc-row__label">Fintech</span><i class="plus"></i></button><div class="acc-row__body"><div><p>We brought seamless user experience to investment platforms, account software, community platforms for angel investors, internal platforms for hedge funds, predictive analytics platforms, Loans management and banking.</p><div class="ind-cases"><a class="ind-case" href="pages/cases/signal-sigma.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f11aecded78c9a35761_image%2062%20(4).jpg" alt=""><span><b>Signal Sigma</b><em>View case study</em></span></a></div></div></div></div>
+      <div class="acc-row"><button class="acc-row__head" type="button"><span class="acc-row__icon"><img src="assets/icons/industries/line-on-dark/hr.svg" alt=""></span><span class="acc-row__label">HR</span><i class="plus"></i></button><div class="acc-row__body"><div><p>Enhance visibility of complex HR processes, ensuring seamless employee lifecycle management, including compliance. Designing the interface so that users can easily navigate between different levels of information, manage large amounts of data, and make the service easy to use for non-technical users.</p><div class="ind-cases"><a class="ind-case" href="pages/cases/hr-hub.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f1187e66d7f787f7c17_image%20(4).jpg" alt=""><span><b>HR SaaS</b><em>View case study</em></span></a><a class="ind-case" href="pages/cases/onground.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f21859ef4778364bac6_image%2062%20(2).jpg" alt=""><span><b>Onground</b><em>View case study</em></span></a></div></div></div></div>
+      <div class="acc-row"><button class="acc-row__head" type="button"><span class="acc-row__icon"><img src="assets/icons/industries/line-on-dark/ai.svg" alt=""></span><span class="acc-row__label">AI</span><i class="plus"></i></button><div class="acc-row__body"><div><p>Designing AI-based applications or integrating AI into your workflows, we consider back-end operations to ensure that all design decisions enhance user experience, making AI-powered products clear and intuitive rather than confusing. AI agent experience, AI-powered builders.</p><div class="ind-cases"><a class="ind-case" href="pages/cases/brightgate.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f141b8c260f09f6bcf5_image%20(1).jpg" alt=""><span><b>Learning Management System</b><em>View case study</em></span></a></div></div></div></div>
+      <div class="acc-row"><button class="acc-row__head" type="button"><span class="acc-row__icon"><img src="assets/icons/industries/line-on-dark/energy.svg" alt=""></span><span class="acc-row__label">Energy</span><i class="plus"></i></button><div class="acc-row__body"><div><p>Oil, gas, electricity, maintenance, etc. We empowered with a great UX for drilling rig operations analytical system, partial discharge monitoring platforms at high-voltage nodes, renewable energy management apps, and others.</p><div class="ind-cases"><a class="ind-case" href="pages/cases/signal-sigma.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f11aecded78c9a35761_image%2062%20(4).jpg" alt=""><span><b>Signal Sigma</b><em>View case study</em></span></a></div></div></div></div>
+      <div class="acc-row"><button class="acc-row__head" type="button"><span class="acc-row__icon"><img src="assets/icons/industries/line-on-dark/sales.svg" alt=""></span><span class="acc-row__label">Sales</span><i class="plus"></i></button><div class="acc-row__body"><div><p>We designed CRM, CPQ, and sales team management tools in a way to support reps’ everyday processes instead of complicate and interfere them. Excellent visualization and intuitive management of sales funnels - our top 1 priority.</p><div class="ind-cases"><a class="ind-case" href="pages/cases/persuasion-systems.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f214a8bb776096fd1c9_image%2062%20(1).jpg" alt=""><span><b>Persuasion Systems</b><em>View case study</em></span></a><a class="ind-case" href="pages/cases/quintessia.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f149b0602c549409cf1_image%2062%20(3).jpg" alt=""><span><b>Quintessia Marketplace</b><em>View case study</em></span></a></div></div></div></div>
+      <div class="acc-row"><button class="acc-row__head" type="button"><span class="acc-row__icon"><img src="assets/icons/industries/line-on-dark/proptech.svg" alt=""></span><span class="acc-row__label">Proptech</span><i class="plus"></i></button><div class="acc-row__body"><div><p>We streamlined, made easy and operational UX for always-busy real estate guys: listing platforms for buying, renting, and selling real estate, deal &amp; customer management for real estate agents, apps for buyer agents, campaigns and communications.</p><div class="ind-cases"><a class="ind-case" href="pages/cases/hotsheet.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f123e2602bb612085f2_image%20(3).jpg" alt=""><span><b>HotSheet</b><em>View case study</em></span></a></div></div></div></div>
+      <div class="acc-row"><button class="acc-row__head" type="button"><span class="acc-row__icon"><img src="assets/icons/industries/line-on-dark/social-media-networking.svg" alt=""></span><span class="acc-row__label">Social media &amp; Networking</span><i class="plus"></i></button><div class="acc-row__body"><div><p>We supercharged retention and user satisfaction for professional and hobby social network apps, event management platforms for organizers and visitors, ticket management and analysis systems.</p><div class="ind-cases"><a class="ind-case" href="pages/cases/vidsprint.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/6846bbcb214ed46f969bc4a9_6fa185092d609a0a157384111b13df95_Frame%201632528944%20%283%29.jpg" alt=""><span><b>VidSprint</b><em>View case study</em></span></a><a class="ind-case" href="pages/cases/momento.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f122b89a033a0403b9c_image%20(5).jpg" alt=""><span><b>Momento</b><em>View case study</em></span></a><a class="ind-case" href="pages/cases/touren.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517e473ada6025b71f1e92_image%2062.jpg" alt=""><span><b>Touren</b><em>View case study</em></span></a></div></div></div></div>
+      <div class="acc-row"><button class="acc-row__head" type="button"><span class="acc-row__icon"><img src="assets/icons/industries/line-on-dark/marketing.svg" alt=""></span><span class="acc-row__label">Marketing</span><i class="plus"></i></button><div class="acc-row__body"><div><p>We eased &amp; streamlined the creative life marketing agencies with clear UX &amp; stunning UI for their order management, content creation campaigns management, and omnichannel systems.</p><div class="ind-cases"><a class="ind-case" href="pages/cases/brightgate.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f141b8c260f09f6bcf5_image%20(1).jpg" alt=""><span><b>Learning Management System</b><em>View case study</em></span></a></div></div></div></div>
+      <div class="acc-row"><button class="acc-row__head" type="button"><span class="acc-row__icon"><img src="assets/icons/industries/line-on-dark/retail-omnichannel.svg" alt=""></span><span class="acc-row__label">Retail &amp; Omnichannel</span><i class="plus"></i></button><div class="acc-row__body"><div><p>We have successfully designed easy onboarding and intuitive integrations with various communication channels (WhatsApp Business API integration, 10DLC phone number registration, etc.).</p><div class="ind-cases"><a class="ind-case" href="pages/cases/quintessia.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f149b0602c549409cf1_image%2062%20(3).jpg" alt=""><span><b>Quintessia Marketplace</b><em>View case study</em></span></a></div></div></div></div>
+      <div class="acc-row"><button class="acc-row__head" type="button"><span class="acc-row__icon"><img src="assets/icons/industries/line-on-dark/web3.svg" alt=""></span><span class="acc-row__label">Web3</span><i class="plus"></i></button><div class="acc-row__body"><div><p>We brought human-centered design principles to always-evolving world of web3 to make it understandable and comfortable for non-tech users, and powerful and sophisticated for experienced techheads. Blockchain, crypto, NFT - you name it, we’ve done it.</p><div class="ind-cases"><a class="ind-case" href="pages/cases/momento.html"><img src="https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/68517f122b89a033a0403b9c_image%20(5).jpg" alt=""><span><b>Momento</b><em>View case study</em></span></a></div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq">
+  <div class="container">
+    <div class="faq__intro">
+      <p class="eyebrow">Faq</p>
+      <h2 class="h-section faq__title">We were asked these</h2>
+      <p class="faq__sub">Have any other questions?</p>
+      <div class="faq__cta"><a class="btn btn--dark" href="pages/contact-us.html">Contact us<i class="btn__arrow"></i></a></div>
+    </div>
+
+    <div>
+      <div class="faq__list js-accordion">
+        <div class="faq__item"><button class="faq__q" type="button">What types of products do you design?<i class="plus"></i></button><div class="acc-row__body"><div><p>We design SaaS web apps, ERPs, CRMs, mobile apps, websites, enterprise systems, marketplaces, data-heavy platforms, including fintech, healthcare, logistics, proptech and AI-driven products.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">Do you work with early-stage startups or only mature products?<i class="plus"></i></button><div class="acc-row__body"><div><p>We work with both early-stage startups (from idea or MVP) and mature products that require redesign, scaling, or UX optimization.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">Can you redesign an existing product or MVP?<i class="plus"></i></button><div class="acc-row__body"><div><p>Yes. We often do redesigns to improve UX, enhance visual consistency, help scalability, reduce churn, increase NPS, and unblock revenue growth.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">How do you usually start a new project?<i class="plus"></i></button><div class="acc-row__body"><div><p>We start with a discovery phase where we learn about product, it’s current state, business situation &amp; goals, project vision and all other context. We do that via knowledge sessions &amp; workshops. After we prepare a tailored estimate with timeline, budget &amp; our vision on successful project completion.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">How do you estimate scope, timelines, and budget?<i class="plus"></i></button><div class="acc-row__body"><div><p>We divide the project into sensible pieces (modules/pages/releases and estimate them based on size, complexity, and potential of discrepancy. After that, we align on everything with client side to make sure that we are on the same page before starting the work.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">How do you collaborate with product managers and developers?<i class="plus"></i></button><div class="acc-row__body"><div><p>We work closely with PMs, BAs and developers via regular syncs, clear documentation, and ongoing communication.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">What design deliverables do you provide at the end of the project?<i class="plus"></i></button><div class="acc-row__body"><div><p>Ready-for-development files: high-fidelity Figma designs, clickable prototypes, design system, and research artifacts,.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">Do you create and maintain design systems?<i class="plus"></i></button><div class="acc-row__body"><div><p>Yes. We maintain &amp; update existing DSs, and build scalable design systems with components, styles, and usage rules - whether from scratch or based on widely used DSs like shadcn, tailwind, material-ui, etc</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">Can you work with existing brand guidelines?<i class="plus"></i></button><div class="acc-row__body"><div><p>Yes. We can follow existing brand guidelines or help refine them if needed.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">Do you handle complex or data-heavy interfaces?<i class="plus"></i></button><div class="acc-row__body"><div><p>Yes. We have a strong experience designing analytics, dashboards, and data-heavy platforms and information-dense systems.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">Do you design AI-driven or automation-based flows?<i class="plus"></i></button><div class="acc-row__body"><div><p>Yes. We design AI-driven flows, agent-based interfaces, and automation-heavy user journeys.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">Can you join an existing team for long-term collaboration?<i class="plus"></i></button><div class="acc-row__body"><div><p>Yes. We often work as an extended product design department for your in-house product teams.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">Do you support developers during implementation?<i class="plus"></i></button><div class="acc-row__body"><div><p>Yes. We provide inline documentation, make UX/UI checks, and organize various sync calls (q/a sessions, grooming, hand-offs, etc.) to make sure that everything is clear and we are on the same page.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">What tools do you use for design and collaboration?<i class="plus"></i></button><div class="acc-row__body"><div><p>Figma, FigJam, Slack, Jira, Notion, and other tools used by the client.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">How do you ensure designs are ready for development?<i class="plus"></i></button><div class="acc-row__body"><div><p>We prepare consistent components, clear states, specifications, and edge cases. Also, we are strongly recommending to perform handoff meetings and grooming sessions with developers and product team.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">Do you sign NDAs and work with confidential data?<i class="plus"></i></button><div class="acc-row__body"><div><p>Yes. We regularly work under NDAs and follow strict confidentiality rules.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">Do you provide UX research and user testing?<i class="plus"></i></button><div class="acc-row__body"><div><p>Yes. We conduct interviews, usability testing, and prototype validation depending on project stage and goals.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">How do you prioritize features and UX improvements?<i class="plus"></i></button><div class="acc-row__body"><div><p>We use UX Impact vs. Implementation Effort Matrix together with business and technical constraints.</p></div></div></div>
+        <div class="faq__item"><button class="faq__q" type="button">How can we start working together?<i class="plus"></i></button><div class="acc-row__body"><div><p>We recommend to start with a short intro call where we discuss goals, scope, and next steps.</p></div></div></div>
+      </div>
+      <div class="faq__after">
+        <p class="faq__sub">Have any other questions?</p>
+        <a class="btn btn--dark" href="pages/contact-us.html" data-drawer="book">Get in touch<i class="btn__arrow"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Contact ================= -->
+<section class="contact dark" id="contact">
+  <div class="contact__bg" aria-hidden="true"><img src="assets/contact-bg.svg" alt=""></div>
+  <div class="container">
+    <div>
+      <h2 class="contact__title">Let's take your product to the next<i class="zap" aria-hidden="true"></i>level</h2>
+      <p class="contact__lead">No calls with sales. Contact us and get to chat with our CEO.</p>
+      <div class="team">
+        <div class="team__row">
+          <button class="team__who" type="button">
+            <img src="assets/av-vlad.jpg" alt="Vlad Kyrieiev">
+            <div><p class="team__name">Vlad Kyrieiev</p><p class="team__role">Founder &amp; CEO</p></div>
+            <i class="team__chev"></i>
+          </button>
+          <p class="team__bio">Serial design entrepreneur &amp; <em>leader with 10+ years of experience solving the most challenging UX issues.</em> Ex-Head of Design in US ERP product</p>
+        </div>
+        <div class="team__row">
+          <button class="team__who" type="button">
+            <img src="assets/av-nick.png" alt="Nick Zhurenko">
+            <div><p class="team__name">Nick Zhurenko</p><p class="team__role">Management Board Member &amp; COO</p></div>
+            <i class="team__chev"></i>
+          </button>
+          <p class="team__bio">Design Leader, lecturer, coach with 10+ years in the field. Ex Head of Design in US CRM development company</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="contact-form" data-contact-inline></div>
+      <div class="company">
+        <b>K&amp;Zh OÜ</b>
+        Registry code: 17092851 Kaupmehe tn 7-120, Kesklinna linnaosa, Tallinn, Harju maakond, 10114, Estonia<br>
+        Email: <a href="mailto:hello@kz.design">hello@kz.design</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= Footer ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="footer__logo" href="index.html" aria-label="K&amp;Z Design — home"><img src="assets/logo.svg" alt="K&amp;Z Design" width="126" height="32"></a>
+        <p class="footer__claim">No calls with sales. Contact us and get to chat with our CEO.</p>
+        <a class="btn btn--dark" href="pages/contact-us.html" data-drawer="book">Get in touch<i class="btn__arrow"></i></a>
+      </div>
+      <nav class="footer__col" aria-label="Services">
+        <p class="footer__h">Services</p>
+        <ul>
+          <li><a class="footer__link" href="pages/saas.html">SaaS web apps</a></li>
+          <li><a class="footer__link" href="pages/mobile.html">Mobile apps</a></li>
+          <li><a class="footer__link" href="pages/web.html">Websites</a></li>
+        </ul>
+      </nav>
+      <nav class="footer__col" aria-label="Company">
+        <p class="footer__h">Company</p>
+        <ul>
+          <li><a class="footer__link" href="pages/cases.html">Cases</a></li>
+          <li><a class="footer__link" href="pages/approach.html">Approach</a></li>
+          <li><a class="footer__link" href="pages/about-us.html">About us</a></li>
+          <li><a class="footer__link" href="pages/reviews.html">Reviews</a></li>
+        </ul>
+      </nav>
+      <div class="footer__col">
+        <p class="footer__h">Contact</p>
+        <ul>
+          <li><a class="footer__link" href="pages/contact-us.html">Contact us</a></li>
+          <li><a class="footer__link" href="mailto:hello@kz.design">hello@kz.design</a></li>
+        </ul>
+        <div class="socials">
+          <a href="https://www.linkedin.com/company/kyzh-studio/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/linkedin.svg" alt=""></a>
+          <a href="https://dribbble.com/kyzh-studio" target="_blank" rel="noopener" aria-label="Dribbble"><img src="assets/dribbble.svg" alt=""></a>
+          <a href="https://www.behance.net/kz_design" target="_blank" rel="noopener" aria-label="Behance"><img class="be" src="assets/behance.svg" alt=""></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 K&amp;Zh OÜ · Registry code 17092851 · Kaupmehe tn 7-120, Tallinn, 10114, Estonia</p>
+      <div class="footer__legal">
+        <a href="https://www.kz.design/privacy-policy">Privacy Policy</a>
+        <a href="https://www.kz.design/terms-of-service">Terms of Service</a>
+        <a href="https://www.kz.design/cancellation-and-refund-policy">Refund Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/drawer.js"></script>
+</body>
+</html>

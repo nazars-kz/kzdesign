@@ -31,7 +31,12 @@ export async function Hero({ content }: { content: SitePageContent<'home'>['hero
           {content.subtitle} <mark>{content.highlight}</mark>
         </p>
         <div className="hero__cta">
-          <ButtonLink href={content.cta.href} external={content.cta.external} size="lg">
+          <ButtonLink
+            href={content.cta.href}
+            external={content.cta.external}
+            size="lg"
+            drawer="book"
+          >
             {content.cta.label}
           </ButtonLink>
         </div>

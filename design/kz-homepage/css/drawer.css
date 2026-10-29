@@ -1,0 +1,219 @@
+/* Contact drawer: slides in from the right when the header "Get in touch" is clicked.
+   Two tabs: "Book a call" (pick a day → pick a time → your details → sent) and "Send a message".
+   Markup is injected by js/drawer.js on every page. Built on tokens.css; fields reuse the
+   homepage contact form pattern (.field, bottom border on dark). */
+
+.dw { position: fixed; inset: 0; z-index: 200; visibility: hidden; pointer-events: none; }
+.dw.is-open { visibility: visible; pointer-events: auto; }
+.dw__overlay { position: absolute; inset: 0; background: rgba(24, 27, 34, .55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  opacity: 0; transition: opacity var(--dur-slow) var(--ease-standard); }
+.dw.is-open .dw__overlay { opacity: 1; }
+.dw.is-closing { visibility: visible; }
+
+.dw__panel {
+  position: absolute; top: 12px; right: 12px; bottom: 12px; width: min(600px, calc(100vw - 24px));
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--bg-alternate); color: var(--content-high-alt);
+  border: 1px solid var(--outline-on-dark); border-radius: var(--radius-large);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .35);
+  transform: translateX(calc(100% + 24px)); transition: transform var(--dur-xslow) var(--ease-emphasized);
+  font-family: var(--font-secondary);
+}
+.dw.is-open .dw__panel { transform: none; }
+
+/* ---------- Top bar: tabs + close ---------- */
+.dw__top { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; }
+.dw__tabs { display: flex; padding: 4px; border-radius: var(--radius-infinite); background: var(--accent-secondary); }
+.dw__tab { height: 40px; padding: 0 18px; border-radius: var(--radius-infinite); color: var(--content-medium-alt);
+  font: var(--fw-semibold) 15px/1 var(--font-primary); transition: background var(--dur-fast), color var(--dur-fast); }
+.dw__tab:hover { color: var(--content-high-alt); }
+.dw__tab[aria-selected="true"] { background: var(--gray-white); color: var(--x-ink); }
+.dw__close { flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid var(--x-border-on-dark); color: var(--content-high-alt); transition: border-color var(--dur-fast); }
+.dw__close:hover { border-color: var(--content-high-alt); }
+.dw__close svg { width: 18px; height: 18px; }
+
+/* ---------- Panes / steps ---------- */
+.dw__pane { flex: 1; min-height: 0; display: none; flex-direction: column; }
+.dw__pane.is-active { display: flex; }
+.dw__step { flex: 1; min-height: 0; display: none; flex-direction: column; }
+.dw__step.is-active { display: flex; animation: dwIn var(--dur-slow) var(--ease-standard); }
+@keyframes dwIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+.dw__scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 8px 24px 32px;
+  scrollbar-width: thin; scrollbar-color: var(--x-border-on-dark) transparent; }
+.dw__foot { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 16px 24px; border-top: 1px solid var(--x-line-dark); background: var(--bg-alternate); }
+.dw__sum { min-width: 0; }
+.dw__sum b { display: block; font: var(--fw-semibold) 16px/22px var(--font-primary); color: var(--content-high-alt); }
+.dw__sum span { display: block; margin-top: 2px; font-size: 14px; line-height: 20px; color: var(--x-muted); }
+.dw__sum.is-empty b { font-weight: var(--fw-regular); color: var(--x-muted); }
+
+/* Button inside the drawer: white pill (homepage .btn--light), hover stays visible on the dark panel */
+.dw .btn--light { height: 54px; flex: none; }
+.dw .btn--light:hover { background: var(--accent-secondary); border-color: var(--x-border-on-dark); color: var(--content-high-alt); }
+.dw .btn--light:not(.btn--mobile):hover { background: var(--accent-secondary); border-color: var(--x-border-on-dark); color: var(--content-high-alt); }
+.dw .btn--light:not(.btn--mobile):hover .btn__arrow { background-image: url(../assets/arrow-right-white.svg); }
+.dw .btn--light[disabled] { opacity: .4; cursor: default; pointer-events: none; }
+
+/* ---------- Content blocks ---------- */
+.dw-person { display: flex; align-items: center; gap: 12px; }
+.dw-person__ava { position: relative; flex: none; width: 48px; height: 48px; }
+.dw-person__ava img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.dw-person__ava::after { content: ""; position: absolute; right: 0; bottom: 1px; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--semantic-positive); border: 2px solid var(--bg-alternate); }
+.dw-person b { display: block; font: var(--fw-semibold) 16px/22px var(--font-primary); }
+.dw-person span { display: block; font-size: 14px; line-height: 20px; color: var(--x-muted); }
+
+.dw-title { margin: 28px 0 0; font: var(--fw-medium) 32px/40px var(--font-primary); letter-spacing: -0.02em; }
+.dw-lead { margin-top: 10px; font-size: 16px; line-height: 24px; color: var(--x-muted); }
+.dw-lead a { color: var(--content-high-alt); text-decoration: underline; text-underline-offset: 3px; }
+.dw-lead a:hover { color: var(--accent-primary); }
+.dw-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; }
+/* plain facts, not controls: no border, no pill */
+.dw-meta span { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; line-height: 20px; color: var(--x-soft); }
+.dw-meta svg { width: 14px; height: 14px; color: var(--accent-primary); }
+
+.dw-label { display: block; margin: 32px 0 14px; font: var(--fw-semibold) 12px/18px var(--font-primary); text-transform: uppercase; letter-spacing: .04em; color: var(--content-low-alt); }
+.dw-label i { font-style: normal; font-weight: var(--fw-regular); text-transform: none; letter-spacing: 0; }
+
+/* ---------- Calendar ---------- */
+.dw-cal { padding: 16px; border: 1px solid var(--x-line-dark); border-radius: var(--radius-large); background: var(--x-dark-3); }
+.dw-cal__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.dw-cal__month { font: var(--fw-semibold) 16px/22px var(--font-primary); }
+.dw-cal__nav { display: flex; gap: 8px; }
+.dw-cal__nav button { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--x-border-on-dark);
+  transition: border-color var(--dur-fast), opacity var(--dur-fast); }
+.dw-cal__nav button:hover { border-color: var(--content-high-alt); }
+.dw-cal__nav button[disabled] { opacity: .3; pointer-events: none; }
+.dw-cal__nav svg { width: 16px; height: 16px; }
+.dw-cal__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.dw-cal__wd { padding: 6px 0; text-align: center; font: var(--fw-semibold) 11px/16px var(--font-primary); text-transform: uppercase; color: var(--content-low-alt); }
+.dw-day { position: relative; height: 44px; border-radius: var(--radius-middle); font: var(--fw-medium) 15px/1 var(--font-primary);
+  color: var(--content-high-alt); background: rgba(255, 255, 255, .06); transition: background var(--dur-fast), color var(--dur-fast); }
+.dw-day:hover { background: var(--x-hover-on-dark); }
+.dw-day[disabled] { background: none; color: var(--content-low-alt); opacity: .45; pointer-events: none; }
+.dw-day.is-today::after { content: ""; position: absolute; left: 50%; bottom: 6px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--accent-primary); }
+.dw-day[aria-pressed="true"] { background: var(--gray-white); color: var(--x-ink); }
+.dw-cal__blank { height: 44px; }
+
+/* ---------- Time slots ---------- */
+.dw-when { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 32px 0 14px; }
+.dw-when b { display: block; font: var(--fw-medium) 20px/28px var(--font-primary); }
+.dw-when span { display: block; margin-top: 2px; font-size: 14px; line-height: 20px; color: var(--x-muted); }
+.dw-seg { flex: none; display: flex; padding: 3px; border-radius: var(--radius-infinite); border: 1px solid var(--x-line-dark); }
+.dw-seg button { height: 28px; padding: 0 10px; border-radius: var(--radius-infinite); font: var(--fw-semibold) 12px/1 var(--font-primary); color: var(--x-muted); }
+.dw-seg button[aria-pressed="true"] { background: var(--accent-secondary-lighter); color: var(--content-high-alt); }
+.dw-slots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.dw-slot { height: 44px; border-radius: var(--radius-infinite); border: 1px solid var(--x-border-on-dark);
+  font: var(--fw-medium) 15px/1 var(--font-primary); color: var(--content-high-alt); transition: border-color var(--dur-fast), background var(--dur-fast), color var(--dur-fast); }
+.dw-slot:hover { border-color: var(--content-high-alt); }
+.dw-slot[disabled] { border-color: var(--x-line-dark); color: var(--content-low-alt); text-decoration: line-through; pointer-events: none; }
+.dw-slot[aria-pressed="true"] { background: var(--gray-white); border-color: var(--gray-white); color: var(--x-ink); }
+.dw-empty { padding: 20px; border: 1px dashed var(--x-border-on-dark); border-radius: var(--radius-large); text-align: center; color: var(--x-muted); font-size: 15px; }
+
+/* ---------- Details step ---------- */
+.dw-back { display: inline-flex; align-items: center; gap: 6px; font: var(--fw-semibold) 15px/22px var(--font-primary); color: var(--x-muted); transition: color var(--dur-fast); }
+.dw-back:hover { color: var(--content-high-alt); }
+.dw-back svg { width: 16px; height: 16px; }
+.dw-card { margin-top: 24px; padding: 20px; border: 1px solid var(--x-line-dark); border-radius: var(--radius-large); background: var(--x-dark-3); }
+.dw-card > b { display: block; font: var(--fw-semibold) 18px/26px var(--font-primary); }
+.dw-card ul { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.dw-card li { display: flex; align-items: center; gap: 10px; font-size: 15px; line-height: 22px; color: var(--x-soft); }
+.dw-card li svg { flex: none; width: 16px; height: 16px; color: var(--accent-primary); }
+.dw-card li em { font-style: normal; color: var(--x-muted); }
+
+.dw-fields { display: grid; gap: 16px; margin-top: 8px; }
+.dw .field textarea { height: 84px; }
+.dw .field select { width: 100%; appearance: none; -webkit-appearance: none; background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 2px center / 16px;
+  border: 0; border-bottom: 1px solid rgba(255, 255, 255, .1); color: #fff; font: 16px/25.92px var(--f-body); padding: 10px 24px 10px 0; outline: none; cursor: pointer; transition: border-color var(--dur-fast); }
+.dw .field select:focus { border-bottom-color: rgba(255, 255, 255, .5); }
+.dw .field select.is-empty { color: #cbcbcb; }
+.dw .field select option { background: var(--bg-alternate); color: #fff; }
+.dw .field.is-error input { border-bottom-color: var(--semantic-negative); }
+
+/* ---------- Message tab ---------- */
+.dw-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.dw-chip { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px 0 14px; border: 1px solid var(--x-border-on-dark);
+  border-radius: var(--radius-infinite); font: 400 15px/1 var(--font-secondary); color: var(--content-high-alt);
+  transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast); }
+.dw-chip:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+.dw-chip svg { width: 14px; height: 14px; transition: transform var(--dur-base); }
+.dw-chip[aria-pressed="true"], .dw-chip[aria-pressed="true"]:hover { background: var(--gray-white); border-color: var(--gray-white); color: var(--x-ink); }
+.dw-chip[aria-pressed="true"] svg { transform: rotate(45deg); }
+.dw-chips--single .dw-chip { padding: 0 16px; }
+
+.dw-more { margin-top: 8px; }
+.dw-more__btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 16px; border: 1px dashed var(--x-border-on-dark);
+  border-radius: var(--radius-middle); color: var(--x-muted); font-size: 16px; text-align: left; transition: border-color var(--dur-fast), color var(--dur-fast); }
+.dw-more__btn:hover { border-color: var(--accent-primary); color: var(--content-high-alt); }
+.dw-more__btn i { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-primary); color: var(--gray-white); }
+.dw-more__btn i svg { width: 14px; height: 14px; }
+.dw-more.is-open .dw-more__btn { display: none; }
+.dw-more .field { display: none; }
+.dw-more.is-open .field { display: block; }
+
+.dw-checks { display: grid; gap: 12px; margin-top: 28px; }
+.dw-check { position: relative; display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 22px; color: var(--x-soft); cursor: pointer; }
+.dw-check input { position: absolute; opacity: 0; width: 20px; height: 20px; margin: 0; }
+.dw-check i { flex: none; width: 20px; height: 20px; margin-top: 1px; border: 1px solid var(--x-border-on-dark); border-radius: var(--radius-small);
+  display: grid; place-items: center; transition: background var(--dur-fast), border-color var(--dur-fast); }
+.dw-check i svg { width: 12px; height: 12px; opacity: 0; color: var(--gray-white); }
+.dw-check input:checked + i { background: var(--accent-primary); border-color: var(--accent-primary); }
+.dw-check input:checked + i svg { opacity: 1; }
+.dw-check input:focus-visible + i { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
+.dw-check a { color: var(--content-high-alt); text-decoration: underline; text-underline-offset: 3px; }
+.dw-check a:hover { color: var(--accent-primary); }
+.dw-check b { color: #ff6b6b; font-weight: 400; }
+
+.dw-replies { display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 20px; color: var(--x-muted); }
+.dw-replies::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--semantic-positive); }
+
+/* ---------- Sent state ---------- */
+.dw-done { flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 24px 24px 64px; }
+.dw-done__icon { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-primary); }
+.dw-done__icon svg { width: 28px; height: 28px; color: var(--gray-white); }
+.dw-done .dw-title { margin-top: 28px; }
+.dw-done .btn { margin-top: 32px; }
+/* Success step action (as live): orange pill */
+.dw .btn--accent { height: 54px; flex: none; background: var(--accent-primary); border-color: var(--accent-primary); color: var(--gray-white); }
+.dw .btn--accent:hover { background: var(--accent-primary-darker); border-color: var(--accent-primary-darker); }
+
+/* Focus */
+.dw button:focus-visible, .dw a:focus-visible, .dw select:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
+
+html.dw-lock, html.dw-lock body { overflow: hidden; }
+
+/* ---------- Mobile (≤767): full screen ---------- */
+@media (max-width: 767px) {
+  .dw__panel { top: 0; right: 0; bottom: 0; width: 100%; border: 0; border-radius: 0; }
+  .dw__top { padding: 16px; }
+  .dw__tab { padding: 0 14px; font-size: 14px; }
+  .dw__scroll { padding: 4px 16px 24px; }
+  .dw__foot { padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); }
+  .dw .btn--light { height: 50px; padding: 0 20px; }
+  .dw-title { margin-top: 24px; font-size: 26px; line-height: 32px; }
+  .dw-slots { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .dw-day, .dw-cal__blank { height: 40px; }
+  .dw-cal { padding: 12px; }
+  .dw-when { flex-wrap: wrap; }
+  .dw-done { padding: 16px 16px 48px; }
+}
+@media (max-width: 380px) {
+  .dw__foot .dw__sum span { display: none; }
+}
+
+/* ---------- Embedded form (Contact us page): same component, no overlay, no close button ---------- */
+.dw--inline { position: relative; inset: auto; z-index: auto; visibility: visible; pointer-events: auto; }
+.dw--inline .dw__overlay, .dw--inline .dw__close { display: none; }
+.dw--inline .dw__panel { position: relative; inset: auto; top: auto; right: auto; bottom: auto; width: 100%; height: auto; overflow: visible; transform: none; transition: none;
+  box-shadow: none; border-radius: var(--radius-middle); background: rgba(38, 41, 48, .6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.dw--inline .dw__scroll { flex: none; overflow: visible; }
+/* the page scrolls, the footer with the main button stays in view */
+.dw--inline .dw__foot { position: sticky; bottom: 0; z-index: 1; background: #1f2229; border-radius: 0 0 var(--radius-middle) var(--radius-middle); }
+@media (max-width: 767px) {
+  .dw--inline .dw__panel { border: 1px solid var(--outline-on-dark); border-radius: var(--radius-middle); }
+}
+/* embedded default form: Name / Email address / Message, like the original contact form */
+.dw--inline .dw-fields--simple { gap: 24px; margin-top: 16px; }
+.dw--inline .dw-fields--simple textarea { height: 96px; }

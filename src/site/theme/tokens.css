@@ -184,10 +184,10 @@
   --type-h6-weight: 300;
   --type-h6-family: var(--font-heading);
 
-  --type-section-title-size: 1.75rem;
-  --type-section-title-line-height: 1.5;
+  --type-section-title-size: 2.5rem;
+  --type-section-title-line-height: 1.2;
   --type-section-title-letter-spacing: -0.01em;
-  --type-section-title-weight: 500;
+  --type-section-title-weight: 400;
   --type-section-title-family: var(--font-heading);
 
   --type-lead-size: 1.25rem;

@@ -18,8 +18,10 @@ export interface NavTarget {
 
 export interface NavItem extends NavTarget {
   readonly key: 'home' | 'services' | 'cases' | 'approach' | 'aboutUs' | 'reviews' | 'contactUs';
-  /** The drop-down lists the items of the services collection. */
+  /** The Services mega menu lists the items of the services collection. */
   readonly submenu?: 'services';
+  /** Not in the desktop bar: it sits in the “=” menu (the burger and footer menus keep it). */
+  readonly more?: true;
 }
 
 export const MAIN_NAV: readonly NavItem[] = [
@@ -31,8 +33,8 @@ export const MAIN_NAV: readonly NavItem[] = [
     submenu: 'services',
   },
   { key: 'cases', pageId: 'cases' },
-  { key: 'approach', pageId: 'approach' },
-  { key: 'aboutUs', pageId: 'about' },
+  { key: 'approach', pageId: 'approach', more: true },
+  { key: 'aboutUs', pageId: 'about', more: true },
   { key: 'reviews', pageId: 'reviews' },
   { key: 'contactUs', pageId: 'contact-us' },
 ];

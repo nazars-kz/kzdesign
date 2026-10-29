@@ -13,6 +13,7 @@ import { ButtonLink } from '../components/ui/button';
 import { MAIN_NAV, type NavTarget, pagePath } from '../navigation';
 import { HeaderShell } from './header-shell';
 import { LanguageSwitcher } from './language-switcher';
+import { MegaCard, MegaPanel, MegaTrigger } from './mega-menu';
 
 /** The site logo: the one uploaded in Settings → Branding, else the bundled K&Z logo. */
 const FALLBACK_LOGO = { src: '/brand/logo.svg', width: 126, height: 32 } as const;
@@ -32,21 +33,26 @@ export async function SiteHeader({
 }) {
   const t = await getTranslations('nav');
   const common = await getTranslations('common');
-  const [{ header }, services] = await Promise.all([
+  const [{ header, menu }, services] = await Promise.all([
     getGlobalContent('site', locale),
     getCollectionList('services', locale),
   ]);
   const href = ({ pageId, anchor }: NavTarget) =>
     localizedPath(pagePath(pageId ?? 'home'), locale, defaultLocale) + (anchor ? `#${anchor}` : '');
-  /** Sub-items of the Services drop-down: every published service, in the editors' order. */
-  const children = (submenu: 'services' | undefined) =>
-    submenu === 'services'
-      ? services.items.map((item) => ({
-          key: item.slug,
-          label: item.content.navLabel || item.content.title,
-          href: item.href,
-        }))
-      : [];
+  /** Items of the Services menu: every published service, in the editors' order. */
+  const serviceCards = services.items.map((item) => ({
+    key: item.slug,
+    title: item.content.menuTitle || item.content.navLabel || item.content.title,
+    label: item.content.navLabel || item.content.title,
+    href: item.href,
+    image: item.content.menuImage,
+  }));
+  const moreCards = menu.more.map((item) => ({
+    key: item._key,
+    title: item.link.label,
+    href: item.link.href,
+    image: item.image,
+  }));
   const mark = logo
     ? {
         src: logo.src,
@@ -70,28 +76,23 @@ export async function SiteHeader({
       }
       nav={
         <nav className="nav" aria-label={common('mainNavigation')}>
-          {MAIN_NAV.map((item) => {
-            const sub = children(item.submenu);
-            return sub.length > 0 ? (
-              <div key={item.key} className="nav__drop">
-                <NavLink href={href(item)}>
-                  {t(item.key)}
-                  <i className="nav__chev" aria-hidden="true" />
-                </NavLink>
-                <div className="nav__menu">
-                  {sub.map((child) => (
-                    <Link key={child.key} href={child.href} className="text-nav">
-                      {child.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
+          {MAIN_NAV.filter((item) => !item.more).map((item) =>
+            item.submenu && serviceCards.length > 0 ? (
+              <MegaTrigger
+                key={item.key}
+                name="services"
+                panelId="mega-services"
+                variant="nav"
+                hrefs={serviceCards.map((card) => card.href)}
+              >
+                {t(item.key)}
+              </MegaTrigger>
             ) : (
               <NavLink key={item.key} href={href(item)}>
                 {t(item.key)}
               </NavLink>
-            );
-          })}
+            ),
+          )}
         </nav>
       }
       languages={
@@ -107,6 +108,7 @@ export async function SiteHeader({
           href={header.cta.href}
           external={header.cta.external}
           variant="light"
+          drawer="book"
           className="site-header__cta"
         >
           {header.cta.label}
@@ -117,10 +119,40 @@ export async function SiteHeader({
           href={header.cta.href}
           external={header.cta.external}
           variant="light"
+          drawer="book"
           className="site-header__cta-compact"
         >
           {header.cta.label}
         </ButtonLink>
+      }
+      more={
+        moreCards.length > 0 ? (
+          <MegaTrigger
+            name="more"
+            panelId="mega-more"
+            variant="more"
+            hrefs={moreCards.map((card) => card.href)}
+            label={common('moreMenu')}
+          />
+        ) : null
+      }
+      mega={
+        <>
+          {serviceCards.length > 0 ? (
+            <MegaPanel name="services" id="mega-services" columns={3}>
+              {serviceCards.map((card) => (
+                <MegaCard key={card.key} href={card.href} title={card.title} image={card.image} />
+              ))}
+            </MegaPanel>
+          ) : null}
+          {moreCards.length > 0 ? (
+            <MegaPanel name="more" id="mega-more" columns={2}>
+              {moreCards.map((card) => (
+                <MegaCard key={card.key} href={card.href} title={card.title} image={card.image} />
+              ))}
+            </MegaPanel>
+          ) : null}
+        </>
       }
       menu={
         <nav aria-label={common('mobileNavigation')}>
@@ -128,7 +160,7 @@ export async function SiteHeader({
             <Link key={item.key} href={href(item)}>
               {t(item.key)}
             </Link>,
-            ...children(item.submenu).map((child) => (
+            ...(item.submenu ? serviceCards : []).map((child) => (
               <Link key={child.key} href={child.href} className="is-sub">
                 {child.label}
               </Link>

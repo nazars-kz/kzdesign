@@ -292,7 +292,7 @@ export const homePage = definePage({
       approach: {
         eyebrow: 'Our Approach',
         title:
-          'With a business-first approach to UX/UI Design, we help you win users, increase revenue, reduce churn and look cool.',
+          'With a business-first approach to UX/UI Design, we help you win users, increase revenue, reduce churn and look cool',
         text: "We tackle the most complex UX/UI challenges. Whether you're adding new features, launching a new product, or improving an existing one, we got you covered and help your business thrive.",
         link: {
           label: 'Learn more about our processes',

@@ -4,7 +4,7 @@ import { getGlobalContent } from '@/core/content/loader';
 import type { SitePageContent } from '@/core/content/loader';
 
 import { CompanyCard } from '../components/company-card';
-import { ContactFormBlock } from '../components/contact-form-server';
+import { ContactInlineBlock } from '../components/contact/contact-panel-server';
 import { TeamMember } from '../components/team-member';
 import { Container, Section } from '../components/ui/layout';
 import { PlainRichText } from '../components/ui/rich-text';
@@ -56,9 +56,7 @@ export async function Contact({
           </div>
         </div>
         <div>
-          <div className="form-card">
-            <ContactFormBlock locale={locale} />
-          </div>
+          <ContactInlineBlock locale={locale} />
           <CompanyCard name={company.name} details={company.details} email={company.email} />
         </div>
       </Container>

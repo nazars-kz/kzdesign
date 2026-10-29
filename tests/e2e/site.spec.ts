@@ -59,8 +59,9 @@ test.describe('site', () => {
     await nav.getByRole('link', { name: 'Cases', exact: true }).click();
     await expect(page).toHaveURL(/\/cases$/);
     await page.goto('/');
-    await nav.getByText('Services').hover();
-    await nav.getByRole('link', { name: 'Mobile', exact: true }).click();
+    await page.waitForLoadState('networkidle'); // hydrated: the Services button opens its panel
+    await nav.getByRole('button', { name: 'Services' }).click();
+    await page.locator('#mega-services').getByRole('link', { name: 'Mobile apps' }).click();
     await expect(page).toHaveURL(/\/services\/mobile$/);
   });
 

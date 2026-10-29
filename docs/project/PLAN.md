@@ -51,7 +51,7 @@ Missing core features: none known. To verify while building: (1) reference field
 ## Tokens (from `design-system/tokens.css`, kit names kept)
 
 - Colors: brand orange `#FC814A` (+darker `#FF7A00`, lighter `#FF9465`), secondary `#262930` (+`#181B22`, `#303642`), content high/medium/low (+alternate on dark), bg default/secondary/alternate, outlines on white/dark, semantic negative/positive/warning/notification; homepage-only `--x-*` greys mapped to kit roles where the doc says so.
-- Fonts: Outfit 300/400/500/600 self-hosted (`next/font/local`), Satoshi 400/500 (Body 4 only) self-hosted.
+- Fonts: Google Sans Flex (variable) self-hosted (`next/font/local`), Satoshi 400/500 (Body 4 only) self-hosted.
 - Text styles: h1 600 88/32, h2 300 64/40 (−3%), h3 300 32/24, h4 300 24/20, h5, h6, sub1–sub4, body1–body4 (+medium/semibold), caps, caps-light; homepage section title (`h-section`) and button/nav labels as project styles.
 - Layout: container 1850 max, page margin `clamp(40px, 4.1667vw, 75px)` / 16 mobile, section padding 140/60, compact 80/40, header 94→68 (mobile 100→72), radii 4/8/12/999 (+1.5), shadows default/menu, motion durations 200/250/350/450/600/800 ms, breakpoints 767 and 1100 (burger).
 

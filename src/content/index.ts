@@ -7,7 +7,9 @@ import { createRegistry } from '@/core/content/registry';
 
 import { cases } from './collections/cases';
 import { services } from './collections/services';
+import { bookingForm } from './forms/booking';
 import { contactForm } from './forms/contact';
+import { projectForm } from './forms/project';
 import { siteGlobals } from './globals/site';
 import { homePage } from './pages/home';
 import { placeholderPages } from './pages/placeholders';
@@ -20,6 +22,6 @@ export const registry = createRegistry({
   pages: [homePage, ...placeholderPages],
   collections: [services, cases],
   globals: [siteGlobals],
-  forms: [contactForm],
+  forms: [contactForm, projectForm, bookingForm],
   sharedSections: [uniquenessShared, testimonialsShared, partnersShared, contactShared],
 });
