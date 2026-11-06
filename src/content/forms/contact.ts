@@ -1,30 +1,17 @@
 /**
- * FORM: the contact form of the "Let's take your product to the next level"
- * block. Fields are fixed here; labels, placeholders and messages are edited in
- * Pages → Forms → Contact form → Texts. Requests land in the admin inbox.
- * See docs/CONTENT_SCHEMA.md § Forms.
+ * FORM: "Send a message" of the contact block (Home, later every page). Fields and default
+ * texts are shared with the slide-in panel's form (`./message-fields.ts`). Labels,
+ * placeholders and messages are edited in Pages → Forms → Texts; requests land in the
+ * admin inbox. See docs/CONTENT_SCHEMA.md § Forms.
  */
-import { defineForm, FormFieldType } from '@/core/forms/define';
+import { defineForm } from '@/core/forms/define';
+
+import { MESSAGE_FIELDS, MESSAGE_SEED } from './message-fields';
 
 export const contactForm = defineForm({
   id: 'contact',
-  label: 'Contact form',
+  label: 'Contact form (contact block)',
   uiTexts: ['forms'],
-  fields: {
-    name: { type: FormFieldType.Text, required: true, max: 100, label: 'Name' },
-    email: { type: FormFieldType.Email, required: true, label: 'Email address' },
-    message: { type: FormFieldType.Textarea, max: 3000, label: 'Message (optional)' },
-  },
-  seed: {
-    en: {
-      name: { label: 'Name' },
-      email: { label: 'Email address' },
-      message: { label: 'Message (optional)', placeholder: 'Message (optional)' },
-      messages: {
-        submit: 'Submit',
-        successTitle: 'Thank you!',
-        successMessage: 'We received your message and will get back to you soon.',
-      },
-    },
-  },
+  fields: MESSAGE_FIELDS,
+  seed: { en: MESSAGE_SEED },
 });

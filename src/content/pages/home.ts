@@ -93,10 +93,10 @@ const FAQ: readonly (readonly [string, string])[] = [
 ];
 
 const APPROACH = [
-  ['Discovery', 'discovery', 'approach-discovery.png'],
-  ['Strategy', 'strategy', 'approach-strategy.png'],
-  ['UX/UI Design', 'design', 'approach-uxui.png'],
-  ['Prototyping', 'prototyping', 'approach-prototyping.png'],
+  ['Discovery', 'discovery', 'discovery'],
+  ['Strategy', 'strategy', 'strategy'],
+  ['UX/UI Design', 'design', 'uxui'],
+  ['Prototyping', 'prototyping', 'prototyping'],
 ] as const;
 
 const INDUSTRY_TEXT: Record<(typeof INDUSTRIES)[number]['value'], string> = {
@@ -130,9 +130,9 @@ export const homePage = definePage({
   parent: null,
   uiTexts: ['home', 'services'],
   seo: {
-    title: 'K&Z Design — Your reliable UX/UI design partner',
+    title: 'UI/UX Design Agency for SaaS & B2B Products | K&Z Design',
     description:
-      'We partner with digital product businesses to help them grow, go from seeds to Series D, and retain clients with our expertise in user experience & digital product design.',
+      'K&Z Design is a UI/UX design agency for SaaS, web and mobile products. Founder-led team, developer-ready Figma, design systems. Seed to Series D.',
   },
   sections: [
     defineSection({
@@ -200,7 +200,15 @@ export const homePage = definePage({
           max: 8,
           of: {
             link: f.link({ label: 'Title and link' }),
-            image: f.image({ label: 'Picture', localized: false, recommendedSize: '460×330' }),
+            graphic: f.select({
+              label: 'Illustration',
+              options: [
+                { value: 'discovery', label: 'Discovery (search)' },
+                { value: 'strategy', label: 'Strategy (priorities)' },
+                { value: 'uxui', label: 'UX/UI Design (form)' },
+                { value: 'prototyping', label: 'Prototyping (payment)' },
+              ],
+            }),
           },
         }),
       },
@@ -246,6 +254,13 @@ export const homePage = definePage({
           integer: true,
           min: 0,
           help: 'Position of the question that is open when the page loads; 0 for none.',
+        }),
+        visibleCount: f.number({
+          label: 'Questions shown at first',
+          localized: false,
+          integer: true,
+          min: 0,
+          help: 'The others wait behind “Show all questions”; 0 shows every question.',
         }),
         cta: f.link({ label: 'Button next to the title' }),
         ctaAfter: f.link({ label: 'Button under the list (phones)' }),
@@ -299,9 +314,9 @@ export const homePage = definePage({
           href: '/approach',
           external: false,
         },
-        cards: APPROACH.map(([label, anchor, asset]) => ({
+        cards: APPROACH.map(([label, anchor, graphic]) => ({
           link: { label, href: `/approach#${anchor}`, external: false },
-          image: { asset, alt: `${label} illustration` },
+          graphic,
         })),
       },
       industries: {
@@ -321,6 +336,7 @@ export const homePage = definePage({
         title: 'We were asked these',
         subtitle: 'Have any other questions?',
         initiallyOpen: 0,
+        visibleCount: 6,
         cta: { label: 'Contact us', href: '/contact-us', external: false },
         ctaAfter: { label: 'Get in touch', href: '/contact-us', external: false },
         items: FAQ.map(([question, answer]) => ({ question, answer })),

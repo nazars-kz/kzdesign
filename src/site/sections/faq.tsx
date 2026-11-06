@@ -1,4 +1,7 @@
+import { getTranslations } from 'next-intl/server';
 import type { SitePageContent } from '@/core/content/loader';
+
+import { JsonLd } from '@/core/seo/json-ld';
 
 import { Accordion } from '../components/accordion';
 import { SectionHeader } from '../components/section-header';
@@ -6,9 +9,21 @@ import { ButtonLink } from '../components/ui/button';
 import { Container } from '../components/ui/layout';
 
 /** "We were asked these": the questions accordion; the button sits next to the title (under the list on phones). */
-export function Faq({ content }: { content: SitePageContent<'home'>['faq'] }) {
+export async function Faq({ content }: { content: SitePageContent<'home'>['faq'] }) {
+  const t = await getTranslations('home');
   return (
     <section className="faq" aria-labelledby="faq-title">
+      {/* Every question is in the page (the extra ones wait behind "Show all"), so FAQPage data is honest. */}
+      <JsonLd
+        data={{
+          '@type': 'FAQPage',
+          mainEntity: content.items.map((item) => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: { '@type': 'Answer', text: item.answer },
+          })),
+        }}
+      />
       <Container className="faq__inner">
         <div className="faq__intro">
           <SectionHeader
@@ -33,6 +48,8 @@ export function Faq({ content }: { content: SitePageContent<'home'>['faq'] }) {
               head: <span className="accordion__label">{item.question}</span>,
               body: <p>{item.answer}</p>,
             }))}
+            collapsedCount={content.visibleCount}
+            moreLabels={{ showAll: t.raw('faqShowAll') as string, showFewer: t('faqShowFewer') }}
             className="faq__list"
           />
           <div className="faq__after">

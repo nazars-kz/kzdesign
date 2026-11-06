@@ -629,50 +629,224 @@
   padding: 0 1rem;
 }
 
-.dw-more {
+.dw-mailbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.75rem;
+  padding: 0.75rem 1.25rem;
   margin-top: 0.5rem;
+  border: 1px solid var(--x-border-on-dark);
+  border-radius: var(--radius-middle);
+  font: 400 1.0625rem/1.5rem var(--font-secondary);
+  color: var(--content-high-alt);
+  transition: border-color var(--dur-fast);
 }
-.dw-more__btn {
+.dw-mailbox svg {
+  flex: none;
+  width: 1.375rem;
+  height: 1.375rem;
+}
+.dw-mailbox u {
+  text-decoration: none;
+  color: var(--accent-primary);
+  border-bottom: 1px solid currentColor;
+}
+.dw-mailbox:hover {
+  border-color: var(--accent-primary);
+}
+.dw-or {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--x-muted);
+}
+.dw-or::before,
+.dw-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--x-line-dark);
+}
+.dw-fields--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 1.25rem;
+}
+.dw-help {
+  margin-top: 1rem;
+}
+.dw-help textarea {
+  height: 6rem;
+}
+
+/* Attach file + Advanced options switch */
+.dw-tools {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  padding: 1rem;
-  border: 1px dashed var(--x-border-on-dark);
-  border-radius: var(--radius-middle);
-  color: var(--x-muted);
-  font-size: 1rem;
-  text-align: left;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+.dw-attach {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+  height: 2.75rem;
+  padding: 0 1.125rem 0 0.875rem;
+  border: 1px solid var(--x-border-on-dark);
+  border-radius: var(--radius-infinite);
+  font: 400 0.9375rem/1 var(--font-secondary);
+  color: var(--content-high-alt);
+  cursor: pointer;
   transition:
     border-color var(--dur-fast),
     color var(--dur-fast);
 }
-.dw-more__btn:hover {
+.dw-attach input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.dw-attach svg {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+}
+.dw-attach span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dw-attach:hover,
+.dw-attach.has-file {
   border-color: var(--accent-primary);
+}
+.dw-attach.has-file svg {
+  color: var(--accent-primary);
+}
+.dw-attach.is-error {
+  border-color: var(--semantic-negative);
+  color: var(--semantic-negative);
+}
+.dw-attach:focus-within {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+.dw-adv {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font: 400 0.9375rem/1.375rem var(--font-secondary);
   color: var(--content-high-alt);
 }
-.dw-more__btn i {
+.dw-adv > svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--accent-primary);
+}
+.dw-switch {
+  position: relative;
   flex: none;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2.75rem;
+  height: 1.625rem;
+  border-radius: 0.8125rem;
+  background: var(--accent-secondary-lighter);
+  transition: background var(--dur-base);
+}
+.dw-switch::after {
+  content: '';
+  position: absolute;
+  top: 0.1875rem;
+  left: 0.1875rem;
+  width: 1.25rem;
+  height: 1.25rem;
   border-radius: 50%;
-  display: grid;
-  place-items: center;
+  background: var(--gray-white);
+  box-shadow: 0 1px 0.1875rem rgba(0, 0, 0, 0.3);
+  transition: transform var(--dur-base) var(--ease-standard);
+}
+.dw-adv[aria-checked='true'] .dw-switch {
   background: var(--accent-primary);
-  color: var(--gray-white);
 }
-.dw-more__btn i svg {
-  width: 0.875rem;
-  height: 0.875rem;
+.dw-adv[aria-checked='true'] .dw-switch::after {
+  transform: translateX(1.125rem);
 }
-.dw-more.is-open .dw-more__btn {
-  display: none;
+.dw-advbox {
+  margin-top: 1.25rem;
+  padding: 0.25rem 1.25rem 1.5rem;
+  border: 1px solid var(--x-line-dark);
+  border-radius: var(--radius-middle);
+  background: var(--x-dark-3);
+  animation: dwIn var(--dur-slow) var(--ease-standard);
 }
-.dw-more .field {
-  display: none;
+.dw-advbox > .dw-label:first-child {
+  margin-top: 1.25rem;
 }
-.dw-more.is-open .field {
+
+/* Project scope: radio cards */
+.dw-opts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.dw-opt {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--x-border-on-dark);
+  border-radius: var(--radius-middle);
+  cursor: pointer;
+  transition: border-color var(--dur-fast);
+}
+.dw-opt input {
+  position: absolute;
+  opacity: 0;
+}
+.dw-opt i {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 2px;
+  border: 1px solid var(--x-muted);
+  border-radius: 50%;
+  transition:
+    border-color var(--dur-fast),
+    box-shadow var(--dur-fast);
+}
+.dw-opt b {
   display: block;
+  font: var(--fw-semibold) 1rem/1.375rem var(--font-primary);
+  color: var(--content-high-alt);
+}
+.dw-opt span {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--x-muted);
+}
+.dw-opt:hover {
+  border-color: var(--content-medium-alt);
+}
+.dw-opt:has(input:checked) {
+  border-color: var(--accent-primary);
+}
+.dw-opt input:checked + i {
+  border-color: var(--accent-primary);
+  box-shadow: inset 0 0 0 0.3125rem var(--accent-primary);
+}
+.dw-opt input:focus-visible + i {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
 }
 
 .dw-checks {
@@ -858,6 +1032,13 @@ html.dw-lock body {
   .dw-done {
     padding: 1rem 1rem 3rem;
   }
+  .dw-fields--2,
+  .dw-opts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dw-mailbox {
+    font-size: 0.9375rem;
+  }
 }
 @media (max-width: 23.75rem) {
   .dw__foot .dw__sum span {
@@ -911,21 +1092,14 @@ html.dw-lock body {
     border-radius: var(--radius-middle);
   }
 }
-/* embedded default form: Name / Email address / Message, like the original contact form */
-.dw--inline .dw-fields--simple {
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-.dw--inline .dw-fields--simple textarea {
-  height: 6rem;
-}
 
-.dw-title--first {
-  margin-top: 0.5rem;
-}
+/* Spacing the design sets inline (the site has no inline visual styles) */
 .dw-fields--after-card {
   margin-top: 1.5rem;
 }
-.dw-fields--after-chips {
-  margin-top: 1.75rem;
+.dw-advbox .dw-fields {
+  margin-top: 1.5rem;
+}
+.dw-advbox .dw-check {
+  margin-top: 1.5rem;
 }

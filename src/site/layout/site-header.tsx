@@ -33,7 +33,7 @@ export async function SiteHeader({
 }) {
   const t = await getTranslations('nav');
   const common = await getTranslations('common');
-  const [{ header, menu }, services] = await Promise.all([
+  const [{ header }, services] = await Promise.all([
     getGlobalContent('site', locale),
     getCollectionList('services', locale),
   ]);
@@ -46,12 +46,6 @@ export async function SiteHeader({
     label: item.content.navLabel || item.content.title,
     href: item.href,
     image: item.content.menuImage,
-  }));
-  const moreCards = menu.more.map((item) => ({
-    key: item._key,
-    title: item.link.label,
-    href: item.link.href,
-    image: item.image,
   }));
   const mark = logo
     ? {
@@ -76,13 +70,12 @@ export async function SiteHeader({
       }
       nav={
         <nav className="nav" aria-label={common('mainNavigation')}>
-          {MAIN_NAV.filter((item) => !item.more).map((item) =>
+          {MAIN_NAV.map((item) =>
             item.submenu && serviceCards.length > 0 ? (
               <MegaTrigger
                 key={item.key}
                 name="services"
                 panelId="mega-services"
-                variant="nav"
                 hrefs={serviceCards.map((card) => card.href)}
               >
                 {t(item.key)}
@@ -125,29 +118,11 @@ export async function SiteHeader({
           {header.cta.label}
         </ButtonLink>
       }
-      more={
-        moreCards.length > 0 ? (
-          <MegaTrigger
-            name="more"
-            panelId="mega-more"
-            variant="more"
-            hrefs={moreCards.map((card) => card.href)}
-            label={common('moreMenu')}
-          />
-        ) : null
-      }
       mega={
         <>
           {serviceCards.length > 0 ? (
             <MegaPanel name="services" id="mega-services" columns={3}>
               {serviceCards.map((card) => (
-                <MegaCard key={card.key} href={card.href} title={card.title} image={card.image} />
-              ))}
-            </MegaPanel>
-          ) : null}
-          {moreCards.length > 0 ? (
-            <MegaPanel name="more" id="mega-more" columns={2}>
-              {moreCards.map((card) => (
                 <MegaCard key={card.key} href={card.href} title={card.title} image={card.image} />
               ))}
             </MegaPanel>

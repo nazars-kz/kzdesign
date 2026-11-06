@@ -10,6 +10,7 @@ import { login } from './support/auth';
 import { setDeveloperMode } from './support/developer';
 import { E2E_DATA_DIR, E2E_ENV } from './support/env';
 import { openSettingsTab, saveSettingsTab } from './support/settings';
+import { sentMessage } from './support/integrations';
 import { E2E_ADMIN, E2E_MANAGER } from './support/users';
 import { admin, ADMIN } from './support/admin';
 
@@ -50,6 +51,8 @@ async function fill(page: Page, input: ContactInput): Promise<void> {
   if (input.name !== undefined) await page.locator('#contact-name').fill(input.name);
   if (input.email !== undefined) await page.locator('#contact-email').fill(input.email);
   if (input.message !== undefined) await page.locator('#contact-message').fill(input.message);
+  // The privacy checkbox is required; its box is drawn by an icon next to the real input.
+  await page.locator('#contact-privacy').check({ force: true });
 }
 
 async function submit(page: Page): Promise<void> {
@@ -77,7 +80,7 @@ async function configureDelivery(page: Page, options: { email: boolean; webhook:
   await setDeveloperMode(page, true);
   const form = await openSettingsTab(page, 'requests', 'Requests');
   // Every form has its own block; these tests use the contact form's.
-  const contact = form.getByRole('group', { name: /^Contact form/ });
+  const contact = form.getByRole('group', { name: /^Contact form \(contact block\)/ });
   // Email goes to the listed recipients; an empty list sends no email.
   await contact.getByLabel('Send requests to').fill(options.email ? 'inbox@example.test' : '');
   const webhook = contact.getByRole('switch', { name: 'Webhook (CRM, Zapier, Make)' });
@@ -118,20 +121,21 @@ test.describe.serial('forms', () => {
     page.on('request', (request) => {
       if (request.method() === 'POST') posts.push(request.url());
     });
+    // `force`: the page is long and its sticky footer moves while Playwright scrolls to it.
     // Required fields are checked by the browser: nothing is sent.
-    await page.locator('form#form-contact button[type="submit"]').click();
+    await page.locator('form#form-contact button[type="submit"]').click({ force: true });
     await page.waitForTimeout(500);
     expect(posts).toEqual([]);
 
     // The timing token needs JavaScript to reach the form, so the server asks to confirm once.
     await fill(page, valid(`NoJS ${stamp}`));
-    await page.locator('form#form-contact button[type="submit"]').click();
+    await page.locator('form#form-contact button[type="submit"]').click({ force: true });
     await expect(page.getByRole('status')).toHaveText(
       'Please press the button to send your message.',
     );
     await page.waitForTimeout(FILL_DELAY_MS);
-    await page.getByRole('button', { name: 'Submit' }).click();
-    await expect(page.getByText('Thank you!').first()).toBeVisible();
+    await page.getByRole('button', { name: 'Submit' }).click({ force: true });
+    await expect(page.getByText('Your Form Was Successfully Submitted!').first()).toBeVisible();
     await context.close();
   });
 
@@ -149,7 +153,7 @@ test.describe.serial('forms', () => {
     await fill(page, valid(`Script ${stamp}`));
     await expect(submitButton).toBeEnabled();
     await submit(page);
-    await expect(page.getByText('Thank you!').first()).toBeVisible();
+    await expect(sentMessage(page)).toBeVisible();
     await context.close();
   });
 
@@ -170,7 +174,7 @@ test.describe.serial('forms', () => {
       .locator('form#form-contact input[name="website"]')
       .fill('https://spam.example', { force: true });
     await submit(bot.page);
-    await expect(bot.page.getByText('Thank you!').first()).toBeVisible();
+    await expect(sentMessage(bot.page)).toBeVisible();
 
     await openContact(bot.page);
     // The Home page is heavy and its form is hydrated seconds before the test types, so get a
@@ -187,9 +191,10 @@ test.describe.serial('forms', () => {
         set('name', name);
         set('email', 'visitor@example.test');
         set('message', 'Hello from the end-to-end tests.');
+        (form.elements.namedItem('privacy') as HTMLInputElement).checked = true;
         form.requestSubmit();
       }, `TooFast ${stamp}`);
-    await expect(bot.page.getByText('Thank you!').first()).toBeVisible();
+    await expect(sentMessage(bot.page)).toBeVisible();
     await bot.context.close();
 
     await login(page, E2E_ADMIN);
@@ -205,7 +210,7 @@ test.describe.serial('forms', () => {
       await openContact(page);
       await fill(page, valid(`Limit ${stamp} ${attempt}`));
       await submit(page);
-      await expect(page.getByText('Thank you!').first()).toBeVisible();
+      await expect(sentMessage(page)).toBeVisible();
     }
     await openContact(page);
     await fill(page, valid(`Limit ${stamp} 6`));
@@ -229,7 +234,7 @@ test.describe.serial('forms', () => {
       await openContact(guest);
       await fill(guest, valid(name));
       await submit(guest);
-      await expect(guest.getByText('Thank you!').first()).toBeVisible();
+      await expect(sentMessage(guest)).toBeVisible();
       await context.close();
 
       // Unread count in the Pages sidebar.
@@ -279,7 +284,7 @@ test.describe.serial('forms', () => {
     await openContact(guest);
     await fill(guest, valid(name));
     await submit(guest);
-    await expect(guest.getByText('Thank you!').first()).toBeVisible();
+    await expect(sentMessage(guest)).toBeVisible();
     await context.close();
     await page.goto(`${ADMIN}/pages/forms/contact?status=all&q=${encodeURIComponent(name)}`);
     await expect(page.getByText('webhook: failed')).toBeVisible();

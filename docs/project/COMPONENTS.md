@@ -92,3 +92,11 @@ Breadcrumbs, Marquee, LeaderCard, FounderCard, FeatureCard, ProcessStep, filter 
 | Contact panel (`ContactPanel`, `ContactDrawer`, `ContactInline`)   | `src/site/components/contact/`                | tabs, calendar, chips; the drawer opens from any `data-drawer` element (`ButtonLink drawer="book"`) |
 | Booking time helpers                                               | `src/site/components/contact/booking-time.ts` | mocked availability; replace `slotsFor` with a real calendar                                        |
 | Drag-to-scroll hook                                                | `src/site/components/ui/use-drag-scroll.ts`   | round cursor, snap to the nearest card                                                              |
+
+## Added with the design update 2026-11
+
+| Component                         | File                                            | Notes                                                                              |
+| --------------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Graphic (pure-CSS illustration)   | `src/site/components/ui/graphic.tsx`            | renders trusted HTML from `src/site/theme/graphics.ts` (Approach and Why us cards) |
+| Accordion "show more"             | `src/site/components/accordion.tsx`             | `collapsedCount`, `moreLabels`: extra items stay in the HTML, hidden with CSS      |
+| Message form of the contact panel | `src/site/components/contact/contact-panel.tsx` | advanced switch, chips, scope cards; forms `contact` and `project`                 |

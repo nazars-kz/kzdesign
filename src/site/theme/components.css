@@ -344,46 +344,6 @@
   background: var(--color-surface);
 }
 
-/* The round "=" button: opens the second mega menu */
-.header__more {
-  position: relative;
-  flex: none;
-  width: 2.75rem;
-  height: 2.75rem;
-  margin-left: 0.5rem;
-  border-radius: 50%;
-  background: var(--color-surface);
-  cursor: pointer;
-  transition: background-color var(--duration-fast) var(--ease-standard);
-}
-.header__more:hover {
-  background: #ebebeb;
-}
-.header__more.is-active::before {
-  content: '';
-  position: absolute;
-  top: 0.25rem;
-  right: 0.25rem;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--color-primary);
-}
-.header__more-ico {
-  position: absolute;
-  inset: 0;
-  background: var(--color-foreground-soft);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 9h14M5 15h14'/%3E%3C/svg%3E")
-    center / 1.5rem no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 9h14M5 15h14'/%3E%3C/svg%3E")
-    center / 1.5rem no-repeat;
-}
-/* open: "=" turns into a chevron pointing up */
-.header__more[aria-expanded='true'] .header__more-ico {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 15l6-6 6 6'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 15l6-6 6 6'/%3E%3C/svg%3E");
-}
-
 /* Mega menus (desktop): Services and "=" open a panel of image cards under the header */
 .mega-dim {
   position: fixed;
@@ -430,9 +390,6 @@
 }
 .mega__panel--3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-.mega__panel--2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .mega.is-open .mega__panel {
   opacity: 1;
@@ -657,7 +614,6 @@ body.menu-open {
 @media (max-width: 68.75rem) {
   .nav,
   .site-header__cta,
-  .header__more,
   .mega {
     display: none;
   }

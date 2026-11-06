@@ -27,23 +27,6 @@ export const siteGlobals = defineGlobal({
       },
     }),
     defineSection({
-      id: 'menu',
-      label: 'Menu',
-      description:
-        'The second menu of the header (the “=” button). The Services menu is built from the Services collection.',
-      fields: {
-        more: f.list({
-          label: 'Cards of the “=” menu',
-          max: 4,
-          itemLabelField: 'link',
-          of: {
-            link: f.link({ label: 'Title and link', required: true }),
-            image: f.image({ label: 'Picture', localized: false, recommendedSize: '640×400' }),
-          },
-        }),
-      },
-    }),
-    defineSection({
       id: 'company',
       label: 'Company details',
       description: 'Shown in the footer and in the contact block.',
@@ -89,18 +72,6 @@ export const siteGlobals = defineGlobal({
     en: {
       header: {
         cta: { label: 'Get in touch', href: '/contact-us', external: false },
-      },
-      menu: {
-        more: [
-          {
-            link: { label: 'Approach', href: '/approach', external: false },
-            image: { asset: 'approach-uxui.png', alt: 'Approach' },
-          },
-          {
-            link: { label: 'About us', href: '/about-us', external: false },
-            image: { asset: 'menu-about.webp', alt: 'About us' },
-          },
-        ],
       },
       company: {
         name: 'K&Zh OÜ',

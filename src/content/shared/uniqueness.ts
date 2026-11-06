@@ -35,12 +35,12 @@ export const uniquenessShared = defineSharedSection({
           localized: false,
           recommendedSize: '96×96',
         }),
-        image: f.image({ label: 'Illustration', localized: false, recommendedSize: '1302×1138' }),
-        imageFit: f.select({
-          label: 'Illustration fit',
+        graphic: f.select({
+          label: 'Illustration',
           options: [
-            { value: 'cover', label: 'Fill the area' },
-            { value: 'contain', label: 'Fit inside' },
+            { value: 'direct', label: 'No middlemen (chat)' },
+            { value: 'updates', label: 'Communication & updates (daily update)' },
+            { value: 'handoff', label: 'Designs created to be developed (handoff)' },
           ],
         }),
       },
@@ -67,11 +67,7 @@ export const uniquenessShared = defineSharedSection({
           personName: 'Kwabena Osei-Larbi',
           personRole: 'Founder, 2step',
           personAvatar: { asset: 'avatar-kwabena-osei-larbi.png', alt: 'Kwabena Osei-Larbi' },
-          image: {
-            asset: 'uniqueness-direct.jpg',
-            alt: 'Client in the center, connected directly to designers',
-          },
-          imageFit: 'cover',
+          graphic: 'direct',
         },
         {
           title: 'Communication & Updates',
@@ -88,11 +84,7 @@ export const uniquenessShared = defineSharedSection({
           personName: 'Benn Eames',
           personRole: 'CEO of VidSprint',
           personAvatar: { asset: 'avatar-benn-eames.png', alt: 'Benn Eames' },
-          image: {
-            asset: 'uniqueness-updates.png',
-            alt: 'Daily updates timeline with Figma, Slack and Google Meet',
-          },
-          imageFit: 'cover',
+          graphic: 'updates',
         },
         {
           title: 'Designs created to be developed',
@@ -113,11 +105,7 @@ export const uniquenessShared = defineSharedSection({
           personName: 'Mike Hapner',
           personRole: 'CTO, Valorian Solutions',
           personAvatar: { asset: 'avatar-mike-hapner.png', alt: 'Mike Hapner' },
-          image: {
-            asset: 'uniqueness-handoff.png',
-            alt: 'Figma components and documentation handed off to code',
-          },
-          imageFit: 'contain',
+          graphic: 'handoff',
         },
       ],
     },

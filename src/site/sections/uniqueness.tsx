@@ -3,10 +3,11 @@ import Image from 'next/image';
 import type { SitePageContent } from '@/core/content/loader';
 
 import { SectionHeader } from '../components/section-header';
-import { cx } from '../components/ui/cn';
+import { Graphic } from '../components/ui/graphic';
 import { Container, Section } from '../components/ui/layout';
 import { PlainRichText } from '../components/ui/rich-text';
 import { Heading } from '../components/ui/typography';
+import { WHY_GRAPHICS } from '../theme/graphics';
 
 /** "We are not design outsource…": cards with bullet points, a client quote and an illustration. */
 export function Uniqueness({ content }: { content: SitePageContent<'home'>['uniqueness'] }) {
@@ -17,7 +18,7 @@ export function Uniqueness({ content }: { content: SitePageContent<'home'>['uniq
         <ul className="uniq__list">
           {content.cards.map((card) => (
             <li key={card._key}>
-              <article className="u-card">
+              <article className="u-card kzw-host">
                 <div className="u-card__text">
                   <Heading level={3} variant="plain" className="u-card__title">
                     {card.title}
@@ -50,15 +51,7 @@ export function Uniqueness({ content }: { content: SitePageContent<'home'>['uniq
                   </div>
                 </div>
                 <div className="u-card__media">
-                  {card.image ? (
-                    <Image
-                      src={card.image.src}
-                      alt={card.image.alt}
-                      fill
-                      sizes="(min-width: 1100px) 50vw, 100vw"
-                      className={cx(card.imageFit === 'contain' && 'is-contain')}
-                    />
-                  ) : null}
+                  {card.graphic ? <Graphic html={WHY_GRAPHICS[card.graphic]} /> : null}
                 </div>
               </article>
             </li>
