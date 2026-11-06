@@ -198,16 +198,6 @@ button.nav__link { font: inherit; font-size: 16px; line-height: 24px; color: var
 .nav__trigger[aria-expanded="true"]::after { transform: scaleX(0); }
 .nav__trigger[aria-expanded="true"] .nav__chev { transform: rotate(0deg); }
 
-.header__more {
-  width: 44px; height: 44px; margin-left: 8px; border-radius: 50%; background: var(--gray-bg); position: relative; flex: none;
-  transition: background .2s;
-}
-.header__more:hover { background: #ebebeb; }
-.header__more.is-active::before { content: ""; position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
-.header__more-ico { position: absolute; inset: 0; background: var(--ink-2);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 9h14M5 15h14'/%3E%3C/svg%3E") no-repeat center / 22px; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 9h14M5 15h14'/%3E%3C/svg%3E") no-repeat center / 22px; }
-/* open: "=" turns into a chevron pointing up */
-.header__more[aria-expanded="true"] .header__more-ico { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 15l6-6 6 6'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 15l6-6 6 6'/%3E%3C/svg%3E"); }
 .mega-dim { position: fixed; inset: 0; z-index: 40; background: rgba(24, 27, 34, .45); opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility 0s .25s; }
 .mega-dim.is-on { opacity: 1; visibility: visible; transition: opacity .25s ease; }
 .mega { position: absolute; left: 0; right: 0; top: 100%; padding-top: 4px; pointer-events: none; }
@@ -440,6 +430,8 @@ body.menu-open .mobile-menu { opacity: 1; visibility: visible; transform: none; 
 .u-card__media { border-left: 1px solid rgba(228,228,228,.11); position: relative; overflow: hidden; aspect-ratio: 1302 / 1138; } /* illustration proportions: no cropping on wide screens */
 .u-card__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .u-card__media img.contain { object-fit: contain; }
+/* "Why us" graphics (css/kz-why.css, kz-why-html pack, 960:840 like the media box): fill it, play on card hover (.kzw-host) */
+.u-card__media .kzw { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; }
 
 /* ---------- Approach ---------- */
 .approach .container { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding-top: 49px; padding-bottom: 140px; }
@@ -448,10 +440,12 @@ body.menu-open .mobile-menu { opacity: 1; visibility: visible; transform: none; 
 .approach__link { margin-top: 74px; }
 .approach__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding-top: 50px; }
 .a-card {
-  position: relative; display: block; background: var(--dark-2); height: 272px; overflow: hidden; color: #fff;
+  position: relative; display: block; background: var(--dark-2); aspect-ratio: 680 / 560; overflow: hidden; color: #fff;
 }
+/* Hover-animated graphics (css/kz-c1.css, kz-c1-graphics pack): fill the card behind the title; .kzc1-host plays them on card hover */
+.a-card .kzc1 { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; }
 .a-card__title {
-  position: absolute; left: 16px; top: 16px; display: inline-flex; align-items: center; gap: 8px;
+  position: absolute; z-index: 2; left: 16px; top: 16px; display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--f-head); font-weight: 400; font-size: 16px; line-height: 22.4px;
 }
 .a-card__title::after {
@@ -459,8 +453,6 @@ body.menu-open .mobile-menu { opacity: 1; visibility: visible; transform: none; 
   transition: transform .25s;
 }
 .a-card:hover .a-card__title::after { transform: translateX(4px); }
-.a-card img { position: absolute; top: 90px; left: calc(50% + 8px); transform: translateX(-50%); width: 230px; height: 165px; transition: transform .4s; }
-.a-card:hover img { transform: translateX(-50%) translateY(-4px); }
 
 /* ---------- Testimonials ---------- */
 .testi { position: relative; overflow: hidden; padding: 68px 0 60px; }
@@ -628,6 +620,15 @@ a.p-tile:hover .p-tile__hover i { transform: none; }
 .faq__q:hover, .faq__q:focus-visible { padding-left: 28px; }
 .faq__q .plus::before { top: 7px; }
 .faq__q .plus::after { left: 7px; }
+.faq__list:not(.is-all) > .faq__item:nth-child(n+7) { display: none; } /* first 6 shown, the rest behind "Show all questions" */
+.faq__more { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; height: 64px; margin-top: 24px;
+  border: 1px solid var(--line-light); border-radius: var(--radius-middle, 8px); background: #fff; color: var(--ink);
+  font: 400 18px/27px var(--f-head); transition: background .25s ease, border-color .25s ease; }
+.faq__more:hover, .faq__more:focus-visible { background: #F2F2F2; border-color: #F2F2F2; }
+.faq__more .plus { position: relative; width: 16px; height: 16px; margin: 0; color: #000; }
+.faq__more .plus::before { top: 7px; }
+.faq__more .plus::after { left: 7px; }
+.faq__more[aria-expanded="true"] .plus::after { transform: scaleY(0); }
 .faq__item .acc-row__body p { padding: 0 64px 24px 16px; color: #4a4c52; font-size: 18px; line-height: 27px; }
 
 /* ---------- Contact ---------- */
@@ -756,7 +757,7 @@ a.p-tile:hover .p-tile__hover i { transform: none; }
 @media (max-width: 1100px) {
   :root { --pad: 40px; }
   .nav, .header__actions .btn { display: none; }
-  .header__more, .mega { display: none; }
+  .mega { display: none; }
   .burger { display: block; }
   .header__actions .btn.btn--mobile { display: inline-flex; }
   .hero__title { font-size: 64px; }
@@ -871,8 +872,6 @@ a.p-tile:hover .p-tile__hover i { transform: none; }
   .approach__link .link-arrow { width: 100%; justify-content: space-between; }
   .approach__link .link-arrow__text { max-width: 200px; }
   .approach__grid { grid-template-columns: 1fr; gap: 4px; padding-top: 36px; }
-  .a-card { height: 256px; }
-  .a-card img { top: 70px; left: 50%; width: 260px; height: auto; }
 
   /* testimonials */
   .testi { padding: 60px 0 56px; }

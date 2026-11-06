@@ -29,6 +29,9 @@
     video: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg>',
     cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
     globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9s1.3-6.3 3.8-9z"/></svg>',
+    mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg>',
+    clip: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5l-8.6 8.6a5 5 0 0 1-7.1-7.1l8.6-8.6a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l7.9-7.9"/></svg>',
+    spark: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 2.5l1.9 5.6 5.6 1.9-5.6 1.9L10 17.5l-1.9-5.6L2.5 10l5.6-1.9zM18.5 13l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9z"/></svg>',
     free: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>'
   };
 
@@ -38,9 +41,10 @@
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function chip(label, multi) { return '<button class="dw-chip" type="button" aria-pressed="false" data-v="' + esc(label) + '">' + (multi ? ic.plus : '') + esc(label) + '</button>'; }
+  function opt(name, title, text) { return '<label class="dw-opt"><input type="radio" name="' + name + '" value="' + esc(title) + '"><i aria-hidden="true"></i><span><b>' + esc(title) + '</b>' + esc(text) + '</span></label>'; }
   var person = '<div class="dw-person"><div class="dw-person__ava"><img src="' + ROOT_URL + 'assets/av-vlad.jpg" alt="Vlad Kyrieiev"></div><div><b>Vlad Kyrieiev</b><span>Founder &amp; CEO</span></div></div>';
 
-  var html =
+  function build(uid) { return (
     '<div class="dw__overlay" data-dw-close></div>' +
     '<div class="dw__panel" role="dialog" aria-modal="true" aria-label="Get in touch" tabindex="-1">' +
       '<div class="dw__top">' +
@@ -106,29 +110,41 @@
       '<div class="dw__pane" data-pane="message" role="tabpanel">' +
         '<form class="dw__step is-active dw-msg" data-step="form" novalidate>' +
           '<div class="dw__scroll">' +
-            '<h2 class="dw-title" style="margin-top:8px">Tell us what you’re building</h2>' +
-            '<p class="dw-lead">We reply within one business day. Prefer email? <a href="mailto:' + EMAIL + '">' + EMAIL + '</a></p>' +
-            '<span class="dw-label">What do you need?</span>' +
-            '<div class="dw-chips" data-group="needs">' + NEEDS.map(function (n) { return chip(n, true); }).join('') + '</div>' +
-            '<span class="dw-label">Budget <i>· optional</i></span>' +
-            '<div class="dw-chips dw-chips--single" data-group="budget" data-single>' + BUDGETS.map(function (n) { return chip(n); }).join('') + '</div>' +
-            '<div class="dw-fields" style="margin-top:28px">' +
-              '<label class="field"><input type="text" name="name" placeholder=" " required autocomplete="name"><span class="req">Name<b>*</b></span></label>' +
+            '<a class="dw-mailbox" href="mailto:' + EMAIL + '">' + ic.mail + '<span>Email us at <u>' + EMAIL + '</u></span></a>' +
+            '<p class="dw-or"><span>or fill out the form below</span></p>' +
+            '<div class="dw-fields dw-fields--2">' +
+              '<label class="field"><input type="text" name="name" placeholder=" " required autocomplete="name"><span class="req">Your name<b>*</b></span></label>' +
               '<label class="field"><input type="email" name="email" placeholder=" " required autocomplete="email"><span class="req">Email<b>*</b></span></label>' +
-              '<label class="field"><input type="text" name="company" placeholder="Company (optional)" autocomplete="organization"></label>' +
-              '<label class="field"><select name="source" class="is-empty"><option value="">How did you hear about us?</option>' + SOURCES.map(function (s) { return '<option>' + esc(s) + '</option>'; }).join('') + '</select></label>' +
             '</div>' +
-            '<div class="dw-more">' +
-              '<button class="dw-more__btn" type="button">About the project<i>' + ic.plus + '</i></button>' +
-              '<label class="field"><textarea name="about" placeholder="About the project: goals, stage, timeline"></textarea></label>' +
+            '<label class="field dw-help"><textarea name="about" placeholder="How can we help you?"></textarea></label>' +
+            '<div class="dw-tools">' +
+              '<label class="dw-attach"><input type="file" name="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.key,.xls,.xlsx,.csv,.txt,.png,.jpg,.jpeg,.zip">' + ic.clip + '<span data-file>Attach file</span></label>' +
+              '<button class="dw-adv" type="button" role="switch" aria-checked="false" aria-controls="' + uid + '-adv">' + ic.spark + '<span>Advanced Options</span><i class="dw-switch" aria-hidden="true"></i></button>' +
             '</div>' +
+            '<div class="dw-advbox" id="' + uid + '-adv" hidden>' +
+              '<span class="dw-label">What do you need?</span>' +
+              '<div class="dw-chips" data-group="needs">' + NEEDS.map(function (n) { return chip(n, true); }).join('') + '</div>' +
+              '<span class="dw-label">Project scope</span>' +
+              '<div class="dw-opts">' +
+                opt('scope', 'MVP', 'We will help you reduce scope, validate fast, and focus on core functionality') +
+                opt('scope', 'Full-scale', 'Designed for scalability, integrations, and long-term growth') +
+              '</div>' +
+              '<div class="dw-fields" style="margin-top:24px">' +
+                '<label class="field"><input type="text" name="company" placeholder="Company (optional)" autocomplete="organization"></label>' +
+                '<label class="field"><textarea name="competitors" placeholder="Competitors: list them via comma"></textarea></label>' +
+              '</div>' +
+              '<label class="dw-check" style="margin-top:24px"><input type="checkbox" name="nda"><i>' + ic.check + '</i>Send me an NDA before we talk</label>' +
+            '</div>' +
+            '<span class="dw-label">What is your budget for this project? <i>(optional)</i></span>' +
+            '<div class="dw-chips dw-chips--single" data-group="budget" data-single>' + BUDGETS.map(function (n) { return chip(n); }).join('') + '</div>' +
+            '<span class="dw-label">How did you hear about us? <i>(optional)</i></span>' +
+            '<div class="dw-chips dw-chips--single" data-group="source" data-single>' + SOURCES.map(function (n) { return chip(n); }).join('') + '</div>' +
             '<div class="dw-checks">' +
-              '<label class="dw-check"><input type="checkbox" name="nda"><i>' + ic.check + '</i>Send me an NDA before we talk</label>' +
               '<label class="dw-check"><input type="checkbox" name="privacy" required><i>' + ic.check + '</i><span>I agree to the <a href="https://www.kz.design/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a><b>*</b></span></label>' +
             '</div>' +
           '</div>' +
           '<div class="dw__foot"><span class="dw-replies">We reply within one business day</span>' +
-            '<button class="btn btn--light" type="submit" disabled>Send message<i class="btn__arrow"></i></button></div>' +
+            '<button class="btn btn--light" type="submit" disabled>Submit<i class="btn__arrow"></i></button></div>' +
         '</form>' +
         '<div class="dw__step" data-step="done"><div class="dw-done">' +
           '<span class="dw-done__icon">' + ic.check + '</span>' +
@@ -137,25 +153,18 @@
           '<button class="btn btn--accent" type="button" data-dw-again>Make another submission</button>' +
         '</div></div>' +
       '</div>' +
-    '</div>';
+    '</div>'); }
 
   /* One builder for both uses: the modal drawer (every page) and the embedded form ([data-contact-inline], Contact us page) */
+  var nUid = 0;
   function setup(root, inline) {
-  root.innerHTML = html;
+  root.innerHTML = build('dw' + (++nUid));
   if (inline) {
     var pnl = root.querySelector('.dw__panel');
     pnl.removeAttribute('role'); pnl.removeAttribute('aria-modal'); pnl.removeAttribute('tabindex'); pnl.setAttribute('aria-label', 'Contact form');
-    // Contact block: the message tab is the site's default contact form (same fields as before), shown first
+    // Contact block: same form as the drawer, "Send a message" tab first
     var tabs = root.querySelector('.dw__tabs');
     tabs.insertBefore(tabs.querySelector('[data-tab="message"]'), tabs.firstChild);
-    root.querySelector('.dw-msg').innerHTML =
-      '<div class="dw__scroll"><div class="dw-fields dw-fields--simple">' +
-        '<label class="field"><input type="text" name="name" placeholder=" " required autocomplete="name"><span class="req">Name<b>*</b></span></label>' +
-        '<label class="field"><input type="email" name="email" placeholder=" " required autocomplete="email"><span class="req">Email address<b>*</b></span></label>' +
-        '<label class="field"><textarea name="about" placeholder="Message (optional)"></textarea></label>' +
-      '</div></div>' +
-      '<div class="dw__foot"><span class="dw-replies">We reply within one business day</span>' +
-        '<button class="btn btn--light" type="submit" disabled>Submit<i class="btn__arrow"></i></button></div>';
   }
   var $ = function (s, el) { return (el || root).querySelector(s); };
   var $$ = function (s, el) { return Array.prototype.slice.call((el || root).querySelectorAll(s)); };
@@ -384,16 +393,26 @@
       c.setAttribute('aria-pressed', String(on));
     });
   });
-  if (msg.source) msg.source.addEventListener('change', function () { msg.source.classList.toggle('is-empty', !msg.source.value); });
-  if ($('.dw-more__btn', msg)) $('.dw-more__btn', msg).addEventListener('click', function () { var m = $('.dw-more', msg); m.classList.add('is-open'); msg.about.focus(); });
-  function fv(n) { var f = msg.elements[n]; return f ? (f.type === 'checkbox' ? f.checked : f.value.trim()) : ''; }
+  var adv = $('.dw-adv', msg), advBox = $('.dw-advbox', msg);
+  function setAdv(on) { adv.setAttribute('aria-checked', String(on)); advBox.hidden = !on; }
+  adv.addEventListener('click', function () { setAdv(adv.getAttribute('aria-checked') !== 'true'); });
+  var fileIn = msg.file, fileLbl = $('[data-file]', msg), MAX_MB = 10;
+  fileIn.addEventListener('change', function () {
+    var f = fileIn.files[0];
+    if (f && f.size > MAX_MB * 1048576) { fileIn.value = ''; f = null; fileLbl.textContent = 'Max ' + MAX_MB + ' MB'; fileLbl.parentNode.classList.add('is-error'); return; }
+    fileLbl.parentNode.classList.toggle('has-file', !!f); fileLbl.parentNode.classList.remove('is-error');
+    fileLbl.textContent = f ? f.name : 'Attach file';
+  });
+  function fv(n) { var f = msg.elements[n]; if (!f) return ''; if (f.type === 'checkbox') return f.checked; return (f.value || '').trim(); }
 
   function picked(group) { return $$('[data-group="' + group + '"] [aria-pressed="true"]', msg).map(function (c) { return c.dataset.v; }); }
 
-  function send(payload, subject, lines, done) {
+  function send(payload, subject, lines, done, file) {
     var ep = window.KZ_FORMS_ENDPOINT;
     if (ep) {
-      fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      var req = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) };
+      if (file) { var fd = new FormData(); Object.keys(payload).forEach(function (k) { fd.append(k, Array.isArray(payload[k]) ? payload[k].join(', ') : payload[k]); }); fd.append('file', file); req = { method: 'POST', body: fd }; }
+      fetch(ep, req)
         .then(function (r) { if (!r.ok) throw new Error(r.status); done(); })
         .catch(function () { window.location.href = mailto(subject, lines); done(); });
     } else { window.location.href = mailto(subject, lines); done(); }
@@ -413,10 +432,11 @@
   });
   msg.addEventListener('submit', function (e) {
     e.preventDefault(); if (msg.querySelector('[type=submit]').disabled) return;
-    var d = { type: 'message', needs: picked('needs'), budget: picked('budget')[0] || '', name: fv('name'), email: fv('email'), company: fv('company'), source: fv('source'), about: fv('about'), nda: fv('nda') };
-    send(d, (inline ? 'Message from ' : 'New project: ') + d.name, ['Name: ' + d.name, 'Email: ' + d.email, d.company && 'Company: ' + d.company, d.needs.length && 'Needs: ' + d.needs.join(', '), d.budget && 'Budget: ' + d.budget, d.source && 'Heard from: ' + d.source, d.about && '\n' + d.about, d.nda && '\nPlease send an NDA before we talk.'], function () {
+    var file = fileIn.files[0] || null;
+    var d = { type: 'message', name: fv('name'), email: fv('email'), about: fv('about'), needs: picked('needs'), scope: fv('scope'), company: fv('company'), competitors: fv('competitors'), nda: fv('nda'), budget: picked('budget')[0] || '', source: picked('source')[0] || '', file: file ? file.name : '' };
+    send(d, 'New project: ' + d.name, ['Name: ' + d.name, 'Email: ' + d.email, d.company && 'Company: ' + d.company, d.needs.length && 'Needs: ' + d.needs.join(', '), d.scope && 'Scope: ' + d.scope, d.budget && 'Budget: ' + d.budget, d.source && 'Heard from: ' + d.source, d.competitors && 'Competitors: ' + d.competitors, d.about && '\n' + d.about, d.nda && '\nPlease send an NDA before we talk.', file && '\nAttachment: ' + file.name + ' (please attach it to this email)'], function () {
       setStep('message', 'done');
-    });
+    }, file);
   });
 
   function resetPane(name) {
@@ -425,9 +445,10 @@
       if (selDay) view = new Date(selDay.getFullYear(), selDay.getMonth(), 1);
       renderCal(); renderSlots(); renderSum(); setStep('book', 'pick');
     } else {
-      msg.reset(); msg._check(); if (msg.source) msg.source.classList.add('is-empty');
+      msg.reset(); msg._check(); setAdv(false);
+      fileLbl.textContent = 'Attach file'; fileLbl.parentNode.classList.remove('has-file', 'is-error');
       $$('.dw-chip', msg).forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
-      if ($('.dw-more', msg)) $('.dw-more', msg).classList.remove('is-open'); setStep('message', 'form');
+      setStep('message', 'form');
     }
   }
   resetPane('book');

@@ -1,7 +1,7 @@
 """Builds pages/saas.html, pages/mobile.html, pages/web.html from one template.
 Shared blocks (header, testimonials, contact, footer) are copied from index.html,
 so every page uses identical markup. Re-run after editing index.html."""
-import html, os
+import html, os, re
 from kzsite import place, page_path, CASE_SLUGS
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..') + os.sep
 idx = open(ROOT + 'index.html').read()
@@ -119,10 +119,8 @@ def nav_fix(s, key):
         s = s.replace('class="nav__link nav__trigger"', 'class="nav__link nav__trigger is-active"')
     else:
         f = LOCAL_PAGES.get(key)
-        if key in ('approach', 'about-us'):
-            s = s.replace('class="header__more"', 'class="header__more is-active"')
     if f:
-        s = s.replace(f'<a class="mega-card" href="{f}">', f'<a class="mega-card" href="{f}" aria-current="page">')
+        s = re.sub(r'<a class="(mega-card[^"]*)" href="' + re.escape(f) + '">', lambda m: f'<a class="{m.group(1)}" href="{f}" aria-current="page">', s)
         s = s.replace(f'<a class="footer__link" href="{f}">', f'<a class="footer__link" href="{f}" aria-current="page">')
     return s
 

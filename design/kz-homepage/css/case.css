@@ -42,29 +42,25 @@
 .cfb__visual { justify-self: center; width: 100%; max-width: 695px; max-height: 760px; height: auto; object-fit: contain; pointer-events: none; }
 
 /* ---------- CTA ---------- */
-.ccta { padding: 167px 0 80px; overflow: hidden; overflow: clip; }
-/* text | 3D logo | CEO card. The logo (js/ccta-logo.js) fills the gap between them; ≤1799 it moves under the card */
-.ccta .container { display: grid; grid-template-columns: minmax(0, 640px) minmax(0, 1fr) minmax(0, 504px); grid-template-areas: "text logo card"; column-gap: 40px; align-items: start; }
-.ccta__text { grid-area: text; min-width: 0; }
-.ccta__card { grid-area: card; }
-.ccta__logo { grid-area: logo; align-self: stretch; position: relative; min-height: 420px; margin: -60px -120px -40px; pointer-events: none; opacity: 0; transition: opacity 1s ease; }
-.ccta__logo.is-on { opacity: 1; }
-@media (max-width: 1799px) {
-  .ccta .container { grid-template-columns: minmax(0, 1fr) minmax(0, 504px); grid-template-areas: "text card" "text logo"; grid-template-rows: auto 1fr; }
-  .ccta__logo { min-height: 300px; margin: 0 -40px -40px; }
-}
+/* As live: KZ-dark-bg (outlined lightning + orange glow) centered under the content, text | CEO card */
+.ccta { padding: 167px 0 80px; background: var(--dark, #181B22) url(https://cdn.prod.website-files.com/66718c0f38efb9085e3bd104/685d58c07413f249e89b6663_ed08675f116f1d1ba9976a4436579f35_KZ-dark-bg.webp) no-repeat 50% 50% / 50% auto; }
+.ccta .container { display: flex; justify-content: space-between; gap: 40px; align-items: flex-start; }
+.ccta__text { flex: 0 1 614px; min-width: 0; }
+@media (max-width: 991px) { .ccta { background-image: none; } } /* as live */
 .ccta .eyebrow { margin-top: 10px; font-size: 15px; line-height: 22.5px; }
 .ccta__title { margin: 24px 0 0; max-width: 614px; font: var(--fw-semibold) 64px/70px var(--font-primary); color: var(--gray-white); }
 .ccta__title b { font-weight: var(--fw-bold); }
 .ccta__sub { margin-top: 25px; max-width: 531px; font: 400 20px/30px var(--font-secondary); color: var(--content-medium-alt); }
 .ccta .btn { margin-top: 48px; }
-.ccta__card { flex: 0 1 504px; min-width: 0; padding: 21px 21px 21px 33px; border: 1px solid var(--x-line-dark); border-radius: var(--radius-middle); color: var(--x-soft); }
-.ccta__card .author { margin: 0 0 18px -12px; gap: 12px; align-items: flex-start; }
+.ccta__card { flex: 0 1 504px; min-width: 0; padding: 20px; border: 1px solid var(--x-line-dark); border-radius: var(--radius-middle); background: var(--dark, #181B22); color: #E3E3E3; }
+.ccta__card .author { margin: 0; gap: 12px; align-items: flex-start; }
 .ccta__card .author > img { width: 48px; height: 48px; }
 .ccta__card .author__name { font: var(--fw-bold) 18px/27px var(--font-secondary); color: var(--gray-white); }
 .ccta__card .author__role { font-size: 20px; line-height: 30px; color: var(--x-muted); }
-.ccta__card p { font: 400 16px/24px var(--font-secondary); }
-.ccta__card p + p { margin-top: 8px; }
+.ccta__list { margin: 18px 0 0; padding: 0; list-style: none; }
+.ccta__list li { position: relative; padding-left: 12px; font: 400 16px/24px var(--font-secondary); }
+.ccta__list li + li { margin-top: 8px; }
+.ccta__list li::before { content: ""; position: absolute; left: 0; top: 11px; width: 4px; height: 4px; border-radius: 50%; background: var(--gray-white); }
 
 /* ---------- Other case studies slider ---------- */
 .cother { padding: 128px 0 120px; overflow: hidden; }
@@ -108,13 +104,12 @@
   .cfb__visual { display: none; }
 
   .ccta { padding: 58px 0 24px; }
-  .ccta .container { grid-template-columns: minmax(0, 1fr); grid-template-areas: "text" "card" "logo"; grid-template-rows: auto; row-gap: 64px; }
+  .ccta .container { flex-direction: column; gap: 64px; }
   .ccta .eyebrow { margin-top: 0; }
   .ccta__title { margin-top: 24px; font-size: 24px; line-height: 30px; }
   .ccta__sub { margin-top: 25px; font-size: 18px; line-height: 27px; }
   .ccta .btn { margin-top: 48px; }
   .ccta__card { flex: none; width: 100%; }
-  .ccta__logo { min-height: 240px; margin: -24px -16px 0; }
 
   .cother { padding: 40px 0 124px; }
   .cother__nav { display: none; }
