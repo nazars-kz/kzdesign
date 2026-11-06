@@ -148,5 +148,21 @@
     "source4": "Behance",
     "source5": "Referral",
     "source6": "Other"
+  },
+  "cases": {
+    "breadcrumb": "Breadcrumb",
+    "home": "Home",
+    "caseStudies": "Case studies",
+    "filterLabel": "Filter case studies by category",
+    "category": "Category",
+    "all": "All",
+    "countOne": "{count} case",
+    "countMany": "{count} cases",
+    "details": "Details:",
+    "clientFeedback": "Client feedback:",
+    "screens": "Screens",
+    "previousCase": "Previous case",
+    "nextCase": "Next case",
+    "otherCases": "Other case studies"
   }
 }

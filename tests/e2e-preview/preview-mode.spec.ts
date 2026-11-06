@@ -21,7 +21,7 @@ test.describe('preview mode (no DATABASE_URL)', () => {
       .toBeGreaterThan(0);
 
     await page.goto('/cases');
-    await expect(page.getByRole('link', { name: /Touren/ }).first()).toBeVisible();
+    await expect(page.getByRole('link', { name: /Onground/ }).first()).toBeVisible();
 
     const robots = await (await request.get('/robots.txt')).text();
     expect(robots).toMatch(/Disallow: \/\s*$/m);

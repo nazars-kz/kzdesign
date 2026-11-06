@@ -163,6 +163,25 @@ export const uiTexts = defineUiTexts({
         learnMore: 'Link to a service on the Services page',
       },
     },
+    cases: {
+      label: 'Case studies',
+      texts: {
+        breadcrumb: 'Name of the breadcrumbs (read by screen readers)',
+        home: 'Breadcrumbs: link to Home',
+        caseStudies: 'Breadcrumbs: link to the Cases page',
+        filterLabel: 'Name of the filters (read by screen readers)',
+        category: 'Name of the phone drop-down with the filters (read by screen readers)',
+        all: 'Filter that shows every case',
+        countOne: 'Phone drop-down: number of cases in a category, one case ({count})',
+        countMany: 'Phone drop-down: number of cases in a category ({count})',
+        details: 'Case page: label of the details',
+        clientFeedback: 'Case page: label of the client feedback',
+        screens: 'Case page: name of the screens (read by screen readers)',
+        previousCase: 'Other cases slider: previous button (read by screen readers)',
+        nextCase: 'Other cases slider: next button (read by screen readers)',
+        otherCases: 'Other cases slider: name (read by screen readers)',
+      },
+    },
     notFound: {
       label: 'Page not found',
       texts: {

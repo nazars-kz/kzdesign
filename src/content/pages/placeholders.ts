@@ -14,15 +14,6 @@ export const aboutPage = definePlaceholderPage({
     'Meet K&Z Design: a product design team of UX/UI designers who partner with digital product businesses to grow and retain clients.',
 });
 
-export const casesPage = definePlaceholderPage({
-  id: 'cases',
-  path: '/cases',
-  label: 'Cases',
-  title: 'Cases',
-  description:
-    'Case studies of K&Z Design: SaaS, mobile and web products we designed for partners from startups to Series D.',
-});
-
 export const approachPage = definePlaceholderPage({
   id: 'approach',
   path: '/approach',
@@ -85,7 +76,6 @@ export const servicesPage = definePlaceholderPage({
 
 export const placeholderPages = [
   aboutPage,
-  casesPage,
   approachPage,
   reviewsPage,
   contactUsPage,
