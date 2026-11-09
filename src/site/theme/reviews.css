@@ -1,0 +1,122 @@
+/*
+ * Reviews page and the Contact us page tweak.
+ * Source: design/kz-homepage/css/reviews.css and style.css (.contact--page).
+ */
+
+/* The design's breadcrumbs here have no top padding */
+.rv-crumbs {
+  padding-top: 0;
+}
+.rv-hero {
+  padding-top: 6rem;
+  text-align: center;
+}
+.rv-hero__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--type-h1-size);
+  font-weight: 600;
+  line-height: var(--type-h1-line-height);
+  color: var(--color-foreground-strong);
+}
+.rv-hero__sub {
+  max-width: 50.75rem;
+  margin: 1.5rem auto 0;
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+  color: var(--color-ink-550);
+}
+
+.rv-list {
+  padding-top: 5rem;
+}
+.rv-widget {
+  max-width: 68.75rem;
+  min-height: 25rem;
+  margin: 0 auto;
+}
+.rv-widget iframe {
+  display: block;
+  width: 100% !important;
+  border: 0;
+}
+
+.rv-cta {
+  padding: 7.5rem 0 8.75rem;
+}
+.rv-cta__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 2.5rem;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  text-align: center;
+}
+.rv-cta__mark {
+  width: 2.4375rem;
+  height: 0.75rem;
+  background: url('/brand/mark-orange.svg') no-repeat center / contain;
+}
+.rv-cta__title {
+  max-width: 47.5rem;
+  margin: 1.5rem 0 0;
+  font-family: var(--font-heading);
+  font-size: var(--type-section-title-size);
+  font-weight: 400;
+  line-height: var(--type-section-title-line-height);
+  letter-spacing: -0.01em;
+  color: var(--color-foreground-strong);
+}
+.rv-cta__sub {
+  max-width: 35.625rem;
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+  color: var(--color-ink-550);
+}
+.rv-cta__card .btn {
+  margin-top: 2.5rem;
+}
+
+/* Contact us: the contact block is the whole page */
+.contact--page .contact__inner {
+  align-items: start;
+  padding-top: 6rem;
+  padding-bottom: 8.75rem;
+}
+
+@media (max-width: 47.9375rem) {
+  .rv-hero {
+    padding-top: 3.5rem;
+  }
+  .rv-hero__title {
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+  }
+  .rv-hero__sub {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  .rv-list {
+    padding-top: 2.5rem;
+  }
+  .rv-cta {
+    padding: 3.75rem 0;
+  }
+  .rv-cta__card {
+    padding: 3rem 1.25rem;
+  }
+  .rv-cta__title {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+  .rv-cta__sub {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  .contact--page .contact__inner {
+    padding-top: 2.5rem;
+    padding-bottom: 3.75rem;
+  }
+}

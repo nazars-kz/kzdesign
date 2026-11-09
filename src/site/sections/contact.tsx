@@ -6,6 +6,7 @@ import type { SitePageContent } from '@/core/content/loader';
 import { CompanyCard } from '../components/company-card';
 import { ContactInlineBlock } from '../components/contact/contact-panel-server';
 import { TeamMember } from '../components/team-member';
+import { cx } from '../components/ui/cn';
 import { Container, Section } from '../components/ui/layout';
 import { PlainRichText } from '../components/ui/rich-text';
 import { Heading } from '../components/ui/typography';
@@ -14,9 +15,12 @@ import { Heading } from '../components/ui/typography';
 export async function Contact({
   content,
   locale,
+  asPage = false,
 }: {
   content: SitePageContent<'home'>['contact'];
   locale: string;
+  /** The block is the whole page (Contact us): its title is the page's h1. */
+  asPage?: boolean;
 }) {
   const { company } = await getGlobalContent('site', locale);
   return (
@@ -24,13 +28,18 @@ export async function Contact({
       tone="inverse"
       spacing="none"
       id="contact"
-      className="contact"
+      className={cx('contact', asPage && 'contact--page')}
       labelledBy="contact-title"
     >
       <div className="contact__bg" aria-hidden="true" />
       <Container className="contact__inner">
         <div>
-          <Heading level={2} variant="plain" id="contact-title" className="contact__title">
+          <Heading
+            level={asPage ? 1 : 2}
+            variant="plain"
+            id="contact-title"
+            className="contact__title"
+          >
             {content.titleBefore}
             <Image
               className="zap"

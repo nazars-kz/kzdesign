@@ -9,7 +9,7 @@ const PAGES: readonly { path: string; h1: string | RegExp | null }[] = [
   { path: '/cases/touren', h1: 'Touren' },
   { path: '/services', h1: null },
   { path: '/services/saas', h1: 'SaaS, Web App, Software' },
-  { path: '/approach', h1: 'Our approach' },
+  { path: '/approach', h1: 'Approach' },
   { path: '/reviews', h1: 'Reviews' },
   { path: '/contact-us', h1: null },
   { path: '/privacy-policy', h1: 'Privacy Policy' },

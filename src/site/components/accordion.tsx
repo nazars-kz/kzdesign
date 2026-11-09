@@ -15,7 +15,8 @@ export interface AccordionItem {
 
 /**
  * Accordion where one item is open at a time (the open one closes when another opens).
- * `industries` is the dark list with icons, `faq` the light striped list.
+ * `industries` is the dark list with icons, `faq` the light striped list, `phase` the plain light
+ * list of the Approach phases.
  */
 export function Accordion({
   items,
@@ -27,7 +28,7 @@ export function Accordion({
   className,
 }: {
   items: readonly AccordionItem[];
-  variant: 'industries' | 'faq';
+  variant: 'industries' | 'faq' | 'phase';
   headingLevel?: HeadingLevel;
   /** Index of the item that is open at the start; `null` for none. */
   initialOpen?: number | null;

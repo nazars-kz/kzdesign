@@ -172,5 +172,17 @@
     "breadcrumb": "Breadcrumb",
     "home": "Home",
     "aboutUs": "About us"
+  },
+  "approach": {
+    "breadcrumb": "Breadcrumb",
+    "home": "Home",
+    "approach": "Approach",
+    "steps": "Process steps"
+  },
+  "reviews": {
+    "breadcrumb": "Breadcrumb",
+    "home": "Home",
+    "reviews": "Reviews",
+    "widget": "Clutch reviews"
   }
 }

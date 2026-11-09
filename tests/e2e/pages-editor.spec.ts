@@ -35,7 +35,7 @@ test.describe.serial('pages editor', () => {
     await expect(page.getByText('Saved. The live site updates in a few seconds.')).toBeVisible();
 
     await expect.poll(() => liveH1(page, '/about-us')).toBe(title);
-    expect(await liveH1(page, '/approach')).toBe('Our approach');
+    expect(await liveH1(page, '/approach')).toBe('Approach');
   });
 
   test('a concurrent edit is detected', async ({ browser }) => {
