@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import {
   createContext,
   type ReactNode,
@@ -16,6 +15,7 @@ import {
 import type { ResolvedImage } from '@/core/content/define';
 
 import { cx } from '../components/ui/cn';
+import { usePagePath } from '../components/ui/use-page-path';
 
 /** The desktop nav collapses into the burger up to this width (px, = 68.75rem). */
 const DESKTOP_QUERY = '(max-width: 1100px)';
@@ -84,9 +84,9 @@ export function MegaTrigger({
   children: ReactNode;
 }) {
   const { open, toggle } = useContext(MegaContext);
-  const pathname = usePathname();
+  const { isAt } = usePagePath();
   const expanded = open === name;
-  const active = hrefs.some((href) => href === pathname);
+  const active = hrefs.some((href) => isAt(href));
   return (
     <button
       type="button"
@@ -135,9 +135,9 @@ export function MegaCard({
   title: string;
   image: ResolvedImage | null;
 }) {
-  const pathname = usePathname();
+  const { isAt } = usePagePath();
   return (
-    <Link href={href} className="mega-card" aria-current={pathname === href ? 'page' : undefined}>
+    <Link href={href} className="mega-card" aria-current={isAt(href) ? 'page' : undefined}>
       {image ? (
         <Image
           src={image.src}
