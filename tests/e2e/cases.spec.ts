@@ -50,9 +50,9 @@ test.describe('cases', () => {
     await expect(page.locator('.cshots--mob img').first()).toBeAttached();
     await expect(page.getByRole('region', { name: 'Other case studies' })).toBeVisible();
     // The case being read is not offered again.
-    await expect(
-      page.locator('.cother__track a.case').filter({ hasText: 'Onground' }),
-    ).toHaveCount(0);
+    await expect(page.locator('.cother__track a.case').filter({ hasText: 'Onground' })).toHaveCount(
+      0,
+    );
     await expect(page.locator('.nav__link[aria-current="page"]')).toHaveText('Cases');
     const crumbs = page.getByRole('navigation', { name: 'Breadcrumb' });
     await expect(crumbs.getByRole('link', { name: 'Case studies' })).toHaveAttribute(
