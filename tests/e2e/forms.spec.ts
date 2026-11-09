@@ -51,8 +51,11 @@ async function fill(page: Page, input: ContactInput): Promise<void> {
   if (input.name !== undefined) await page.locator('#contact-name').fill(input.name);
   if (input.email !== undefined) await page.locator('#contact-email').fill(input.email);
   if (input.message !== undefined) await page.locator('#contact-message').fill(input.message);
-  // The privacy checkbox is required; its box is drawn by an icon next to the real input.
-  await page.locator('#contact-privacy').check({ force: true });
+  // The privacy checkbox is required. Its box is an icon over the real input, and the long page
+  // shifts while it settles, so the input is clicked in the DOM instead of by pointer position.
+  await page.locator('#contact-privacy').evaluate((box: HTMLInputElement) => {
+    if (!box.checked) box.click();
+  });
 }
 
 async function submit(page: Page): Promise<void> {
