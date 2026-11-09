@@ -1,0 +1,251 @@
+/*
+ * About us page.
+ * Source: design/kz-homepage/css/about.css (measured at 1440 and 375).
+ */
+
+/* ── Breadcrumbs (dark trail at the top of a plain page) ─────────────────── */
+.crumbs--page ol,
+.crumbs--page li + li::before {
+  color: var(--color-foreground-strong);
+}
+.crumbs--page a {
+  color: var(--color-ink-550);
+}
+.ab-crumbs {
+  padding-top: 1.75rem;
+}
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+.ab-hero {
+  padding-top: 8rem;
+  text-align: center;
+}
+.ab-hero__title {
+  max-width: 68.75rem;
+  margin: 0 auto;
+  font-family: var(--font-heading);
+  font-size: var(--type-h1-size);
+  font-weight: 600;
+  line-height: var(--type-h1-line-height);
+  color: var(--color-foreground-strong);
+}
+.ab-hero__sub {
+  max-width: 50.75rem;
+  margin: 1.5rem auto 0;
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+  color: var(--color-ink-550);
+}
+/* The 3D logo (three.js, transparent canvas) */
+.ab-hero__logo {
+  width: min(100%, 55rem);
+  height: 26.25rem;
+  margin: 1.5rem auto 0;
+}
+
+/* ── Leadership ──────────────────────────────────────────────────────────── */
+.lead {
+  padding-top: 8.75rem;
+}
+.lead__inner {
+  padding: 3.1875rem 0 6rem;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+.lead__intro {
+  max-width: 71.875rem;
+  margin-top: 2.1875rem;
+  font-size: 1.125rem;
+  line-height: 1.6875rem;
+  color: var(--color-foreground);
+}
+.lead__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem;
+  margin-top: 4rem;
+}
+.leader {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.leader__photo {
+  flex: 0 0 auto;
+  width: 50.2%;
+  max-width: 20.0625rem;
+  height: auto;
+  aspect-ratio: 321 / 388;
+  object-fit: cover;
+  background: var(--color-surface);
+}
+.leader__text {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 18.4375rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--color-foreground);
+}
+.leader__name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 2.625rem;
+  color: var(--color-foreground);
+}
+.leader__name .hl {
+  background: var(--color-primary);
+}
+.leader__role,
+.leader__bio {
+  padding-bottom: 1rem;
+}
+.leader__ex {
+  font-weight: 700;
+  color: var(--color-foreground-strong);
+}
+.lead__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.3125rem;
+}
+.lead__cta .btn {
+  height: 4.1875rem;
+  padding: 0 1.9375rem;
+}
+/* On this page the uniqueness block sits right under the leadership block */
+.lead + .uniq {
+  padding-top: 2rem;
+}
+
+/* ── What makes us different ─────────────────────────────────────────────── */
+.diff {
+  --section-header-gap: 0.6875rem;
+  padding: 3.1875rem 0 8.75rem;
+}
+.diff__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+.diff-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0.625rem;
+  background: var(--color-inverse-raised);
+}
+.diff-card__anim {
+  width: 100%;
+  aspect-ratio: 301 / 276;
+  overflow: hidden;
+}
+.diff-card__anim svg {
+  display: block;
+}
+.diff-card__text {
+  padding: 1.5rem 0.75rem;
+}
+.diff-card__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.6875rem;
+  color: var(--color-surface);
+}
+.diff-card__text p {
+  margin-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #d0d0d1;
+}
+.diff__more {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.375rem;
+}
+
+@media (max-width: 47.9375rem) {
+  .ab-hero {
+    padding-top: 6.375rem;
+  }
+  .ab-hero > div {
+    padding-inline: 2rem;
+  }
+  .ab-hero__title {
+    font-size: 2rem;
+    line-height: 2.2rem;
+  }
+  .ab-hero__sub {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  .ab-hero__logo {
+    height: 15rem;
+    margin-top: 0.5rem;
+  }
+
+  .lead {
+    padding-top: 4.25rem;
+  }
+  .lead__inner {
+    padding: 1.25rem 0 4rem;
+  }
+  .lead__intro {
+    margin-top: 1.8125rem;
+  }
+  .lead__list {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-top: 4rem;
+  }
+  .leader {
+    flex-direction: column;
+    gap: 0.6875rem;
+  }
+  .leader__photo {
+    width: 100%;
+    max-width: none;
+    aspect-ratio: 343 / 415;
+  }
+  .leader__text {
+    max-width: none;
+  }
+  .leader__name {
+    font-size: 1.5rem;
+    line-height: 2.25rem;
+  }
+  .lead__cta {
+    margin-top: 2.5rem;
+  }
+  .lead__cta .btn {
+    height: 3.75rem;
+    padding: 0 1.5625rem;
+  }
+
+  .diff {
+    padding: 3.1875rem 0 3.75rem;
+  }
+  .diff__title {
+    font-size: 1.5rem;
+    line-height: 2.1rem;
+  }
+  .diff__list {
+    grid-template-columns: 1fr;
+  }
+  .diff-card {
+    padding: 1rem;
+  }
+  .diff-card__anim {
+    aspect-ratio: 311 / 285;
+  }
+  .diff-card__text {
+    padding: 1.25rem 0 0.5rem;
+  }
+  .diff__more {
+    margin-top: 2.5rem;
+  }
+}

@@ -11,7 +11,7 @@ export interface Crumb {
 
 /**
  * Breadcrumbs: Home › Case studies › Onground. `hero` is the light trail over a hero picture,
- * `case` the orange one above a case title. The last item is the current page.
+ * `case` the orange one above a case title, `page` the dark one at the top of a plain page. The last item is the current page.
  */
 export function Breadcrumbs({
   items,
@@ -22,7 +22,7 @@ export function Breadcrumbs({
   items: readonly Crumb[];
   /** Accessible name of the trail ("Breadcrumb"). */
   label: string;
-  variant?: 'hero' | 'case';
+  variant?: 'hero' | 'case' | 'page';
   className?: string;
 }) {
   return (

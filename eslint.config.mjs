@@ -28,6 +28,7 @@ export default defineConfig([
   ...nextTs,
   globalIgnores([
     'design/**',
+    'public/vendor/**', // third-party libraries (three.js, lottie) and the vendored logo script
     '.next/**',
     '.next-*/**',
     'out/**',

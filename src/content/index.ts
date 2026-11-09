@@ -11,6 +11,7 @@ import { bookingForm } from './forms/booking';
 import { contactForm } from './forms/contact';
 import { projectForm } from './forms/project';
 import { siteGlobals } from './globals/site';
+import { aboutPage } from './pages/about';
 import { casesPage } from './pages/cases';
 import { homePage } from './pages/home';
 import { placeholderPages } from './pages/placeholders';
@@ -21,7 +22,7 @@ import { testimonialsShared } from './shared/testimonials';
 import { uniquenessShared } from './shared/uniqueness';
 
 export const registry = createRegistry({
-  pages: [homePage, casesPage, servicesPage, ...placeholderPages],
+  pages: [homePage, aboutPage, casesPage, servicesPage, ...placeholderPages],
   collections: [services, cases],
   globals: [siteGlobals],
   forms: [contactForm, projectForm, bookingForm],

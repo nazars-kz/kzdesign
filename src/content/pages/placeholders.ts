@@ -5,15 +5,6 @@
  */
 import { definePlaceholderPage } from './placeholder';
 
-export const aboutPage = definePlaceholderPage({
-  id: 'about',
-  path: '/about-us',
-  label: 'About us',
-  title: 'About us',
-  description:
-    'Meet K&Z Design: a product design team of UX/UI designers who partner with digital product businesses to grow and retain clients.',
-});
-
 export const approachPage = definePlaceholderPage({
   id: 'approach',
   path: '/approach',
@@ -66,7 +57,6 @@ export const refundPage = definePlaceholderPage({
 });
 
 export const placeholderPages = [
-  aboutPage,
   approachPage,
   reviewsPage,
   contactUsPage,
