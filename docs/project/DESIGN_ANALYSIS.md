@@ -275,3 +275,7 @@ The Services trigger of the menu is marked while a service page is open.
 | Industries                                           | **shared section** `industries` (moved out of Home)                                       | Home and Approach edit the same texts                                                                                                                                |
 | Reviews: hero, widget, CTA card                      | page `reviews`; `ClutchWidget` (client)                                                   | the widget is Clutch's script; its origin is allowed in `csp` of `project.config.ts`; the company id is a field; no cookie consent gate yet (decide with the client) |
 | Contact us                                           | page `contact-us` = the shared contact block, title as h1                                 | `contact--page` spacing                                                                                                                                              |
+
+## Legal pages
+
+There is no design for Privacy Policy, Terms of Service and Refund Policy. They use one template (`src/site/pages/legal.tsx`): breadcrumbs, title, "last updated" and rich text in a narrow column. The texts come from the client (issue #9); until then a page shows only its title. `privacyPath` (the cookie banner link) is not set yet: set it when the Privacy text exists.

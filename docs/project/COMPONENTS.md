@@ -138,3 +138,9 @@ Breadcrumbs, Marquee, LeaderCard, FounderCard, FeatureCard, ProcessStep, filter 
 | Clutch widget              | `src/site/components/clutch-widget.tsx`   | loads Clutch's script once, then initializes the widget |
 | Accordion, `phase` variant | `src/site/components/accordion.tsx`       | light list of the Approach steps                        |
 | Contact block, `asPage`    | `src/site/sections/contact.tsx`           | h1 and page spacing                                     |
+
+## Added with the legal pages
+
+| Component       | File                       | Notes                                                           |
+| --------------- | -------------------------- | --------------------------------------------------------------- |
+| Legal page view | `src/site/pages/legal.tsx` | replaces the placeholder view; fields title, last updated, text |

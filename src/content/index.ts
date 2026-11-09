@@ -16,7 +16,7 @@ import { approachPage } from './pages/approach';
 import { contactUsPage } from './pages/contact-us';
 import { casesPage } from './pages/cases';
 import { homePage } from './pages/home';
-import { placeholderPages } from './pages/placeholders';
+import { legalPages } from './pages/legal';
 import { reviewsPage } from './pages/reviews';
 import { servicesPage } from './pages/services';
 import { contactShared } from './shared/contact';
@@ -34,7 +34,7 @@ export const registry = createRegistry({
     servicesPage,
     reviewsPage,
     contactUsPage,
-    ...placeholderPages,
+    ...legalPages,
   ],
   collections: [services, cases],
   globals: [siteGlobals],

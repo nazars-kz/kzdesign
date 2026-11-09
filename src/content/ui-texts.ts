@@ -211,6 +211,14 @@ export const uiTexts = defineUiTexts({
         widget: 'Name of the Clutch reviews (read by screen readers)',
       },
     },
+    legal: {
+      label: 'Legal pages',
+      texts: {
+        breadcrumb: 'Name of the breadcrumbs (read by screen readers)',
+        home: 'Breadcrumbs: link to Home',
+        updated: 'Label before the date of the last update',
+      },
+    },
     notFound: {
       label: 'Page not found',
       texts: {

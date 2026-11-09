@@ -1,0 +1,40 @@
+/* Legal pages: a narrow reading column. */
+.legal {
+  padding: 5rem 0 8.75rem;
+}
+.legal__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--color-foreground-strong);
+}
+.legal__updated {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.3125rem;
+  color: var(--color-muted-foreground);
+}
+.legal__text {
+  margin-top: 2.5rem;
+  line-height: 1.625rem;
+  color: var(--color-foreground);
+}
+.legal__text:empty {
+  display: none;
+}
+
+@media (max-width: 47.9375rem) {
+  .legal {
+    padding: 3rem 0 5rem;
+  }
+  .legal__title {
+    font-size: 2.5rem;
+  }
+}
+
+/* A reading column, aligned with the breadcrumbs */
+.legal__inner > * {
+  max-width: 42rem;
+}

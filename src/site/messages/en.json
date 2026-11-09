@@ -184,5 +184,10 @@
     "home": "Home",
     "reviews": "Reviews",
     "widget": "Clutch reviews"
+  },
+  "legal": {
+    "breadcrumb": "Breadcrumb",
+    "home": "Home",
+    "updated": "Last updated:"
   }
 }
