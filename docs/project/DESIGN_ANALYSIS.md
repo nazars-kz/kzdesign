@@ -237,3 +237,19 @@ Compared with the previous upload (`git diff` of `design/kz-homepage`). Home fir
 | "Other case studies" slider                                 | `CaseSlider` (client)                                                                                                  | the other listed cases, in list order                                                                                                                              |
 
 Only three cases have a full page (Onground, MyNQS, VidSprint): the user asked for the template and 2–3 cases. The other 13 cases stay in the collection (Home block, Industries, Partners, Testimonials link to them) with the flag **Hide from the Cases page**; their page opens the same template with the parts they lack left out. To finish a case: fill its fields in Pages → Blog & lists → Case studies and untick the flag.
+
+## Service template (SaaS, Mobile, Web): how the design is built
+
+| Design block                                | Built as                                                                     | Notes                                                                                                                          |
+| ------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Top picture + breadcrumbs, H1               | collection `services`: `heroImage`, `navLabel`, `title`                      | breadcrumb label is `navLabel` ("SaaS", "Mobile apps", "Websites")                                                             |
+| About (paragraphs) and founders (SaaS only) | `about` (list of paragraphs), `founders`                                     | founders are shown only when the list is filled                                                                                |
+| Three promises (cards with a picture)       | page `services` → `features`                                                 | the same on every service; pictures are rasterized from the design's SVGs                                                      |
+| Case studies (2-column cards)               | `caseSlugs` per service + page `services` → `cases`                          | cards use the case's Cases-page cover (phone cover on phones) and the stacked card variant                                     |
+| "Got an Idea?" banner                       | page `idea` + `bannerImage` per service                                      | lightning background is a theme image                                                                                          |
+| Process                                     | page `process`                                                               | four numbered steps, text with bold                                                                                            |
+| Partners marquee                            | page `partners` (own logo list)                                              | the service pages use their own 24 logos (white tiles with a border), not the Home grid                                        |
+| Testimonials, contact                       | shared sections                                                              | same as Home                                                                                                                   |
+| Next service                                | other services in the list; card fields `nextTitle`, `nextText`, `nextImage` | order is the list order without the current one (the design shows Mobile before SaaS on the Web page; here it is SaaS, Mobile) |
+
+The Services trigger of the menu is marked while a service page is open.

@@ -1,0 +1,453 @@
+/*
+ * Service page template (SaaS, Mobile, Web).
+ * Source: design/kz-homepage/css/service.css (measured at 1440 and 375).
+ */
+
+/* ── Top picture with the breadcrumbs, and the title ─────────────────────── */
+.svc-hero {
+  position: relative;
+  height: 29.6875rem;
+  overflow: hidden;
+}
+.svc-hero__bg {
+  object-fit: cover;
+}
+.svc-hero__crumbs {
+  position: relative;
+  padding-top: 1.75rem;
+}
+.svc-title {
+  padding-top: 4.5rem;
+}
+.svc-title h1 {
+  max-width: 43.75rem;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--type-h1-size);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--color-foreground-strong);
+}
+
+/* ── About and founders ──────────────────────────────────────────────────── */
+.svc-about {
+  padding-top: 6.25rem;
+}
+.svc-about__inner {
+  display: grid;
+  grid-template-columns: minmax(8.75rem, 445fr) minmax(0, 875fr);
+  align-items: start;
+}
+.svc-about__text p {
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 2.45rem;
+  color: var(--color-foreground);
+}
+.svc-about__text p + p {
+  margin-top: 2rem;
+}
+.svc-founders {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
+  gap: 2rem 1.875rem;
+  margin-top: 8rem;
+}
+.founder {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.founder img {
+  flex: none;
+  width: 5.875rem;
+  height: 7.0625rem;
+  object-fit: cover;
+  background: var(--color-surface);
+}
+.founder__text {
+  min-width: 0;
+  max-width: 19.5625rem;
+}
+.founder__name {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 2.625rem;
+  color: var(--color-foreground-strong);
+}
+.founder .eyebrow {
+  margin-top: 0.5rem;
+}
+.founder__bio {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--color-ink-780);
+}
+.founder__ex {
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+  color: var(--color-foreground-strong);
+}
+
+/* ── The three promises ──────────────────────────────────────────────────── */
+.svc-features {
+  padding-top: 6rem;
+}
+.svc-features__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.feature {
+  display: flex;
+  flex-direction: column;
+  min-height: 39.6875rem;
+  background: radial-gradient(circle, #ffffff, #edf1f9);
+}
+.feature__text {
+  padding: 1.5rem;
+}
+.feature__title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 2.625rem;
+  color: var(--color-foreground-strong);
+}
+.feature__text p {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--color-ink-780);
+}
+.feature img {
+  margin-top: auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 429 / 383;
+}
+
+/* ── Case studies of the service ─────────────────────────────────────────── */
+.svc-cases {
+  padding-top: 8rem;
+}
+.svc-cases__title {
+  margin-top: 2.5rem;
+}
+.svc-cases__grid,
+.svc-next__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.svc-cases__grid {
+  margin-top: 1.9375rem;
+}
+.case--stack .case__body {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.case--stack .case__name::after {
+  content: none;
+}
+.case--stack .case__tags {
+  justify-content: flex-start;
+}
+.svc-cases .case {
+  aspect-ratio: 652 / 637; /* the covers' proportions */
+}
+.svc-cases__all {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.75rem;
+}
+
+/* ── "Got an Idea?" banner ───────────────────────────────────────────────── */
+.git {
+  padding: 7rem 0;
+}
+.git__box {
+  position: relative;
+  min-height: 19.375rem;
+  padding: 3.25rem 0 3.25rem 3.25rem;
+  background: var(--color-inverse) url('/images/service-lightning.webp') no-repeat 100% 50% /
+    58.6875rem 18.9375rem;
+}
+.git__title {
+  margin: 0;
+  font-size: 2.5rem;
+  line-height: 3rem;
+  color: var(--color-inverse-foreground);
+}
+.git__box .btn {
+  margin-top: 3rem;
+}
+.git__device {
+  position: absolute;
+  right: 0;
+  top: -7.5rem; /* 120px above the box; the bottom edge sits on the box bottom */
+  bottom: 0;
+  width: auto;
+  height: calc(100% + 7.5rem);
+  max-width: min(58%, calc(100% - 30rem));
+  object-fit: contain;
+  object-position: 100% 100%;
+  pointer-events: none;
+}
+
+/* ── Process ─────────────────────────────────────────────────────────────── */
+.svc-process {
+  padding: 6rem 0 5.5625rem;
+  background: var(--color-surface);
+}
+.svc-process__title {
+  margin-top: 1.4375rem;
+  font-family: var(--font-body);
+  font-size: var(--type-section-title-size);
+  font-weight: 400;
+  line-height: var(--type-section-title-line-height);
+  color: var(--color-foreground-strong);
+}
+.svc-process__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.svc-process__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 37.375rem));
+  gap: 1rem;
+}
+.svc-process__row + .svc-process__row {
+  padding-left: 6.75rem;
+}
+.step {
+  padding: 1.25rem 1.5rem;
+  background: var(--color-background);
+}
+.step__head {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  text-transform: uppercase;
+  color: var(--color-foreground-strong);
+}
+.step__head span {
+  color: var(--color-primary);
+}
+.step__text {
+  margin-top: 2rem;
+  font-size: 0.875rem;
+  line-height: 1.3125rem;
+  color: var(--color-foreground);
+}
+.step__text b,
+.step__text strong {
+  font-weight: 700;
+}
+
+/* ── Partners: scrolling logos ───────────────────────────────────────────── */
+.svc-partners {
+  padding: 3.5rem 0 4rem;
+}
+.svc-partners__title {
+  margin-top: 2rem;
+  font-family: var(--font-heading);
+  font-size: var(--type-section-title-size);
+  font-weight: 400;
+  line-height: var(--type-section-title-line-height);
+  color: var(--color-foreground-strong);
+}
+.marquee {
+  margin-top: 1.5rem;
+  overflow: hidden;
+}
+.marquee__track {
+  display: flex;
+  gap: 0.625rem;
+  width: max-content;
+  will-change: transform;
+}
+.marquee__track img {
+  flex: none;
+  width: 12.5rem;
+  height: 5.875rem;
+}
+
+/* ── Next service ────────────────────────────────────────────────────────── */
+.svc-next {
+  padding-top: 3.5rem;
+}
+.svc-next__grid {
+  margin-top: 3rem;
+}
+.svc-next .case {
+  aspect-ratio: 652 / 550;
+}
+.svc-next .case__desc {
+  max-width: 36.75rem;
+}
+
+@media (max-width: 68.75rem) {
+  .svc-cases .case,
+  .svc-next .case {
+    aspect-ratio: auto;
+    height: 28.75rem;
+  }
+}
+@media (max-width: 61.9375rem) {
+  .git__box {
+    overflow: hidden;
+  }
+  .git__device {
+    top: auto;
+    right: -8%;
+    height: 18.75rem;
+    max-width: calc(100% - 26.25rem);
+  }
+}
+
+/* ── Phones ──────────────────────────────────────────────────────────────── */
+@media (max-width: 47.9375rem) {
+  .svc-hero {
+    height: 21.875rem;
+  }
+  .svc-title {
+    padding-top: 3rem;
+  }
+  .svc-title h1 {
+    font-size: 2.5rem;
+    line-height: 3.75rem;
+  }
+
+  .svc-about {
+    padding-top: 2.5rem;
+  }
+  .svc-about__inner {
+    grid-template-columns: 1fr;
+    row-gap: 1.5rem;
+  }
+  .svc-about__text p {
+    font-size: 1rem;
+    line-height: 1.4rem;
+  }
+  .svc-about__text p + p {
+    margin-top: 0.75rem;
+  }
+  .svc-founders {
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+    margin-top: 3rem;
+  }
+  .founder img {
+    width: 4.625rem;
+    height: 5.5625rem;
+  }
+  .founder__name {
+    font-size: 1.5rem;
+    line-height: 2.25rem;
+  }
+  .founder__bio {
+    font-size: 0.875rem;
+    line-height: 1.3125rem;
+  }
+  .founder__ex {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .svc-features__list {
+    grid-template-columns: 1fr;
+  }
+  .feature {
+    min-height: 0;
+  }
+  .feature__title {
+    font-size: 1.5rem;
+    line-height: 2.25rem;
+  }
+  .feature img {
+    margin-top: 1.875rem;
+    aspect-ratio: 343 / 306;
+  }
+
+  .svc-cases__title {
+    margin-top: 2.625rem;
+    line-height: 2.1rem;
+  }
+  .svc-cases__grid {
+    grid-template-columns: 1fr;
+    margin-top: 1.8125rem;
+  }
+  .svc-cases .case {
+    height: 31.25rem;
+    min-height: 0;
+    aspect-ratio: auto;
+  }
+  .svc-cases__all {
+    margin-top: 2.75rem;
+  }
+
+  .git {
+    padding: 4rem 0 4.5rem;
+  }
+  .git__box {
+    min-height: 22.25rem;
+    padding: 3.25rem 1rem;
+    background-position: 50% 100%;
+  }
+  .git__title {
+    max-width: 15rem;
+  }
+  .git__device {
+    display: none;
+  }
+
+  .svc-process {
+    padding: 2.5rem 0 1.9375rem;
+  }
+  .svc-process__title {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    line-height: 2.25rem;
+  }
+  .svc-process__rows {
+    margin-top: 2rem;
+  }
+  .svc-process__row {
+    grid-template-columns: 1fr;
+  }
+  .svc-process__row + .svc-process__row {
+    padding-left: 0;
+  }
+
+  .svc-partners__title {
+    margin-top: 2.625rem;
+    font-size: 1.5rem;
+    line-height: 2.1rem;
+  }
+  .marquee__track img {
+    width: 9.375rem;
+    height: 4.375rem;
+  }
+
+  .svc-next__grid {
+    grid-template-columns: 1fr;
+  }
+  .svc-next .case {
+    height: 34.375rem;
+    min-height: 0;
+    aspect-ratio: auto;
+  }
+}
