@@ -87,7 +87,7 @@ test.describe.serial('contact panel', () => {
     expect(await inboxCount(page, 'booking', name)).toBe(1);
   });
 
-  test('message: chips and the privacy checkbox, then the request reaches the inbox', async ({
+  test('message: advanced options, chips and the privacy checkbox, then the request reaches the inbox', async ({
     browser,
     page,
   }) => {
@@ -95,12 +95,18 @@ test.describe.serial('contact panel', () => {
     await openDrawer(guest);
     const panel = drawer(guest);
     await panel.getByRole('tab', { name: 'Send a message' }).click();
+    // The extra fields open with the Advanced Options switch.
+    const advanced = panel.getByRole('switch', { name: 'Advanced Options' });
+    await expect(advanced).toHaveAttribute('aria-checked', 'false');
+    await advanced.click();
     await panel.getByRole('button', { name: 'SaaS', exact: true }).click();
     await panel.getByRole('button', { name: 'Web', exact: true }).click();
+    await panel.getByText('Full-scale').click();
     await panel.getByRole('button', { name: '$25–50k' }).click();
+    await panel.getByRole('button', { name: 'Clutch', exact: true }).click();
 
     const name = `Project ${stamp}`;
-    const submit = panel.getByRole('button', { name: 'Send message' });
+    const submit = panel.getByRole('button', { name: 'Submit' });
     await panel.locator('#project-name').fill(name);
     await panel.locator('#project-email').fill('project@example.test');
     // Submit waits for the privacy checkbox.
@@ -118,6 +124,8 @@ test.describe.serial('contact panel', () => {
     await page.getByRole('table', { name: 'Requests' }).getByRole('link').first().click();
     await expect(page.getByText('SaaS, Web')).toBeVisible();
     await expect(page.getByText('$25–50k')).toBeVisible();
+    await expect(page.getByText('Clutch')).toBeVisible();
+    await expect(page.getByText('full-scale')).toBeVisible();
   });
 
   test('the Home contact block has the same panel: Send a message first, Book a call second', async ({
@@ -153,23 +161,18 @@ test.describe('header menus', () => {
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
   });
 
-  test('the "=" button holds Approach and About us, one panel at a time', async ({ page }) => {
+  test('the nav lists every page; the Services panel is the only mega menu', async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    const more = page.getByRole('button', { name: /More pages/ });
-    await page.getByRole('button', { name: 'Services' }).click();
-    await more.click();
-    await expect(more).toHaveAttribute('aria-expanded', 'true');
-    await expect(page.getByRole('button', { name: 'Services' })).toHaveAttribute(
-      'aria-expanded',
-      'false',
-    );
-    await expect(page.locator('#mega-more').getByRole('link')).toHaveText(['Approach', 'About us']);
-    // Approach and About us are not in the bar any more.
-    await expect(
-      page
-        .getByRole('navigation', { name: 'Main navigation' })
-        .getByRole('link', { name: 'Approach' }),
-    ).toHaveCount(0);
+    const nav = page.getByRole('navigation', { name: 'Main navigation' });
+    await expect(nav.getByRole('link')).toHaveText([
+      'Home',
+      'Cases',
+      'Approach',
+      'About us',
+      'Reviews',
+      'Contact us',
+    ]);
+    await expect(nav.getByRole('button', { name: 'Services' })).toBeVisible();
+    await expect(page.getByRole('button', { name: /More pages/ })).toHaveCount(0);
   });
 });

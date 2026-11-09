@@ -442,21 +442,21 @@ Opens from the right when the header "Get in touch" button is clicked (desktop a
   1. Pick: Vlad's card (online dot), "Book a call", lead (verbatim from the Contact section), meta chips 30 min / Google Meet / Free, month calendar (Mon first, past days, weekends and full days disabled, today has an orange dot, selected day white), then the day title, visitor's time zone, 24h / am-pm toggle and 30-min slots (4 columns, 3 on mobile; booked slots struck through). The first open day is preselected. Sticky footer: summary + Continue (disabled until a slot is chosen).
   2. Details: "Change time", summary card (date, time range, Google Meet, time zone), Name*, Email*, Company, topic. Footer: summary + "Book call".
   3. Sent (both tabs, texts as live): orange check, "Your Form Was Successfully Submitted!", lead "We will be in touch with you shortly!" (booking: Vlad confirmation line), orange `.btn--accent` "Make another submission" (`[data-dw-again]`) that resets the pane to an empty form.
-- **Send a message:** title, reply time + email link, "What do you need?" multi-select chips (plus → ×), budget single-select chips, Name*, Email*, Company, source select, "About the project" dashed field that expands into a textarea, NDA checkbox, Privacy Policy checkbox (required). Footer: green dot "We reply within one business day" + "Send message". Then a sent state.
+- **Send a message** (2026-10-29, same form in the drawer and in every Contact block): "Email us at hello@kz.design" box (`.dw-mailbox`), "or fill out the form below" divider, Your name* | Email* (2 columns, 1 on mobile), "How can we help you?" textarea, then a row with **Attach file** (pill, file input, shows the file name, max 10 MB) and **Advanced Options** (`role="switch"` toggle, orange when on). The switch opens a box (`.dw-advbox`) with "What do you need?" multi chips, "Project scope" radio cards (MVP / Full-scale), Company, Competitors (list them via comma) and the NDA checkbox. Always visible after it: budget chips and "How did you hear about us?" chips (single choice, optional), the Privacy Policy checkbox (required), and the footer with the green dot "We reply within one business day" + Submit. With `KZ_FORMS_ENDPOINT` set, a form with a file is sent as multipart FormData; the mailto fallback names the file and asks to attach it.
 - **Fields** reuse the homepage contact form pattern (`.field`, bottom border on dark, red `*`); buttons are `.btn--light` (hover = `--accent-secondary`, visible on the dark panel).
 - **Data:** availability is mocked (Mon–Fri 10:00–17:30 Europe/Tallinn, ~25% busy, closed less than 2h ahead, 8 weeks). If `window.KZ_FORMS_ENDPOINT` is set, both forms POST JSON (`type: "call"` with `start` ISO / `duration` / `timezone`, or `type: "message"` with `needs`, `budget`, `source`, `about`, `nda`); otherwise they open a prefilled email to hello@kz.design.
 
 ## 12. Header navigation and mega menu (2026-10-28)
 
-- Desktop nav: Home · Services (button, opens the Services mega menu) · Cases · Reviews · Contact us; on the right "Get in touch" (opens the contact drawer) and a round "=" button (opens the second mega menu). Approach and About us moved from the nav into the "=" menu. The footer and the mobile burger menu keep all links.
-- Mega menu = one white panel under the header (radius 12, 1px `--x-line-light`, soft shadow, 16px padding and gap) with image cards: Services → SaaS web apps, Mobile apps, Websites (3 columns); "=" → Approach, About us (2 columns).
+- Desktop nav (as live): Home · Services (button, opens the Services mega menu) · Cases · Approach · About us · Reviews · Contact us; "Get in touch" on the right opens the contact drawer. The current page gets the light pill. The "=" button and its Approach / About us mega menu were removed on 2026-10-29.
+- Mega menu = one white panel under the header (radius 12, 1px `--x-line-light`, soft shadow, 16px padding and gap) with image cards: Services → SaaS web apps, Mobile apps, Websites (3 columns).
 - Card: image cover, radius 8, dark gradient at the bottom, title Google Sans Flex 28/34 white, 44px white round button with a chevron (orange with a white chevron on hover, image zooms 1.03). The current page's card has an orange dot; its trigger is marked (underline on Services, orange dot on "=").
 - While a panel is open the page under the header is dimmed (`.mega-dim`, rgba(24,27,34,.45)), so the focus is on the menu.
 - Behaviour (`js/main.js`): click opens, a second click / click outside / Esc closes, one panel at a time; Services gets a light pill while open; "=" turns into a chevron-up. Hidden ≤1100 (the burger menu is used there).
 
 ## 13. Contact block (every page) and Contact us page
 
-The Contact block is split in two equal columns (gap 64, 40 below 1360; one column ≤1100). The Contact block is the same everywhere (homepage, services, cases list, approach, about, contact page): left = title, lead and the team rows (avatar, name, role, bio) as on the live site; right = a card with two tabs in the drawer style: "Send a message" (default, the original fields Name* / Email address* / Message (optional) / Submit) and "Book a call" (the same booking flow as the drawer), then the company details card. The "Get in touch" drawer keeps its full message form (needs, budget, source, NDA).
+The Contact block is split in two equal columns (gap 64, 40 below 1360; one column ≤1100). The Contact block is the same everywhere (homepage, services, cases list, approach, about, contact page): left = title, lead and the team rows (avatar, name, role, bio) as on the live site; right = the drawer component embedded (`[data-contact-inline]`): the same "Send a message" form as the drawer (§11), shown first, and "Book a call", then the company details card.
 
 `pages/contact-us.html` (built by `tools/build_contact.py`) = the homepage Contact block with the contact drawer embedded as the form (`<div data-contact-inline>`; `js/drawer.js` mounts the same component without overlay and close button, the footer with the main button is sticky, "Make another submission" after sending). All "Get in touch" buttons open the drawer; their link points to this page as a no-JS fallback. Every former kz.design/contact-us link now goes here.
 
@@ -468,7 +468,6 @@ Brand column (logo, "No calls with sales…" line, Get in touch button that open
 
 `js/kz-logo-3d.js` (from the kz-logo-3d package, classic script so it also works from disk) + `js/vendor/three.min.js` (three.js r160, MIT), mounted by `js/about-logo.js` into `#kz-logo-3d` under the About hero text: spins slowly (`autoRotate` 0.6 rad/s), tilts after the cursor, drag to turn, click for a full turn, pauses off screen, no float with reduced motion. Loaded only on About.
 
-**Case pages CTA** (`.ccta`, all 16 cases): the same logo sits in the CTA grid, `text | logo | CEO card` from 1800px up, under the CEO card at ≤1799 (`"text card" "text logo"`), and after the card on mobile (240px). `js/ccta-logo.js` loads three.js + kz-logo-3d.js only when the block is 400px from the screen, mounts with `autoRotate 0.5`, cursor tilt, no drag/click, no shadow; fades in (`.is-on`). No WebGL: the slot hides.
 
 ## 16. Icon pack (kz-icons, 2026-10-28)
 
@@ -489,3 +488,20 @@ Brand column (logo, "No calls with sales…" line, Get in touch button that open
 - `.btn--light` (white pill) sits on dark boxes (Got an Idea, CTA cards, case pages). Hover keeps it light: `--gray-bg` background, ink text, dark arrow slides in. Exceptions: header `.btn--mobile` (hover dark) and the drawer (hover `--accent-secondary`).
 - `.git__device` (service pages: laptop / phones / Mac Studio) follows live: `top:-120px; bottom:0; height:calc(100% + 120px); width:auto`, `object-fit:contain; object-position:right bottom`, so the image sticks out 120px above the box and its bottom edge rests on the box bottom (no floating cut edge). `max-width: min(58%, 100% - 480px)` keeps it off the title.
 - ≤991px: box `overflow:hidden`, device 300px high at the bottom right; ≤767px: device hidden.
+
+## 19. Case pages CTA (`.ccta`, as live)
+
+Dark section (`--dark`) with the live `KZ-dark-bg.webp` (outlined lightning + orange glow) centered at 50% width; hidden ≤991 like live. Text column 614px on the left, CEO card 504px on the right: padding 20, 1px `--x-line-dark`, radius 8, `--dark` fill, author row (48px photo, 12px gap), then a bullet list (4px white dots, 16/24, 8px apart). The 3D logo is not used here (About only).
+
+## 20. Our Approach cards — C1 graphics (homepage)
+
+The four `.a-card` tiles (Discovery, Strategy, UX/UI Design, Prototyping) use the `kz-c1-graphics` pack instead of PNGs: `css/kz-c1.css` (pure CSS, no JS/images, text inherits the site font) + the markup from the pack's demo. The graphic fills the card (`.a-card .kzc1 { position:absolute; inset:0 }`) behind the title (`z-index:2`). The card has `aspect-ratio: 680/560` (the pack ratio), and the `.kzc1-host` class makes hovering anywhere on the card play the animation (search typing, MoSCoW check, email validation, payment toast). Reduced motion turns the animation off.
+
+## 21. (removed) Mega menu "More" cards
+
+The "=" menu with the Approach (C1 graphic) and About us (3D logo) cards was removed on 2026-10-29: Approach and About us are plain nav links again. The 3D logo stays on the About hero only (§15).
+
+## 22. FAQ "Show all" + Uniqueness graphics (homepage, 2026-10-29)
+
+- **FAQ:** the first 6 questions are shown, the other 13 are hidden with CSS (`.faq__list:not(.is-all) > .faq__item:nth-child(n+7)`) but stay in the HTML for search engines. Below the list is a full-width row button `.faq__more` "Show all questions (19)" with a plus: 64px high, 1px `--line-light` border, radius 8, light gray hover. It expands the list in place and becomes "Show fewer questions" (the plus turns into a minus). Collapsing closes any open hidden answer and keeps the button in view (`js/main.js`).
+- **Uniqueness cards:** the three `.u-card__media` images are replaced by the `kz-why-html` pack (`css/kz-why.css`, pure CSS, 960:840 = the media box ratio): direct (No middlemen), updates (Communication & Updates), handoff (Designs created to be developed). The graphic fills the media box (`.u-card__media .kzw { position:absolute; inset:0 }`). The card has `.kzw-host`, so hovering anywhere on the card plays the animation. Reduced motion turns it off.

@@ -129,14 +129,15 @@ def page(slug):
       <p class="ccta__sub">No calls with sales. Contact us and get to chat with our CEO.</p>
       <a class="btn btn--light" href="pages/contact-us.html" data-drawer="book">Get in touch<i class="btn__arrow"></i></a>
     </div>
-    <div class="ccta__logo" data-kz-logo aria-hidden="true"></div>
     <div class="ccta__card">
       <div class="author">
         <img src="{CDN}6846dac160b7d4f40d4e4b01_image.png" alt="Vlad Kyrieiev" width="48" height="48" loading="lazy">
         <div><p class="author__name">Vlad Kyrieiev</p><p class="author__role">Founder &amp; CEO</p></div>
       </div>
-      <p>Serial design entrepreneur &amp; leader with 10+ years of experience solving the most challenging UX issues.</p>
-      <p>Ex-Head of Design in US ERP product.</p>
+      <ul class="ccta__list">
+        <li>Serial design entrepreneur &amp; leader with 10+ years of experience solving the most challenging UX issues.</li>
+        <li>Ex-Head of Design in US ERP product.</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -165,7 +166,6 @@ def page(slug):
 <script src="js/main.js"></script>
 <script src="js/drawer.js"></script>
 <script src="js/case.js" defer></script>
-<script src="js/ccta-logo.js" defer></script>
 </body>
 </html>
 '''

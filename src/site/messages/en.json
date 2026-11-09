@@ -6,7 +6,6 @@
     "mainNavigation": "Main navigation",
     "mobileNavigation": "Mobile navigation",
     "language": "Language",
-    "moreMenu": "More pages: Approach, About us",
     "home": "K&Z Design — home"
   },
   "nav": {
@@ -48,6 +47,8 @@
     "servicesTabs": "Services",
     "testimonialsLabel": "Testimonials",
     "drag": "Drag",
+    "faqShowAll": "Show all questions ({count})",
+    "faqShowFewer": "Show fewer questions",
     "companyEmail": "Email:"
   },
   "preview": {
@@ -115,8 +116,6 @@
     "callWith": "Intro call with {name}",
     "meetInviteNote": "· link comes with the invite",
     "bookDone": "{name} will confirm {when} and send the Google Meet invite to {email}.",
-    "messageTitle": "Tell us what you’re building",
-    "messageLead": "We reply within one business day. Prefer email?",
     "needsLabel": "What do you need?",
     "needs0": "SaaS",
     "needs1": "Mobile app",
@@ -125,8 +124,8 @@
     "needs4": "UX audit",
     "needs5": "Discovery & strategy",
     "needs6": "Something else",
-    "budgetLabel": "Budget",
-    "optional": "optional",
+    "budgetLabel": "What is your budget for this project?",
+    "optional": "(optional)",
     "budget0": "Under $10k",
     "budget1": "$10–25k",
     "budget2": "$25–50k",
@@ -134,6 +133,20 @@
     "budget4": "Not sure yet",
     "aboutToggle": "About the project",
     "replies": "We reply within one business day",
-    "again": "Make another submission"
+    "again": "Make another submission",
+    "mailbox": "Email us at",
+    "orText": "or fill out the form below",
+    "advanced": "Advanced Options",
+    "scopeLabel": "Project scope",
+    "scope0Text": "We will help you reduce scope, validate fast, and focus on core functionality",
+    "scope1Text": "Designed for scalability, integrations, and long-term growth",
+    "sourceLabel": "How did you hear about us?",
+    "source0": "Clutch",
+    "source1": "Google search",
+    "source2": "LinkedIn",
+    "source3": "Dribbble",
+    "source4": "Behance",
+    "source5": "Referral",
+    "source6": "Other"
   }
 }

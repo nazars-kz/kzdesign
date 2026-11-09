@@ -110,6 +110,25 @@
     });
   });
 
+  /* FAQ: first 6 questions, the rest behind "Show all questions (N)" (all stay in the HTML for search engines) */
+  document.querySelectorAll('.faq__more').forEach(function (b) {
+    var list = b.parentElement.querySelector('.faq__list');
+    var total = b.dataset.total || list.children.length;
+    if (list.children.length <= 6) { b.hidden = true; return; }
+    b.addEventListener('click', function () {
+      var all = !list.classList.contains('is-all');
+      list.classList.toggle('is-all', all);
+      b.setAttribute('aria-expanded', String(all));
+      b.firstChild.nodeValue = all ? 'Show fewer questions' : 'Show all questions (' + total + ')';
+      if (all) { var q = list.children[6].querySelector('.faq__q'); if (q) q.focus({ preventScroll: true }); }
+      else {
+        list.querySelectorAll(':scope > .faq__item:nth-child(n+7).is-open').forEach(function (o) { o.classList.remove('is-open'); });
+        var top = list.getBoundingClientRect().bottom; // keep the button in view after the list shrinks
+        if (b.getBoundingClientRect().top < 0 || top < 0) b.scrollIntoView({ block: 'center' });
+      }
+    });
+  });
+
   /* Team (mobile accordion) */
   document.querySelectorAll('.team__who').forEach(function (b) {
     b.addEventListener('click', function () {
@@ -230,3 +249,4 @@
     });
   }
 })();
+

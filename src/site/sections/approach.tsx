@@ -1,11 +1,11 @@
-import Image from 'next/image';
-
 import type { SitePageContent } from '@/core/content/loader';
 
 import { SectionHeader } from '../components/section-header';
 import { ContentLink } from '../components/ui/content-link';
+import { Graphic } from '../components/ui/graphic';
 import { Container } from '../components/ui/layout';
 import { LinkCta } from '../components/ui/link-cta';
+import { APPROACH_GRAPHICS } from '../theme/graphics';
 
 /** "Our Approach": the pitch with a link, and four cards (Discovery, Strategy, UX/UI Design, Prototyping). */
 export function Approach({ content }: { content: SitePageContent<'home'>['approach'] }) {
@@ -24,17 +24,13 @@ export function Approach({ content }: { content: SitePageContent<'home'>['approa
         <ul className="approach__grid">
           {content.cards.map((card) => (
             <li key={card._key}>
-              <ContentLink href={card.link.href} external={card.link.external} className="a-card">
+              <ContentLink
+                href={card.link.href}
+                external={card.link.external}
+                className="a-card kzc1-host"
+              >
                 <span className="a-card__title text-body">{card.link.label}</span>
-                {card.image ? (
-                  <Image
-                    src={card.image.src}
-                    alt={card.image.alt}
-                    width={card.image.width}
-                    height={card.image.height}
-                    sizes="260px"
-                  />
-                ) : null}
+                {card.graphic ? <Graphic html={APPROACH_GRAPHICS[card.graphic]} /> : null}
               </ContentLink>
             </li>
           ))}

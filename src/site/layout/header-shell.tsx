@@ -21,7 +21,6 @@ export function HeaderShell({
   languages,
   cta,
   compactCta,
-  more,
   mega,
   menu,
   labels,
@@ -31,8 +30,6 @@ export function HeaderShell({
   languages: ReactNode;
   cta: ReactNode;
   compactCta: ReactNode;
-  /** The round “=” button that opens the second mega menu. */
-  more: ReactNode;
   /** The mega menu panels (inside the header, under its bar). */
   mega: ReactNode;
   menu: ReactNode;
@@ -82,7 +79,6 @@ export function HeaderShell({
               {languages}
               {cta}
               {compactCta}
-              {more}
               <BurgerButton
                 buttonRef={burger}
                 open={open}

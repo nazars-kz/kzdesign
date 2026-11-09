@@ -70,42 +70,23 @@ export function MegaProvider({ children }: { children: ReactNode }) {
   );
 }
 
-/** Button that opens the panel `name`; `variant` picks the “Services” text trigger or the round “=” button. */
+/** The "Services" button of the nav: opens the panel `name`. */
 export function MegaTrigger({
   name,
   panelId,
-  variant,
   hrefs = [],
-  label,
   children,
 }: {
   name: string;
   panelId: string;
-  variant: 'nav' | 'more';
   /** Pages of the panel: the trigger is marked while one of them is open. */
   hrefs?: readonly string[];
-  label?: string;
-  children?: ReactNode;
+  children: ReactNode;
 }) {
   const { open, toggle } = useContext(MegaContext);
   const pathname = usePathname();
   const expanded = open === name;
   const active = hrefs.some((href) => href === pathname);
-  if (variant === 'more') {
-    return (
-      <button
-        type="button"
-        className={cx('header__more', active && 'is-active')}
-        data-mega={name}
-        aria-expanded={expanded}
-        aria-controls={panelId}
-        aria-label={label}
-        onClick={() => toggle(name)}
-      >
-        <i className="header__more-ico" aria-hidden="true" />
-      </button>
-    );
-  }
   return (
     <button
       type="button"
@@ -130,7 +111,7 @@ export function MegaPanel({
 }: {
   name: string;
   id: string;
-  columns: 2 | 3;
+  columns: 3;
   children: ReactNode;
 }) {
   const { open } = useContext(MegaContext);

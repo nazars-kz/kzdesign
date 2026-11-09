@@ -7,17 +7,23 @@
  * `booking` for calls, `project` (drawer) or `contact` (embedded) for messages.
  */
 import Image from 'next/image';
-import { type FormEvent, type ReactNode, useRef, useState, useSyncExternalStore } from 'react';
+import {
+  type FormEvent,
+  type ReactNode,
+  useId,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react';
 
 import type { ResolvedImage } from '@/core/content/define';
 import type { SiteFormConfig } from '@/core/forms/config';
-import { FormFieldType } from '@/core/forms/define';
 import { type FormMessages, useSiteForm } from '@/core/forms/use-site-form';
 
 import { ButtonArrow } from '../ui/button-arrow';
 import { buttonClasses } from '../ui/button-styles';
 import { cx } from '../ui/cn';
-import { Field, Input, Select, Textarea } from '../ui/field';
+import { Field, Input, Textarea } from '../ui/field';
 import {
   firstOpenDay,
   formatDay,
@@ -69,6 +75,7 @@ export interface ContactPanelProps {
 
 const NEEDS = 7;
 const BUDGETS = 5;
+const SOURCES = 7;
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const;
 
 /* ── Icons ─────────────────────────────────────────────────────────────── */
@@ -137,6 +144,17 @@ const IconCalendar = () => (
   <Svg>
     <rect x="3" y="5" width="18" height="16" rx="2" />
     <path d="M3 10h18M8 3v4M16 3v4" />
+  </Svg>
+);
+const IconMail = () => (
+  <Svg width={1.8}>
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <path d="M3.5 6.5l8.5 6.5 8.5-6.5" />
+  </Svg>
+);
+const IconSpark = () => (
+  <Svg fill="currentColor" width={0}>
+    <path d="M10 2.5l1.9 5.6 5.6 1.9-5.6 1.9L10 17.5l-1.9-5.6L2.5 10l5.6-1.9zM18.5 13l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9z" />
   </Svg>
 );
 const IconGlobe = () => (
@@ -658,7 +676,6 @@ function BookPane({
 /* ── Send a message ────────────────────────────────────────────────────── */
 
 function MessagePane({
-  mode,
   messageForm,
   strings: s,
   formStrings,
@@ -673,36 +690,22 @@ function MessagePane({
     summaryRef,
   });
   const { ready, check } = useReady();
-  const full = mode === 'drawer';
+  const advancedId = useId();
   const [needs, setNeeds] = useState<readonly string[]>([]);
   const [budget, setBudget] = useState('');
-  const [aboutOpen, setAboutOpen] = useState(false);
-  const [sourceChosen, setSourceChosen] = useState(false);
+  const [source, setSource] = useState('');
+  const [advanced, setAdvanced] = useState(false);
 
   const name = form.field('name');
   const email = form.field('email');
   const message = form.field('message');
+  const scope = form.field('scope');
+  const company = form.field('company');
+  const competitors = form.field('competitors');
   const required = formStrings.required;
 
-  const needOptions = Array.from(
-    { length: NEEDS },
-    (_, i) => s[`needs${i}` as PanelStringKey],
-  ).filter(Boolean);
-  const budgetOptions = Array.from(
-    { length: BUDGETS },
-    (_, i) => s[`budget${i}` as PanelStringKey],
-  ).filter(Boolean);
-
-  const submit = (
-    <button
-      type="submit"
-      className={buttonClasses('light')}
-      disabled={form.pending || (isHydrated(form) && !ready)}
-    >
-      {form.pending ? formStrings.sending : messageForm.config.submitLabel}
-      <ButtonArrow />
-    </button>
-  );
+  const options = (prefix: 'needs' | 'budget' | 'source', count: number) =>
+    Array.from({ length: count }, (_, i) => s[`${prefix}${i}` as PanelStringKey]).filter(Boolean);
 
   return (
     <>
@@ -715,59 +718,21 @@ function MessagePane({
       >
         {form.hiddenFields}
         {messageForm.security}
-        {full ? (
-          <>
-            <input type="hidden" name="needs" value={needs.join(', ')} />
-            <input type="hidden" name="budget" value={budget} />
-          </>
-        ) : null}
+        <input type="hidden" name="needs" value={needs.join(', ')} />
+        <input type="hidden" name="budget" value={budget} />
+        <input type="hidden" name="source" value={source} />
         <div className="dw__scroll">
-          {full ? (
-            <>
-              <h2 className="dw-title dw-title--first">{s.messageTitle}</h2>
-              <p className="dw-lead">
-                {s.messageLead} <a href={`mailto:${companyEmail}`}>{companyEmail}</a>
-              </p>
-              <span className="dw-label">{s.needsLabel}</span>
-              <div className="dw-chips">
-                {needOptions.map((option) => {
-                  const on = needs.includes(option);
-                  return (
-                    <button
-                      key={option}
-                      type="button"
-                      className="dw-chip"
-                      aria-pressed={on}
-                      onClick={() =>
-                        setNeeds((now) => (on ? now.filter((n) => n !== option) : [...now, option]))
-                      }
-                    >
-                      <IconPlus />
-                      {option}
-                    </button>
-                  );
-                })}
-              </div>
-              <span className="dw-label">
-                {s.budgetLabel} <i>· {s.optional}</i>
-              </span>
-              <div className="dw-chips dw-chips--single">
-                {budgetOptions.map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    className="dw-chip"
-                    aria-pressed={budget === option}
-                    onClick={() => setBudget((now) => (now === option ? '' : option))}
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            </>
-          ) : null}
+          <a className="dw-mailbox" href={`mailto:${companyEmail}`}>
+            <IconMail />
+            <span>
+              {s.mailbox} <u>{companyEmail}</u>
+            </span>
+          </a>
+          <p className="dw-or">
+            <span>{s.orText}</span>
+          </p>
           <FormFeedback form={form} summaryRef={summaryRef} title={formStrings.summaryTitle} />
-          <div className={cx('dw-fields', full ? 'dw-fields--after-chips' : 'dw-fields--simple')}>
+          <div className="dw-fields dw-fields--2">
             <Field
               label={name.field.label}
               htmlFor={name.ids.input}
@@ -790,41 +755,127 @@ function MessagePane({
             >
               <Input {...email.inputProps} placeholder=" " />
             </Field>
-            {full ? (
-              <CompanyAndSource form={form} chosen={sourceChosen} onChosen={setSourceChosen} />
-            ) : null}
-            {full ? null : (
-              <Field label={message.field.label} htmlFor={message.ids.input} hideLabel>
-                <Textarea
-                  {...message.inputProps}
-                  placeholder={message.field.placeholder ?? message.field.label}
+          </div>
+          <Field
+            className="dw-help"
+            label={message.field.label}
+            htmlFor={message.ids.input}
+            hideLabel
+          >
+            <Textarea
+              {...message.inputProps}
+              placeholder={message.field.placeholder ?? message.field.label}
+            />
+          </Field>
+          <div className="dw-tools">
+            <button
+              type="button"
+              className="dw-adv"
+              role="switch"
+              aria-checked={advanced}
+              aria-controls={advancedId}
+              onClick={() => setAdvanced((now) => !now)}
+            >
+              <IconSpark />
+              <span>{s.advanced}</span>
+              <i className="dw-switch" aria-hidden="true" />
+            </button>
+          </div>
+          <div className="dw-advbox" id={advancedId} hidden={!advanced}>
+            <span className="dw-label">{s.needsLabel}</span>
+            <div className="dw-chips">
+              {options('needs', NEEDS).map((option) => {
+                const on = needs.includes(option);
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    className="dw-chip"
+                    aria-pressed={on}
+                    onClick={() =>
+                      setNeeds((now) => (on ? now.filter((n) => n !== option) : [...now, option]))
+                    }
+                  >
+                    <IconPlus />
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+            <span className="dw-label">{s.scopeLabel}</span>
+            <div className="dw-opts">
+              {(scope.field.options ?? []).map((option, index) => (
+                <label key={option.value} className="dw-opt">
+                  <input type="radio" name={scope.inputProps.name} value={option.value} />
+                  <i aria-hidden="true" />
+                  <span>
+                    <b>{option.label}</b>
+                    {s[`scope${index}Text` as PanelStringKey]}
+                  </span>
+                </label>
+              ))}
+            </div>
+            <div className="dw-fields">
+              <Field label={company.field.label} htmlFor={company.ids.input} hideLabel>
+                <Input
+                  {...company.inputProps}
+                  placeholder={company.field.placeholder ?? company.field.label}
+                  autoComplete="organization"
                 />
               </Field>
-            )}
+              <Field label={competitors.field.label} htmlFor={competitors.ids.input} hideLabel>
+                <Textarea
+                  {...competitors.inputProps}
+                  placeholder={competitors.field.placeholder ?? competitors.field.label}
+                />
+              </Field>
+            </div>
+            <NdaCheck form={form} />
           </div>
-          {full ? (
-            <>
-              <div className={cx('dw-more', aboutOpen && 'is-open')}>
-                <button type="button" className="dw-more__btn" onClick={() => setAboutOpen(true)}>
-                  {s.aboutToggle}
-                  <i>
-                    <IconPlus />
-                  </i>
-                </button>
-                <Field label={message.field.label} htmlFor={message.ids.input} hideLabel>
-                  <Textarea
-                    {...message.inputProps}
-                    placeholder={message.field.placeholder ?? message.field.label}
-                  />
-                </Field>
-              </div>
-              <PanelChecks form={form} consent={consent} />
-            </>
-          ) : null}
+          <span className="dw-label">
+            {s.budgetLabel} <i>{s.optional}</i>
+          </span>
+          <div className="dw-chips dw-chips--single">
+            {options('budget', BUDGETS).map((option) => (
+              <button
+                key={option}
+                type="button"
+                className="dw-chip"
+                aria-pressed={budget === option}
+                onClick={() => setBudget((now) => (now === option ? '' : option))}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+          <span className="dw-label">
+            {s.sourceLabel} <i>{s.optional}</i>
+          </span>
+          <div className="dw-chips dw-chips--single">
+            {options('source', SOURCES).map((option) => (
+              <button
+                key={option}
+                type="button"
+                className="dw-chip"
+                aria-pressed={source === option}
+                onClick={() => setSource((now) => (now === option ? '' : option))}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+          <PrivacyCheck form={form} consent={consent} />
         </div>
         <div className="dw__foot">
           <span className="dw-replies">{s.replies}</span>
-          {submit}
+          <button
+            type="submit"
+            className={buttonClasses('light')}
+            disabled={form.pending || (isHydrated(form) && !ready)}
+          >
+            {form.pending ? formStrings.sending : messageForm.config.submitLabel}
+            <ButtonArrow />
+          </button>
         </div>
       </form>
       <DoneStep
@@ -838,62 +889,31 @@ function MessagePane({
   );
 }
 
-/** Company input and the "How did you hear about us?" select of the project form. */
-function CompanyAndSource({
-  form,
-  chosen,
-  onChosen,
-}: {
-  form: ReturnType<typeof useSiteForm>;
-  chosen: boolean;
-  onChosen: (value: boolean) => void;
-}) {
-  const company = form.field('company');
-  const source = form.field('source');
-  const options = source.field.options ?? [];
+/** "Send me an NDA before we talk" checkbox in the panel's own style. */
+function NdaCheck({ form }: { form: ReturnType<typeof useSiteForm> }) {
+  const nda = form.field('nda');
   return (
-    <>
-      <Field label={company.field.label} htmlFor={company.ids.input} hideLabel>
-        <Input
-          {...company.inputProps}
-          placeholder={company.field.placeholder ?? company.field.label}
-          autoComplete="organization"
-        />
-      </Field>
-      {source.field.definition.type === FormFieldType.Select ? (
-        <Field label={source.field.label} htmlFor={source.ids.input} hideLabel>
-          <Select
-            {...source.inputProps}
-            className={cx(!chosen && 'is-empty')}
-            placeholder={source.field.label}
-            options={options}
-            onChange={(event) => onChosen(event.currentTarget.value !== '')}
-          />
-        </Field>
-      ) : null}
-    </>
+    <label className="dw-check">
+      <input {...nda.inputProps} />
+      <i>
+        <IconCheck />
+      </i>
+      {nda.field.label}
+    </label>
   );
 }
 
-/** NDA and privacy checkboxes in the panel's own style. */
-function PanelChecks({
+/** The required privacy checkbox; its text (with the link) is rich text edited in the admin. */
+function PrivacyCheck({
   form,
   consent,
 }: {
   form: ReturnType<typeof useSiteForm>;
   consent: ReactNode;
 }) {
-  const nda = form.field('nda');
   const privacy = form.field('privacy');
   return (
     <div className="dw-checks">
-      <label className="dw-check">
-        <input {...nda.inputProps} />
-        <i>
-          <IconCheck />
-        </i>
-        {nda.field.label}
-      </label>
       <label className="dw-check">
         <input {...privacy.inputProps} />
         <i>

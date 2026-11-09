@@ -36,13 +36,23 @@ export async function visitor(browser: Browser) {
   return { context, page: await context.newPage() };
 }
 
+/** The "sent" step of the contact panel that is showing (the hidden tab has its own copy). */
+export function sentMessage(page: Page) {
+  return page
+    .locator('.dw__step.is-active [role="status"]')
+    .filter({ hasText: 'Your Form Was Successfully Submitted!' });
+}
+
 export async function submitContact(page: Page, name: string) {
   await page.goto('/');
   await expect(page.locator('form#form-contact input[name="_t"]')).toBeAttached();
   await page.locator('#contact-name').fill(name);
   await page.locator('#contact-email').fill('visitor@example.test');
   await page.locator('#contact-message').fill('Hello from the integrations test.');
+  await page.locator('#contact-privacy').evaluate((box: HTMLInputElement) => {
+    if (!box.checked) box.click();
+  });
   await page.waitForTimeout(FILL_DELAY_MS);
   await page.locator('form#form-contact button[type="submit"]').click();
-  await expect(page.getByText('Thank you!').first()).toBeVisible();
+  await expect(sentMessage(page)).toBeVisible();
 }
