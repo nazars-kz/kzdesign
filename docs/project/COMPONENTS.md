@@ -128,3 +128,13 @@ Breadcrumbs, Marquee, LeaderCard, FounderCard, FeatureCard, ProcessStep, filter 
 | Difference card             | `src/site/components/diff-card.tsx`     | Lottie illustration that plays on hover    |
 | Script loader               | `src/site/components/ui/load-script.ts` | `loadScript` (once per file), `whenIdle`   |
 | Breadcrumbs, `page` variant | `src/site/components/breadcrumbs.tsx`   | dark trail at the top of a plain page      |
+
+## Added with Approach, Reviews and Contact us
+
+| Component                  | File                                      | Notes                                                   |
+| -------------------------- | ----------------------------------------- | ------------------------------------------------------- |
+| Lottie hover hook          | `src/site/components/use-lottie-hover.ts` | used by `DiffCard` (About) and `PhaseVisual` (Approach) |
+| Phase visual               | `src/site/components/phase-visual.tsx`    | dark box with a hover animation                         |
+| Clutch widget              | `src/site/components/clutch-widget.tsx`   | loads Clutch's script once, then initializes the widget |
+| Accordion, `phase` variant | `src/site/components/accordion.tsx`       | light list of the Approach steps                        |
+| Contact block, `asPage`    | `src/site/sections/contact.tsx`           | h1 and page spacing                                     |

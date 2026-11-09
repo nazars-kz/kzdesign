@@ -12,19 +12,38 @@ import { contactForm } from './forms/contact';
 import { projectForm } from './forms/project';
 import { siteGlobals } from './globals/site';
 import { aboutPage } from './pages/about';
+import { approachPage } from './pages/approach';
+import { contactUsPage } from './pages/contact-us';
 import { casesPage } from './pages/cases';
 import { homePage } from './pages/home';
 import { placeholderPages } from './pages/placeholders';
+import { reviewsPage } from './pages/reviews';
 import { servicesPage } from './pages/services';
 import { contactShared } from './shared/contact';
+import { industriesShared } from './shared/industries';
 import { partnersShared } from './shared/partners';
 import { testimonialsShared } from './shared/testimonials';
 import { uniquenessShared } from './shared/uniqueness';
 
 export const registry = createRegistry({
-  pages: [homePage, aboutPage, casesPage, servicesPage, ...placeholderPages],
+  pages: [
+    homePage,
+    aboutPage,
+    approachPage,
+    casesPage,
+    servicesPage,
+    reviewsPage,
+    contactUsPage,
+    ...placeholderPages,
+  ],
   collections: [services, cases],
   globals: [siteGlobals],
   forms: [contactForm, projectForm, bookingForm],
-  sharedSections: [uniquenessShared, testimonialsShared, partnersShared, contactShared],
+  sharedSections: [
+    uniquenessShared,
+    testimonialsShared,
+    partnersShared,
+    industriesShared,
+    contactShared,
+  ],
 });

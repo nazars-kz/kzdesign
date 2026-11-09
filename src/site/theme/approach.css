@@ -1,0 +1,226 @@
+/*
+ * Approach page.
+ * Source: design/kz-homepage/css/approach.css (measured at 1440 and 375).
+ */
+
+.ap-crumbs {
+  padding-top: 1.75rem;
+}
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+.ap-hero {
+  padding: 7.5rem 0 4.75rem;
+}
+.ap-hero__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--type-h1-size);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--color-foreground-strong);
+}
+.ap-hero__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+.ap-hero__sub {
+  max-width: 40.25rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: var(--color-ink-550);
+}
+.ap-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 3.375rem;
+}
+.ap-pills a {
+  padding: 0.5625rem 1.4375rem;
+  border: 1px solid var(--color-border);
+  border-radius: 2.125rem;
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  line-height: 1.6875rem;
+  color: var(--color-foreground);
+  transition:
+    border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+.ap-pills a:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.ap-quote {
+  flex: 0 0 31.5rem;
+  margin: 0 8.75rem 0 0;
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+.ap-quote blockquote {
+  margin: 0;
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.5rem;
+  color: var(--color-foreground);
+}
+.ap-quote blockquote b,
+.ap-quote blockquote strong {
+  font-weight: 700;
+}
+.ap-quote .author {
+  gap: 0;
+  margin-top: 1.375rem;
+}
+.ap-quote .author > img {
+  width: 3rem;
+  height: 3rem;
+}
+.ap-quote .author__name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.6875rem;
+}
+.ap-quote .author__role {
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+}
+
+/* ── Phases ──────────────────────────────────────────────────────────────── */
+.phase {
+  scroll-margin-top: 5rem;
+}
+.phase + .phase {
+  margin-top: 8.75rem;
+}
+.phase__inner {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 2rem;
+  padding-bottom: 1.5rem;
+  border-top: 1px solid var(--color-surface);
+}
+.phase__text {
+  padding-top: 3.3125rem;
+}
+.phase__intro {
+  margin-top: 1.75rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--color-ink-550);
+}
+.phase__visual {
+  height: 35.3125rem;
+  margin-top: 2.5625rem;
+  overflow: hidden;
+  background: var(--color-inverse);
+}
+.phase--rev .phase__text {
+  order: 2;
+}
+.phase--rev .phase__visual {
+  order: 1;
+}
+
+.phase-acc {
+  margin-top: 2.5rem;
+}
+.accordion--phase .accordion__item {
+  border-bottom: 1px solid #d0d0d1;
+}
+.accordion--phase .accordion__head {
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 5.5625rem;
+  padding: 1.25rem 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.875rem;
+  color: var(--color-foreground);
+}
+.accordion--phase .plus {
+  margin-right: 0;
+  color: var(--color-foreground);
+}
+.accordion--phase .accordion__label span {
+  white-space: nowrap;
+}
+.accordion--phase .accordion__body p {
+  max-width: 37.3125rem;
+  padding: 0.5rem 2.5rem 1.25rem 0;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--color-ink-550);
+  white-space: pre-line;
+}
+
+.ap-industries {
+  margin-top: 8.75rem;
+}
+
+@media (max-width: 47.9375rem) {
+  .ap-hero {
+    padding: 3.75rem 1rem;
+  }
+  .ap-hero__title {
+    font-size: 2rem;
+    line-height: 2.2rem;
+  }
+  .ap-hero__row {
+    flex-direction: column;
+    gap: 0;
+    margin-top: 0.75rem;
+  }
+  .ap-hero__sub {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+  .ap-pills {
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  .ap-pills a {
+    padding: 0.5rem 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  .ap-quote {
+    flex: none;
+    width: 100%;
+    margin: 4rem 0 0;
+  }
+
+  .phase + .phase {
+    margin-top: 0;
+  }
+  .phase__inner {
+    grid-template-columns: 1fr;
+    padding-bottom: 0;
+  }
+  .phase--rev .phase__text,
+  .phase--rev .phase__visual {
+    order: initial;
+  }
+  .phase__visual {
+    height: 19rem;
+    margin: 2.5rem 0 4rem;
+  }
+  .accordion--phase .accordion__head {
+    min-height: 5rem;
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
+  }
+  .accordion--phase .accordion__body p {
+    padding: 0.25rem 0 1.25rem;
+  }
+}
+
+@media (max-width: 68.75rem) {
+  .accordion--phase .accordion__head {
+    min-height: 5rem;
+  }
+}

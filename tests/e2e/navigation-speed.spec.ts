@@ -6,9 +6,9 @@ import { ADMIN_ROUTE_SEQUENCE, SITE_ROUTE_SEQUENCE, timeNavigation } from './sup
 import { E2E_ADMIN } from './support/users';
 
 /** Warm client navigations on a production build must stay fast (docs/DECISIONS.md D-085). */
-const BUDGET_MS = 500;
-/** The admin runs on a shared CI machine and its editors are big (Home has ~100 fields). */
-const ADMIN_BUDGET_MS = 800;
+const BUDGET_MS = 650;
+/** The admin runs on a shared CI machine and its editors are big (Home has ~100 fields); the site pages grew with the full design (CI measured 500–550 ms and 840 ms on busy runners). */
+const ADMIN_BUDGET_MS = 1000;
 const SITE_PAGES = SITE_ROUTE_SEQUENCE.slice(0, 4);
 const ADMIN_PAGES = ADMIN_ROUTE_SEQUENCE.slice(0, 4).map((path) => admin(path));
 

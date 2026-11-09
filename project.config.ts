@@ -17,7 +17,11 @@ export const projectConfig = defineProjectConfig({
   siteRoutes: [],
   // Extra Content-Security-Policy sources for the public site (third-party scripts, embeds…).
   // e.g. csp: { scriptSrc: ['https://www.googletagmanager.com'], frameSrc: ['https://www.youtube-nocookie.com'] },
-  csp: {},
+  // The Clutch reviews widget on the Reviews page.
+  csp: {
+    scriptSrc: ['https://widget.clutch.co'],
+    frameSrc: ['https://widget.clutch.co', 'https://clutch.co'],
+  },
   brand: {
     // Used for the browser UI theme color until one is set in Settings → Branding.
     themeColor: '#181b22',

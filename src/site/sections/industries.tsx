@@ -7,6 +7,7 @@ import type { SitePageContent } from '@/core/content/loader';
 
 import { Accordion } from '../components/accordion';
 import { SectionHeader } from '../components/section-header';
+import { cx } from '../components/ui/cn';
 import { Icon } from '../components/ui/icon';
 import { Container, Section } from '../components/ui/layout';
 
@@ -14,9 +15,11 @@ import { Container, Section } from '../components/ui/layout';
 export async function Industries({
   content,
   locale,
+  className,
 }: {
   content: SitePageContent<'home'>['industries'];
   locale: string;
+  className?: string;
 }) {
   const [{ items: cases }, t] = await Promise.all([
     getCollectionList('cases', locale),
@@ -71,7 +74,12 @@ export async function Industries({
   });
 
   return (
-    <Section tone="inverse" spacing="none" className="industries" labelledBy="industries-title">
+    <Section
+      tone="inverse"
+      spacing="none"
+      className={cx('industries', className)}
+      labelledBy="industries-title"
+    >
       <Container className="industries__inner">
         <div className="industries__intro">
           <SectionHeader

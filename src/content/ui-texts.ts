@@ -193,6 +193,24 @@ export const uiTexts = defineUiTexts({
         aboutUs: 'Breadcrumbs: this page',
       },
     },
+    approach: {
+      label: 'Approach',
+      texts: {
+        breadcrumb: 'Name of the breadcrumbs (read by screen readers)',
+        home: 'Breadcrumbs: link to Home',
+        approach: 'Breadcrumbs: this page',
+        steps: 'Name of the jump links to the phases (read by screen readers)',
+      },
+    },
+    reviews: {
+      label: 'Reviews',
+      texts: {
+        breadcrumb: 'Name of the breadcrumbs (read by screen readers)',
+        home: 'Breadcrumbs: link to Home',
+        reviews: 'Breadcrumbs: this page',
+        widget: 'Name of the Clutch reviews (read by screen readers)',
+      },
+    },
     notFound: {
       label: 'Page not found',
       texts: {

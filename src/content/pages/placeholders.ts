@@ -5,33 +5,6 @@
  */
 import { definePlaceholderPage } from './placeholder';
 
-export const approachPage = definePlaceholderPage({
-  id: 'approach',
-  path: '/approach',
-  label: 'Our approach',
-  title: 'Our approach',
-  description:
-    'How K&Z Design works: a business-first approach to UX/UI design with discovery, strategy, design and prototyping.',
-});
-
-export const reviewsPage = definePlaceholderPage({
-  id: 'reviews',
-  path: '/reviews',
-  label: 'Reviews',
-  title: 'Reviews',
-  description:
-    'What our partners say about working with K&Z Design, including reviews from Clutch.',
-});
-
-export const contactUsPage = definePlaceholderPage({
-  id: 'contact-us',
-  path: '/contact-us',
-  label: 'Contact us',
-  title: 'Contact us',
-  description:
-    'Contact K&Z Design: no calls with sales, talk to our CEO about your product design needs.',
-});
-
 export const privacyPage = definePlaceholderPage({
   id: 'privacy-policy',
   path: '/privacy-policy',
@@ -56,11 +29,4 @@ export const refundPage = definePlaceholderPage({
   description: 'Cancellation and Refund Policy of K&Zh OÜ, the company behind K&Z Design.',
 });
 
-export const placeholderPages = [
-  approachPage,
-  reviewsPage,
-  contactUsPage,
-  privacyPage,
-  termsPage,
-  refundPage,
-] as const;
+export const placeholderPages = [privacyPage, termsPage, refundPage] as const;

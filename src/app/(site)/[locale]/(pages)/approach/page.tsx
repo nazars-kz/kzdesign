@@ -1,7 +1,7 @@
 import { createPageRoute } from '@/core/content/page-route';
-import { PlaceholderView } from '@/site/pages/placeholder';
+import { ApproachView } from '@/site/pages/approach';
 
-const route = createPageRoute('approach', PlaceholderView);
+const route = createPageRoute('approach', ApproachView);
 
 export default route.Page;
 export const generateMetadata = route.generateMetadata;
