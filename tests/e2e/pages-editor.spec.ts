@@ -43,25 +43,25 @@ test.describe.serial('pages editor', () => {
     const second = await browser.newPage();
     await login(first, E2E_ADMIN);
     await login(second, E2E_ADMIN);
-    await openEditor(first, admin('/pages/contact-us'));
-    await openEditor(second, admin('/pages/contact-us'));
+    await openEditor(first, admin('/pages/reviews'));
+    await openEditor(second, admin('/pages/reviews'));
 
-    await heroTitle(first).fill('Contact (first editor)');
+    await heroTitle(first).fill('Reviews (first editor)');
     await saveButton(first).click();
     await expect(first.getByText(/^Saved\./)).toBeVisible();
 
-    await heroTitle(second).fill('Contact (second editor)');
+    await heroTitle(second).fill('Reviews (second editor)');
     await saveButton(second).click();
     await expect(second.getByText('This was changed by someone else')).toBeVisible();
-    expect(await liveH1(second, '/contact-us')).toBe('Contact (first editor)');
+    expect(await liveH1(second, '/reviews')).toBe('Reviews (first editor)');
     await first.close();
     await second.close();
   });
 
   test('a revision can be restored', async ({ page }) => {
     await login(page, E2E_ADMIN);
-    await openEditor(page, admin('/pages/contact-us'));
-    await expect(heroTitle(page)).toHaveValue('Contact (first editor)');
+    await openEditor(page, admin('/pages/reviews'));
+    await expect(heroTitle(page)).toHaveValue('Reviews (first editor)');
 
     await heroTitle(page).fill('Temporary title');
     await saveButton(page).click();
@@ -73,8 +73,8 @@ test.describe.serial('pages editor', () => {
     await revisions.nth(1).click();
     await page.getByRole('button', { name: 'Restore this version' }).click();
     await expect(page.getByText('Revision restored.')).toBeVisible();
-    await expect(heroTitle(page)).toHaveValue('Contact (first editor)');
-    await expect.poll(() => liveH1(page, '/contact-us')).toBe('Contact (first editor)');
+    await expect(heroTitle(page)).toHaveValue('Reviews (first editor)');
+    await expect.poll(() => liveH1(page, '/reviews')).toBe('Reviews (first editor)');
   });
 
   test('validation errors are shown on fields and nothing is saved', async ({ page }) => {
