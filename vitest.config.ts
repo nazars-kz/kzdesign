@@ -23,7 +23,8 @@ export default defineConfig({
       : [...configDefaults.exclude, 'tests/unit/demo/**'],
     environment: 'node',
     restoreMocks: true,
-    // Suites set up migrated in-memory PGlite databases; under parallel load that can exceed 10 s.
-    hookTimeout: 30_000,
+    // Suites set up migrated in-memory PGlite databases and seed the project's content with its
+    // images; under parallel load that can exceed 10 s.
+    hookTimeout: 120_000,
   },
 });
