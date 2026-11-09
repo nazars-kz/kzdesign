@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 
-/** A leading language segment: `en`, `uk`, `pt-BR` (no page of this site has a path like that). */
+/** A leading language segment such as `en` or `uk`, optionally with a region (no page of this site has a path like that). */
 const LOCALE_SEGMENT = /^\/[a-z]{2}(?:-[A-Za-z]{2,4})?(?=\/|$)/;
 
 /** A path without its locale prefix (`/en/cases` → `/cases`, `/en` → `/`). */
