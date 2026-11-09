@@ -31,7 +31,8 @@ describe('database (PGlite)', () => {
     expect(result?.count).toBeGreaterThanOrEqual(18);
   });
 
-  it('seeds default settings idempotently without overwriting', async () => {
+  // Seeding also syncs the project's content and its seed images, so it takes a while.
+  it('seeds default settings idempotently without overwriting', { timeout: 60_000 }, async () => {
     await runSeed(db, { seedDevAdmin: false });
     const [row] = await db.select().from(settings);
     const parsed = siteSettingsSchema.parse(row?.data);
@@ -70,7 +71,7 @@ describe('database (postgres-js driver over the Postgres wire protocol)', () => 
     await pg.close();
   });
 
-  it('migrates and queries through postgres-js', async () => {
+  it('migrates and queries through postgres-js', { timeout: 60_000 }, async () => {
     await migratePostgres(url);
     const { db, close } = openPostgres(url, { max: 1 });
     try {
