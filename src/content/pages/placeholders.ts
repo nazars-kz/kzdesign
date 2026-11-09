@@ -65,15 +65,6 @@ export const refundPage = definePlaceholderPage({
   description: 'Cancellation and Refund Policy of K&Zh OÜ, the company behind K&Z Design.',
 });
 
-export const servicesPage = definePlaceholderPage({
-  id: 'services',
-  path: '/services',
-  label: 'Services',
-  title: 'Services',
-  description:
-    'UX/UI design services of K&Z Design: SaaS web apps, mobile apps and websites for digital product businesses.',
-});
-
 export const placeholderPages = [
   aboutPage,
   approachPage,
@@ -82,5 +73,4 @@ export const placeholderPages = [
   privacyPage,
   termsPage,
   refundPage,
-  servicesPage,
 ] as const;

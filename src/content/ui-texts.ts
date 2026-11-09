@@ -161,6 +161,9 @@ export const uiTexts = defineUiTexts({
       label: 'Services',
       texts: {
         learnMore: 'Link to a service on the Services page',
+        breadcrumb: 'Name of the breadcrumbs (read by screen readers)',
+        home: 'Breadcrumbs: link to Home',
+        partnersLabel: 'Name of the scrolling partner logos (read by screen readers)',
       },
     },
     cases: {

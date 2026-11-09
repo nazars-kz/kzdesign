@@ -19,6 +19,7 @@ export function CaseCard({
   cover,
   coverMobile = null,
   headingLevel = 3,
+  stacked = false,
   className,
 }: {
   href: string;
@@ -29,10 +30,12 @@ export function CaseCard({
   /** Another cover for phones (art direction); the main cover is used when empty. */
   coverMobile?: ResolvedImage | null;
   headingLevel?: HeadingLevel;
+  /** Name, text and tags one under another (service pages), without the arrow after the name. */
+  stacked?: boolean;
   className?: string;
 }) {
   return (
-    <Link href={href} className={cx('case', className)}>
+    <Link href={href} className={cx('case', stacked && 'case--stack', className)}>
       {cover ? <CaseCover cover={cover} coverMobile={coverMobile} /> : null}
       <span className="case__shade" aria-hidden="true" />
       <div className="case__body">

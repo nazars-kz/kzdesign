@@ -111,3 +111,11 @@ Breadcrumbs, Marquee, LeaderCard, FounderCard, FeatureCard, ProcessStep, filter 
 | Other cases slider      | `src/site/components/case-slider.tsx`                               | scroll track with round buttons                                          |
 | Case card               | `src/site/components/case-card.tsx`                                 | now with an optional phone cover                                         |
 | Case page sections      | `src/site/sections/case-*.tsx`, `other-cases.tsx`, `cases-hero.tsx` | details, screens, feedback, CTA, other cases, hero                       |
+
+## Added with the service template
+
+| Component                  | File                                      | Notes                                                                             |
+| -------------------------- | ----------------------------------------- | --------------------------------------------------------------------------------- |
+| Partner marquee            | `src/site/components/partner-marquee.tsx` | three copies of the logos, moved by script at 80 px/s, still with "reduce motion" |
+| Case card, stacked variant | `src/site/components/case-card.tsx`       | `stacked`: name, text and tags one under another (service pages, next service)    |
+| Service page sections      | `src/site/sections/service-*.tsx`         | hero, about, features, cases, idea, process, partners, next                       |

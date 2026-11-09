@@ -67,6 +67,17 @@ const CATEGORIES: Readonly<Record<string, readonly (typeof CASE_CATEGORIES)[numb
   mynqs: ['Healthcare', 'SaaS', 'Web'],
 };
 
+/** Covers of the cases that have no page content yet (the service pages show them); desktop file, phone file. */
+const COVERS: Readonly<Record<string, readonly [string, string?]>> = {
+  'signal-sigma': ['case-signal-sigma-list.webp', 'case-signal-sigma-list-mobile.webp'],
+  'print-buy': ['case-print-buy-list.webp', 'case-print-buy-list-mobile.webp'],
+  filmtoro: ['case-filmtoro-list.webp', 'case-filmtoro-list-mobile.webp'],
+  touren: ['case-touren-list.webp'],
+  'listen-upp': ['case-listen-upp-list.webp', 'case-listen-upp-list-mobile.webp'],
+  momento: ['case-momento-list.webp', 'case-momento-list-mobile.webp'],
+  quintessia: ['case-quintessia-list.webp', 'case-quintessia-list-mobile.webp'],
+};
+
 export const cases = defineCollection({
   id: 'cases',
   label: 'Case studies',
@@ -438,6 +449,7 @@ function seedCase(
   extras: CaseExtras = {},
 ) {
   const page = CASE_PAGES[slug];
+  const covers = COVERS[slug];
   return {
     slug,
     publishedAt: `2026-01-${String(order).padStart(2, '0')}`,
@@ -449,6 +461,14 @@ function seedCase(
         tags: [...tags],
         categories: [...(CATEGORIES[slug] ?? [])],
         hideInList: !page,
+        ...(covers
+          ? {
+              listCover: { asset: covers[0], alt: `${title} — ${description}` },
+              ...(covers[1]
+                ? { listCoverMobile: { asset: covers[1], alt: `${title} — ${description}` } }
+                : {}),
+            }
+          : {}),
         ...(page
           ? {
               listCover: page.listCover,

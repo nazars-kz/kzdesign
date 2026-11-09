@@ -56,7 +56,10 @@
     "exit": "Exit preview"
   },
   "services": {
-    "learnMore": "Learn more"
+    "learnMore": "Learn more",
+    "breadcrumb": "Breadcrumb",
+    "home": "Home",
+    "partnersLabel": "Partner logos"
   },
   "notFound": {
     "title": "Page not found",

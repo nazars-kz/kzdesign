@@ -14,13 +14,14 @@ import { siteGlobals } from './globals/site';
 import { casesPage } from './pages/cases';
 import { homePage } from './pages/home';
 import { placeholderPages } from './pages/placeholders';
+import { servicesPage } from './pages/services';
 import { contactShared } from './shared/contact';
 import { partnersShared } from './shared/partners';
 import { testimonialsShared } from './shared/testimonials';
 import { uniquenessShared } from './shared/uniqueness';
 
 export const registry = createRegistry({
-  pages: [homePage, casesPage, ...placeholderPages],
+  pages: [homePage, casesPage, servicesPage, ...placeholderPages],
   collections: [services, cases],
   globals: [siteGlobals],
   forms: [contactForm, projectForm, bookingForm],
