@@ -49,7 +49,9 @@ export async function submitContact(page: Page, name: string) {
   await page.locator('#contact-name').fill(name);
   await page.locator('#contact-email').fill('visitor@example.test');
   await page.locator('#contact-message').fill('Hello from the integrations test.');
-  await page.locator('#contact-privacy').check({ force: true });
+  await page.locator('#contact-privacy').evaluate((box: HTMLInputElement) => {
+    if (!box.checked) box.click();
+  });
   await page.waitForTimeout(FILL_DELAY_MS);
   await page.locator('form#form-contact button[type="submit"]').click();
   await expect(sentMessage(page)).toBeVisible();
