@@ -60,7 +60,9 @@ test.describe('preview mode (no DATABASE_URL)', () => {
     await page.locator('#contact-name').fill('Preview Visitor');
     await page.locator('#contact-email').fill('visitor@example.test');
     await page.locator('#contact-message').fill('Hello from preview mode.');
-    await page.locator('#contact-privacy').check({ force: true });
+    await page.locator('#contact-privacy').evaluate((box: HTMLInputElement) => {
+      if (!box.checked) box.click();
+    });
     await form.locator('button[type="submit"]').click();
     await expect(page.getByText('This form isn’t connected yet', { exact: false })).toBeVisible();
 
