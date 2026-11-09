@@ -1,10 +1,13 @@
 /**
  * COLLECTION: case studies. Each case has its own page at /cases/<slug>; editors add
- * new cases in Pages → Blog & lists → Case studies. The fields here are the card data
- * used on Home, the Industries block and the list; the page body is built on the Cases step.
+ * new cases in Pages → Blog & lists → Case studies. The fields cover the card (Home, the
+ * Industries block, the Cases list) and the case page: details, client feedback and the
+ * exported screens. Every case is listed on /cases unless it is hidden there.
  */
 import { defineCollection, MissingTranslation } from '@/core/content/collection';
 import { f } from '@/core/content/fields';
+
+import { CASE_PAGES } from './case-pages';
 
 /** Industries of the Home "Industries" block; a case lists the ones it belongs to. */
 export const INDUSTRIES = [
@@ -22,13 +25,55 @@ export const INDUSTRIES = [
   { value: 'web3', label: 'Web3' },
 ] as const;
 
+/** Filters of the Cases page, in the order of the pills. A case lists the ones it belongs to. */
+export const CASE_CATEGORIES = [
+  { value: 'HR', label: 'HR' },
+  { value: 'Healthcare', label: 'Healthcare' },
+  { value: 'SaaS', label: 'SaaS' },
+  { value: 'Logistics', label: 'Logistics' },
+  { value: 'B2B', label: 'B2B' },
+  { value: 'Web', label: 'Web' },
+  { value: 'Mobile', label: 'Mobile' },
+  { value: 'E-Commerce', label: 'E-Commerce' },
+  { value: 'CRM', label: 'CRM' },
+  { value: 'Proptech', label: 'Proptech' },
+  { value: 'Web3', label: 'Web3' },
+  { value: 'Gaming', label: 'Gaming' },
+  { value: 'Marketplace', label: 'Marketplace' },
+  { value: 'B2C', label: 'B2C' },
+  { value: 'LMS', label: 'LMS' },
+  { value: 'ERP', label: 'ERP' },
+  { value: 'Marketing', label: 'Marketing' },
+  { value: 'Social Media', label: 'Social Media' },
+] as const;
+
+/** Filters of every case (the design's data-cats); only listed cases show on the Cases page. */
+const CATEGORIES: Readonly<Record<string, readonly (typeof CASE_CATEGORIES)[number]['value'][]>> = {
+  'signal-sigma': ['Web'],
+  touren: ['SaaS', 'Web', 'B2C'],
+  filmtoro: ['Marketing', 'Mobile'],
+  'print-buy': ['SaaS', 'Web'],
+  onground: ['SaaS', 'Web'],
+  vidsprint: ['Marketing', 'CRM', 'SaaS', 'B2B', 'Web', 'Mobile'],
+  'listen-upp': ['Healthcare', 'Mobile'],
+  'signature-pharmacy': ['SaaS', 'Logistics', 'Healthcare', 'B2B', 'Web', 'Mobile'],
+  'hr-hub': ['HR', 'ERP', 'SaaS', 'B2B', 'Web', 'Mobile'],
+  'persuasion-systems': ['Healthcare', 'CRM', 'SaaS', 'B2B', 'Web'],
+  brightgate: ['LMS', 'SaaS', 'B2B', 'Web', 'Mobile'],
+  quintessia: ['E-Commerce', 'Marketplace', 'B2B', 'Web'],
+  hotsheet: ['Proptech', 'CRM', 'B2B', 'Web', 'Mobile'],
+  momento: ['Web3', 'Social Media', 'B2C', 'Mobile'],
+  'whodunnit-2-0': ['Gaming', 'B2C', 'Mobile'],
+  mynqs: ['Healthcare', 'SaaS', 'Web'],
+};
+
 export const cases = defineCollection({
   id: 'cases',
   label: 'Case studies',
   itemLabel: 'Case study',
   listPageId: 'cases',
   itemPath: '/cases/:slug',
-  uiTexts: ['preview'],
+  uiTexts: ['preview', 'cases'],
   fields: {
     order: f.number({
       label: 'Order in the list',
@@ -46,7 +91,35 @@ export const cases = defineCollection({
       max: 8,
       help: 'Shown on the case card.',
     }),
-    cover: f.image({ label: 'Card cover', localized: false, recommendedSize: '1320×637' }),
+    cover: f.image({
+      label: 'Card cover (Home)',
+      localized: false,
+      recommendedSize: '1320×637',
+      help: 'Used by the Home block.',
+    }),
+    hideInList: f.boolean({
+      label: 'Hide from the Cases page',
+      localized: false,
+      help: 'The case is left out of the Cases page and of “Other case studies” (its own page still works).',
+    }),
+    listCover: f.image({
+      label: 'Cover on the Cases page',
+      localized: false,
+      recommendedSize: '1320×637',
+      help: 'Leave empty to use the Home cover.',
+    }),
+    listCoverMobile: f.image({
+      label: 'Cover on the Cases page: phone',
+      localized: false,
+      recommendedSize: '750×1000',
+      help: 'Shown on phones instead of the cover above. Leave empty to use the same cover.',
+    }),
+    categories: f.list({
+      label: 'Filters',
+      of: f.select({ options: CASE_CATEGORIES }),
+      localized: false,
+      help: 'The filters of the Cases page this case appears under.',
+    }),
     showOnHome: f.boolean({
       label: 'Show on Home',
       localized: false,
@@ -93,6 +166,63 @@ export const cases = defineCollection({
       integer: true,
       min: 1,
       help: 'Position inside an industry: 1 is first.',
+    }),
+    pageTitle: f.text({
+      label: 'Page title (H1)',
+      max: 120,
+      help: 'The heading of the case page. Leave empty to use the name.',
+    }),
+    details: f.list({
+      label: 'Details',
+      itemLabelField: 'label',
+      max: 8,
+      of: {
+        label: f.text({ label: 'Label', required: true, max: 40 }),
+        value: f.text({ label: 'Value', max: 80 }),
+      },
+      help: 'Rows under the title: Industry, Platform, Year…',
+    }),
+    quote: f.textarea({
+      label: 'Client feedback (details)',
+      max: 700,
+      rows: 5,
+      help: 'The quote in the details block. An empty line starts a new paragraph.',
+    }),
+    author: f.text({ label: 'Feedback author', max: 60 }),
+    authorRole: f.text({ label: 'Feedback author: role and company', max: 80 }),
+    authorPhoto: f.image({
+      label: 'Feedback author: photo or logo',
+      localized: false,
+      recommendedSize: '128×128',
+    }),
+    authorFlag: f.image({
+      label: 'Feedback author: country flag',
+      localized: false,
+      recommendedSize: '40×54',
+    }),
+    feedbackLead: f.text({
+      label: 'Feedback block: lead',
+      max: 160,
+      help: 'The sentence in large type in the “Client feedback” block below the screens.',
+    }),
+    feedbackBody: f.textarea({ label: 'Feedback block: text', max: 700, rows: 4 }),
+    feedbackVisual: f.image({
+      label: 'Feedback block: picture',
+      localized: false,
+      recommendedSize: '1400×1000',
+      help: 'Shown next to the feedback on wide screens.',
+    }),
+    screensDesktop: f.list({
+      label: 'Screens: desktop',
+      of: f.image({ recommendedSize: '1920 wide' }),
+      localized: false,
+      help: 'The exported layouts, one under another. Shown on tablets and desktops.',
+    }),
+    screensMobile: f.list({
+      label: 'Screens: phone',
+      of: f.image({ recommendedSize: '768 wide' }),
+      localized: false,
+      help: 'The layouts for phones. Leave empty to show the desktop ones.',
     }),
   },
   titleField: 'title',
@@ -266,6 +396,26 @@ export const cases = defineCollection({
   ],
 });
 
+type SeedImage = { readonly asset: string; readonly alt: string };
+
+/** Seed content of one case page (see case-pages.ts). */
+export interface CasePageSeed {
+  readonly listCover: SeedImage;
+  readonly listCoverMobile: SeedImage;
+  readonly pageTitle: string;
+  readonly details: readonly { readonly label: string; readonly value: string }[];
+  readonly quote: string;
+  readonly author: string;
+  readonly authorRole: string;
+  readonly authorPhoto: SeedImage;
+  readonly authorFlag: SeedImage;
+  readonly feedbackLead: string;
+  readonly feedbackBody: string;
+  readonly feedbackVisual?: SeedImage;
+  readonly screensDesktop: readonly SeedImage[];
+  readonly screensMobile: readonly SeedImage[];
+}
+
 interface CaseExtras {
   industries?: readonly (typeof INDUSTRIES)[number]['value'][];
   thumb?: string;
@@ -287,6 +437,7 @@ function seedCase(
   tags: readonly string[],
   extras: CaseExtras = {},
 ) {
+  const page = CASE_PAGES[slug];
   return {
     slug,
     publishedAt: `2026-01-${String(order).padStart(2, '0')}`,
@@ -296,6 +447,26 @@ function seedCase(
         title,
         description,
         tags: [...tags],
+        categories: [...(CATEGORIES[slug] ?? [])],
+        hideInList: !page,
+        ...(page
+          ? {
+              listCover: page.listCover,
+              listCoverMobile: page.listCoverMobile,
+              pageTitle: page.pageTitle,
+              details: page.details.map((row) => ({ ...row })),
+              quote: page.quote,
+              author: page.author,
+              authorRole: page.authorRole,
+              authorPhoto: page.authorPhoto,
+              authorFlag: page.authorFlag,
+              feedbackLead: page.feedbackLead,
+              feedbackBody: page.feedbackBody,
+              ...(page.feedbackVisual ? { feedbackVisual: page.feedbackVisual } : {}),
+              screensDesktop: [...page.screensDesktop],
+              screensMobile: [...page.screensMobile],
+            }
+          : {}),
         ...(extras.cover ? { cover: { asset: extras.cover, alt: extras.coverAlt ?? title } } : {}),
         showOnHome: extras.homeOrder !== undefined,
         ...(extras.homeOrder !== undefined ? { homeOrder: extras.homeOrder } : {}),

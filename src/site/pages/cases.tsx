@@ -1,31 +1,56 @@
-/** Cases list page (/cases); the full design (filters, cards) is built on the Cases step. */
+/** Cases page (/cases): hero, the filterable list of case studies and the contact block. */
+import { getTranslations } from 'next-intl/server';
+
 import type { CollectionListViewProps } from '@/core/collections/list-route';
 
-import { CaseCard } from '../components/case-card';
-import { Container, Section } from '../components/ui/layout';
-import { Heading } from '../components/ui/typography';
+import { CASE_CATEGORIES } from '@/content/collections/cases';
 
-export function CasesView({ content, list }: CollectionListViewProps<'cases', 'cases'>) {
+import { isListedCase, listCoverOf } from '../cases';
+import { type CaseListItem, CasesBrowser } from '../components/cases-browser';
+import { Container } from '../components/ui/layout';
+import { CasesHero } from '../sections/cases-hero';
+import { Contact } from '../sections/contact';
+
+export async function CasesView({
+  content,
+  list,
+  locale,
+}: CollectionListViewProps<'cases', 'cases'>) {
+  const t = await getTranslations('cases');
+  const items: CaseListItem[] = list.items
+    .filter((item) => isListedCase(item.content))
+    .map((item) => ({
+      slug: item.slug,
+      href: item.href,
+      title: item.content.title,
+      description: item.content.description,
+      tags: item.content.tags,
+      categories: item.content.categories,
+      cover: listCoverOf(item.content),
+      coverMobile: item.content.listCoverMobile,
+    }));
+  const used = new Set(items.flatMap((item) => item.categories));
+  const filters = CASE_CATEGORIES.filter((category) => used.has(category.value));
+
   return (
-    <Section labelledBy="page-title">
-      <Container className="flex flex-col gap-12">
-        <Heading level={1} variant="h2" id="page-title">
-          {content.intro.title}
-        </Heading>
-        <ul className="cases__list">
-          {list.items.map((item) => (
-            <li key={item.slug}>
-              <CaseCard
-                href={item.href}
-                title={item.content.title}
-                description={item.content.description}
-                tags={item.content.tags}
-                cover={item.content.cover}
-              />
-            </li>
-          ))}
-        </ul>
-      </Container>
-    </Section>
+    <>
+      <CasesHero content={content.hero} />
+      <section className="cs-list" id="cases" aria-label={t('caseStudies')}>
+        <Container>
+          <CasesBrowser
+            items={items}
+            filters={filters}
+            labels={{
+              filters: t('filterLabel'),
+              category: t('category'),
+              all: t('all'),
+              countOne: t.raw('countOne') as string,
+              countMany: t.raw('countMany') as string,
+            }}
+          />
+        </Container>
+      </section>
+      <Contact content={content.contact} locale={locale} />
+    </>
   );
 }

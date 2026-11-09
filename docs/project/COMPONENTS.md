@@ -100,3 +100,14 @@ Breadcrumbs, Marquee, LeaderCard, FounderCard, FeatureCard, ProcessStep, filter 
 | Graphic (pure-CSS illustration)   | `src/site/components/ui/graphic.tsx`            | renders trusted HTML from `src/site/theme/graphics.ts` (Approach and Why us cards) |
 | Accordion "show more"             | `src/site/components/accordion.tsx`             | `collapsedCount`, `moreLabels`: extra items stay in the HTML, hidden with CSS      |
 | Message form of the contact panel | `src/site/components/contact/contact-panel.tsx` | advanced switch, chips, scope cards; forms `contact` and `project`                 |
+
+## Added with Cases
+
+| Component               | File                                                                | Notes                                                                    |
+| ----------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Breadcrumbs             | `src/site/components/breadcrumbs.tsx`                               | `hero` (light, on a picture) and `case` (orange mark) variants           |
+| Author                  | `src/site/components/author.tsx`                                    | round photo, name, optional flag, role: client feedback and the CEO card |
+| Cases list with filters | `src/site/components/cases-browser.tsx`                             | pills / phone drop-down, sticky bar                                      |
+| Other cases slider      | `src/site/components/case-slider.tsx`                               | scroll track with round buttons                                          |
+| Case card               | `src/site/components/case-card.tsx`                                 | now with an optional phone cover                                         |
+| Case page sections      | `src/site/sections/case-*.tsx`, `other-cases.tsx`, `cases-hero.tsx` | details, screens, feedback, CTA, other cases, hero                       |
