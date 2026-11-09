@@ -167,5 +167,10 @@
     "previousCase": "Previous case",
     "nextCase": "Next case",
     "otherCases": "Other case studies"
+  },
+  "about": {
+    "breadcrumb": "Breadcrumb",
+    "home": "Home",
+    "aboutUs": "About us"
   }
 }

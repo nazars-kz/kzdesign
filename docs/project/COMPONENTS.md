@@ -119,3 +119,12 @@ Breadcrumbs, Marquee, LeaderCard, FounderCard, FeatureCard, ProcessStep, filter 
 | Partner marquee            | `src/site/components/partner-marquee.tsx` | three copies of the logos, moved by script at 80 px/s, still with "reduce motion" |
 | Case card, stacked variant | `src/site/components/case-card.tsx`       | `stacked`: name, text and tags one under another (service pages, next service)    |
 | Service page sections      | `src/site/sections/service-*.tsx`         | hero, about, features, cases, idea, process, partners, next                       |
+
+## Added with About us
+
+| Component                   | File                                    | Notes                                      |
+| --------------------------- | --------------------------------------- | ------------------------------------------ |
+| 3D logo                     | `src/site/components/kz-logo-3d.tsx`    | loads three.js and the logo script on idle |
+| Difference card             | `src/site/components/diff-card.tsx`     | Lottie illustration that plays on hover    |
+| Script loader               | `src/site/components/ui/load-script.ts` | `loadScript` (once per file), `whenIdle`   |
+| Breadcrumbs, `page` variant | `src/site/components/breadcrumbs.tsx`   | dark trail at the top of a plain page      |

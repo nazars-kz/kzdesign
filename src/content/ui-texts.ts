@@ -185,6 +185,14 @@ export const uiTexts = defineUiTexts({
         otherCases: 'Other cases slider: name (read by screen readers)',
       },
     },
+    about: {
+      label: 'About us',
+      texts: {
+        breadcrumb: 'Name of the breadcrumbs (read by screen readers)',
+        home: 'Breadcrumbs: link to Home',
+        aboutUs: 'Breadcrumbs: this page',
+      },
+    },
     notFound: {
       label: 'Page not found',
       texts: {
