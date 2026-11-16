@@ -23,6 +23,7 @@ Every request from the user (date, items, status), so later sessions know what w
 
 ## 2026-11-16
 
-| #   | Request                                                                                              | Status                                                                                                                                                                                         |
-| --- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | New Home section after Case Studies: "What's included" (from `design/service-product-redesign.html`) | done: section `included` (label, title, 6 icon cards editable in the admin), `InfoCard` pattern, 6 icons in `public/icons/included`; compared with the design: 0.01% (1440). Issue #34, PR #35 |
+| #   | Request                                                                                              | Status                                                                                                                                                         |
+| --- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | New Home section after Case Studies: "What's included" (from `design/service-product-redesign.html`) | done in #34 / PR #35 (section, `InfoCard`, six icons), then removed by request 2                                                                               |
+| 2   | Remove the "What's included" section from Home                                                       | done: section, `InfoCard`, its icons, the 32 px Icon size and its styles removed (#36); the design file stays; restore with `git revert` of the removal commit |
