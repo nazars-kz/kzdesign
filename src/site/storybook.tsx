@@ -11,7 +11,6 @@ import type { ReactNode } from 'react';
 import type { StorybookSection } from '@/core/storybook/slot';
 
 import { BurgerButton } from './components/burger-button';
-import { InfoCard } from './components/info-card';
 import { NavLink } from './components/nav-link';
 import { SectionHeader } from './components/section-header';
 import { ButtonArrow } from './components/ui/button-arrow';
@@ -260,19 +259,6 @@ function Primitives() {
       <div className="flex flex-col gap-3">
         <h3 className="text-h5">Section header</h3>
         <SectionHeader eyebrow="Case Studies" title="Check how K&Z keeps partners ahead" />
-      </div>
-
-      <div className="flex flex-col gap-3">
-        <h3 className="text-h5">Info cards</h3>
-        <div className="info-cards">
-          <InfoCard
-            icon="included/ux-audit"
-            title="UX audit"
-            text="A review of your key flows against usability heuristics, analytics and user feedback."
-          />
-          <InfoCard icon="included/new-ux-ui" title="New UX/UI" text="Short text." />
-          <InfoCard title="Without an icon" />
-        </div>
       </div>
 
       <div className="flex flex-col gap-3">

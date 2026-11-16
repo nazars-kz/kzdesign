@@ -92,49 +92,6 @@ const FAQ: readonly (readonly [string, string])[] = [
   ],
 ];
 
-/** Icons of the "What's included" cards: `public/icons/included/<value>.svg`. */
-const INCLUDED_ICONS = [
-  { value: 'ux-audit', label: 'Magnifier with a person' },
-  { value: 'information-architecture', label: 'Site map' },
-  { value: 'user-flow', label: 'Flow between two points' },
-  { value: 'new-ux-ui', label: 'Screen with a cursor' },
-  { value: 'design-system', label: 'Component blocks' },
-  { value: 'prototypes', label: 'Two linked screens' },
-] as const;
-
-const INCLUDED: readonly (readonly [(typeof INCLUDED_ICONS)[number]['value'], string, string])[] = [
-  [
-    'ux-audit',
-    'UX audit',
-    'A review of your key flows against usability heuristics, analytics and user feedback. Issues are ranked by UX impact and implementation effort.',
-  ],
-  [
-    'information-architecture',
-    'Information architecture',
-    'We restructure navigation and screens, so users find what matters and the product has room to grow.',
-  ],
-  [
-    'user-flow',
-    'User flow optimization',
-    'Shorter paths to key actions and no dead ends, based on how people really use the product.',
-  ],
-  [
-    'new-ux-ui',
-    'New UX/UI',
-    'High-fidelity Figma designs for web and mobile in one consistent visual language.',
-  ],
-  [
-    'design-system',
-    'Design system',
-    'Components, styles and usage rules built on the libraries your developers use: Tailwind, Material UI, shadcn and others.',
-  ],
-  [
-    'prototypes',
-    'Prototypes',
-    'Clickable prototypes to check the new experience with users before development starts.',
-  ],
-];
-
 const APPROACH = [
   ['Discovery', 'discovery', 'discovery'],
   ['Strategy', 'strategy', 'strategy'],
@@ -202,24 +159,6 @@ export const homePage = definePage({
         eyebrow: f.text({ label: 'Label above the title', max: 40 }),
         title: f.text({ label: 'Title', required: true, max: 160 }),
         seeAll: f.link({ label: 'Link under the cards' }),
-      },
-    }),
-    defineSection({
-      id: 'included',
-      label: "What's included",
-      fields: {
-        eyebrow: f.text({ label: 'Label on the left', max: 40 }),
-        title: f.text({ label: 'Title', required: true, max: 160 }),
-        cards: f.list({
-          label: 'Cards',
-          itemLabelField: 'title',
-          max: 12,
-          of: {
-            icon: f.select({ label: 'Icon', options: [...INCLUDED_ICONS] }),
-            title: f.text({ label: 'Title', required: true, max: 60 }),
-            text: f.textarea({ label: 'Text', max: 240, rows: 3 }),
-          },
-        }),
       },
     }),
     useShared(uniquenessShared),
@@ -315,11 +254,6 @@ export const homePage = definePage({
         eyebrow: 'Case Studies',
         title: 'Check how K&Z keeps partners ahead in the digital landscape',
         seeAll: { label: 'See all cases', href: '/cases', external: false },
-      },
-      included: {
-        eyebrow: "What's included",
-        title: 'What a product redesign with K&Z includes',
-        cards: INCLUDED.map(([icon, title, text]) => ({ icon, title, text })),
       },
       approach: {
         eyebrow: 'Our Approach',
