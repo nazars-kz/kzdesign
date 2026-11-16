@@ -1,6 +1,6 @@
 import { cx } from './cn';
 
-/** Every icon of the site: the SVG files in `public/icons` (and `public/icons/industries`). */
+/** Every icon of the site: the SVG files in `public/icons` (and its `industries`, `included` folders). */
 export const ICON_NAMES = [
   'arrow-right',
   'arrow-right-white',
@@ -27,12 +27,26 @@ export const ICON_NAMES = [
   'industries/sales',
   'industries/social',
   'industries/web3',
+  'included/ux-audit',
+  'included/information-architecture',
+  'included/user-flow',
+  'included/new-ux-ui',
+  'included/design-system',
+  'included/prototypes',
 ] as const;
 export type IconName = (typeof ICON_NAMES)[number];
 
-/** Icon sizes: 20 px (social links), 24 px (lists, buttons), 50 px (round awards arrow). */
-export type IconSize = 'sm' | 'md' | 'lg';
-const SIZE_CLASS: Record<IconSize, string> = { sm: 'size-5', md: 'size-6', lg: 'size-12.5' };
+/**
+ * Icon sizes: 20 px (social links), 24 px (lists, buttons), 32 px (info cards),
+ * 50 px (round awards arrow).
+ */
+export type IconSize = 'sm' | 'md' | 'card' | 'lg';
+const SIZE_CLASS: Record<IconSize, string> = {
+  sm: 'size-5',
+  md: 'size-6',
+  card: 'size-8',
+  lg: 'size-12.5',
+};
 
 /**
  * An icon from the site's icon set. Decorative by default (`alt=""`); pass `label` when the
