@@ -127,6 +127,7 @@
   position: relative;
   overflow: hidden;
   container-type: inline-size;
+  width: 100%;
   aspect-ratio: 3840 / 2980;
   max-height: 93.1rem;
   margin-bottom: var(--tach-gap);
@@ -188,7 +189,7 @@
   left: 7.2%;
   top: 25.8%;
   width: 46%;
-  font-size: 2.57vw;
+  font-size: min(2.57vw, 3.083rem);
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -0.01em;
@@ -199,7 +200,7 @@
   top: 63.5%;
   display: grid;
   gap: 0.7em;
-  font-size: 0.8333vw;
+  font-size: min(0.8333vw, 1rem);
 }
 
 /* Product cards drawn in code (sized in em) */
