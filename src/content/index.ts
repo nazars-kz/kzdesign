@@ -5,7 +5,7 @@
  */
 import { createRegistry } from '@/core/content/registry';
 
-import { cases } from './collections/cases';
+import { casePages } from './cases';
 import { services } from './collections/services';
 import { bookingForm } from './forms/booking';
 import { contactForm } from './forms/contact';
@@ -21,6 +21,7 @@ import { servicesPage } from './pages/services';
 import { contactShared } from './shared/contact';
 import { industriesShared } from './shared/industries';
 import { partnersShared } from './shared/partners';
+import { relatedCasesShared } from './shared/related-cases';
 import { testimonialsShared } from './shared/testimonials';
 import { uniquenessShared } from './shared/uniqueness';
 
@@ -34,8 +35,9 @@ export const registry = createRegistry({
     reviewsPage,
     contactUsPage,
     ...legalPages,
+    ...casePages,
   ],
-  collections: [services, cases],
+  collections: [services],
   globals: [siteGlobals],
   forms: [contactForm, bookingForm],
   sharedSections: [
@@ -43,6 +45,7 @@ export const registry = createRegistry({
     testimonialsShared,
     partnersShared,
     industriesShared,
+    relatedCasesShared,
     contactShared,
   ],
 });

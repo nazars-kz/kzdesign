@@ -30,7 +30,8 @@ async function openEditor(page: Page, url: string): Promise<void> {
 }
 
 const saveButton = (page: Page) => page.getByRole('button', { name: 'Save', exact: true });
-const titleInput = (page: Page) => page.getByRole('textbox', { name: 'Name', exact: true }).first();
+const titleInput = (page: Page) =>
+  page.getByRole('textbox', { name: 'Page title (H1)', exact: true }).first();
 
 async function chooseStatus(page: Page, label: 'Published' | 'Draft (only staff can preview)') {
   await page.getByRole('combobox', { name: 'Status' }).click();
@@ -39,8 +40,8 @@ async function chooseStatus(page: Page, label: 'Published' | 'Draft (only staff 
 
 test.describe.serial('collections', () => {
   const stamp = Date.now();
-  const title = `E2E case ${stamp}`;
-  const slug = `e2e-case-${stamp}`;
+  const title = `E2E service ${stamp}`;
+  const slug = `e2e-service-${stamp}`;
   const renamed = `${slug}-renamed`;
   let editorUrl = '';
 
@@ -48,19 +49,22 @@ test.describe.serial('collections', () => {
     page,
   }) => {
     await login(page, E2E_MANAGER);
-    await page.goto(admin('/pages/collections/cases'));
-    await page.getByRole('button', { name: 'New case study' }).click();
-    await expect(page).toHaveURL(adminRe(String.raw`\/pages\/collections\/cases\/[0-9a-f-]{36}$`));
+    await page.goto(admin('/pages/collections/services'));
+    await page.getByRole('button', { name: 'New service' }).click();
+    await expect(page).toHaveURL(
+      adminRe(String.raw`\/pages\/collections\/services\/[0-9a-f-]{36}$`),
+    );
     await expect(page.locator('form[data-hydrated]')).toBeVisible();
     editorUrl = page.url();
 
     await titleInput(page).fill(title);
+    await page.getByRole('textbox', { name: 'Name in the menu' }).fill('E2E');
     await page.getByLabel('URL slug').fill(slug);
     await saveButton(page).click();
     await expect(page.getByText('Saved as a draft (not visible on the site).')).toBeVisible();
 
-    expect((await visit(page, `/cases/${slug}`)).status).toBe(404);
-    expect((await visit(page, '/cases')).html).not.toContain(title);
+    expect((await visit(page, `/services/${slug}`)).status).toBe(404);
+    expect((await visit(page, '/services')).html).not.toContain(title);
     expect(await sitemap(page)).not.toContain(slug);
 
     // Staff preview (Draft Mode) shows the draft with a notice; leaving it restores the 404.
@@ -80,17 +84,17 @@ test.describe.serial('collections', () => {
     await saveButton(page).click();
     await expect(page.getByText('Saved. The live site updates in a few seconds.')).toBeVisible();
 
-    await expect.poll(async () => (await visit(page, `/cases/${slug}`)).status).toBe(200);
-    expect((await visit(page, '/cases')).html).toContain(title);
+    await expect.poll(async () => (await visit(page, `/services/${slug}`)).status).toBe(200);
+    expect((await visit(page, '/services')).html).toContain(title);
     const map = await sitemap(page);
-    expect(map).toContain(`/cases/${slug}</loc>`);
+    expect(map).toContain(`/services/${slug}</loc>`);
   });
 
   test('the list has real URLs; pages beyond the last one are 404', async ({ page }) => {
     // Everything fits on one page.
-    expect((await visit(page, '/cases?page=1')).status).toBe(200);
-    expect((await visit(page, '/cases?page=2')).status).toBe(404);
-    expect((await visit(page, '/cases?page=0')).status).toBe(404);
+    expect((await visit(page, '/services?page=1')).status).toBe(200);
+    expect((await visit(page, '/services?page=2')).status).toBe(404);
+    expect((await visit(page, '/services?page=0')).status).toBe(404);
   });
 
   test('changing the slug redirects the old URL with 308', async ({ page }) => {
@@ -102,11 +106,11 @@ test.describe.serial('collections', () => {
 
     await expect
       .poll(async () => {
-        const old = await visit(page, `/cases/${slug}`);
+        const old = await visit(page, `/services/${slug}`);
         return `${old.status} ${old.location}`;
       })
-      .toMatch(new RegExp(`^308 .*/cases/${renamed}$`));
-    expect((await visit(page, `/cases/${renamed}`)).status).toBe(200);
+      .toMatch(new RegExp(`^308 .*/services/${renamed}$`));
+    expect((await visit(page, `/services/${renamed}`)).status).toBe(200);
   });
 
   test('a concurrent edit is detected and a revision can be restored', async ({ browser }) => {
@@ -131,29 +135,29 @@ test.describe.serial('collections', () => {
     await expect(first.getByText('Revision restored.')).toBeVisible();
     await expect(titleInput(first)).toHaveValue(title);
     await expect
-      .poll(async () => (await visit(first, `/cases/${renamed}`)).html)
+      .poll(async () => (await visit(first, `/services/${renamed}`)).html)
       .toContain(`>${title}<`);
     await first.close();
     await second.close();
   });
 
-  test('deleting a case study: 404, gone from the sitemap, the activity log shows its title', async ({
+  test('deleting a service: 404, gone from the sitemap, the activity log shows its title', async ({
     page,
   }) => {
     await login(page, E2E_ADMIN);
     await openEditor(page, editorUrl);
     await page.getByRole('button', { name: 'Delete' }).click();
     await page.getByRole('alertdialog').getByRole('button', { name: 'Delete' }).click();
-    await expect(page).toHaveURL(adminRe(String.raw`\/pages\/collections\/cases$`));
+    await expect(page).toHaveURL(adminRe(String.raw`\/pages\/collections\/services$`));
 
-    await expect.poll(async () => (await visit(page, `/cases/${renamed}`)).status).toBe(404);
+    await expect.poll(async () => (await visit(page, `/services/${renamed}`)).status).toBe(404);
     // The proxy refreshes its view of published slugs and redirects within seconds.
-    await expect.poll(async () => (await visit(page, `/cases/${slug}`)).status).toBe(404);
+    await expect.poll(async () => (await visit(page, `/services/${slug}`)).status).toBe(404);
     expect(await sitemap(page)).not.toContain(renamed);
 
     await page.goto(admin('/security/activity'));
     const audit = page.getByRole('table', { name: 'Activity' });
     await expect(audit).toContainText('Deleted an item');
-    await expect(audit).toContainText(`Case studies: ${title}`);
+    await expect(audit).toContainText(`Services: ${title}`);
   });
 });

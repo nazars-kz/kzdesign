@@ -10,14 +10,18 @@ test.describe.serial('SEO and i18n', () => {
   test('pages carry canonical, hreflang, OG tags and JSON-LD', async ({ baseURL }) => {
     // Read from the server's HTML: the head crawlers get, whatever the browser streams.
     const visitor = await request.newContext({ baseURL, extraHTTPHeaders: VISITOR_HEADERS });
-    const html = await (await visitor.get('/cases/touren')).text();
-    expect(html).toMatch(/<title>Touren<\/title>/);
-    expect(html).toMatch(/<link rel="canonical" href="[^"]*\/cases\/touren"\/?>/);
-    expect(html).toMatch(/<link rel="alternate" hrefLang="en" href="[^"]*\/cases\/touren"\/?>/);
+    const html = await (await visitor.get('/cases/tach')).text();
     expect(html).toMatch(
-      /<link rel="alternate" hrefLang="x-default" href="[^"]*\/cases\/touren"\/?>/,
+      /<title>Tach: Logistics Platform UX\/UI Case Study \| K&amp;Z Design<\/title>/,
     );
-    expect(html).toMatch(/<meta property="og:title" content="Touren"\/?>/);
+    expect(html).toMatch(/<link rel="canonical" href="[^"]*\/cases\/tach"\/?>/);
+    expect(html).toMatch(/<link rel="alternate" hrefLang="en" href="[^"]*\/cases\/tach"\/?>/);
+    expect(html).toMatch(
+      /<link rel="alternate" hrefLang="x-default" href="[^"]*\/cases\/tach"\/?>/,
+    );
+    expect(html).toMatch(
+      /<meta property="og:title" content="Tach: Logistics Platform UX\/UI Case Study \| K&amp;Z Design"\/?>/,
+    );
     expect(html).toMatch(/<meta property="og:image" content="https?:\/\/[^"]+"\/?>/);
     const jsonLd = /<script type="application\/ld\+json"[^>]*>([^<]*)<\/script>/.exec(html)?.[1];
     expect(jsonLd).toContain('BreadcrumbList');
@@ -47,7 +51,7 @@ test.describe.serial('SEO and i18n', () => {
     expect(robots).not.toContain(ADMIN);
     const sitemap = await (await visitor.get('/sitemap.xml')).text();
     expect(sitemap).toMatch(/<loc>[^<]*\/about-us<\/loc>/);
-    expect(sitemap).toMatch(/<loc>[^<]*\/cases\/touren<\/loc>/);
+    expect(sitemap).toMatch(/<loc>[^<]*\/cases\/tach<\/loc>/);
     expect(sitemap).toMatch(/<loc>[^<]*\/services\/saas<\/loc>/);
     expect(sitemap).toMatch(/hreflang="en"/);
     await visitor.dispose();

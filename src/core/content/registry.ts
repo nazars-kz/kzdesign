@@ -47,6 +47,8 @@ export interface PageRegistry<
   byId(id: string): P[number] | undefined;
   byPath(path: string): P[number] | undefined;
   tree(): PageTreeNode[];
+  /** Pages shown in their own admin sidebar group (`adminGroup`), in registry order. */
+  adminGroups(): { readonly title: string; readonly pages: readonly P[number][] }[];
   readonly collections: C;
   collectionById(id: string): C[number] | undefined;
   readonly globals: G;
@@ -226,8 +228,17 @@ export function createRegistry(input: readonly AnyPage[] | AnyRegistryInput): Pa
 
   const buildTree = (parent: string | null): PageTreeNode[] =>
     pages
-      .filter((page) => page.parent === parent)
+      .filter((page) => page.parent === parent && !page.adminGroup)
       .map((page) => ({ page, children: buildTree(page.id) }));
+
+  const adminGroups = () => {
+    const groups = new Map<string, (typeof pages)[number][]>();
+    for (const page of pages) {
+      if (!page.adminGroup) continue;
+      groups.set(page.adminGroup, [...(groups.get(page.adminGroup) ?? []), page]);
+    }
+    return [...groups].map(([title, members]) => ({ title, pages: members }));
+  };
 
   return {
     pages,
@@ -235,6 +246,7 @@ export function createRegistry(input: readonly AnyPage[] | AnyRegistryInput): Pa
     byId: (id) => byId.get(id),
     byPath: (path) => byPath.get(path),
     tree: () => buildTree(null),
+    adminGroups,
     collections,
     collectionById: (id) => collectionById.get(id),
     globals,

@@ -32,3 +32,27 @@ const body = localFont({
 
 /** Class names that define the font variables; applied to <html>. */
 export const fontVariables = [heading.variable, body.variable].join(' ');
+
+/**
+ * Case study fonts (Google Fonts, self-hosted). Not part of the site-wide set: a case page
+ * that needs them applies `tachFontVariables` to its own root element, so other pages load
+ * nothing extra (preload is off).
+ */
+const tachHanken = localFont({
+  src: [{ path: './fonts/hanken-grotesk.woff2', weight: '100 900', style: 'normal' }],
+  variable: '--font-family-tach-hanken',
+  display: 'swap',
+  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+const tachPlex = localFont({
+  src: [{ path: './fonts/ibm-plex-sans.woff2', weight: '100 700', style: 'normal' }],
+  variable: '--font-family-tach-plex',
+  display: 'swap',
+  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+/** Tach case study: Hanken Grotesk (headings, UI) and IBM Plex Sans (brand type specimen). */
+export const tachFontVariables = [tachHanken.variable, tachPlex.variable].join(' ');

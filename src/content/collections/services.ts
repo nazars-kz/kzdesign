@@ -170,7 +170,7 @@ export const services = defineCollection({
               experience: 'Ex Head of Design in US CRM development company',
             },
           ],
-          caseSlugs: ['signal-sigma', 'print-buy', 'onground', 'vidsprint'],
+          caseSlugs: [],
           bannerImage: {
             asset: 'service-saas-banner.webp',
             alt: 'SaaS, Web App, Software on a device',
@@ -209,7 +209,7 @@ export const services = defineCollection({
           about: [
             'User flow and employee performance driven mobile app design for your B2B product. User-centered and conversion-optimized mobile experience for your product to reach App Store and Google Play top for B2C.',
           ],
-          caseSlugs: ['filmtoro', 'touren', 'listen-upp', 'momento'],
+          caseSlugs: ['tach'],
           bannerImage: { asset: 'service-mobile-banner.webp', alt: 'Mobile Apps on a device' },
           nextTitle: 'Mobile Apps',
           nextText:
@@ -245,7 +245,7 @@ export const services = defineCollection({
           about: [
             'Conversion and brand positioning driven web design for your website to help leads and visitors find the fastest way to actions necessary for your business',
           ],
-          caseSlugs: ['touren', 'quintessia'],
+          caseSlugs: ['tach'],
           bannerImage: { asset: 'service-web-banner.webp', alt: 'Web Design on a device' },
           nextTitle: 'Web Design',
           nextText:

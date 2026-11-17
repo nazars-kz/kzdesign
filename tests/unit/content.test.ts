@@ -257,15 +257,40 @@ describe('registry', () => {
     const pages: readonly AnyPage[] = registry.pages;
     const tree = registry.tree();
     expect(tree.map((node) => node.page.id)).toEqual(
-      pages.filter((page) => page.parent === null).map((page) => page.id),
+      pages.filter((page) => page.parent === null && !page.adminGroup).map((page) => page.id),
     );
     const flat = (nodes: readonly PageTreeNode[]): PageTreeNode[] =>
       nodes.flatMap((node) => [node, ...flat(node.children)]);
     for (const node of flat(tree)) {
       expect(node.children.map((child) => child.page.id)).toEqual(
-        pages.filter((page) => page.parent === node.page.id).map((page) => page.id),
+        pages
+          .filter((page) => page.parent === node.page.id && !page.adminGroup)
+          .map((page) => page.id),
       );
     }
+  });
+
+  it('lists pages with an admin group apart from the tree', () => {
+    const page = (id: string, adminGroup?: string) =>
+      definePage({
+        id,
+        path: `/${id}`,
+        label: id,
+        parent: null,
+        ...(adminGroup ? { adminGroup } : {}),
+        seo: { title: id },
+        sections: [],
+      });
+    const grouped = createRegistry([
+      page('a'),
+      page('b', 'Case studies'),
+      page('c', 'Case studies'),
+    ]);
+    expect(grouped.tree().map((node) => node.page.id)).toEqual(['a']);
+    expect(
+      grouped.adminGroups().map((group) => [group.title, group.pages.map((p) => p.id)]),
+    ).toEqual([['Case studies', ['b', 'c']]]);
+    expect(createRegistry([page('a')]).adminGroups()).toEqual([]);
   });
 
   it('rejects duplicate ids, unknown parents and cycles', () => {

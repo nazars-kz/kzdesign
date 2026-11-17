@@ -279,3 +279,12 @@ The Services trigger of the menu is marked while a service page is open.
 ## Legal pages
 
 There is no design for Privacy Policy, Terms of Service and Refund Policy. They use one template (`src/site/pages/legal.tsx`): breadcrumbs, title, "last updated" and rich text in a narrow column. The texts come from the client (issue #9); until then a page shows only its title. `privacyPath` (the cookie banner link) is not set yet: set it when the Privacy text exists.
+
+## Case study: Tach (`design/cases/tach`)
+
+A unique page (`/cases/tach`), built from `Case.png` (1920 px full-page screenshot) and 28 raster assets. Sections in order: hero (photo, cut-out person in front of an SVG orange line, lead, two interface cards in code), tablet scene with a coded "Add Maintenance Reminder" dialog, overview (logo, text, site link, facts table), dark "Workflow plan" timeline, truck scene with three coded cards (one with a donut chart), then five chapters: 01 Brand identity (logo grid, logo panel, color swatches, type specimens, cards, cap with coded cards, billboard), 02 Platform, 03 Finances (dark statement band), 04 Vendor marketplace (coded vendor card over a photo), 05 Assets; the outro "See ya in the next case study" with the founders and the team.
+
+- Palette (scoped to `.tach-case`): green `#6A9E68`, orange `#F7A826`, admiral blue `#013366`, indigo `#1D213B`, ink `#1D1E2A`, greys `#EEEEEE` / `#F9F9F9` / `#E4E4E4`.
+- Type: Hanken Grotesk (headings, text), IBM Plex Sans (tile titles, the colors title, the dark statement), both Google Fonts, self-hosted through `fonts.ts`.
+- Mobile (no design): the hero stacks text, photo and cards; the timeline becomes a list of labelled bars; floating cards stack above the truck photo; the dialog moves under the tablet picture; the team is a two-column grid.
+- Coded overlays are sized in `em` and their parent sets `font-size` in `cqw` units, so they scale with the picture. The container (`.tach-tile`) must not have padding: `cqw` is measured on its content box, put the padding on an inner element.

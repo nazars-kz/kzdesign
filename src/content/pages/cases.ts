@@ -1,7 +1,7 @@
 /**
  * PAGE: Cases (/cases). Design: design/kz-homepage/pages/cases.html and pages/cases/*.html.
- * The list itself comes from the "Case studies" collection; this page holds the hero, and the
- * two blocks every case page ends with (the call to action and "Other case studies").
+ * The list is made of the case study pages (src/content/cases, docs/project/CASES.md); this page
+ * holds the hero.
  * Texts are copied verbatim from the design.
  */
 import { definePage, defineSection } from '@/core/content/define';
@@ -53,32 +53,6 @@ export const casesPage = definePage({
         }),
       },
     }),
-    defineSection({
-      id: 'caseCta',
-      label: 'Case page: call to action',
-      description: 'The dark block under the client feedback on every case page.',
-      fields: {
-        eyebrow: f.text({ label: 'Label', max: 40 }),
-        titleBefore: f.text({ label: 'Title: before the bold word', max: 60 }),
-        titleBold: f.text({ label: 'Title: bold word', max: 40 }),
-        titleAfter: f.text({ label: 'Title: after the bold word', max: 60 }),
-        sub: f.text({ label: 'Text', max: 160 }),
-        button: f.link({ label: 'Button' }),
-        photo: f.image({ label: 'Person: photo', localized: false, recommendedSize: '96×96' }),
-        name: f.text({ label: 'Person: name', max: 60 }),
-        role: f.text({ label: 'Person: role', max: 60 }),
-        points: f.list({ label: 'Person: points', of: f.text({ max: 160 }), max: 4 }),
-      },
-    }),
-    defineSection({
-      id: 'otherCases',
-      label: 'Case page: other case studies',
-      description: 'Heading of the slider of other cases at the bottom of every case page.',
-      fields: {
-        eyebrow: f.text({ label: 'Label', max: 40 }),
-        title: f.text({ label: 'Title', max: 120 }),
-      },
-    }),
     useShared(contactShared),
   ],
   seed: {
@@ -97,25 +71,6 @@ export const casesPage = definePage({
           { label: 'Websites', value: '125' },
           { label: 'Totally', value: '300+' },
         ],
-      },
-      caseCta: {
-        eyebrow: 'Get in touch',
-        titleBefore: 'Take your',
-        titleBold: 'product',
-        titleAfter: 'to the next level',
-        sub: 'No calls with sales. Contact us and get to chat with our CEO.',
-        button: { label: 'Get in touch', href: '/contact-us', external: false },
-        photo: { asset: 'cta-vlad.png', alt: 'Vlad Kyrieiev' },
-        name: 'Vlad Kyrieiev',
-        role: 'Founder & CEO',
-        points: [
-          'Serial design entrepreneur & leader with 10+ years of experience solving the most challenging UX issues.',
-          'Ex-Head of Design in US ERP product.',
-        ],
-      },
-      otherCases: {
-        eyebrow: 'Other Case Studies',
-        title: 'If you liked the previous works, you will definitely like these ones',
       },
     },
   },
