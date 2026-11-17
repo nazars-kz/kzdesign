@@ -1067,18 +1067,15 @@
 .tach-band .tach-accent {
   color: var(--tach-orange);
 }
+/* The illustration (public/cases/tach/orange.svg, from the design) is cut by the bottom edge */
 .tach-band__deco {
   position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 26%;
-  height: 24rem;
-  background:
-    radial-gradient(circle at 42% 22%, #ffb25a 0 3.1rem, transparent 3.2rem),
-    radial-gradient(circle at 18% 52%, #ffa648 0 3.1rem, transparent 3.2rem),
-    radial-gradient(circle at 47% 56%, #ff9f42 0 3.1rem, transparent 3.2rem),
-    linear-gradient(115deg, transparent 20%, rgb(247 168 38 / 28%) 45%, transparent 70%);
-  opacity: 0.95;
+  left: -1.5rem;
+  bottom: -15.4rem;
+  width: 35.75rem;
+  height: 36.625rem;
+  background: url('/cases/tach/orange.svg') left bottom / contain no-repeat;
+  pointer-events: none;
 }
 .tach-band__note {
   position: absolute;
