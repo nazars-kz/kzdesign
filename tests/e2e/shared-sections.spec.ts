@@ -53,7 +53,11 @@ test.describe.serial('shared sections', () => {
 
     await expect.poll(async () => liveHtml(page, '/')).toContain(title);
 
-    // "Every page" lists it for an overview.
+    // "Every page" lists it for an overview (the group is folded until it is opened).
+    await page
+      .getByRole('navigation', { name: 'Pages' })
+      .getByRole('button', { name: 'Every page', exact: true })
+      .click();
     const everyPage = page.getByRole('region', { name: 'Every page' });
     await expect(everyPage.getByRole('link', { name: /Contact block/ })).toBeVisible();
   });

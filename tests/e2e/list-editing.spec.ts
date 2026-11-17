@@ -34,7 +34,7 @@ test.describe('list editing', () => {
     await expect(chips).toHaveText(['Logistics', 'Mobile', 'Web', 'B2C', 'Product']);
     await expect(input).toBeFocused();
 
-    await paste(page, '[aria-label="Add to Tags"]', 'Design, Speed\nNews');
+    await paste(page, '[aria-label="Add to Tags"]', 'Design,\nSpeed');
     await expect(chips).toHaveText([
       'Logistics',
       'Mobile',
