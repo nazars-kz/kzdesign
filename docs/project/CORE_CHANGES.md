@@ -1,7 +1,14 @@
 # Core changes
 
 Files of the template core (`src/core/**`, `src/admin/**`, admin/api routes, `scripts/**`) changed for this
-project, with the reason. **None so far.**
+project, with the reason.
+
+| File                                                                                            | Change                                                                                                                                                                                                      | Reason                                                                                                                                    |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/core/content/define.ts`, `registry.ts`                                                     | optional `adminGroup` on `definePage`; `registry.adminGroups()`; `tree()` leaves such pages out                                                                                                             | the unique case studies are pages that must appear in their own admin sidebar group ("Case studies") instead of the page tree (issue #38) |
+| `src/admin/components/content/pages-tree.tsx`, `src/app/(admin)/admin/(panel)/pages/layout.tsx` | the Pages sidebar sections (Pages, page groups, Blog & lists, Every page, Forms) fold; only Pages is open at first (a section that holds the current page opens too); page groups are listed after the tree | the sidebar got too long (issue #38)                                                                                                      |
+
+Upstream candidate: both changes are generic and can go into the template.
 
 Tooling files outside the core that differ from the template (for transparency):
 

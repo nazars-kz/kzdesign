@@ -11,7 +11,7 @@ import { loadPageStatuses } from '@/core/content/editor';
 import { contentRegistry } from '@/core/content/project-registry';
 import type { PageTreeNode } from '@/core/content/registry';
 import { getDb } from '@/core/db/client';
-import { PagesArea, pagesAreaHref } from '@/core/project/paths';
+import { adminHref, AdminRoute, PagesArea, pagesAreaHref } from '@/core/project/paths';
 import { getRequestSettings } from '@/core/settings/request';
 import { timed } from '@/core/perf/timing';
 import { selectedLocales } from '@/core/i18n/language-state';
@@ -75,6 +75,18 @@ async function PagesSidebar() {
     ]),
   );
   const groups: SidebarGroup[] = [];
+  // Pages that have their own group (e.g. "Case studies"): not in the tree, listed right after it.
+  for (const group of registry.adminGroups()) {
+    groups.push({
+      id: `group-${group.title}`,
+      title: group.title,
+      items: group.pages.map((page) => ({
+        id: page.id,
+        label: page.label,
+        href: `${adminHref(AdminRoute.Pages)}/${page.id}`,
+      })),
+    });
+  }
   if (contentRegistry.collections.length > 0) {
     groups.push({
       id: PagesArea.Collections,

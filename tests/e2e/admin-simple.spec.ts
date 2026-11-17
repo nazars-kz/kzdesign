@@ -34,6 +34,24 @@ test.describe('simpler admin', () => {
     await expect(page.getByRole('textbox', { name: 'Main address of this content' })).toBeVisible();
   });
 
+  test('the Pages sidebar folds: only Pages is open at first, the others open on click', async ({
+    page,
+  }) => {
+    await login(page, E2E_MANAGER);
+    await page.goto(admin(`/pages/${FIRST_PAGE_ID}`));
+    await expect(page.locator('form[data-hydrated]')).toBeVisible();
+    const nav = page.getByRole('navigation', { name: 'Pages' });
+    const fold = (name: string) => nav.getByRole('button', { name, exact: true });
+    await expect(fold('Pages')).toHaveAttribute('aria-expanded', 'true');
+    await expect(fold('Every page')).toHaveAttribute('aria-expanded', 'false');
+    await expect(nav.getByRole('link', { name: 'Header & footer' })).toBeHidden();
+    await fold('Every page').click();
+    await expect(fold('Every page')).toHaveAttribute('aria-expanded', 'true');
+    await expect(nav.getByRole('link', { name: 'Header & footer' })).toBeVisible();
+    await fold('Pages').click();
+    await expect(nav.getByRole('link', { name: 'Home' })).toBeHidden();
+  });
+
   test('Overview: three KPIs, more statistics closed, one status line', async ({ page }) => {
     await login(page, E2E_ADMIN);
     await page.goto(admin());

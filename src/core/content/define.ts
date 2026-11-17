@@ -124,6 +124,11 @@ export interface PageDefinition<Id extends string = string, S extends SectionLis
   readonly label: string;
   /** Parent page id: builds the page tree in the admin. */
   readonly parent: string | null;
+  /**
+   * Shows the page in its own sidebar group of the admin (e.g. `'Case studies'`) instead of in the
+   * page tree. Pages with the same title share a group; the URL and `parent` are not affected.
+   */
+  readonly adminGroup?: string;
   readonly sections: S;
   /**
    * Interface text namespaces this page shows (`src/content/ui-texts.ts`), e.g. `['blog', 'common']`.
