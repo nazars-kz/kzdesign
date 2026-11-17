@@ -78,11 +78,15 @@ export const tachCase = definePage({
           help: 'The only H1 of the page. It is read by search engines and screen readers; the logo is shown instead of it.',
         }),
         lead: f.textarea({ label: 'Lead text', required: true, max: 300, rows: 4 }),
-        photo: picture('Background photo', '3840×2980'),
+        photo: picture(
+          'Background photo',
+          '6400×2980',
+          'A wide panorama: on large screens more of it is shown to the sides. The person stands at 62% of its width.',
+        ),
         person: picture(
           'Person cut-out',
           '3840×2980',
-          'The same frame as the photo with a transparent background around the person: the orange line passes behind it.',
+          'The middle part of the photo (its 20%–80% of the width, 3840×2980) with a transparent background around the person: the orange line passes behind it.',
         ),
         screenTitle: f.text({ label: 'Card 1: title', max: 30 }),
         goalTitle: f.text({ label: 'Card 2: title', max: 30 }),
@@ -412,8 +416,8 @@ export const tachCase = definePage({
         heading: 'Tach: UX/UI case study of a logistics banking and operations platform',
         lead: 'TACH is a digital platform that helps simplify financial and operational tasks for Owner-Operators, Carriers, and Vendors in the logistics industry.',
         photo: {
-          asset: 'case-tach-hero.webp',
-          alt: 'A trucker in a cap and a plaid shirt in front of his truck',
+          asset: 'case-tach-hero-wide.webp',
+          alt: 'A trucker in a cap and a plaid shirt in front of his truck, snowy mountains behind',
         },
         person: {
           asset: 'case-tach-hero-person.webp',

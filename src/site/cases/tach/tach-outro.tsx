@@ -1,7 +1,7 @@
 import type { PageViewProps } from '@/core/content/page-route';
 
 import { SiteImage } from '../../components/ui/site-image';
-import { Accent, cssVars, Rows } from './tach-parts';
+import { Accent, cssVars, Lines } from './tach-parts';
 
 type Content = PageViewProps<'case-tach'>['content'];
 type Founder = Content['outro']['founders'][number];
@@ -58,7 +58,7 @@ export function TachOutro({ outro }: { outro: Content['outro'] }) {
             />
             <p className="tach-member__name">{member.name}</p>
             <p className="tach-member__role">
-              <Rows text={member.role} />
+              <Lines text={member.role} />
             </p>
           </li>
         ))}

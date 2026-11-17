@@ -13,24 +13,58 @@ import { Heading } from '../../components/ui/typography';
 /** Inline style that only sets CSS custom properties (the token rule allows nothing else). */
 export const cssVars = (vars: Record<`--${string}`, string | number>) => vars as CSSProperties;
 
-/** "Plain *highlighted* text": the words between asterisks get the case accent color. */
-export function Accent({ text }: { text: string }) {
-  return text.split('*').map((part, index) =>
-    index % 2 === 1 ? (
-      <span key={`${index}-${part}`} className="tach-accent">
-        {part}
+/** Number of words of a text (asterisks are not words): the next row of a title starts after it. */
+const countWords = (text: string) => text.replace(/\*/g, '').split(/\s+/).filter(Boolean).length;
+
+/**
+ * "Plain *highlighted* text": the words between asterisks get the case accent color. Every word is
+ * wrapped in a clipping mask and carries its index (`--tach-w`), so the page can slide the words up
+ * one after another.
+ */
+export function Accent({ text, start = 0 }: { text: string; start?: number }) {
+  let index = start;
+  return text.split('*').map((part, partIndex) => {
+    const words = part.split(/(\s+)/).map((token, tokenIndex) => {
+      if (token === '' || /^\s+$/.test(token)) return token;
+      const word = index;
+      index += 1;
+      return (
+        <span key={`${tokenIndex}-${token}`} className="tach-w">
+          <span className="tach-w__in" style={cssVars({ '--tach-w': word })}>
+            {token}
+          </span>
+        </span>
+      );
+    });
+    return partIndex % 2 === 1 ? (
+      <span key={`${partIndex}-${part}`} className="tach-accent">
+        {words}
       </span>
     ) : (
-      <Fragment key={`${index}-${part}`}>{part}</Fragment>
-    ),
-  );
+      <Fragment key={`${partIndex}-${part}`}>{words}</Fragment>
+    );
+  });
 }
 
-/** A title written on several lines: every line is a row of its own. */
+/** A title written on several lines: every line is a row of its own (the word index runs on). */
 export function Rows({ text }: { text: string }) {
+  let start = 0;
+  return text.split('\n').map((row, index) => {
+    const node = (
+      <span key={`${index}-${row}`} className="tach-row">
+        <Accent text={row} start={start} />
+      </span>
+    );
+    start += countWords(row);
+    return node;
+  });
+}
+
+/** Plain lines (a role under a name): a new line starts a new row, no word animation. */
+export function Lines({ text }: { text: string }) {
   return text.split('\n').map((row, index) => (
     <span key={`${index}-${row}`} className="tach-row">
-      <Accent text={row} />
+      {row}
     </span>
   ));
 }
@@ -52,7 +86,7 @@ export function Chapter({
       <div className="tach-chapter__main">
         <p className="tach-chapter__eyebrow">{eyebrow}</p>
         <Heading level={2} variant="plain" id={id} className="tach-chapter__title">
-          {title}
+          <Accent text={title} />
         </Heading>
       </div>
       {text ? <p className="tach-chapter__text">{text}</p> : null}

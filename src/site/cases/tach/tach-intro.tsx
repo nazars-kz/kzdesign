@@ -2,7 +2,7 @@ import type { PageViewProps } from '@/core/content/page-route';
 
 import { SiteImage } from '../../components/ui/site-image';
 import { TachLogo } from './tach-logo';
-import { CloseIcon, cssVars, PlusIcon } from './tach-parts';
+import { Accent, CloseIcon, cssVars, PlusIcon } from './tach-parts';
 
 type Content = PageViewProps<'case-tach'>['content'];
 
@@ -53,7 +53,9 @@ export function TachOverview({ overview }: { overview: Content['overview'] }) {
   return (
     <section className="tach-overview">
       <TachLogo className="tach-overview__logo" />
-      <p className="tach-overview__lead">{overview.lead}</p>
+      <p className="tach-overview__lead">
+        <Accent text={overview.lead} />
+      </p>
       <p className="tach-overview__text">{overview.text}</p>
       {overview.website.href ? (
         <a
@@ -84,7 +86,7 @@ export function TachWorkflow({ workflow }: { workflow: Content['workflow'] }) {
     <section className="tach-workflow" aria-labelledby="tach-workflow-title">
       <div className="tach-workflow__head">
         <h2 id="tach-workflow-title" className="tach-workflow__title">
-          {workflow.title}
+          <Accent text={workflow.title} />
         </h2>
         <p className="tach-workflow__duration">{workflow.duration}</p>
       </div>

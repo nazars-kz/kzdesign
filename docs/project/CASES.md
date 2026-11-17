@@ -80,3 +80,12 @@ Tach (`src/content/cases/tach.ts`, `src/site/cases/tach/`) is the reference impl
 - **Alt texts.** The seed needs a non-empty `alt` for every image; for a decorative duplicate render the image with `alt=""` in the view.
 - **Fonts.** Download the Google Fonts woff2 (latin) into `src/site/theme/fonts/`, declare them in `fonts.ts` with `preload: false` and apply the exported variable class on the case root only.
 - **Screenshots.** Chrome cannot capture pages higher than 16 384 px in one piece: capture in 6 000 px chunks and stitch them; hide `position: fixed` elements first.
+
+## Motion (every case gets entrances)
+
+The Tach page is the reference (`tach-motion.tsx` and the "Motion" part of `case-tach.css`).
+
+- The **hero** plays on load with CSS keyframes only. Everything below is armed by a tiny client component: it gives the blocks (tiles, chapters, lists) the class `tach-r` and, when a block's top passes 90% of the viewport, `is-in`. The position is read from the layout on scroll, **not** with an `IntersectionObserver`: a block hidden by its own `clip-path` would never count as visible.
+- Without JavaScript or with "reduce motion" nothing is armed, so the page is just shown (e2e checks it).
+- Signature moves: words slide up out of masks (`Accent` / `Rows` wrap every word and set `--tach-w`), tiles are uncovered by a curtain (left tile from the left, right tile from the right) while the picture settles from a zoom, the hero line draws itself, the logo letters rise and the needle swings, timeline bars grow along the months, the donut sweeps, overlays land with a spring and then float, the team rises one by one. Use `translate` / `rotate` / `scale` (individual properties) so transitions and scroll-linked drift (`animation-timeline: view()`) do not fight.
+- Keep the hidden state in `.tach-armed .tach-r:not(.is-in) …` and the transition on the base rule; stagger with `--tach-w`, `--tach-i` and `--tach-d`.

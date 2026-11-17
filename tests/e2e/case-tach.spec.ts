@@ -46,3 +46,23 @@ test.describe('case study: Tach', () => {
     expect(a && b && b.y > a.y + a.height - 1).toBe(true);
   });
 });
+
+test.describe('case study: Tach motion', () => {
+  test('blocks are armed and play their entrance when scrolled into view', async ({ page }) => {
+    await page.goto('/cases/tach');
+    await expect(page.locator('.tach-case')).toHaveClass(/tach-armed/);
+    const tile = page.locator('.tach-showcase');
+    await expect(tile).toHaveClass(/tach-r/);
+    await tile.scrollIntoViewIfNeeded();
+    await expect(tile).toHaveClass(/is-in/);
+  });
+
+  test('with "reduce motion" nothing is hidden or animated', async ({ browser }) => {
+    const context = await browser.newContext({ reducedMotion: 'reduce' });
+    const page = await context.newPage();
+    await page.goto('/cases/tach');
+    await expect(page.locator('.tach-case')).not.toHaveClass(/tach-armed/);
+    await expect(page.locator('.tach-showcase')).not.toHaveClass(/tach-r/);
+    await context.close();
+  });
+});
