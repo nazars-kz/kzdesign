@@ -83,7 +83,7 @@ async function configureDelivery(page: Page, options: { email: boolean; webhook:
   await setDeveloperMode(page, true);
   const form = await openSettingsTab(page, 'requests', 'Requests');
   // Every form has its own block; these tests use the contact form's.
-  const contact = form.getByRole('group', { name: /^Contact form \(contact block\)/ });
+  const contact = form.getByRole('group', { name: /^Contact form \(contact block/ });
   // Email goes to the listed recipients; an empty list sends no email.
   await contact.getByLabel('Send requests to').fill(options.email ? 'inbox@example.test' : '');
   const webhook = contact.getByRole('switch', { name: 'Webhook (CRM, Zapier, Make)' });

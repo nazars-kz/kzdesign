@@ -9,7 +9,6 @@ import { casePages } from './cases';
 import { services } from './collections/services';
 import { bookingForm } from './forms/booking';
 import { contactForm } from './forms/contact';
-import { projectForm } from './forms/project';
 import { siteGlobals } from './globals/site';
 import { aboutPage } from './pages/about';
 import { approachPage } from './pages/approach';
@@ -40,7 +39,7 @@ export const registry = createRegistry({
   ],
   collections: [services],
   globals: [siteGlobals],
-  forms: [contactForm, projectForm, bookingForm],
+  forms: [contactForm, bookingForm],
   sharedSections: [
     uniquenessShared,
     testimonialsShared,

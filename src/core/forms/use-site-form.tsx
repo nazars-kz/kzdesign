@@ -96,11 +96,18 @@ export function useSiteForm({
   config,
   messages = {},
   summaryRef,
+  idPrefix,
 }: {
   config: SiteFormConfig;
   messages?: FormMessages;
   /** Error summary element; receives focus when validation fails. */
   summaryRef: RefObject<HTMLElement | null>;
+  /**
+   * Prefix of the element ids (`<prefix>-<field>`, `form-<prefix>`); defaults to the form id. Lets one
+   * form be shown twice on a page (a block and a panel) without duplicate ids. The submitted form id
+   * does not change.
+   */
+  idPrefix?: string;
 }) {
   const [state, setState] = useState<FormSubmitState>(INITIAL_FORM_STATE);
   const [pending, setPending] = useState(false);
@@ -140,7 +147,8 @@ export function useSiteForm({
   );
   const errors: FormErrors = clientErrors ?? state.errors ?? {};
   const message = (code: FormErrorCode) => messages[code] ?? DEFAULT_ERROR_MESSAGES[code];
-  const idFor = (name: string) => `${config.formId}-${name}`;
+  const prefix = idPrefix ?? config.formId;
+  const idFor = (name: string) => `${prefix}-${name}`;
 
   // Server-side validation errors (with JavaScript): move focus to the summary.
   useEffect(() => {
@@ -242,13 +250,13 @@ export function useSiteForm({
     // Server HTML: native POST + browser validation. Hydrated: server action + our validation.
     formProps: hydrated
       ? {
-          id: `form-${config.formId}`,
+          id: `form-${prefix}`,
           action: FORM_SUBMIT_PATH,
           method: 'post',
           onSubmit,
           noValidate: true,
         }
-      : { id: `form-${config.formId}`, action: FORM_SUBMIT_PATH, method: 'post' },
+      : { id: `form-${prefix}`, action: FORM_SUBMIT_PATH, method: 'post' },
     hiddenFields,
     field,
     /** Errors to list in the summary (`summaryRef`, tabIndex={-1}). */
