@@ -144,3 +144,13 @@ Breadcrumbs, Marquee, LeaderCard, FounderCard, FeatureCard, ProcessStep, filter 
 | Component       | File                       | Notes                                                           |
 | --------------- | -------------------------- | --------------------------------------------------------------- |
 | Legal page view | `src/site/pages/legal.tsx` | replaces the placeholder view; fields title, last updated, text |
+
+## Case study Tach (unique page, not reusable)
+
+| Piece                 | File                                 | Notes                                                                                      |
+| --------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------ |
+| View and its sections | `src/site/cases/tach/*.tsx`          | hero, scene, overview, workflow, showcase, brand, platform/finances/vendors/assets, outro  |
+| Helpers               | `src/site/cases/tach/tach-parts.tsx` | `Accent` (`*words*`), `Rows` (new line = row), `Chapter`, `Shot`, `cssVars`, mock-up icons |
+| Logo                  | `src/site/cases/tach/tach-logo.tsx`  | colors from `--tach-logo-ink` / `--tach-logo-accent`                                       |
+| Styles                | `src/site/theme/case-tach.css`       | every selector starts with `tach-`                                                         |
+| Fonts                 | `src/site/theme/fonts.ts`            | `tachFontVariables`, applied on the case root only (no preload)                            |

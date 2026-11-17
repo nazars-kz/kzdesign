@@ -1,0 +1,1819 @@
+/*
+ * Case study: Tach (/cases/tach). A unique page with its own palette and type; every selector starts
+ * with `tach-` so nothing here can reach another page. Design: design/cases/tach/Case.png (1920 px).
+ * Fonts (Hanken Grotesk, IBM Plex Sans) come from fonts.ts (`tachFontVariables`).
+ *
+ * Sizing: layout in rem; the coded product mock-ups (hero cards, dialog, floating cards, vendor
+ * card) are sized in `em`, and their parent sets `font-size` from its own width (cqw), so they scale
+ * with the picture they sit on.
+ */
+.tach-case {
+  --tach-ink: #1d1e2a;
+  --tach-muted: #6b6e75;
+  --tach-faint: #8a8d93;
+  --tach-line: #e6e7eb;
+  --tach-green: #6a9e68;
+  --tach-orange: #f7a826;
+  --tach-blue: #013366;
+  --tach-slate: #4f5778;
+  --tach-dark: #1d1e2a;
+  --tach-paper: #f9f9f9;
+  --tach-gray: #eeeeee;
+  --tach-radius: 1rem;
+  --tach-gap: 1rem;
+  --tach-gutter: clamp(1.25rem, 6.6vw, 7.9rem);
+  --tach-sans: var(--font-family-tach-hanken), system-ui, sans-serif;
+  --tach-plex: var(--font-family-tach-plex), system-ui, sans-serif;
+
+  max-width: 120rem;
+  margin-inline: auto;
+  overflow-x: clip;
+  background: #fff;
+  color: var(--tach-ink);
+  font-family: var(--tach-sans);
+  line-height: 1.4;
+}
+.tach-case :where(h1, h2, h3, p, ul, ol, dl, dd, figure) {
+  margin: 0;
+}
+.tach-case :where(ul, ol) {
+  padding: 0;
+  list-style: none;
+}
+.tach-accent {
+  color: var(--tach-accent, var(--tach-green));
+}
+.tach-row {
+  display: block;
+}
+
+/* ── Logo (colors by variables) ───────────────────────────────────────────────────── */
+.tach-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.tach-logo__ink {
+  fill: var(--tach-logo-ink, #fff);
+}
+.tach-logo__accent {
+  fill: var(--tach-logo-accent, var(--tach-orange));
+}
+
+/* ── Tiles: rounded blocks with a picture ─────────────────────────────────────────── */
+.tach-tile {
+  position: relative;
+  overflow: hidden;
+  margin: 0 var(--tach-gap) var(--tach-gap);
+  border-radius: var(--tach-radius);
+  container-type: inline-size;
+  background: var(--tach-gray);
+}
+.tach-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.tach-tile--green {
+  background: var(--tach-green);
+}
+.tach-tile--orange {
+  background: var(--tach-orange);
+}
+.tach-pair,
+.tach-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.tach-pair > .tach-tile,
+.tach-duo > .tach-tile {
+  margin-bottom: var(--tach-gap);
+}
+
+/* ── Chapter intro ────────────────────────────────────────────────────────────────── */
+.tach-chapter {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 14rem var(--tach-gutter) 6rem;
+}
+.tach-chapter__eyebrow {
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--tach-faint);
+}
+.tach-chapter__title {
+  max-width: 13em;
+  margin-top: 0.75rem;
+  font-size: 2.75rem;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.tach-chapter__text {
+  flex: none;
+  max-width: 22rem;
+  margin-top: 2.1rem;
+  font-size: 1.125rem;
+  line-height: 1.55;
+  color: var(--tach-muted);
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────────────────── */
+.tach-hero {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3840 / 2980;
+  margin-bottom: var(--tach-gap);
+  background: #3a3d45;
+  --tach-logo-ink: #fff;
+}
+.tach-hero__stage {
+  position: absolute;
+  inset: 0;
+}
+.tach-hero__photo,
+.tach-hero__person {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tach-hero__swoosh {
+  position: absolute;
+  left: 0;
+  top: 40.6%;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2304 / 718;
+  stroke: var(--tach-orange);
+  stroke-width: 108;
+  overflow: visible;
+}
+.tach-hero__inner {
+  position: absolute;
+  inset: 0;
+  color: #fff;
+}
+.tach-hero__logo {
+  position: absolute;
+  left: 7.2%;
+  top: 15.4%;
+  width: 12.3%;
+}
+.tach-hero__lead {
+  position: absolute;
+  left: 7.2%;
+  top: 25.8%;
+  width: 46%;
+  font-size: 2.57vw;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.tach-hero__cards {
+  position: absolute;
+  left: 6.8%;
+  top: 63.5%;
+  display: grid;
+  gap: 0.7em;
+  font-size: 0.8333vw;
+}
+
+/* Product cards drawn in code (sized in em) */
+.tach-screen,
+.tach-goal {
+  width: 40em;
+  border-radius: 1.5em;
+  background: #fff;
+  color: var(--tach-ink);
+}
+.tach-screen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 7.7em;
+  padding: 0 1.9em;
+}
+.tach-screen__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8em;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+.tach-screen__mark {
+  width: 1.2em;
+  height: 1.2em;
+  color: var(--tach-green);
+}
+.tach-screen__tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5em;
+}
+.tach-screen__tool {
+  width: 1.7em;
+  height: 1.7em;
+}
+.tach-screen__avatar {
+  display: block;
+  width: 4.3em;
+  height: 4.3em;
+  overflow: hidden;
+  border: 0.18em solid var(--tach-green);
+  border-radius: 50%;
+}
+.tach-screen__avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tach-goal {
+  padding: 1.7em 2em 1.7em;
+}
+.tach-goal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tach-goal__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 1.4em;
+  font-weight: 600;
+}
+.tach-goal__icon {
+  width: 1.2em;
+  height: 1.2em;
+}
+.tach-goal__more {
+  width: 1.5em;
+  height: 1.5em;
+  color: var(--tach-ink);
+}
+.tach-goal__sum {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.3em;
+  font-size: 1.4em;
+  color: var(--tach-slate);
+}
+.tach-goal__bar {
+  position: relative;
+  display: block;
+  height: 0.7em;
+  margin-top: 0.9em;
+  overflow: hidden;
+  border-radius: 1em;
+  background: #fdf0d9;
+}
+.tach-goal__bar::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--tach-progress, 50%);
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--tach-orange), #fcc15c);
+}
+.tach-goal__note {
+  margin-top: 0.8em;
+  font-size: 1.05em;
+  color: var(--tach-faint);
+}
+.tach-icon {
+  display: block;
+  flex: none;
+}
+.tach-pump-body {
+  fill: #d6372b;
+}
+.tach-pump-glass {
+  fill: #fff;
+}
+.tach-pump-hose {
+  stroke: #d6372b;
+}
+
+/* ── Tablet scene + dialog ────────────────────────────────────────────────────────── */
+.tach-scene {
+  background: #c9c9cb;
+}
+.tach-dialog {
+  position: absolute;
+  left: 3.4%;
+  bottom: 3.4%;
+  width: 32.5em;
+  font-size: max(0.84cqw, 0.6875rem);
+  border-radius: 1.1em;
+  overflow: hidden;
+  background: #fff;
+  color: var(--tach-ink);
+  box-shadow: 0 1.2em 3em rgb(0 0 0 / 18%);
+}
+.tach-dialog__head,
+.tach-dialog__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 1.3em;
+}
+.tach-dialog__head {
+  border-bottom: 1px solid var(--tach-line);
+}
+.tach-dialog__title {
+  font-size: 0.95em;
+  font-weight: 600;
+}
+.tach-dialog__close {
+  width: 1.1em;
+  height: 1.1em;
+}
+.tach-dialog__body {
+  padding: 1em 1.3em 1.3em;
+}
+.tach-dialog__label {
+  margin-top: 0.9em;
+  font-size: 0.8em;
+  color: var(--tach-faint);
+}
+.tach-dialog__label:first-child {
+  margin-top: 0;
+}
+.tach-dialog__field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.4em;
+  padding: 0.85em 1em;
+  border-radius: 0.7em;
+  background: #f4f4f6;
+  font-size: 0.9em;
+}
+.tach-dialog__plus {
+  width: 1.1em;
+  height: 1.1em;
+  color: var(--tach-muted);
+}
+.tach-dialog__radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4em;
+  margin-top: 0.5em;
+  font-size: 0.85em;
+}
+.tach-dialog__radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+}
+.tach-dialog__radio::before {
+  content: '';
+  width: 1.05em;
+  height: 1.05em;
+  border: 0.12em solid #b9bcc6;
+  border-radius: 50%;
+}
+.tach-dialog__radio[data-selected='true']::before {
+  border: 0.32em solid var(--tach-orange);
+}
+.tach-dialog__foot {
+  gap: 0.8em;
+  border-top: 1px solid var(--tach-line);
+}
+.tach-dialog__button {
+  flex: 1;
+  padding: 0.75em 1em;
+  border: 1px solid var(--tach-line);
+  border-radius: 2em;
+  text-align: center;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+.tach-dialog__button[data-primary='true'] {
+  border-color: transparent;
+  background: linear-gradient(90deg, var(--tach-orange), #fcc15c);
+}
+
+/* ── Overview ─────────────────────────────────────────────────────────────────────── */
+.tach-overview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 58rem;
+  margin-inline: auto;
+  padding: 8rem 1.25rem 7.5rem;
+  text-align: center;
+  --tach-logo-ink: var(--tach-ink);
+  --tach-logo-accent: var(--tach-green);
+}
+.tach-overview__logo {
+  width: 9.4rem;
+}
+.tach-overview__lead {
+  max-width: 58rem;
+  margin-top: 3rem;
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+.tach-overview__text {
+  max-width: 51rem;
+  margin-top: 1.75rem;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--tach-faint);
+}
+.tach-overview__link {
+  margin-top: 2.5rem;
+  color: var(--tach-green);
+  font-size: 1.0625rem;
+  text-decoration: none;
+}
+.tach-overview__link:hover {
+  text-decoration: underline;
+}
+.tach-facts {
+  width: 100%;
+  margin-top: 4rem;
+  text-align: left;
+}
+.tach-facts__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.55rem 0;
+  border-top: 1px solid var(--tach-gray);
+  font-size: 1.0625rem;
+}
+.tach-facts__row:last-child {
+  border-bottom: 1px solid var(--tach-gray);
+}
+.tach-facts dt {
+  flex: none;
+}
+.tach-facts dd {
+  text-align: right;
+}
+
+/* ── Workflow plan ────────────────────────────────────────────────────────────────── */
+.tach-workflow {
+  position: relative;
+  overflow: hidden;
+  margin: 8rem var(--tach-gap) var(--tach-gap);
+  padding: 5.6rem 6.7rem 9rem;
+  border-radius: var(--tach-radius);
+  background: var(--tach-dark);
+  color: #fff;
+}
+.tach-workflow__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.tach-workflow__title {
+  font-size: 3.5rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+.tach-workflow__duration {
+  margin-top: 0.85rem;
+  font-size: 1.25rem;
+  color: #8e90a0;
+}
+.tach-gantt {
+  position: relative;
+  margin-top: 4.4rem;
+}
+.tach-gantt::before {
+  content: '';
+  position: absolute;
+  inset: 2.2rem 0 -9rem;
+  background: repeating-linear-gradient(
+    to right,
+    rgb(255 255 255 / 14%) 0 1px,
+    transparent 1px calc(100% / var(--tach-months))
+  );
+}
+.tach-gantt__months {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--tach-months), 1fr);
+  font-size: 1rem;
+}
+.tach-gantt__months li {
+  padding-left: 0.15rem;
+}
+.tach-gantt__bars {
+  position: relative;
+  height: calc(var(--tach-rows) * 4.8rem);
+  margin-top: 9.5rem;
+}
+.tach-bar {
+  --tach-bar-bg: #2f3141;
+  --tach-bar-ink: #fff;
+  position: absolute;
+  top: calc((var(--tach-row) - 1) * 4.8rem);
+  left: calc(var(--tach-start) / var(--tach-months) * 100%);
+  width: calc(var(--tach-length) / var(--tach-months) * 100%);
+  height: 4.375rem;
+  display: grid;
+  place-items: center;
+  padding: 0 0.75rem;
+  border-radius: 0.35rem;
+  background: var(--tach-bar-bg);
+  color: var(--tach-bar-ink);
+  font-size: 1rem;
+  text-align: center;
+}
+.tach-bar[data-tone='white'] {
+  --tach-bar-bg: #fff;
+  --tach-bar-ink: var(--tach-ink);
+}
+.tach-bar[data-tone='orange'] {
+  --tach-bar-bg: linear-gradient(90deg, var(--tach-orange), #ffc668);
+  --tach-bar-ink: var(--tach-ink);
+}
+.tach-bar[data-tone='green'] {
+  --tach-bar-bg: linear-gradient(90deg, var(--tach-green), #a6d8a3);
+  --tach-bar-ink: var(--tach-ink);
+}
+.tach-bar[data-tone='fade'] {
+  --tach-bar-bg: linear-gradient(90deg, #30323f 55%, transparent);
+}
+
+/* ── Truck scene with floating cards ──────────────────────────────────────────────── */
+.tach-showcase {
+  background: #587e8a;
+}
+.tach-showcase__cards {
+  position: absolute;
+  inset: 0;
+  font-size: max(0.84cqw, 0.5rem);
+}
+.tach-float {
+  position: absolute;
+  border-radius: 0.9em;
+  background: #fff;
+  color: var(--tach-ink);
+  box-shadow: 0 0.6em 2em rgb(0 0 0 / 12%);
+}
+.tach-float--balance,
+.tach-float--amount {
+  width: 19.5em;
+  padding: 1.4em 1.8em;
+}
+.tach-float--balance {
+  left: 19.3%;
+  top: 6.5%;
+}
+.tach-float--amount {
+  left: 64.9%;
+  top: 33%;
+}
+.tach-float__label {
+  font-size: 0.78em;
+  color: var(--tach-faint);
+}
+.tach-float__value {
+  margin-top: 0.3em;
+  font-size: 1.75em;
+  font-weight: 600;
+}
+.tach-float__note {
+  margin-top: 0.4em;
+  font-size: 0.7em;
+  color: var(--tach-faint);
+}
+.tach-float--budget {
+  left: 37.9%;
+  top: 9.3%;
+  width: 30em;
+  padding: 1.1em 1.4em 1.4em;
+}
+.tach-float__title {
+  font-size: 0.8em;
+  font-weight: 600;
+}
+.tach-budget__totals {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  margin-top: 1em;
+  font-size: 0.75em;
+}
+.tach-budget__totals dt {
+  color: var(--tach-muted);
+}
+.tach-budget__totals dd {
+  margin-top: 0.2em;
+  font-size: 1.15em;
+  font-weight: 700;
+}
+.tach-budget__chart {
+  position: relative;
+  margin-top: 1.4em;
+  padding: 0.6em 0 0.4em;
+  border-top: 1px solid var(--tach-line);
+}
+.tach-donut {
+  display: block;
+  width: 11em;
+  aspect-ratio: 1;
+  margin: 0.6em auto 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    #e9604b 0 14%,
+    #f0836c 14% 24%,
+    #f6a899 24% 30%,
+    #f9cbc1 30% 34%,
+    #a5e3c9 34% 40%,
+    #6fd3a8 40% 52%,
+    #38c18a 52% 100%
+  );
+  -webkit-mask: radial-gradient(circle, transparent 36%, #000 37%);
+  mask: radial-gradient(circle, transparent 36%, #000 37%);
+}
+.tach-budget__callouts {
+  position: absolute;
+  inset: 0.6em 0 0;
+  font-size: 0.62em;
+  color: var(--tach-muted);
+}
+.tach-budget__callouts li {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  max-width: 10em;
+}
+.tach-budget__callouts strong {
+  font-weight: 600;
+  color: var(--tach-ink);
+}
+.tach-budget__callouts li:nth-child(1) {
+  left: 0;
+  top: 2em;
+}
+.tach-budget__callouts li:nth-child(2) {
+  left: 0;
+  top: 8em;
+}
+.tach-budget__callouts li:nth-child(3) {
+  left: 1em;
+  bottom: 0;
+}
+.tach-budget__callouts li:nth-child(4) {
+  right: 0;
+  bottom: 0;
+  text-align: right;
+}
+
+/* ── 01 Brand identity ────────────────────────────────────────────────────────────── */
+.tach-logogrid {
+  --tach-logo-ink: #cacfd4;
+  --tach-logo-accent: #cacfd4;
+  position: relative;
+  max-width: 79rem;
+  margin: 0 auto;
+  padding: 7rem 0;
+}
+.tach-logogrid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(to right, #e4e6ea 0 1px, transparent 1px 4.4rem),
+    repeating-linear-gradient(to bottom, #e4e6ea 0 1px, transparent 1px 4.4rem);
+  -webkit-mask: radial-gradient(ellipse at center, #000 35%, transparent 72%);
+  mask: radial-gradient(ellipse at center, #000 35%, transparent 72%);
+}
+.tach-logogrid__frame {
+  position: relative;
+  width: min(47.4rem, calc(100% - 3rem));
+  margin-inline: auto;
+}
+.tach-logogrid__measure {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  height: 2.2rem;
+  background: #f1f2f4;
+  color: var(--tach-muted);
+  font-size: 0.9rem;
+}
+.tach-logogrid__measure--wide {
+  left: 52.4%;
+  width: 22.7%;
+  bottom: calc(100% + 0.1rem);
+}
+.tach-logogrid__measure--tall {
+  left: 75.1%;
+  width: 4.4%;
+  top: calc(100% + 0.1rem);
+}
+.tach-logopanel {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1904 / 921;
+  background:
+    repeating-linear-gradient(to right, rgb(255 255 255 / 4%) 0 1px, transparent 1px 8rem),
+    repeating-linear-gradient(to bottom, rgb(255 255 255 / 4%) 0 1px, transparent 1px 8rem),
+    var(--tach-dark);
+  --tach-logo-ink: #fff;
+}
+.tach-logopanel__logo {
+  width: 39.8%;
+}
+
+/* colors */
+.tach-swatches {
+  display: flex;
+  min-height: 51rem;
+  margin-bottom: var(--tach-gap);
+}
+.tach-swatch {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.9rem 1.5rem;
+  background: var(--tach-swatch, #fff);
+  color: #fff;
+}
+.tach-swatch[data-tone='dark'] {
+  color: var(--tach-ink);
+}
+.tach-swatch:first-child {
+  flex: 2.5;
+  padding-inline: 1.9rem;
+  background: #fbfbfb;
+}
+.tach-swatch:last-child {
+  flex: 1.57;
+}
+.tach-swatch__name {
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.tach-swatch__code {
+  margin-top: 1.2rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.tach-swatch__intro {
+  margin-top: auto;
+}
+.tach-swatch__title {
+  max-width: 9em;
+  font-family: var(--tach-plex);
+  font-size: 5rem;
+  font-weight: 300;
+  line-height: 0.93;
+  letter-spacing: -0.045em;
+}
+.tach-swatch__text {
+  max-width: 21rem;
+  margin-top: 1.5rem;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--tach-muted);
+}
+
+/* fonts */
+.tach-fonts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.tach-font {
+  aspect-ratio: 933 / 919;
+  background: var(--tach-paper);
+}
+.tach-font__in {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 9.5cqw;
+}
+.tach-font__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tach-font__label {
+  font-size: max(0.75rem, 1.7cqw);
+  opacity: 0.8;
+}
+.tach-font__name {
+  margin-top: 3.5cqw;
+  font-size: clamp(3rem, 26.4cqw, 17rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+.tach-font__alphabet {
+  margin-top: auto;
+  font-size: max(0.8125rem, 4.9cqw);
+  line-height: 1.3;
+}
+.tach-font[data-font='hanken'] {
+  color: #fff;
+  font-family: var(--tach-sans);
+}
+.tach-font[data-font='plex'] {
+  color: var(--tach-blue);
+  font-family: var(--tach-plex);
+}
+.tach-font[data-font='plex'] .tach-font__label {
+  color: var(--tach-faint);
+}
+
+/* cards and cap mock-ups */
+.tach-cards {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 933 / 1060;
+  background: linear-gradient(180deg, var(--tach-green) 50%, #aac9a8);
+}
+.tach-cards__img {
+  width: 67%;
+  height: auto;
+}
+.tach-cap {
+  aspect-ratio: 933 / 1060;
+  background: #e4e4e4;
+}
+.tach-cap__img {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 88.6%;
+  height: auto;
+}
+.tach-cap__goal {
+  position: absolute;
+  left: 13.7%;
+  top: 68.4%;
+  font-size: 0.715cqw;
+}
+.tach-cap__goal .tach-goal {
+  box-shadow: 0 0.6em 2em rgb(0 0 0 / 14%);
+}
+.tach-cap__carrier {
+  position: absolute;
+  left: 44.4%;
+  top: 80%;
+  width: 52.6%;
+  display: flex;
+  align-items: center;
+  gap: 2.6cqw;
+  padding: 2.4cqw 2.8cqw;
+  border-radius: 1.8cqw;
+  background: #fff;
+  box-shadow: 0 1.2cqw 4cqw rgb(0 0 0 / 14%);
+  font-size: max(0.5rem, 1.5cqw);
+}
+.tach-cap__badge {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 3.3em;
+  height: 3.3em;
+  border: 0.14em solid var(--tach-orange);
+  border-radius: 50%;
+  color: var(--tach-orange);
+}
+.tach-cap__mark {
+  width: 1.7em;
+  height: 1.7em;
+}
+.tach-cap__role {
+  font-weight: 600;
+}
+.tach-cap__text {
+  margin-top: 0.3em;
+  color: var(--tach-muted);
+  line-height: 1.4;
+}
+
+/* ── 02 Platform / features ───────────────────────────────────────────────────────── */
+.tach-note {
+  background: var(--tach-gray);
+}
+.tach-note__in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 6cqw 9cqw;
+  text-align: center;
+}
+.tach-note__icon {
+  display: grid;
+  place-items: center;
+  width: 16.5cqw;
+  height: 16.5cqw;
+  max-width: 10rem;
+  max-height: 10rem;
+  border-radius: 24%;
+  background: #fff;
+  color: var(--tach-green);
+}
+.tach-note__glyph {
+  width: 48%;
+  height: 48%;
+}
+.tach-note__title {
+  max-width: 66cqw;
+  margin-top: 5.5cqw;
+  font-family: var(--tach-plex);
+  font-size: clamp(2.5rem, 9.4cqw, 5.5rem);
+  font-weight: 300;
+  line-height: 0.93;
+  letter-spacing: -0.05em;
+}
+.tach-note__text {
+  max-width: 72cqw;
+  margin-top: 4cqw;
+  font-size: max(1rem, 2.35cqw);
+  line-height: 1.6;
+  color: var(--tach-muted);
+}
+.tach-home {
+  display: grid;
+  padding: 8% 13% 5%;
+}
+.tach-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+.tach-features__phone {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  background: #dcdcdc;
+}
+.tach-features > .tach-tile {
+  margin-bottom: var(--tach-gap);
+}
+.tach-feature {
+  min-height: 20rem;
+}
+.tach-feature__in {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 7cqw 7cqw 8cqw;
+}
+.tach-feature[data-tone='dark'] {
+  grid-column: 1;
+  grid-row: 1;
+  color: #fff;
+  background:
+    radial-gradient(ellipse 80% 90% at 100% 100%, rgb(110 110 120 / 85%), transparent 70%),
+    repeating-linear-gradient(to right, rgb(255 255 255 / 4%) 0 1px, transparent 1px 8cqw),
+    repeating-linear-gradient(to bottom, rgb(255 255 255 / 4%) 0 1px, transparent 1px 8cqw), #25262f;
+}
+.tach-feature[data-tone='light'] {
+  grid-column: 1;
+  grid-row: 2;
+  background: var(--tach-paper);
+}
+.tach-feature__title {
+  font-family: var(--tach-plex);
+  font-size: clamp(2.5rem, 8.15cqw, 5rem);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+.tach-feature[data-tone='dark'] .tach-feature__title .tach-accent,
+.tach-feature[data-tone='light'] .tach-feature__title .tach-accent {
+  color: var(--tach-orange);
+}
+.tach-feature__text {
+  max-width: 52cqw;
+  margin-top: 3.5cqw;
+  font-size: max(1rem, 1.9cqw);
+  line-height: 1.55;
+}
+.tach-feature[data-tone='dark'] .tach-feature__text {
+  color: #c9c9d0;
+}
+.tach-feature[data-tone='light'] .tach-feature__text {
+  color: var(--tach-muted);
+}
+
+/* ── 03 Finances band ─────────────────────────────────────────────────────────────── */
+.tach-band {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 58rem;
+  padding: 7rem 4rem 5rem;
+  text-align: center;
+  background: linear-gradient(180deg, #1d213b, #151724);
+  color: #fff;
+  --tach-logo-ink: #fff;
+}
+.tach-band__logo {
+  width: 12.5rem;
+}
+.tach-band__statement {
+  max-width: 87rem;
+  margin-top: 4.5rem;
+  font-family: var(--tach-plex);
+  font-size: clamp(2rem, 4.1cqw, 4.6rem);
+  font-weight: 300;
+  line-height: 1.22;
+  letter-spacing: -0.035em;
+}
+.tach-band .tach-accent {
+  color: var(--tach-orange);
+}
+.tach-band__deco {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 26%;
+  height: 24rem;
+  background:
+    radial-gradient(circle at 42% 22%, #ffb25a 0 3.1rem, transparent 3.2rem),
+    radial-gradient(circle at 18% 52%, #ffa648 0 3.1rem, transparent 3.2rem),
+    radial-gradient(circle at 47% 56%, #ff9f42 0 3.1rem, transparent 3.2rem),
+    linear-gradient(115deg, transparent 20%, rgb(247 168 38 / 28%) 45%, transparent 70%);
+  opacity: 0.95;
+}
+.tach-band__note {
+  position: absolute;
+  right: 6.6%;
+  bottom: 4.4rem;
+  max-width: 22rem;
+  text-align: left;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: #c3c5d2;
+}
+
+/* ── 04 Vendor card ───────────────────────────────────────────────────────────────── */
+.tach-vendor {
+  display: block;
+}
+.tach-vendor__stage {
+  position: absolute;
+  inset: 0;
+  font-size: max(1.8cqw, 0.625rem);
+}
+.tach-vcard {
+  position: absolute;
+  left: 6.4%;
+  top: 3.5%;
+  width: 26em;
+  padding: 1.4em 1.5em 1.5em;
+  border-radius: 1em;
+  background: #fff;
+  color: var(--tach-ink);
+  box-shadow: 0 0.8em 2.4em rgb(0 0 0 / 18%);
+}
+.tach-vcard__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1em;
+}
+.tach-vcard__name {
+  max-width: 11em;
+  font-size: 1.15em;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.tach-vcard__pills {
+  display: inline-flex;
+  gap: 0.5em;
+}
+.tach-vcard__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.3em 0.7em;
+  border-radius: 2em;
+  background: #f0f1f3;
+  font-size: 0.85em;
+}
+.tach-vcard__pill-icon {
+  width: 1em;
+  height: 1em;
+}
+.tach-vcard__desc {
+  margin-top: 0.7em;
+  font-size: 0.85em;
+  color: var(--tach-muted);
+}
+.tach-vcard__row {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-top: 0.9em;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+.tach-vcard__icon {
+  width: 1.2em;
+  height: 1.2em;
+  color: var(--tach-muted);
+}
+.tach-vcard__badge {
+  margin-left: 0.6em;
+  padding: 0.3em 0.8em;
+  border-radius: 2em;
+  background: #e1f3ea;
+  color: #1b7f55;
+  font-size: 0.95em;
+}
+.tach-vcard__link {
+  text-decoration: underline;
+}
+.tach-vcard__actions {
+  position: absolute;
+  right: 1.2em;
+  bottom: 1.3em;
+  display: inline-flex;
+  gap: 0.6em;
+}
+.tach-vcard__action {
+  width: 2.2em;
+  height: 2.2em;
+  padding: 0.5em;
+  border-radius: 50%;
+  background: #f0f1f3;
+}
+.tach-vcard__action--orange {
+  color: var(--tach-orange);
+}
+
+/* ── 05 Assets ────────────────────────────────────────────────────────────────────── */
+.tach-dusk {
+  background: #0c2a3d;
+}
+.tach-dusk__caption {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 3cqw;
+  padding: 7.5cqw 7.5cqw 0;
+  color: #fff;
+}
+.tach-dusk__title {
+  flex: none;
+  font-size: clamp(2.25rem, 7.9cqw, 5rem);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+.tach-dusk__text {
+  max-width: 17rem;
+  margin-top: 0.5cqw;
+  font-size: max(0.8125rem, 1.6cqw);
+  line-height: 1.5;
+  color: #b9cdd8;
+}
+
+/* ── Outro and team ───────────────────────────────────────────────────────────────── */
+.tach-outro {
+  padding: 12rem var(--tach-gutter) 10rem;
+}
+.tach-outro__lines {
+  font-size: clamp(3rem, 11.5vw, 13.75rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.tach-outro__line {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+  min-height: 1.1em;
+}
+.tach-outro__line[data-line='2'] {
+  padding-left: 0.1em;
+}
+.tach-outro__text {
+  display: block;
+  line-height: 1.1;
+}
+.tach-outro__lines .tach-accent {
+  color: var(--tach-orange);
+}
+.tach-founder {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.18em;
+  font-size: 1em;
+}
+.tach-founder[data-side='left'] {
+  flex-direction: row-reverse;
+}
+.tach-founder__photo {
+  width: 1.38em;
+  height: auto;
+}
+.tach-founder__caption {
+  display: flex;
+  flex-direction: column;
+  max-width: 7.5em;
+  margin-bottom: 0.1em;
+  font-size: clamp(0.6875rem, 1.25vw, 1.5rem);
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+.tach-founder[data-side='left'] .tach-founder__caption {
+  text-align: right;
+}
+.tach-founder__name {
+  font-weight: 500;
+}
+.tach-founder__role {
+  margin-top: 0.15em;
+  font-size: 0.8em;
+  color: var(--tach-faint);
+}
+.tach-team {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 44rem;
+  max-width: 102rem;
+  margin: 8rem auto 0;
+}
+.tach-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: start;
+  text-align: center;
+}
+.tach-member:nth-child(2),
+.tach-member:nth-child(4) {
+  margin-top: 6.7rem;
+}
+.tach-member:nth-child(1) {
+  grid-column: 1;
+}
+.tach-member:nth-child(2) {
+  grid-column: 2;
+}
+.tach-member:nth-child(3) {
+  grid-column: 3;
+}
+.tach-member:nth-child(4) {
+  grid-column: 4;
+}
+.tach-member:nth-child(5) {
+  grid-column: 5;
+}
+.tach-member:nth-child(6) {
+  grid-column: 3;
+  grid-row: 1;
+  align-self: end;
+}
+.tach-member:nth-child(-n + 5) {
+  grid-row: 1;
+}
+.tach-member__photo {
+  width: calc(var(--tach-photo, 418) * 0.03125rem);
+  height: auto;
+}
+.tach-member__name {
+  margin-top: 1.1rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+.tach-member__role {
+  margin-top: 0.15rem;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  color: var(--tach-faint);
+}
+
+/* ── Tablet ───────────────────────────────────────────────────────────────────────── */
+@media (max-width: 63.9375rem) {
+  .tach-chapter {
+    padding: 8rem 2rem 3.5rem;
+  }
+  .tach-chapter__title {
+    font-size: 2.25rem;
+  }
+  .tach-workflow {
+    padding: 4rem 3rem 6rem;
+  }
+  .tach-swatches {
+    min-height: 38rem;
+  }
+  .tach-swatch__title {
+    font-size: 3rem;
+  }
+  .tach-team {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: none;
+    gap: 3rem 1rem;
+  }
+  .tach-member:nth-child(2),
+  .tach-member:nth-child(4) {
+    margin-top: 0;
+  }
+  .tach-member:nth-child(n) {
+    grid-column: auto;
+    grid-row: auto;
+    align-self: start;
+  }
+  .tach-band__note {
+    position: static;
+    max-width: 30rem;
+    margin-top: auto;
+    padding-top: 4rem;
+    text-align: center;
+  }
+  .tach-band {
+    min-height: 0;
+    padding-bottom: 4rem;
+  }
+  .tach-band__deco {
+    display: none;
+  }
+}
+
+/* The hero stops being proportional: text on top, the photo and the cards below */
+@media (max-width: 59.9375rem) {
+  .tach-hero {
+    aspect-ratio: auto;
+    min-height: 48rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .tach-hero__stage {
+    inset: auto 0 0 auto;
+    height: 29rem;
+    aspect-ratio: 3840 / 2980;
+    -webkit-mask: linear-gradient(to bottom, transparent, #000 22%);
+    mask: linear-gradient(to bottom, transparent, #000 22%);
+  }
+  .tach-hero__inner {
+    position: relative;
+    inset: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 5.5rem 1.5rem 1.5rem;
+  }
+  .tach-hero__logo,
+  .tach-hero__lead,
+  .tach-hero__cards {
+    position: static;
+  }
+  .tach-hero__logo {
+    width: 8.5rem;
+  }
+  .tach-hero__lead {
+    width: auto;
+    max-width: 32rem;
+    margin-top: 1.25rem;
+    font-size: clamp(1.375rem, 4.6vw, 2.25rem);
+  }
+  .tach-hero__cards {
+    margin-top: auto;
+    padding-top: 18rem;
+    font-size: min(0.5rem, 2.1vw);
+  }
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────────────────────── */
+@media (max-width: 47.9375rem) {
+  .tach-case {
+    --tach-gap: 0.75rem;
+    --tach-radius: 0.75rem;
+  }
+  .tach-chapter {
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 5rem 1.25rem 2rem;
+  }
+  .tach-chapter__title {
+    font-size: 1.875rem;
+  }
+  .tach-chapter__text {
+    max-width: none;
+    margin-top: 0;
+    font-size: 1rem;
+  }
+  .tach-pair,
+  .tach-duo,
+  .tach-fonts,
+  .tach-features {
+    grid-template-columns: 1fr;
+  }
+  .tach-features__phone,
+  .tach-feature[data-tone='dark'],
+  .tach-feature[data-tone='light'] {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .tach-features__phone {
+    order: 3;
+  }
+  .tach-feature {
+    min-height: 0;
+  }
+  .tach-feature__in {
+    padding: 2.25rem 1.5rem 2.5rem;
+  }
+  .tach-feature__title {
+    font-size: 2.5rem;
+  }
+  .tach-feature__text {
+    margin-top: 1.25rem;
+    font-size: 1rem;
+  }
+  .tach-note__in {
+    padding: 2.5rem 1.5rem 3rem;
+  }
+  .tach-note__icon {
+    width: 5rem;
+    height: 5rem;
+  }
+  .tach-note__title {
+    margin-top: 1.5rem;
+    font-size: 2.5rem;
+  }
+  .tach-note__text {
+    margin-top: 1.25rem;
+    font-size: 1rem;
+  }
+  .tach-home {
+    padding: 8% 6% 6%;
+  }
+
+  /* scene dialog under the picture */
+  .tach-scene {
+    background: #c9c9cb;
+  }
+  .tach-dialog {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: calc(100% - 2rem);
+    max-width: 22rem;
+    margin: -3.5rem auto 1.25rem;
+    font-size: 0.8125rem;
+  }
+
+  .tach-overview {
+    padding: 4.5rem 1.25rem 4rem;
+  }
+  .tach-overview__lead {
+    margin-top: 2rem;
+    font-size: 1.375rem;
+  }
+  .tach-overview__text {
+    font-size: 1rem;
+  }
+  .tach-facts {
+    margin-top: 2.5rem;
+  }
+  .tach-facts__row {
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.1rem 0;
+  }
+  .tach-facts dd {
+    text-align: left;
+    color: var(--tach-muted);
+  }
+
+  /* timeline as a list of labelled bars */
+  .tach-workflow {
+    margin-top: 3rem;
+    padding: 2.5rem 1.25rem 2.5rem;
+  }
+  .tach-workflow__head {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .tach-workflow__title {
+    font-size: 2.25rem;
+  }
+  .tach-workflow__duration {
+    margin-top: 0;
+    font-size: 1rem;
+  }
+  .tach-gantt {
+    margin-top: 2rem;
+  }
+  .tach-gantt::before {
+    inset: 1.6rem 0 -2.5rem;
+  }
+  .tach-gantt__months {
+    font-size: 0.6875rem;
+  }
+  .tach-gantt__bars {
+    display: grid;
+    height: auto;
+    margin-top: 1.5rem;
+    row-gap: 1.1rem;
+  }
+  .tach-bar {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    height: auto;
+    display: block;
+    padding: 0;
+    background: none;
+    color: #fff;
+    text-align: left;
+    font-size: 0.8125rem;
+  }
+  .tach-bar::after {
+    content: '';
+    display: block;
+    height: 0.6rem;
+    margin-top: 0.35rem;
+    margin-left: calc(var(--tach-start) / var(--tach-months) * 100%);
+    width: calc(var(--tach-length) / var(--tach-months) * 100%);
+    border-radius: 0.3rem;
+    background: var(--tach-bar-bg);
+  }
+  .tach-bar[data-tone='dark'] {
+    --tach-bar-bg: #5b5f7a;
+  }
+  .tach-bar[data-tone='fade'] {
+    --tach-bar-bg: linear-gradient(90deg, #5b5f7a 55%, transparent);
+  }
+  .tach-bar__label {
+    position: relative;
+  }
+
+  /* truck scene: cards stacked over the photo */
+  .tach-showcase {
+    display: grid;
+    background: linear-gradient(180deg, #5c8794, #b98d86 82%, #c98f7f);
+  }
+  .tach-showcase .tach-shot {
+    order: 2;
+  }
+  .tach-showcase__cards {
+    position: relative;
+    inset: auto;
+    order: 1;
+    display: grid;
+    gap: 0.6rem;
+    padding: 1rem;
+    font-size: 0.8125rem;
+  }
+  .tach-float {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
+  }
+  .tach-float--balance,
+  .tach-float--amount {
+    width: auto;
+    padding: 1rem 1.25rem;
+  }
+  .tach-float--budget {
+    width: auto;
+  }
+  .tach-donut {
+    width: 9rem;
+  }
+  .tach-budget__callouts {
+    font-size: 0.75rem;
+  }
+
+  /* brand */
+  .tach-logogrid {
+    padding: 3.5rem 0;
+  }
+  .tach-logopanel {
+    aspect-ratio: 4 / 3;
+  }
+  .tach-logopanel__logo {
+    width: 66%;
+  }
+  .tach-swatches {
+    flex-wrap: wrap;
+    min-height: 0;
+  }
+  .tach-swatch {
+    flex: 1 1 50%;
+    min-height: 11rem;
+    padding: 1.25rem;
+  }
+  .tach-swatch:first-child {
+    flex: 1 1 100%;
+    min-height: 26rem;
+    padding: 1.5rem 1.25rem 2rem;
+  }
+  .tach-swatch:last-child {
+    flex: 1 1 100%;
+    min-height: 8rem;
+  }
+  .tach-swatch__title {
+    font-size: 2.75rem;
+  }
+  .tach-swatch__text {
+    font-size: 1rem;
+  }
+  .tach-cap__carrier {
+    font-size: max(0.5rem, 1.9cqw);
+  }
+
+  .tach-font {
+    aspect-ratio: auto;
+    min-height: 26rem;
+  }
+  .tach-font__name {
+    font-size: 21cqw;
+  }
+  .tach-font__alphabet {
+    margin-top: 2rem;
+    font-size: 1.125rem;
+  }
+  .tach-note__title {
+    max-width: none;
+  }
+  .tach-budget__chart {
+    min-height: 0;
+  }
+  .tach-budget__callouts {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem 1rem;
+    margin-top: 1.25rem;
+  }
+  .tach-budget__callouts li {
+    position: static;
+    max-width: none;
+    text-align: left;
+  }
+  .tach-budget__callouts li:nth-child(n) {
+    inset: auto;
+    text-align: left;
+  }
+
+  /* dark band */
+  .tach-band {
+    padding: 3.5rem 1.5rem 3rem;
+  }
+  .tach-band__logo {
+    width: 8rem;
+  }
+  .tach-band__statement {
+    margin-top: 2.5rem;
+    font-size: 1.75rem;
+  }
+  .tach-band__note {
+    padding-top: 2.5rem;
+    font-size: 1rem;
+  }
+
+  /* vendor card under the picture */
+  .tach-vendor__stage {
+    font-size: 0.8125rem;
+  }
+  .tach-vcard {
+    left: 0.75rem;
+    top: 0.75rem;
+    width: min(20rem, calc(100% - 1.5rem));
+  }
+  .tach-dusk__caption {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.75rem 1.5rem 0;
+  }
+  .tach-dusk__title {
+    font-size: 2.25rem;
+  }
+  .tach-dusk__text {
+    max-width: 18rem;
+    font-size: 0.875rem;
+  }
+
+  /* outro */
+  .tach-outro {
+    padding: 6rem 1.25rem 5rem;
+  }
+  .tach-outro__lines {
+    font-size: clamp(3rem, 15vw, 5rem);
+  }
+  .tach-founder {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  .tach-founder[data-side='left'] {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .tach-founder__photo {
+    width: 1.5em;
+  }
+  .tach-founder__caption {
+    max-width: 8rem;
+    font-size: 0.6875rem;
+  }
+  .tach-team {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 0.75rem;
+    margin-top: 4rem;
+  }
+  .tach-member__photo {
+    width: calc(var(--tach-photo, 418) * 0.0156rem);
+  }
+  .tach-member__name {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet and phone: the truck scene shows its cards in a stack above the photo */
+@media (max-width: 63.9375rem) {
+  .tach-showcase {
+    display: grid;
+    background: linear-gradient(180deg, #5c8794, #b98d86 82%, #c98f7f);
+  }
+  .tach-showcase .tach-shot {
+    order: 2;
+  }
+  .tach-showcase__cards {
+    position: relative;
+    inset: auto;
+    order: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    font-size: 0.875rem;
+  }
+  .tach-float {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
+  }
+  .tach-float--balance,
+  .tach-float--amount {
+    width: auto;
+    padding: 1rem 1.25rem;
+  }
+  .tach-float--budget {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: auto;
+    padding: 1.25rem;
+  }
+  .tach-donut {
+    width: 9rem;
+  }
+  .tach-budget__chart {
+    min-height: 0;
+  }
+  .tach-budget__callouts {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem 1rem;
+    margin-top: 1.25rem;
+    font-size: 0.75rem;
+  }
+  .tach-budget__callouts li:nth-child(n) {
+    position: static;
+    max-width: none;
+    text-align: left;
+  }
+}
+
+/* Tablet hero: the photo spans the full width under the text */
+@media (min-width: 36rem) and (max-width: 59.9375rem) {
+  .tach-hero {
+    min-height: 54rem;
+  }
+  .tach-hero__stage {
+    inset: auto 0 0 0;
+    width: 100%;
+    height: auto;
+  }
+  .tach-hero__cards {
+    padding-top: 20rem;
+  }
+}

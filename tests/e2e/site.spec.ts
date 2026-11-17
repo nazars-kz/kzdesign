@@ -6,7 +6,7 @@ const PAGES: readonly { path: string; h1: string | RegExp | null }[] = [
   { path: '/', h1: /^Your reliable\s*UX\/UI design partner$/ },
   { path: '/about-us', h1: null },
   { path: '/cases', h1: null },
-  { path: '/cases/tach', h1: null },
+  { path: '/cases/tach', h1: /^Tach: UX\/UI case study/ },
   { path: '/services', h1: null },
   { path: '/services/saas', h1: 'SaaS, Web App, Software' },
   { path: '/approach', h1: 'Approach' },
