@@ -12,9 +12,9 @@ import type { PanelForm } from './contact-panel';
 import { PANEL_STRING_KEYS, type PanelStrings } from './panel-strings';
 
 /** Everything the panel needs, read once on the server (texts are edited in the admin). */
-async function panelData(locale: string, messageFormId: 'contact' | 'project') {
+async function panelData(locale: string) {
   const [messageConfig, bookingConfig, t, tForms, home, site] = await Promise.all([
-    getSiteFormConfig(messageFormId, locale),
+    getSiteFormConfig('contact', locale),
     getSiteFormConfig('booking', locale),
     getTranslations('contact'),
     getTranslations('forms'),
@@ -42,7 +42,7 @@ async function panelData(locale: string, messageFormId: 'contact' | 'project') {
   const consentField = messageConfig.fields.find((field) => field.consentText);
   const person = home.contact.team[0];
   return {
-    messageForm: form(messageConfig, messageFormId),
+    messageForm: form(messageConfig, 'contact'),
     bookingForm: form(bookingConfig, 'booking'),
     strings,
     formStrings: {
@@ -63,10 +63,10 @@ async function panelData(locale: string, messageFormId: 'contact' | 'project') {
 
 /** The slide-in panel mounted once in the site layout. */
 export async function ContactDrawerMount({ locale }: { locale: string }) {
-  return <ContactDrawer {...await panelData(locale, 'project')} />;
+  return <ContactDrawer {...await panelData(locale)} />;
 }
 
 /** The embedded form of the Home contact block. */
 export async function ContactInlineBlock({ locale }: { locale: string }) {
-  return <ContactInline {...await panelData(locale, 'contact')} />;
+  return <ContactInline {...await panelData(locale)} />;
 }

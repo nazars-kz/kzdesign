@@ -1,8 +1,8 @@
 /**
- * Fields and default texts of the "Send a message" form. It is shown twice, so it is two
- * forms with the same fields: `contact` (the Home contact block) and `project` (the
- * slide-in panel of every "Get in touch" button). Two forms because each needs its own
- * element ids on a page where both exist; editors can tell them apart in the inbox.
+ * Fields and default texts of the "Send a message" form (`contact`). It is shown twice: in the
+ * contact block (Home, Contact us) and in the slide-in panel of every "Get in touch" button.
+ * One form, so its texts are edited in one place; the two places use different element ids
+ * (`idPrefix` of `useSiteForm`) and a hidden `origin` field tells them apart in the inbox.
  *
  * "What do you need?", the budget and "How did you hear about us?" are chips in the panel:
  * their answers arrive as comma-separated text and the options are interface texts
@@ -27,6 +27,8 @@ export const MESSAGE_FIELDS = {
   nda: { type: FormFieldType.Checkbox, label: 'Send me an NDA before we talk' },
   budget: { type: FormFieldType.Text, max: 60, label: 'Budget' },
   source: { type: FormFieldType.Text, max: 60, label: 'How did you hear about us?' },
+  /** Hidden: where the request was sent from (`block` or `panel`), shown in the inbox. */
+  origin: { type: FormFieldType.Text, max: 20, label: 'Sent from' },
   privacy: { type: FormFieldType.Consent, required: true },
 } as const;
 
@@ -61,6 +63,7 @@ export const MESSAGE_SEED = {
   nda: { label: 'Send me an NDA before we talk' },
   budget: { label: 'Budget' },
   source: { label: 'How did you hear about us?' },
+  origin: { label: 'Sent from' },
   privacy: { label: CONSENT },
   messages: {
     submit: 'Submit',

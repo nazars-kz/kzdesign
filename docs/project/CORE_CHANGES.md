@@ -1,7 +1,11 @@
 # Core changes
 
 Files of the template core (`src/core/**`, `src/admin/**`, admin/api routes, `scripts/**`) changed for this
-project, with the reason. **None so far.**
+project, with the reason.
+
+| File                               | Change                                                                                                                                                                                                                                       |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/core/forms/use-site-form.tsx` | new optional `idPrefix`: the element ids (`<prefix>-<field>`, `form-<prefix>`) can differ from the form id, so one form can be shown twice on a page without duplicate ids. The submitted form id and the token request are unchanged (#44). |
 
 Tooling files outside the core that differ from the template (for transparency):
 

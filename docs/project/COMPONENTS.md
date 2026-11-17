@@ -99,7 +99,7 @@ Breadcrumbs, Marquee, LeaderCard, FounderCard, FeatureCard, ProcessStep, filter 
 | --------------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------- |
 | Graphic (pure-CSS illustration)   | `src/site/components/ui/graphic.tsx`            | renders trusted HTML from `src/site/theme/graphics.ts` (Approach and Why us cards) |
 | Accordion "show more"             | `src/site/components/accordion.tsx`             | `collapsedCount`, `moreLabels`: extra items stay in the HTML, hidden with CSS      |
-| Message form of the contact panel | `src/site/components/contact/contact-panel.tsx` | advanced switch, chips, scope cards; forms `contact` and `project`                 |
+| Message form of the contact panel | `src/site/components/contact/contact-panel.tsx` | advanced switch, chips, scope cards; form `contact` (drawer and block)             |
 
 ## Added with Cases
 

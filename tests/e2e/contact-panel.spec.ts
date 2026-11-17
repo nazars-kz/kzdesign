@@ -107,11 +107,11 @@ test.describe.serial('contact panel', () => {
 
     const name = `Project ${stamp}`;
     const submit = panel.getByRole('button', { name: 'Submit' });
-    await panel.locator('#project-name').fill(name);
-    await panel.locator('#project-email').fill('project@example.test');
+    await panel.locator('#contact-panel-name').fill(name);
+    await panel.locator('#contact-panel-email').fill('project@example.test');
     // Submit waits for the privacy checkbox.
     await expect(submit).toBeDisabled();
-    await panel.locator('#project-privacy').check({ force: true });
+    await panel.locator('#contact-panel-privacy').check({ force: true });
     await expect(submit).toBeEnabled();
     await guest.waitForTimeout(FILL_DELAY_MS);
     await submit.click();
@@ -119,7 +119,7 @@ test.describe.serial('contact panel', () => {
     await context.close();
 
     await login(page, E2E_ADMIN);
-    expect(await inboxCount(page, 'project', name)).toBe(1);
+    expect(await inboxCount(page, 'contact', name)).toBe(1);
     // The chosen chips are in the request.
     await page.getByRole('table', { name: 'Requests' }).getByRole('link').first().click();
     await expect(page.getByText('SaaS, Web')).toBeVisible();
@@ -174,5 +174,32 @@ test.describe('header menus', () => {
     ]);
     await expect(nav.getByRole('button', { name: 'Services' })).toBeVisible();
     await expect(page.getByRole('button', { name: /More pages/ })).toHaveCount(0);
+  });
+});
+
+test.describe('one message form in two places', () => {
+  test('the block and the panel have distinct ids and tell the inbox where a request came from', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.locator('.site-header__cta').click();
+    await expect(drawer(page)).toHaveClass(/is-open/);
+    const duplicates = await page.evaluate(() => {
+      const seen = new Set<string>();
+      const dup: string[] = [];
+      for (const el of document.querySelectorAll('[id]')) {
+        if (seen.has(el.id)) dup.push(el.id);
+        seen.add(el.id);
+      }
+      return dup;
+    });
+    expect(duplicates).toEqual([]);
+    await expect(page.locator('[data-contact-inline] input[name="origin"]')).toHaveValue('block');
+    await expect(page.locator('#contact-drawer input[name="origin"]')).toHaveValue('panel');
+    // both post to the same form
+    const forms = await page
+      .locator('input[name="_form"]')
+      .evaluateAll((inputs) => inputs.map((input) => (input as HTMLInputElement).value));
+    expect(new Set(forms)).toEqual(new Set(['contact', 'booking']));
   });
 });

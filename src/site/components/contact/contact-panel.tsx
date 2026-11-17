@@ -4,7 +4,7 @@
  * The contact panel: tabs "Book a call" (day → time → details → sent) and "Send a message".
  * One component for the slide-in drawer (every "Get in touch" button) and for the embedded
  * block of the Home page. The forms go through the site's form engine (`useSiteForm`):
- * `booking` for calls, `project` (drawer) or `contact` (embedded) for messages.
+ * `booking` for calls and `contact` for messages (the same form in the drawer and embedded).
  */
 import Image from 'next/image';
 import {
@@ -163,6 +163,15 @@ const IconGlobe = () => (
     <path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9s1.3-6.3 3.8-9z" />
   </Svg>
 );
+
+/**
+ * Element ids of a form shown in two places: the embedded block keeps the form id (`contact-name`),
+ * the slide-in panel gets its own prefix, so the ids stay unique once both are on the page.
+ */
+function idPrefix(formId: string, mode: ContactPanelProps['mode']): string {
+  if (mode === 'inline') return formId === 'booking' ? 'booking-inline' : formId;
+  return formId === 'booking' ? formId : `${formId}-panel`;
+}
 
 /* ── Panel ─────────────────────────────────────────────────────────────── */
 
@@ -331,6 +340,7 @@ function browserClock(): BrowserClock {
 }
 
 function BookPane({
+  mode,
   bookingForm,
   strings: s,
   formStrings,
@@ -343,6 +353,7 @@ function BookPane({
     config: bookingForm.config,
     messages: bookingForm.messages,
     summaryRef,
+    idPrefix: idPrefix('booking', mode),
   });
   const { ready, check } = useReady();
   // The calendar depends on "now" and the visitor's zone: it exists in the browser only.
@@ -676,6 +687,7 @@ function BookPane({
 /* ── Send a message ────────────────────────────────────────────────────── */
 
 function MessagePane({
+  mode,
   messageForm,
   strings: s,
   formStrings,
@@ -688,6 +700,7 @@ function MessagePane({
     config: messageForm.config,
     messages: messageForm.messages,
     summaryRef,
+    idPrefix: idPrefix('contact', mode),
   });
   const { ready, check } = useReady();
   const advancedId = useId();
@@ -718,6 +731,7 @@ function MessagePane({
       >
         {form.hiddenFields}
         {messageForm.security}
+        <input type="hidden" name="origin" value={mode === 'drawer' ? 'panel' : 'block'} />
         <input type="hidden" name="needs" value={needs.join(', ')} />
         <input type="hidden" name="budget" value={budget} />
         <input type="hidden" name="source" value={source} />

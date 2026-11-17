@@ -370,6 +370,7 @@ its own primitives and tokens (see `src/site/components/contact-form.tsx`):
 // server component
 const config = await getSiteFormConfig('contact', locale); // definition + texts
 <ContactForm config={config} messages={…} security={<FormSecurityFields formId="contact" />} />
+// A form shown twice on one page: pass `idPrefix` to `useSiteForm` (ids `<prefix>-<field>`), not a second form.
 
 // client component
 const summaryRef = useRef<HTMLDivElement>(null);
