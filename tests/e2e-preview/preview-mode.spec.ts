@@ -7,7 +7,7 @@ test.describe('preview mode (no DATABASE_URL)', () => {
     page,
     request,
   }) => {
-    for (const path of ['/', '/about-us', '/cases', '/cases/touren', '/services/saas']) {
+    for (const path of ['/', '/about-us', '/cases', '/cases/tach', '/services/saas']) {
       const response = await page.goto(path);
       expect(response?.status(), path).toBe(200);
       expect(response?.headers()['x-robots-tag'], path).toContain('noindex');
@@ -21,7 +21,7 @@ test.describe('preview mode (no DATABASE_URL)', () => {
       .toBeGreaterThan(0);
 
     await page.goto('/cases');
-    await expect(page.getByRole('link', { name: /Onground/ }).first()).toBeVisible();
+    await expect(page.getByRole('link', { name: /Tach/ }).first()).toBeVisible();
 
     const robots = await (await request.get('/robots.txt')).text();
     expect(robots).toMatch(/Disallow: \/\s*$/m);

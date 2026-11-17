@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 
+import { caseExists } from '@/content/cases';
 import type { SitePageContent } from '@/core/content/loader';
 
 import { SectionHeader } from '../components/section-header';
@@ -68,7 +69,9 @@ export async function Testimonials({
             role={item.role}
             project={item.project}
             quote={item.quote}
-            caseKind={item.caseKind}
+            caseKind={
+              item.caseKind === 'link' && !caseExists(item.caseSlug) ? 'soon' : item.caseKind
+            }
             caseName={item.caseName}
             caseImage={item.caseImage}
             caseSlug={item.caseSlug}

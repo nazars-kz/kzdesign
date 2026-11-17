@@ -39,6 +39,13 @@ layer** (public site, content schemas, theme, `project.config.ts`). Full spec:
    export `Page`, `generateMetadata`, `generateStaticParams` (+ `instant = false`).
 4. `pnpm content:sync`, `pnpm content:check`. Data: `getCollectionList` / `getCollectionItem`.
 
+## Case studies: unique pages
+
+A case study is **not** a template or a collection item: each one is a unique page with its own
+layout at `/cases/<slug>` (page `case-<slug>`, `adminGroup: 'Case studies'`). Only the header, the footer,
+the card data and the "Related case studies" block are shared. How to add one from a screenshot and
+assets: `docs/project/CASES.md`.
+
 ## Repeated sections: shared sections, not globals
 
 A section of page content that appears on several pages (CTA, testimonials, "why us") is a

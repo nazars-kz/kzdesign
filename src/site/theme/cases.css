@@ -295,69 +295,7 @@
   display: none;
 }
 
-/* ── Case page: details ──────────────────────────────────────────────────── */
-.cd {
-  padding: 3.75rem 0 8.75rem;
-}
-.cd__box {
-  padding-top: 3.0625rem;
-}
-.cd__title {
-  margin: 2.5rem 0 0;
-  font-family: var(--font-heading);
-  font-size: 4rem;
-  font-weight: 600;
-  line-height: 4.375rem;
-  color: var(--color-foreground);
-}
-.cd__group {
-  display: grid;
-  grid-template-columns: minmax(7.5rem, 264fr) minmax(0, 1056fr);
-  margin-top: 5rem;
-}
-.cd__label {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  color: var(--color-foreground);
-}
-.cd__rows {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin: 0;
-}
-.cd__row {
-  display: grid;
-  grid-template-columns: minmax(0, 348fr) minmax(0, 696fr);
-  gap: 0.75rem;
-  padding-bottom: 2.5625rem;
-  border-bottom: 1px solid rgb(26 26 26 / 0.1);
-}
-.cd__row dt {
-  font-family: var(--font-heading);
-  font-size: 1.75rem;
-  line-height: 2.375rem;
-  color: var(--color-foreground);
-}
-.cd__row dd {
-  margin: 0;
-  font-size: 1.75rem;
-  line-height: 2.375rem;
-  color: var(--color-inverse-subtle);
-}
-.cd__quote {
-  margin: 0;
-  padding-bottom: 2.5rem;
-}
-.cd__quote blockquote {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-size: 1.75rem;
-  font-weight: 500;
-  line-height: 2.375rem;
-  color: var(--color-foreground);
-  white-space: pre-line;
-}
+/* ── Author (round photo, name, role): client quotes and cards ───────────── */
 .author {
   display: flex;
   align-items: center;
@@ -388,154 +326,6 @@
   font-size: 1.25rem;
   line-height: 1.875rem;
   color: var(--color-foreground);
-}
-
-/* ── Case page: screens (exported layouts) ───────────────────────────────── */
-.cshots img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.cshots--mob {
-  display: none;
-}
-
-/* ── Case page: client feedback ──────────────────────────────────────────── */
-.cfb {
-  padding: 9.25rem 0 8.75rem;
-  overflow: hidden;
-  background: var(--color-surface);
-}
-.cfb__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 37.375rem) minmax(0, 1fr);
-  column-gap: 3.25rem;
-  align-items: center;
-}
-.cfb__text {
-  max-width: 37.375rem;
-}
-.cfb__lead {
-  margin-top: 2.5rem;
-  font-size: 1.75rem;
-  font-weight: 500;
-  line-height: 2.625rem;
-  color: var(--color-foreground-strong);
-  white-space: pre-line;
-}
-.cfb__body {
-  margin-top: 2rem;
-  font-size: 1.125rem;
-  line-height: 1.6875rem;
-  color: var(--color-ink-780);
-  white-space: pre-line;
-}
-.cfb .author {
-  margin-top: 4.25rem;
-}
-.cfb__visual {
-  justify-self: center;
-  width: 100%;
-  max-width: 43.4375rem;
-  max-height: 47.5rem;
-  object-fit: contain;
-  pointer-events: none;
-}
-
-/* ── Case page: call to action ───────────────────────────────────────────── */
-.ccta {
-  padding: 10.4375rem 0 5rem;
-  background: var(--color-inverse) url('/images/kz-dark-bg.webp') no-repeat 50% 50% / 50% auto;
-}
-.ccta__inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2.5rem;
-}
-.ccta__text {
-  flex: 0 1 38.375rem;
-  min-width: 0;
-}
-.ccta .eyebrow {
-  margin-top: 0.625rem;
-  font-size: 0.9375rem;
-  line-height: 1.40625rem;
-}
-.ccta__title {
-  max-width: 38.375rem;
-  margin: 1.5rem 0 0;
-  font-family: var(--font-heading);
-  font-size: 4rem;
-  font-weight: 600;
-  line-height: 4.375rem;
-  color: var(--color-inverse-foreground);
-}
-.ccta__title b {
-  font-weight: 700;
-}
-.ccta__sub {
-  max-width: 33.1875rem;
-  margin-top: 1.5625rem;
-  font-size: 1.25rem;
-  line-height: 1.875rem;
-  color: var(--color-inverse-muted);
-}
-.ccta .btn {
-  margin-top: 3rem;
-}
-.ccta__card {
-  flex: 0 1 31.5rem;
-  min-width: 0;
-  padding: 1.25rem;
-  border: 1px solid var(--color-inverse-border);
-  border-radius: var(--radius-md);
-  background: var(--color-inverse);
-  color: var(--color-gray-200);
-}
-.ccta__card .author {
-  align-items: flex-start;
-  gap: 0.75rem;
-  margin: 0;
-}
-.ccta__card .author > img {
-  width: 3rem;
-  height: 3rem;
-}
-.ccta__card .author__name {
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 1.6875rem;
-  color: var(--color-inverse-foreground);
-}
-.ccta__card .author__role {
-  font-size: 1.25rem;
-  line-height: 1.875rem;
-  color: var(--color-inverse-muted);
-}
-.ccta__list {
-  margin: 1.125rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-.ccta__list li {
-  position: relative;
-  padding-left: 0.75rem;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-.ccta__list li + li {
-  margin-top: 0.5rem;
-}
-.ccta__list li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.6875rem;
-  width: 0.25rem;
-  height: 0.25rem;
-  border-radius: 50%;
-  background: var(--color-inverse-foreground);
 }
 
 /* ── Case page: other case studies ───────────────────────────────────────── */
@@ -581,24 +371,6 @@
   min-height: 0;
   aspect-ratio: 1103 / 637;
   scroll-snap-align: start;
-}
-
-/* ── Narrow desktop (768–1100): the feedback picture goes under the text ─── */
-@media (max-width: 68.75rem) {
-  .cfb__inner {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 3rem;
-  }
-  .cfb__visual {
-    max-height: 35rem;
-  }
-  .cd__row dt,
-  .cd__row dd {
-    overflow-wrap: anywhere;
-  }
-  .ccta {
-    background-image: none;
-  }
 }
 
 /* ── Phones ──────────────────────────────────────────────────────────────── */
@@ -653,42 +425,6 @@
     padding-bottom: 3.75rem;
   }
 
-  .cd {
-    padding: 5rem 0 0;
-  }
-  .cd__box {
-    padding: 0;
-  }
-  .cd__title {
-    margin-top: 2.125rem;
-    font-size: 2rem;
-    line-height: 1.875rem;
-  }
-  .cd__group {
-    grid-template-columns: 1fr;
-    row-gap: 2rem;
-    margin-top: 2.5rem;
-  }
-  .cd__row {
-    grid-template-columns: auto auto;
-    justify-content: space-between;
-    padding-bottom: 1.3125rem;
-  }
-  .cd__row dt {
-    font-size: 1.5rem;
-  }
-  .cd__row dd {
-    font-size: 1.5rem;
-    line-height: 1.875rem;
-    text-align: right;
-  }
-  .cd__quote {
-    padding-bottom: 1.3125rem;
-  }
-  .cd__quote blockquote {
-    font-size: 1.5rem;
-    line-height: 2.375rem;
-  }
   .author__name {
     font-size: 1.5rem;
     line-height: 2.25rem;
@@ -696,60 +432,6 @@
   .author__role {
     font-size: 1.125rem;
     line-height: 1.6875rem;
-  }
-  .cd__group:last-child {
-    padding-bottom: 0;
-  }
-
-  .cshots--desk {
-    display: none;
-  }
-  .cshots--mob {
-    display: block;
-  }
-
-  .cfb {
-    padding: 2rem 0 1.5rem;
-  }
-  .cfb__lead {
-    margin-top: 1.125rem;
-  }
-  .cfb__inner {
-    grid-template-columns: 1fr;
-  }
-  .cfb .author {
-    margin-top: 4rem;
-  }
-  .cfb__visual {
-    display: none;
-  }
-
-  .ccta {
-    padding: 3.625rem 0 1.5rem;
-  }
-  .ccta__inner {
-    flex-direction: column;
-    gap: 4rem;
-  }
-  .ccta .eyebrow {
-    margin-top: 0;
-  }
-  .ccta__title {
-    margin-top: 1.5rem;
-    font-size: 1.5rem;
-    line-height: 1.875rem;
-  }
-  .ccta__sub {
-    margin-top: 1.5625rem;
-    font-size: 1.125rem;
-    line-height: 1.6875rem;
-  }
-  .ccta .btn {
-    margin-top: 3rem;
-  }
-  .ccta__card {
-    flex: none;
-    width: 100%;
   }
 
   .cother {
