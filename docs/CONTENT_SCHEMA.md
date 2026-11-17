@@ -158,6 +158,12 @@ tags, so pages stay statically rendered and update within seconds.
 - `page_seo(page_id, locale)`: SEO overrides.
 - `page_revisions`: the last 20 snapshots per (page, locale).
 
+### Pages in their own admin group
+
+`definePage({ …, adminGroup: 'Case studies' })` lists the page in its own, foldable sidebar group of
+the admin instead of the page tree (its URL and `parent` are unchanged). Pages with the same
+title share a group. A grouped page must not have child pages.
+
 ## Collections
 
 Repeatable items with their own URL: posts, projects, vacancies. Developers define the

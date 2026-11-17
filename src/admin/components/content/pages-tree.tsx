@@ -1,9 +1,9 @@
 'use client';
 
-import { FileTextIcon, SearchIcon } from 'lucide-react';
+import { ChevronDownIcon, FileTextIcon, SearchIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { type ReactNode, useId, useMemo, useState } from 'react';
 
 import { cn } from '@/admin/lib/utils';
 import { Input } from '@/admin/ui/input';
@@ -12,7 +12,7 @@ import { adminHref, AdminRoute } from '@/core/project/paths';
 
 import { LocaleStatusChips } from './locale-status';
 
-/** Extra sidebar group (Collections, Site-wide, Forms): flat links with an optional count. */
+/** Extra sidebar group (Case studies, Collections, Site-wide, Forms): flat links with an optional count. */
 export interface SidebarGroup {
   readonly id: string;
   readonly title: string;
@@ -27,6 +27,9 @@ export interface SidebarGroup {
     readonly note?: string;
   }>;
 }
+
+/** Id of the section with the page tree; the only one open at first. */
+const PAGES_SECTION = 'pages';
 
 export interface TreeNode {
   readonly id: string;
@@ -62,6 +65,7 @@ export function PagesTree({
 }) {
   const [query, setQuery] = useState('');
   const pathname = usePathname();
+  const [toggled, setToggled] = useState<Readonly<Record<string, boolean>>>({});
   const searchParams = useSearchParams();
   const currentLocale = searchParams.get('locale');
   const visible = useMemo(() => tree.filter((node) => matches(node, query)), [tree, query]);
@@ -76,6 +80,13 @@ export function PagesTree({
         .filter((group) => group.items.length > 0),
     [groups, needle],
   );
+
+  /** A section is open when the visitor toggled it, searched into it, or its page is the current one. */
+  const holdsCurrent = (group: SidebarGroup) =>
+    group.items.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
+  const isOpen = (id: string, fallback: boolean) => (needle ? true : (toggled[id] ?? fallback));
+  const toggle = (id: string, fallback: boolean) =>
+    setToggled((state) => ({ ...state, [id]: !(state[id] ?? fallback) }));
 
   const renderNode = (node: TreeNode, depth: number) => {
     if (!matches(node, query)) return null;
@@ -122,11 +133,22 @@ export function PagesTree({
       {visible.length === 0 && visibleGroups.length === 0 ? (
         <p className="px-2 text-sm text-muted-foreground">Nothing matches.</p>
       ) : null}
-      {groups.length > 0 && visible.length > 0 ? <GroupTitle>Pages</GroupTitle> : null}
-      <ul className="flex flex-col gap-0.5">{tree.map((node) => renderNode(node, 0))}</ul>
+      {visible.length > 0 ? (
+        <Fold
+          title="Pages"
+          open={isOpen(PAGES_SECTION, true)}
+          onToggle={() => toggle(PAGES_SECTION, true)}
+        >
+          <ul className="flex flex-col gap-0.5">{tree.map((node) => renderNode(node, 0))}</ul>
+        </Fold>
+      ) : null}
       {visibleGroups.map((group) => (
-        <section key={group.id} aria-label={group.title} className="flex flex-col gap-0.5">
-          <GroupTitle>{group.title}</GroupTitle>
+        <Fold
+          key={group.id}
+          title={group.title}
+          open={isOpen(group.id, holdsCurrent(group))}
+          onToggle={() => toggle(group.id, holdsCurrent(group))}
+        >
           <ul className="flex flex-col gap-0.5">
             {group.items.map((item) => {
               const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -159,16 +181,45 @@ export function PagesTree({
               );
             })}
           </ul>
-        </section>
+        </Fold>
       ))}
     </nav>
   );
 }
 
-function GroupTitle({ children }: { children: string }) {
+/** A sidebar section that folds: its title is a button (`aria-expanded`), the list hides when closed. */
+function Fold({
+  title,
+  open,
+  onToggle,
+  children,
+}: {
+  title: string;
+  open: boolean;
+  onToggle: () => void;
+  children: ReactNode;
+}) {
+  const bodyId = useId();
   return (
-    <h2 className="px-2 pt-2 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-      {children}
-    </h2>
+    <section aria-label={title} className="flex flex-col gap-0.5">
+      <h2 className="pt-2 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls={bodyId}
+          onClick={onToggle}
+          className="flex w-full items-center justify-between rounded-md px-2 py-1 text-start uppercase hover:bg-muted"
+        >
+          {title}
+          <ChevronDownIcon
+            aria-hidden
+            className={cn('size-4 transition-transform', !open && '-rotate-90')}
+          />
+        </button>
+      </h2>
+      <div id={bodyId} hidden={!open}>
+        {children}
+      </div>
+    </section>
   );
 }
