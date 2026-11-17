@@ -67,3 +67,25 @@ The input is a full-page screenshot of the case and a folder of assets (`design/
 - Fonts come from Google Fonts through `src/site/theme/fonts.ts` (`next/font`), never from a CDN link.
 - One case never styles another: every selector starts with the case prefix.
 - Never remove or restyle the header, footer or the Related block inside a case.
+
+## Lessons from the first case (Tach): reuse them
+
+Tach (`src/content/cases/tach.ts`, `src/site/cases/tach/`) is the reference implementation.
+
+- **Titles in fields.** A new line starts a new row and words in `*asterisks*` are highlighted: use `<Rows text>` / `<Accent text>` from `tach-parts.tsx` (copy the helpers into the new case folder; cases do not import each other).
+- **Hero with a cut-out person.** Photo, an SVG line and a transparent cut-out of the same frame are stacked in one box with a fixed aspect ratio; the SVG passes behind the person. Crop the cut-out to the photo's frame (find the offset by template matching) so both layers align.
+- **Coded mock-ups over a picture** (cards, dialogs, vendor card): size them in `em`, put `container-type: inline-size` on the tile and set the overlay's `font-size` in `cqw` on a **child** of the tile. `cqw` is measured on the content box of the nearest ancestor container, so the container itself must have no padding (use an inner element for padding) and never use `cqw` on the container's own properties.
+- **Mobile.** A mock-up that cannot be read when scaled (dialog, floating cards) is moved under or above the picture on phones; a timeline becomes a list of labelled bars; stagger layouts (team) become a plain grid.
+- **Images.** Convert with `sharp` to WebP (full width 2400 px, half width 1600 px, q 78–82, transparent PNGs keep alpha). `Hero`-like full-bleed photos weigh 150–300 KB, a whole case about 3 MB. Do not commit `design/`.
+- **Alt texts.** The seed needs a non-empty `alt` for every image; for a decorative duplicate render the image with `alt=""` in the view.
+- **Fonts.** Download the Google Fonts woff2 (latin) into `src/site/theme/fonts/`, declare them in `fonts.ts` with `preload: false` and apply the exported variable class on the case root only.
+- **Screenshots.** Chrome cannot capture pages higher than 16 384 px in one piece: capture in 6 000 px chunks and stitch them; hide `position: fixed` elements first.
+
+## Motion (every case gets entrances)
+
+The Tach page is the reference (`tach-motion.tsx` and the "Motion" part of `case-tach.css`).
+
+- The **hero** plays on load with CSS keyframes only. Everything below is armed by a tiny client component: it gives the blocks (tiles, chapters, lists) the class `tach-r` and, when a block's top passes 90% of the viewport, `is-in`. The position is read from the layout on scroll, **not** with an `IntersectionObserver`: a block hidden by its own `clip-path` would never count as visible.
+- Without JavaScript or with "reduce motion" nothing is armed, so the page is just shown (e2e checks it).
+- Signature moves: words slide up out of masks (`Accent` / `Rows` wrap every word and set `--tach-w`), tiles are uncovered by a curtain (left tile from the left, right tile from the right) while the picture settles from a zoom, the hero line draws itself, the logo letters rise and the needle swings, timeline bars grow along the months, the donut sweeps, overlays land with a spring and then float, the team rises one by one. Use `translate` / `rotate` / `scale` (individual properties) so transitions and scroll-linked drift (`animation-timeline: view()`) do not fight.
+- Keep the hidden state in `.tach-armed .tach-r:not(.is-in) …` and the transition on the base rule; stagger with `--tach-w`, `--tach-i` and `--tach-d`.
