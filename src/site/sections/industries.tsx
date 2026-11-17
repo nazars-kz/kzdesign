@@ -2,9 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
-import { getCollectionList } from '@/core/collections/loader';
 import type { SitePageContent } from '@/core/content/loader';
 
+import { getListedCases } from '../case-cards';
 import { Accordion } from '../components/accordion';
 import { SectionHeader } from '../components/section-header';
 import { cx } from '../components/ui/cn';
@@ -21,17 +21,12 @@ export async function Industries({
   locale: string;
   className?: string;
 }) {
-  const [{ items: cases }, t] = await Promise.all([
-    getCollectionList('cases', locale),
-    getTranslations('home'),
-  ]);
+  const [cases, t] = await Promise.all([getListedCases(locale), getTranslations('home')]);
 
   const items = content.items.map((industry) => {
     const related = cases
-      .filter((item) => item.content.industries.includes(industry.key))
-      .sort(
-        (a, b) => (a.content.industryOrder ?? Infinity) - (b.content.industryOrder ?? Infinity),
-      );
+      .filter((card) => card.industries.includes(industry.key))
+      .sort((x, y) => (x.industryOrder ?? Infinity) - (y.industryOrder ?? Infinity));
     return {
       key: industry._key,
       head: (
@@ -50,9 +45,9 @@ export async function Industries({
               {related.map((item) => (
                 <li key={item.slug}>
                   <Link href={item.href} className="ind-case">
-                    {item.content.industryThumb ? (
+                    {item.industryThumb ? (
                       <Image
-                        src={item.content.industryThumb.src}
+                        src={item.industryThumb.src}
                         alt=""
                         width={58}
                         height={58}
@@ -60,7 +55,7 @@ export async function Industries({
                       />
                     ) : null}
                     <span>
-                      <b>{item.content.industryLabel || item.content.title}</b>
+                      <b>{item.industryLabel || item.title}</b>
                       <em>{t('viewCaseStudy')}</em>
                     </span>
                   </Link>

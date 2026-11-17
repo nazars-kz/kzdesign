@@ -2,7 +2,7 @@
 import { f } from '@/core/content/fields';
 import { defineSharedSection } from '@/core/content/shared-section';
 
-import { INDUSTRIES } from '../collections/cases';
+import { INDUSTRIES } from '../cases/card';
 
 const INDUSTRY_TEXT: Record<(typeof INDUSTRIES)[number]['value'], string> = {
   healthcare:

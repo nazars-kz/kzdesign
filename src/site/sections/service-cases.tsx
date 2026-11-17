@@ -1,8 +1,7 @@
 import type { SiteCollectionItem } from '@/core/collections/loader';
-import { getCollectionList } from '@/core/collections/loader';
 import type { SitePageContent } from '@/core/content/loader';
 
-import { listCoverOf } from '../cases';
+import { getListedCases } from '../case-cards';
 import { CaseCard } from '../components/case-card';
 import { Eyebrow } from '../components/ui/eyebrow';
 import { Container } from '../components/ui/layout';
@@ -20,8 +19,9 @@ export async function ServiceCases({
   content: SitePageContent<'services'>['cases'];
   locale: string;
 }) {
-  const { items } = await getCollectionList('cases', locale);
-  const bySlug = new Map(items.map((entry) => [entry.slug, entry]));
+  const listed = await getListedCases(locale);
+  const bySlug = new Map(listed.map((card) => [card.slug, card]));
+  // Slugs of cases that do not exist (yet) are skipped.
   const cases = item.content.caseSlugs.flatMap((slug) => {
     const found = bySlug.get(slug);
     return found ? [found] : [];
@@ -40,16 +40,16 @@ export async function ServiceCases({
           <Lines text={content.title} />
         </Heading>
         <ul className="svc-cases__grid">
-          {cases.map((entry) => (
-            <li key={entry.slug}>
+          {cases.map((card) => (
+            <li key={card.slug}>
               <CaseCard
                 stacked
-                href={entry.href}
-                title={entry.content.title}
-                description={entry.content.description}
-                tags={entry.content.tags}
-                cover={listCoverOf(entry.content)}
-                coverMobile={entry.content.listCoverMobile}
+                href={card.href}
+                title={card.title}
+                description={card.description}
+                tags={card.tags}
+                cover={card.cover}
+                coverMobile={card.coverMobile}
               />
             </li>
           ))}

@@ -1,6 +1,6 @@
-import { getCollectionList } from '@/core/collections/loader';
 import type { SitePageContent } from '@/core/content/loader';
 
+import { getListedCases } from '../case-cards';
 import { CaseCard } from '../components/case-card';
 import { SectionHeader } from '../components/section-header';
 import { Container } from '../components/ui/layout';
@@ -14,10 +14,9 @@ export async function HomeCases({
   content: SitePageContent<'home'>['cases'];
   locale: string;
 }) {
-  const { items } = await getCollectionList('cases', locale);
-  const cases = items
-    .filter((item) => item.content.showOnHome)
-    .sort((a, b) => (a.content.homeOrder ?? Infinity) - (b.content.homeOrder ?? Infinity));
+  const cases = (await getListedCases(locale))
+    .filter((card) => card.showOnHome)
+    .sort((a, b) => (a.homeOrder ?? Infinity) - (b.homeOrder ?? Infinity));
 
   return (
     <section className="cases" id="cases" aria-labelledby="cases-title">
@@ -26,14 +25,15 @@ export async function HomeCases({
           <SectionHeader eyebrow={content.eyebrow} title={content.title} id="cases-title" />
         </div>
         <ul className="cases__list">
-          {cases.map((item) => (
-            <li key={item.slug}>
+          {cases.map((card) => (
+            <li key={card.slug}>
               <CaseCard
-                href={item.href}
-                title={item.content.title}
-                description={item.content.homeDescription || item.content.description}
-                tags={item.content.homeTags.length > 0 ? item.content.homeTags : item.content.tags}
-                cover={item.content.cover}
+                href={card.href}
+                title={card.title}
+                description={card.homeDescription || card.description}
+                tags={card.homeTags.length > 0 ? card.homeTags : card.tags}
+                cover={card.cover}
+                coverMobile={card.coverMobile}
               />
             </li>
           ))}
