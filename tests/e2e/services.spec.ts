@@ -12,8 +12,12 @@ test.describe('service pages', () => {
 
     await expect(page.locator('.founder')).toHaveCount(2);
     await expect(page.locator('.feature')).toHaveCount(3);
-    // SaaS lists no case study yet: the block is left out.
-    await expect(page.locator('.svc-cases')).toHaveCount(0);
+    // SaaS lists the Onground case study.
+    await expect(page.locator('.svc-cases__grid a.case')).toHaveCount(1);
+    await expect(page.locator('.svc-cases__grid a.case').first()).toHaveAttribute(
+      'href',
+      /\/cases\/onground$/,
+    );
     await expect(page.locator('.step')).toHaveCount(4);
     await expect(page.locator('.step__head span').first()).toHaveText('01');
 
@@ -40,7 +44,7 @@ test.describe('service pages', () => {
 
     await page.goto('/services/web');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Websites');
-    await expect(page.locator('.svc-cases__grid a.case')).toHaveCount(1);
+    await expect(page.locator('.svc-cases__grid a.case')).toHaveCount(2);
 
     // The marquee moves once the page is hydrated (the logos repeat three times).
     const track = page.locator('.marquee__track');

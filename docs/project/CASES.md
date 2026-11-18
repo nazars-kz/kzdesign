@@ -89,3 +89,10 @@ The Tach page is the reference (`tach-motion.tsx` and the "Motion" part of `case
 - Without JavaScript or with "reduce motion" nothing is armed, so the page is just shown (e2e checks it).
 - Signature moves: words slide up out of masks (`Accent` / `Rows` wrap every word and set `--tach-w`), tiles are uncovered by a curtain (left tile from the left, right tile from the right) while the picture settles from a zoom, the hero line draws itself, the logo letters rise and the needle swings, timeline bars grow along the months, the donut sweeps, overlays land with a spring and then float, the team rises one by one. Use `translate` / `rotate` / `scale` (individual properties) so transitions and scroll-linked drift (`animation-timeline: view()`) do not fight.
 - Keep the hidden state in `.tach-armed .tach-r:not(.is-in) …` and the transition on the base rule; stagger with `--tach-w`, `--tach-i` and `--tach-d`.
+
+## Second case (Onground): what was reused and what is new
+
+- Same recipe as Tach: schema with seed text, one folder under `src/site/cases/<slug>/`, one CSS file with a short prefix (`og-`), route, card section, service `caseSlugs`, e2e. The helpers (`Accent`, `Rows`, the motion component) are **copied** into the folder, not imported from another case.
+- Rows of pictures wider than the page (tablet screens): put the row in a grid track with `minmax(0, 1fr)` and `justify-content: center`; shift a row with `translate`, drift it with `animation-timeline: view()` on `transform`.
+- Decorative yellow lines are SVG files from the design: keep them in `public/cases/<slug>/` and place them as CSS backgrounds sized from the design (measure the scale from the screenshot); animate them with a `clip-path` wipe.
+- Re-importing a seed image under the same file name does not update an existing database: give a changed image a new file name.

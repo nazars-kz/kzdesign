@@ -288,3 +288,12 @@ A unique page (`/cases/tach`), built from `Case.png` (1920 px full-page screensh
 - Type: Hanken Grotesk (headings, text), IBM Plex Sans (tile titles, the colors title, the dark statement), both Google Fonts, self-hosted through `fonts.ts`.
 - Mobile (no design): the hero stacks text, photo and cards; the timeline becomes a list of labelled bars; floating cards stack above the truck photo; the dialog moves under the tablet picture; the team is a two-column grid.
 - Coded overlays are sized in `em` and their parent sets `font-size` in `cqw` units, so they scale with the picture. The container (`.tach-tile`) must not have padding: `cqw` is measured on its content box, put the padding on an inner element.
+
+## Case study: Onground (`design/cases/onground`)
+
+A unique page (`/cases/onground`) from `Case.png` (1920 × 21486) and 33 assets. Sections: dark hero (laptop in a spotlight, a thin bar with studio / service / year), About (grey), Process (six chips in a zig-zag), sign-up laptop and plane, the yellow motion-video link block, Task and Goals (four goals, a yellow line, a plane photo and an ID card), Info Architecture (dark: three rows of dashed boxes running off the right edge), Typography and Colors (DM Sans specimen, three weight columns, four color circles), Dashboard (vendor phone, cabin photo with a coded chart and total card, client laptop), Booking (grey: two rows of tablet screens that run off both sides), Booking Details, Inbox (full-width laptop), Admin (grey, two rows of screens), outro (yellow lines, the team with yellow rings).
+
+- Palette (scoped to `.og-case`): yellow `#FBD854`, grey `#F0F0F1`, ink `#161616`, dark `#262626` / `#2A2A2A`.
+- Type: Inter Tight (page), DM Sans (specimen), both Google Fonts through `fonts.ts` (`ongroundFontVariables`).
+- Mobile (no design): pairs stack, the zig-zag becomes a 2-column grid, the architecture rows wrap, the specimen tiles stack, screens rows stay wider than the page and are centered.
+- Rows of screens are centered with `justify-content: center` inside a `minmax(0, 1fr)` grid track (a plain grid item would grow to the row's width and start at the left edge).

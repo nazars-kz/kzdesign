@@ -2,11 +2,12 @@
  * The case studies of the site, one unique page each. A new case is added here (and gets its own
  * route and view): see docs/project/CASES.md.
  */
+import { ongroundCase } from './onground';
 import { tachCase } from './tach';
 
 export { CASE_CATEGORIES, INDUSTRIES } from './card';
 
-export const casePages = [tachCase] as const;
+export const casePages = [tachCase, ongroundCase] as const;
 
 export type CasePage = (typeof casePages)[number];
 
