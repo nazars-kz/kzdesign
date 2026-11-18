@@ -56,3 +56,25 @@ const tachPlex = localFont({
 
 /** Tach case study: Hanken Grotesk (headings, UI) and IBM Plex Sans (brand type specimen). */
 export const tachFontVariables = [tachHanken.variable, tachPlex.variable].join(' ');
+
+const sigmaInter = localFont({
+  src: [
+    { path: './fonts/inter.woff2', weight: '100 900', style: 'normal' },
+    { path: './fonts/inter-italic.woff2', weight: '100 900', style: 'italic' },
+  ],
+  variable: '--font-family-sigma-inter',
+  display: 'swap',
+  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+const sigmaHand = localFont({
+  src: [{ path: './fonts/kalam-300.woff2', weight: '300', style: 'normal' }],
+  variable: '--font-family-sigma-hand',
+  display: 'swap',
+  preload: false,
+  fallback: ['cursive'],
+});
+
+/** Signal Sigma case study: Inter (titles, quote, specimen) and Kalam (handwritten notes). */
+export const signalSigmaFontVariables = [sigmaInter.variable, sigmaHand.variable].join(' ');
