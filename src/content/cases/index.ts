@@ -4,10 +4,11 @@
  */
 import { signalSigmaCase } from './signal-sigma';
 import { tachCase } from './tach';
+import { tourenCase } from './touren';
 
 export { CASE_CATEGORIES, INDUSTRIES } from './card';
 
-export const casePages = [tachCase, signalSigmaCase] as const;
+export const casePages = [tachCase, signalSigmaCase, tourenCase] as const;
 
 export type CasePage = (typeof casePages)[number];
 

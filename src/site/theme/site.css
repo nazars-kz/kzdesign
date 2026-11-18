@@ -1,6 +1,6 @@
 /*
  * Public site stylesheet entry. Visual values live in tokens.css (raw values)
- * and components.css (component styles built from tokens).
+ * and components.css (component styles built from tokens). Case pages: case-<slug>.css.
  */
 @import 'tailwindcss';
 @import './tokens.css';
@@ -9,6 +9,7 @@
 @import './cases.css';
 @import './case-tach.css';
 @import './case-signal-sigma.css';
+@import './case-touren.css';
 @import './services.css';
 @import './about.css';
 @import './approach.css';
