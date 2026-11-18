@@ -89,3 +89,23 @@ The Tach page is the reference (`tach-motion.tsx` and the "Motion" part of `case
 - Without JavaScript or with "reduce motion" nothing is armed, so the page is just shown (e2e checks it).
 - Signature moves: words slide up out of masks (`Accent` / `Rows` wrap every word and set `--tach-w`), tiles are uncovered by a curtain (left tile from the left, right tile from the right) while the picture settles from a zoom, the hero line draws itself, the logo letters rise and the needle swings, timeline bars grow along the months, the donut sweeps, overlays land with a spring and then float, the team rises one by one. Use `translate` / `rotate` / `scale` (individual properties) so transitions and scroll-linked drift (`animation-timeline: view()`) do not fight.
 - Keep the hidden state in `.tach-armed .tach-r:not(.is-in) …` and the transition on the base rule; stagger with `--tach-w`, `--tach-i` and `--tach-d`.
+
+## Lessons from Signal Sigma
+
+Signal Sigma (`src/content/cases/signal-sigma.ts`, `src/site/cases/signal-sigma/`, prefix `sigma-`) is the
+second reference.
+
+- **Scaled design layout.** A design with many free-placed cards and notes is easiest to match when the
+  page is the 1920 px design scaled to the window: `--u: calc(min(100vw, 1920px) / 1920)` is one design
+  pixel and every position is `calc(N * var(--u))`; text sizes use `max(<readable px>, calc(N * var(--u)))`.
+  Below 1024 px the scenes become a single column (cards and notes under their pictures).
+- **Scenes.** A picture with cards/notes on it is `.sigma-scene` with a design height and absolutely placed
+  children (design coordinates); on phones `position: relative` and `order` put them in reading order.
+- **Overlay PNGs with shadows.** Place them by the opaque part: find the box of pixels with alpha > 230
+  (`sharp` raw buffer) and offset the image so that box lands on the design coordinates.
+- **Chapter strip.** One `chapter` field per block; the view groups the chapters into parts and shows the
+  part up to the current one (`aria-current="step"`), so labels stay editable and never get out of order.
+- **Lists inside lists** are not supported by the content schema: per-item tags are a comma-separated
+  text field split in the view.
+- **Comparing with the design**: screenshot the page at 1920 in 6 000 px chunks with the site header
+  hidden, then put design and page side by side per block (aligned on each block's top).
