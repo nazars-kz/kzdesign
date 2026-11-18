@@ -1794,7 +1794,9 @@
     --touren-intro-gap: calc(193 * var(--u));
     --touren-top: calc(244 * var(--u));
   }
+  /* The dark bar spreads sideways from the 1440 column: keep it on the photo */
   .touren-idea {
+    overflow: hidden;
     margin-top: calc(59 * var(--u));
   }
   .touren-idea__photo {
