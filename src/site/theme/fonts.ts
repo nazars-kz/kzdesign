@@ -56,3 +56,25 @@ const tachPlex = localFont({
 
 /** Tach case study: Hanken Grotesk (headings, UI) and IBM Plex Sans (brand type specimen). */
 export const tachFontVariables = [tachHanken.variable, tachPlex.variable].join(' ');
+
+/**
+ * Onground case study fonts: Inter Tight (the page) and DM Sans (the type specimen and the
+ * product screens). Applied on that case's root only, preload is off.
+ */
+const ongroundInter = localFont({
+  src: [{ path: './fonts/inter-tight.woff2', weight: '100 900', style: 'normal' }],
+  variable: '--font-family-onground-inter',
+  display: 'swap',
+  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+const ongroundDm = localFont({
+  src: [{ path: './fonts/dm-sans.woff2', weight: '100 1000', style: 'normal' }],
+  variable: '--font-family-onground-dm',
+  display: 'swap',
+  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+export const ongroundFontVariables = [ongroundInter.variable, ongroundDm.variable].join(' ');

@@ -170,7 +170,7 @@ export const services = defineCollection({
               experience: 'Ex Head of Design in US CRM development company',
             },
           ],
-          caseSlugs: [],
+          caseSlugs: ['onground'],
           bannerImage: {
             asset: 'service-saas-banner.webp',
             alt: 'SaaS, Web App, Software on a device',
@@ -245,7 +245,7 @@ export const services = defineCollection({
           about: [
             'Conversion and brand positioning driven web design for your website to help leads and visitors find the fastest way to actions necessary for your business',
           ],
-          caseSlugs: ['tach'],
+          caseSlugs: ['tach', 'onground'],
           bannerImage: { asset: 'service-web-banner.webp', alt: 'Web Design on a device' },
           nextTitle: 'Web Design',
           nextText:

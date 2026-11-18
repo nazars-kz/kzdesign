@@ -154,3 +154,13 @@ Breadcrumbs, Marquee, LeaderCard, FounderCard, FeatureCard, ProcessStep, filter 
 | Logo                  | `src/site/cases/tach/tach-logo.tsx`  | colors from `--tach-logo-ink` / `--tach-logo-accent`                                       |
 | Styles                | `src/site/theme/case-tach.css`       | every selector starts with `tach-`                                                         |
 | Fonts                 | `src/site/theme/fonts.ts`            | `tachFontVariables`, applied on the case root only (no preload)                            |
+
+## Case study Onground (unique page, not reusable)
+
+| Piece                 | File                                          | Notes                                                                                                                       |
+| --------------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| View and its sections | `src/site/cases/onground/*.tsx`               | hero, overview, process, visuals + video, goals, architecture, typography, dashboard, booking, details, inbox, admin, outro |
+| Helpers               | `src/site/cases/onground/onground-parts.tsx`  | `Accent` / `Rows` (words in masks), `Head` ("// Label" + title), `Shot`, `Chips`, `cssVars`                                 |
+| Motion                | `src/site/cases/onground/onground-motion.tsx` | arms the scroll entrances (layout check, not IntersectionObserver)                                                          |
+| Styles                | `src/site/theme/case-onground.css`            | every selector starts with `og-`                                                                                            |
+| Fonts / lines         | `fonts.ts`, `public/cases/onground/*.svg`     | `ongroundFontVariables`; the yellow lines are SVG backgrounds                                                               |
