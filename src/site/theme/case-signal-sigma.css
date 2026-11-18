@@ -45,6 +45,10 @@
   padding: 0;
   list-style: none;
 }
+/* After the reset above: the blocks of the page stay centred on screens wider than the design */
+.sigma-case > * {
+  margin-inline: auto;
+}
 .sigma-img {
   display: block;
   width: 100%;
