@@ -1,0 +1,2235 @@
+/*
+ * Case study: Touren (/cases/touren). A unique page with its own palette and type; every selector
+ * starts with `touren-` so nothing here can reach another page.
+ * Design: design/cases/touren/Frame.png (1440 px wide, not committed).
+ * Fonts (Urbanist for the page, Inter for the app's type specimen) come from fonts.ts
+ * (`tourenFontVariables`).
+ *
+ * Layout: the base rules are the phone and tablet layout (one column, rem). From 1024 px up the
+ * page is the 1440 px design scaled to the window: `--u` is one design pixel and every position is
+ * `calc(N * var(--u))`; pictures on panels are placed with design coordinates. Text never goes
+ * below a readable minimum.
+ */
+.touren-case {
+  --touren-ink: #2d2d2d;
+  --touren-black: #0e0e10;
+  --touren-text: #464649;
+  --touren-muted: #585858;
+  --touren-faint: #8c8c8c;
+  --touren-line: #e6e6e6;
+  --touren-mist: #f6f7f4;
+  --touren-paper: #f8f8f8;
+  --touren-panel: #eeeeee;
+  --touren-panel-deep: #ebebeb;
+  --touren-lime: #c3e54f;
+  --touren-lime-soft: #f3fadb;
+  --touren-lime-line: #cde96b;
+  --touren-node-line: #dadfc4;
+  --touren-olive: #4b5230;
+  --touren-olive-light: #7d8f3a;
+  --touren-orange: #f08a3a;
+  --touren-sans: var(--font-family-touren-urbanist), system-ui, sans-serif;
+  --touren-inter: var(--font-family-touren-inter), system-ui, sans-serif;
+  --touren-gutter: clamp(1rem, 5vw, 2.5rem);
+  --touren-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  overflow-x: clip;
+  background: #fff;
+  color: var(--touren-ink);
+  font-family: var(--touren-sans);
+  line-height: 1.45;
+}
+.touren-case :where(h1, h2, h3, p, ul, ol, dl, dd, figure, blockquote) {
+  margin: 0;
+}
+.touren-case :where(ul, ol) {
+  padding: 0;
+  list-style: none;
+}
+.touren-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.touren-row {
+  display: block;
+}
+.touren-accent {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--touren-olive), var(--touren-olive-light));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* Each word is its own box (the motion masks), so the gradient is painted per word */
+.touren-accent .touren-w__in {
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.touren-icon,
+.touren-arrow {
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.touren-arrow {
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-left: 0.35em;
+  vertical-align: -0.05em;
+}
+
+/* ── Shared text ──────────────────────────────────────────────────────────────────── */
+.touren-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-inline: var(--touren-gutter);
+}
+.touren-head--stacked {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+.touren-badge {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: var(--touren-mist);
+  color: var(--touren-ink);
+}
+.touren-badge .touren-icon {
+  width: 38%;
+  height: 38%;
+}
+.touren-head--warm .touren-badge {
+  color: var(--touren-orange);
+}
+.touren-label {
+  font-size: 1.375rem;
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--touren-ink);
+}
+.touren-title {
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--touren-ink);
+}
+.touren-intro {
+  display: grid;
+  gap: 1.5rem;
+  padding-inline: var(--touren-gutter);
+  margin-top: 1.75rem;
+}
+.touren-lead {
+  max-width: 40rem;
+  font-size: 1.1875rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--touren-text);
+}
+.touren-note,
+.touren-small {
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--touren-muted);
+}
+.touren-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+.touren-tag {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--touren-line);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  color: var(--touren-ink);
+}
+.touren-dash {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--touren-ink);
+}
+.touren-dash::before {
+  content: '';
+  flex: none;
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+.touren-slogan {
+  font-size: 2.75rem;
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--touren-black);
+}
+.touren-band {
+  margin: 0;
+}
+.touren-shot {
+  margin: 0;
+}
+.touren-panel {
+  display: block;
+}
+
+/* Block rhythm (phones and tablets) */
+.touren-process,
+.touren-goals,
+.touren-sitemap,
+.touren-feature,
+.touren-identity {
+  margin-top: 4.5rem;
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────────────────── */
+.touren-hero {
+  position: relative;
+}
+.touren-hero__stage {
+  position: relative;
+}
+.touren-hero__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: 62% 0;
+}
+.touren-facts {
+  position: absolute;
+  inset: 1.25rem var(--touren-gutter) auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1rem;
+  color: #fff;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.35);
+}
+.touren-facts__item:first-child {
+  grid-column: 1 / -1;
+}
+.touren-facts dt {
+  font-weight: 600;
+}
+.touren-hero__phone {
+  position: relative;
+  width: min(64%, 20rem);
+  margin: -30% auto 0;
+}
+.touren-request {
+  padding-inline: var(--touren-gutter);
+  margin-top: 1.5rem;
+}
+.touren-request .touren-dash {
+  font-size: 0.875rem;
+}
+.touren-request__text {
+  margin-top: 1rem;
+  font-size: 1.1875rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--touren-text);
+}
+
+/* ── Solution, goal, challenge ────────────────────────────────────────────────────── */
+.touren-brief {
+  margin-top: 3.5rem;
+}
+.touren-brief__list {
+  display: grid;
+  gap: 2rem;
+  padding-inline: var(--touren-gutter);
+}
+.touren-brief__item:first-child {
+  padding: 1.5rem var(--touren-gutter);
+  margin-inline: calc(var(--touren-gutter) * -1);
+  background: var(--touren-paper);
+}
+.touren-brief__title {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: var(--touren-ink);
+}
+.touren-brief__text {
+  margin-top: 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--touren-muted);
+}
+.touren-brief__phones {
+  width: min(92%, 34rem);
+  margin: 2.5rem auto 0;
+}
+
+/* ── Design process, task and goals ───────────────────────────────────────────────── */
+.touren-process__intro {
+  display: grid;
+  gap: 1.25rem;
+  padding-inline: var(--touren-gutter);
+  margin-top: 2rem;
+  font-size: 1.0625rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--touren-ink);
+}
+.touren-steps,
+.touren-goals__list {
+  display: grid;
+  gap: 2rem;
+  padding-inline: var(--touren-gutter);
+  margin-top: 2.5rem;
+}
+.touren-step .touren-small,
+.touren-goal .touren-small {
+  margin-top: 0.875rem;
+}
+.touren-rocks {
+  margin-top: 4rem;
+}
+
+/* ── Site map (phones: a list of screens with their pages) ────────────────────────── */
+.touren-map {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0 var(--touren-gutter) 0 calc(var(--touren-gutter) + 1rem);
+  margin: 2rem var(--touren-gutter) 0;
+  border-left: 1px dashed var(--touren-node-line);
+}
+.touren-map__grid {
+  display: contents;
+}
+.touren-map__entry,
+.touren-map__top,
+.touren-map__pages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.touren-map__entry,
+.touren-map__onboarding,
+.touren-map__hub--first {
+  order: 0;
+}
+.touren-map__top {
+  order: 1;
+}
+.touren-map__screen {
+  display: grid;
+  gap: 0.5rem;
+  order: 2;
+  margin-top: 0.75rem;
+}
+.touren-node {
+  display: grid;
+  place-items: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--touren-node-line);
+  border-radius: 0.875rem;
+  background: #fff;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  text-align: center;
+  color: #18181b;
+}
+.touren-map__onboarding {
+  justify-self: start;
+  width: max-content;
+}
+.touren-node--hub {
+  width: max-content;
+  border-color: var(--touren-lime-line);
+  background: var(--touren-lime-soft);
+  font-weight: 500;
+}
+.touren-map__hub--first {
+  margin-top: 0.75rem;
+}
+
+/* ── Quote ────────────────────────────────────────────────────────────────────────── */
+.touren-quote {
+  display: grid;
+  gap: 1.5rem;
+  padding-inline: var(--touren-gutter);
+  margin-block: 4rem;
+}
+.touren-quote__who {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+}
+.touren-quote__bubble {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--touren-lime-line);
+  border-radius: 999px;
+  background: var(--touren-lime-soft);
+  font-size: 0.8125rem;
+  white-space: nowrap;
+  color: var(--touren-ink);
+}
+.touren-quote__photo {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+}
+.touren-quote__role {
+  grid-column: 1;
+  grid-row: 2;
+  font-size: 0.75rem;
+  color: var(--touren-muted);
+}
+.touren-quote__text {
+  font-size: 1.1875rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--touren-text);
+}
+
+/* ── Website showcase bands ───────────────────────────────────────────────────────── */
+.touren-showcase {
+  display: grid;
+  gap: 0.5rem;
+}
+
+/* ── Typography and colors (phones: stacked panels) ───────────────────────────────── */
+.touren-type {
+  display: grid;
+  margin-top: 2rem;
+}
+.touren-type__panel {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  padding: 1.5rem var(--touren-gutter);
+  font-size: 1rem;
+  color: var(--touren-black);
+}
+.touren-type__panel--font {
+  background: #c7d0cc;
+}
+.touren-type__panel--weights {
+  background: #f7f7f7;
+}
+.touren-type__alphabet {
+  font-family: var(--touren-inter);
+  line-height: 1.55;
+  letter-spacing: 0.04em;
+}
+.touren-type__weights {
+  font-family: var(--touren-inter);
+  line-height: 1.9;
+}
+.touren-type__weights li:nth-child(2) {
+  font-weight: 600;
+}
+.touren-type__weights li:nth-child(n + 3) {
+  font-weight: 700;
+}
+.touren-type__name {
+  grid-column: 1 / -1;
+  justify-self: end;
+  font-family: var(--touren-inter);
+  font-size: 4.5rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.touren-type__specimen {
+  position: relative;
+  overflow: hidden;
+  height: 13rem;
+  background: var(--touren-paper);
+}
+.touren-type__stripes {
+  position: absolute;
+  inset: 32% 0 auto;
+  display: grid;
+}
+.touren-type__stripes li {
+  height: 1.25rem;
+  background: var(--touren-stripe);
+}
+.touren-type__stripes li:first-child {
+  height: 1.75rem;
+}
+.touren-abc {
+  position: absolute;
+  left: -0.12em;
+  bottom: -0.04em;
+  font-family: var(--touren-inter);
+  font-size: 14rem;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: #000;
+}
+.touren-abc--soft,
+.touren-abc--paper,
+.touren-type__veil {
+  display: none;
+}
+.touren-type__swatches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.touren-swatch {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 9rem;
+  padding: 1.25rem 0.75rem;
+  background: var(--touren-swatch);
+  color: var(--touren-black);
+}
+.touren-swatch--light {
+  color: #fff;
+}
+.touren-swatch__name {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.1;
+}
+.touren-swatch__hex {
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+.touren-identity__icons {
+  margin-top: 0.5rem;
+}
+
+/* ── Feature scenes (phones: panels stacked, each with its picture) ───────────────── */
+.touren-scene {
+  display: grid;
+  margin-top: 2.5rem;
+}
+.touren-scene > * {
+  grid-column: 1;
+}
+.touren-scene--split > .touren-panel--left,
+.touren-scene--split > .touren-shot:nth-of-type(1) {
+  grid-row: 1;
+}
+.touren-scene--split > .touren-panel--right,
+.touren-scene--split > .touren-shot:nth-of-type(2) {
+  grid-row: 2;
+}
+.touren-panel--left {
+  background: var(--touren-panel);
+}
+.touren-panel--right {
+  background: var(--touren-paper);
+}
+.touren-scene .touren-shot {
+  position: relative;
+  justify-self: center;
+  width: min(80%, 26rem);
+  padding-block: 2rem;
+}
+.touren-wide-shot {
+  margin-top: 2rem;
+}
+.touren-explore__band,
+.touren-conditions__band {
+  margin-top: 2.5rem;
+}
+
+/* Navigation: text panel, then the phones on the second panel */
+.touren-scene--navigation > .touren-navigation__panel {
+  grid-row: 1;
+}
+.touren-scene--navigation > .touren-panel--right,
+.touren-scene--navigation > .touren-shot {
+  grid-row: 2;
+}
+.touren-navigation__panel,
+.touren-hazard__panel {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem var(--touren-gutter);
+}
+.touren-navigation__panel {
+  background: var(--touren-paper);
+}
+.touren-scene--navigation > .touren-panel--right {
+  background: var(--touren-panel-deep);
+}
+.touren-navigation__panel .touren-slogan {
+  margin-top: 2rem;
+}
+.touren-scene--navigation .touren-shot {
+  width: min(96%, 36rem);
+}
+
+/* Hazard: phones on the first panel, the alerts text on the second */
+.touren-scene--hazard > .touren-panel--left,
+.touren-scene--hazard > .touren-shot {
+  grid-row: 1;
+}
+.touren-scene--hazard > .touren-hazard__panel {
+  grid-row: 2;
+}
+.touren-hazard__panel .touren-small {
+  margin-top: 1.5rem;
+}
+
+/* ── Website: the riders photo with the process overlay ───────────────────────────── */
+.touren-idea {
+  position: relative;
+  margin-top: 2.5rem;
+  background: var(--touren-black);
+  color: #fff;
+}
+.touren-idea__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+.touren-idea__body {
+  display: contents;
+}
+.touren-idea__title {
+  position: absolute;
+  left: var(--touren-gutter);
+  right: var(--touren-gutter);
+  top: calc(min(125vw, 100%) - 1rem);
+  translate: 0 -100%;
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.touren-idea__bar {
+  display: grid;
+  gap: 1.75rem;
+  padding: 2rem var(--touren-gutter) 2.5rem;
+}
+.touren-idea__text {
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.65;
+}
+.touren-idea__steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+  gap: 0.875rem 1.5rem;
+  font-size: 0.9375rem;
+}
+.touren-idea__steps li {
+  white-space: nowrap;
+}
+.touren-web__laptop {
+  margin-top: 0.5rem;
+}
+
+/* ── Mobile website ───────────────────────────────────────────────────────────────── */
+.touren-mobile {
+  margin-top: 0.5rem;
+}
+.touren-mobile__stage {
+  padding: 2.5rem var(--touren-gutter);
+  background: var(--touren-paper);
+}
+.touren-mobile__phone {
+  width: min(78%, 24rem);
+  margin-inline: auto;
+}
+.touren-mobile__dark {
+  position: relative;
+  overflow: hidden;
+  padding: 3rem var(--touren-gutter) 0;
+  background: #000;
+  color: #fff;
+}
+.touren-mobile__title {
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #5c5c5c;
+}
+.touren-mobile__title .touren-accent,
+.touren-mobile__title .touren-accent .touren-w__in {
+  background: none;
+  color: #fff;
+}
+.touren-mobile__lead {
+  margin-top: 2rem;
+  font-size: 1.1875rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+.touren-mobile__note {
+  margin-top: 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #bdbdbd;
+}
+.touren-mobile__year {
+  margin-top: 1.5rem;
+  margin-bottom: -0.2em;
+  font-size: 9rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #1c1c1c;
+}
+
+/* ── Website pages ────────────────────────────────────────────────────────────────── */
+.touren-pages__links {
+  display: grid;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--touren-ink);
+}
+.touren-pages__band {
+  margin-top: 2.5rem;
+}
+
+/* ── Project highlights ───────────────────────────────────────────────────────────── */
+.touren-cards {
+  display: grid;
+  gap: 1rem;
+  padding-inline: var(--touren-gutter);
+  margin-top: 2rem;
+}
+.touren-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  min-height: 32rem;
+  background: var(--touren-paper);
+  color: var(--touren-black);
+}
+.touren-card__inner {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 2rem 1.75rem 2.25rem;
+  margin: 0;
+}
+.touren-card--review {
+  background: var(--touren-black);
+  color: #fff;
+}
+.touren-card--story {
+  background: #20201c;
+  color: #fff;
+}
+.touren-card__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.touren-card--story::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0.15), rgb(0 0 0 / 0) 40%, rgb(0 0 0 / 0.45));
+}
+.touren-card--story .touren-card__inner {
+  z-index: 1;
+}
+.touren-card__person {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.touren-card__avatar {
+  flex: none;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+}
+.touren-card__name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+}
+.touren-card__flag {
+  width: 1.25rem;
+  height: auto;
+  border-radius: 0.125rem;
+}
+.touren-card__role {
+  display: block;
+  margin-top: 0.125rem;
+  font-size: 0.875rem;
+  color: #9a9a9a;
+}
+.touren-card__quote {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.touren-card__label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+.touren-card__badge {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--touren-lime);
+  color: var(--touren-black);
+}
+.touren-card__badge .touren-icon {
+  width: 45%;
+  height: 45%;
+}
+.touren-card__title {
+  margin-top: 3rem;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.touren-card__texts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: auto;
+  padding-top: 2.5rem;
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #d9d9d9;
+}
+.touren-card__note {
+  max-width: 15rem;
+  margin-top: auto;
+  padding-top: 2.5rem;
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+.touren-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.75rem;
+  margin-top: auto;
+  padding-top: 2.5rem;
+}
+.touren-stat {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.75rem;
+}
+.touren-stat__value {
+  font-size: 3.25rem;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.touren-stat__label {
+  font-size: 0.875rem;
+  color: var(--touren-muted);
+}
+
+/* ── Team ─────────────────────────────────────────────────────────────────────────── */
+.touren-outro {
+  display: grid;
+  margin-top: 4.5rem;
+}
+.touren-outro__circle {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: 3rem var(--touren-gutter);
+  background: radial-gradient(circle closest-side, #fff 98%, var(--touren-paper) 100%);
+  background-color: var(--touren-paper);
+}
+.touren-outro__title {
+  font-size: 2.25rem;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--touren-black);
+}
+.touren-outro__title .touren-accent {
+  background: linear-gradient(90deg, var(--touren-olive), #a7c43c);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.touren-team {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 2rem 1rem;
+  padding: 3rem var(--touren-gutter);
+}
+.touren-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.touren-member__photo {
+  width: 5.5rem;
+  height: 5.5rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+}
+.touren-member__role {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: #6b6b6b;
+}
+.touren-member__name {
+  margin-top: 0.25rem;
+  font-size: 1rem;
+  color: #18181b;
+}
+
+/* ── Tablets: two columns where the text allows ───────────────────────────────────── */
+@media (min-width: 48rem) {
+  .touren-hero__photo {
+    aspect-ratio: 16 / 9;
+  }
+  .touren-facts {
+    grid-template-columns: repeat(3, auto);
+    justify-content: space-between;
+    font-size: 0.875rem;
+  }
+  .touren-facts__item:first-child {
+    grid-column: auto;
+  }
+  .touren-hero__phone {
+    width: 18rem;
+    margin-top: -14rem;
+  }
+  .touren-intro,
+  .touren-process__intro {
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3rem;
+  }
+  .touren-steps {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 3rem;
+  }
+  .touren-goals__list {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 3rem;
+  }
+  .touren-type__specimen {
+    height: 20rem;
+  }
+  .touren-abc {
+    font-size: 22rem;
+  }
+  .touren-card__title {
+    font-size: 2.25rem;
+  }
+  .touren-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+  .touren-card--story {
+    grid-column: 1 / -1;
+  }
+  .touren-idea__photo {
+    aspect-ratio: 16 / 10;
+  }
+  .touren-idea__title {
+    top: calc(62.5vw - 1.5rem);
+    font-size: 3.5rem;
+  }
+  .touren-idea__bar {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+  }
+  .touren-team {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ══ Desktop: the 1440 px design scaled to the window ═════════════════════════════════ */
+@media (min-width: 64rem) {
+  .touren-case {
+    --u: calc(min(100vw, 1440px) / 1440);
+  }
+  .touren-case > * {
+    position: relative;
+    max-width: 1440px;
+    margin-inline: auto;
+  }
+  /* Pictures across the page run past the 1440 px column on wide screens (up to 1920 px) */
+  .touren-band,
+  .touren-hero__stage,
+  .touren-idea {
+    width: min(100vw, 1920px);
+    max-width: none;
+    margin-inline: calc(50% - min(50vw, 960px));
+  }
+  /* Panels touching the side of the column continue to the window edge */
+  .touren-panel--left {
+    box-shadow: 0 0 0 100vmax var(--touren-panel-color, var(--touren-panel));
+    clip-path: inset(0 0 0 -100vmax);
+  }
+  .touren-panel--right {
+    box-shadow: 0 0 0 100vmax var(--touren-panel-color, var(--touren-paper));
+    clip-path: inset(0 -100vmax 0 0);
+  }
+
+  /* Shared text in design pixels */
+  .touren-head {
+    gap: calc(20 * var(--u));
+    padding-inline: var(--touren-head-x, calc(59 * var(--u))) 0;
+  }
+  .touren-head--stacked {
+    gap: calc(30 * var(--u));
+  }
+  .touren-badge {
+    width: calc(90 * var(--u));
+    height: calc(90 * var(--u));
+  }
+  .touren-label {
+    font-size: max(18px, calc(30 * var(--u)));
+  }
+  .touren-title {
+    font-size: max(24px, calc(42 * var(--u)));
+    margin-top: calc(6 * var(--u));
+  }
+  .touren-intro {
+    grid-template-columns: var(--touren-lead-w, calc(420 * var(--u))) var(
+        --touren-note-w,
+        calc(310 * var(--u))
+      );
+    justify-content: start;
+    column-gap: var(--touren-intro-gap, calc(136 * var(--u)));
+    padding-inline: var(--touren-intro-x, calc(171 * var(--u))) 0;
+    margin-top: calc(60 * var(--u));
+  }
+  .touren-lead {
+    max-width: none;
+    font-size: max(16px, calc(24 * var(--u)));
+  }
+  .touren-note,
+  .touren-small {
+    font-size: max(13px, calc(15 * var(--u)));
+  }
+  .touren-tags {
+    gap: calc(8 * var(--u));
+    margin-top: calc(24 * var(--u));
+  }
+  .touren-tag {
+    padding: calc(7 * var(--u)) calc(12 * var(--u));
+    font-size: max(11px, calc(13 * var(--u)));
+  }
+  .touren-dash {
+    gap: calc(8 * var(--u));
+    font-size: max(13px, calc(16 * var(--u)));
+  }
+  .touren-dash::before {
+    width: calc(28 * var(--u));
+  }
+  .touren-slogan {
+    font-size: max(36px, calc(64 * var(--u)));
+  }
+  .touren-process,
+  .touren-goals,
+  .touren-sitemap,
+  .touren-feature,
+  .touren-identity {
+    margin-top: var(--touren-top, calc(180 * var(--u)));
+  }
+
+  /* Hero */
+  .touren-hero {
+    height: calc(1180 * var(--u));
+  }
+  .touren-hero__photo {
+    aspect-ratio: auto;
+  }
+  .touren-facts {
+    inset: calc(40 * var(--u)) 0 auto;
+    display: block;
+    width: min(100vw, 1440px);
+    margin-inline: auto;
+    font-size: max(12px, calc(15 * var(--u)));
+  }
+  .touren-facts__item {
+    position: absolute;
+    top: 0;
+    left: calc(60 * var(--u));
+  }
+  .touren-facts__item:nth-child(2) {
+    left: calc(950 * var(--u));
+  }
+  .touren-facts__item:nth-child(3) {
+    left: calc(1285 * var(--u));
+  }
+  .touren-facts dt {
+    margin-bottom: calc(10 * var(--u));
+    font-size: max(13px, calc(16 * var(--u)));
+  }
+  .touren-hero__phone {
+    position: absolute;
+    left: calc(176 * var(--u));
+    top: calc(372 * var(--u));
+    width: calc(381 * var(--u));
+    margin: 0;
+  }
+  .touren-request {
+    position: absolute;
+    left: calc(617 * var(--u));
+    top: calc(742 * var(--u));
+    width: calc(610 * var(--u));
+    padding: 0;
+    margin: 0;
+  }
+  .touren-request .touren-dash {
+    font-size: max(12px, calc(15 * var(--u)));
+  }
+  .touren-request__text {
+    margin-top: calc(18 * var(--u));
+    font-size: max(16px, calc(24 * var(--u)));
+  }
+
+  /* Solution, goal, challenge */
+  .touren-brief {
+    height: calc(970 * var(--u));
+    margin-top: 0;
+  }
+  .touren-brief__list {
+    position: absolute;
+    left: calc(175 * var(--u));
+    top: calc(148 * var(--u));
+    width: calc(306 * var(--u));
+    gap: calc(92 * var(--u));
+    padding: 0;
+  }
+  .touren-brief__list::before {
+    content: '';
+    position: absolute;
+    left: calc(-114 * var(--u));
+    top: calc(-37 * var(--u));
+    width: calc(561 * var(--u));
+    height: calc(239 * var(--u));
+    background: var(--touren-paper);
+  }
+  .touren-brief__item:first-child {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    background: none;
+  }
+  .touren-brief__title {
+    font-size: max(15px, calc(18 * var(--u)));
+  }
+  .touren-brief__text {
+    margin-top: calc(18 * var(--u));
+    font-size: max(13px, calc(15 * var(--u)));
+  }
+  .touren-brief__phones {
+    position: absolute;
+    left: calc(586 * var(--u));
+    top: calc(62 * var(--u));
+    width: calc(666 * var(--u));
+    margin: 0;
+  }
+
+  /* Design process */
+  .touren-process {
+    --touren-top: calc(79 * var(--u));
+    --touren-head-x: calc(208 * var(--u));
+  }
+  .touren-process__intro,
+  .touren-steps {
+    grid-template-columns: calc(320 * var(--u)) calc(320 * var(--u));
+    column-gap: calc(124 * var(--u));
+    padding-inline: calc(317 * var(--u)) 0;
+  }
+  .touren-process__intro {
+    margin-top: calc(59 * var(--u));
+    font-size: max(14px, calc(17 * var(--u)));
+  }
+  .touren-steps {
+    row-gap: calc(64 * var(--u));
+    margin-top: calc(88 * var(--u));
+  }
+  .touren-step {
+    min-height: calc(173 * var(--u));
+  }
+  .touren-step .touren-small,
+  .touren-goal .touren-small {
+    margin-top: calc(18 * var(--u));
+  }
+
+  /* Task and goals */
+  .touren-goals {
+    --touren-head-x: calc(312 * var(--u));
+  }
+  .touren-goals__list {
+    grid-template-columns: repeat(3, calc(320 * var(--u)));
+    column-gap: calc(124 * var(--u));
+    row-gap: calc(60 * var(--u));
+    padding-inline: calc(60 * var(--u)) 0;
+    margin-top: calc(58 * var(--u));
+  }
+  .touren-goal {
+    min-height: calc(176 * var(--u));
+  }
+  .touren-rocks {
+    margin-top: calc(135 * var(--u));
+  }
+
+  /* Site map: the design's tree with dashed connectors */
+  .touren-sitemap {
+    --touren-head-x: calc(171 * var(--u));
+    --touren-node-w: calc(186 * var(--u));
+    --touren-node-h: calc(74 * var(--u));
+    --touren-dash: 1px dashed var(--touren-node-line);
+  }
+  .touren-map {
+    position: relative;
+    display: block;
+    padding: 0 0 0 calc(297 * var(--u));
+    margin: calc(94 * var(--u)) 0 0;
+    border: 0;
+  }
+  /* The line from the icon down to the entry screens */
+  .touren-map::before,
+  .touren-map::after {
+    content: '';
+    position: absolute;
+    left: calc(216 * var(--u));
+  }
+  .touren-map::before {
+    top: calc(-94 * var(--u));
+    height: calc(293 * var(--u));
+    border-left: var(--touren-dash);
+  }
+  .touren-map::after {
+    top: calc(199 * var(--u));
+    width: calc(60 * var(--u));
+    border-top: var(--touren-dash);
+  }
+  .touren-node {
+    position: relative;
+    width: var(--touren-node-w);
+    height: var(--touren-node-h);
+    min-height: 0;
+    padding: 0 calc(10 * var(--u));
+    border-radius: calc(22 * var(--u));
+    font-size: max(12px, calc(16 * var(--u)));
+  }
+  .touren-node--hub {
+    width: var(--touren-node-w);
+    font-weight: 400;
+  }
+  .touren-node::before,
+  .touren-node::after,
+  .touren-map__hub::before,
+  .touren-map__hub::after,
+  .touren-map__pages::before,
+  .touren-map__top::after,
+  .touren-map__entry::before {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+  /* Pages of the first screen: a row above it, joined by a line under the row */
+  .touren-map__top {
+    position: relative;
+    flex-wrap: nowrap;
+    gap: calc(25 * var(--u));
+    width: max-content;
+    margin-left: calc(211 * var(--u));
+  }
+  .touren-map__top::after {
+    left: calc(93 * var(--u));
+    right: calc(93 * var(--u));
+    bottom: calc(-19 * var(--u));
+    border-top: var(--touren-dash);
+  }
+  .touren-map__top .touren-node::after {
+    left: 50%;
+    top: 100%;
+    height: calc(19 * var(--u));
+    border-left: var(--touren-dash);
+  }
+  .touren-map__grid {
+    display: grid;
+    grid-template-columns: var(--touren-node-w) var(--touren-node-w) var(--touren-node-w) auto;
+    column-gap: calc(25 * var(--u));
+    row-gap: calc(39 * var(--u));
+    align-items: center;
+    margin-top: calc(39 * var(--u));
+  }
+  .touren-map__entry {
+    position: relative;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: calc(25 * var(--u));
+    grid-column: 1;
+    grid-row: 1 / 3;
+    align-self: start;
+  }
+  /* Bracket in front of the entry screens */
+  .touren-map__entry::before {
+    left: calc(-21 * var(--u));
+    top: calc(37 * var(--u));
+    bottom: calc(37 * var(--u));
+    border-left: var(--touren-dash);
+  }
+  .touren-map__entry .touren-node::before {
+    right: 100%;
+    top: 50%;
+    width: calc(21 * var(--u));
+    border-top: var(--touren-dash);
+  }
+  .touren-map__entry .touren-node:first-child::after,
+  .touren-map__onboarding::after {
+    left: 100%;
+    top: 50%;
+    width: calc(25 * var(--u));
+    border-top: var(--touren-dash);
+  }
+  /* Log in joins the main screens' spine */
+  .touren-map__entry .touren-node:nth-child(2)::after {
+    left: 100%;
+    top: 50%;
+    width: calc(329 * var(--u));
+    border-top: var(--touren-dash);
+  }
+  .touren-map__onboarding {
+    grid-column: 2;
+    grid-row: 1;
+    width: var(--touren-node-w);
+  }
+  .touren-map__hub--first {
+    grid-column: 3;
+    grid-row: 1;
+    margin: 0;
+  }
+  .touren-map__screen {
+    display: contents;
+  }
+  .touren-map__screen .touren-map__hub {
+    grid-column: 3;
+    grid-row: var(--touren-row);
+  }
+  .touren-map__hub {
+    position: relative;
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+  }
+  /* The spine of the main screens */
+  .touren-map__hub::before {
+    left: 50%;
+    top: 0;
+    bottom: calc(-39 * var(--u));
+    border-left: var(--touren-dash);
+    z-index: -1;
+  }
+  .touren-map__hub--first::before {
+    top: calc(-20 * var(--u));
+  }
+  .touren-map__hub--last::before {
+    bottom: 50%;
+  }
+  .touren-map__hub:not(.touren-map__hub--first)::after {
+    left: 100%;
+    top: 50%;
+    width: calc(19 * var(--u));
+    border-top: var(--touren-dash);
+  }
+  .touren-map__pages {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--touren-node-w) var(--touren-node-w);
+    gap: calc(25 * var(--u));
+    grid-column: 4;
+    grid-row: var(--touren-row);
+    margin-left: calc(13 * var(--u));
+  }
+  .touren-map__pages::before {
+    left: calc(-19 * var(--u));
+    top: calc(37 * var(--u));
+    bottom: calc(37 * var(--u));
+    border-left: var(--touren-dash);
+  }
+  .touren-map__pages .touren-node::before {
+    right: 100%;
+    top: 50%;
+    width: calc(19 * var(--u));
+    border-top: var(--touren-dash);
+  }
+  .touren-map__pages .touren-node:nth-child(2n)::before {
+    width: calc(25 * var(--u));
+  }
+
+  /* Quote */
+  .touren-quote {
+    grid-template-columns: calc(280 * var(--u)) calc(602 * var(--u));
+    column-gap: 0;
+    padding: 0 0 0 calc(279 * var(--u));
+    margin-block: calc(182 * var(--u));
+  }
+  .touren-quote__who {
+    display: block;
+    height: calc(140 * var(--u));
+  }
+  .touren-quote__bubble {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: calc(12 * var(--u)) calc(18 * var(--u));
+    font-size: max(11px, calc(13 * var(--u)));
+    z-index: 1;
+  }
+  .touren-quote__photo {
+    position: absolute;
+    left: calc(133 * var(--u));
+    top: calc(7 * var(--u));
+    width: calc(93 * var(--u));
+    height: calc(93 * var(--u));
+  }
+  .touren-quote__role {
+    position: absolute;
+    left: calc(133 * var(--u));
+    top: calc(110 * var(--u));
+    width: calc(93 * var(--u));
+    font-size: max(10px, calc(12 * var(--u)));
+    text-align: center;
+    white-space: nowrap;
+  }
+  .touren-quote__text {
+    padding-top: calc(-2 * var(--u));
+    font-size: max(16px, calc(24 * var(--u)));
+  }
+
+  /* Website showcase */
+  .touren-showcase {
+    gap: calc(14 * var(--u));
+  }
+
+  /* Typography and colors: the composition of the design (1443 × 1615) */
+  .touren-identity {
+    --touren-head-x: calc(283 * var(--u));
+  }
+  .touren-type {
+    display: block;
+    height: calc(1615 * var(--u));
+    margin-top: calc(96 * var(--u));
+    --touren-split: calc(711 * var(--u));
+    --touren-grey-x: calc(1076 * var(--u));
+    --touren-stripe-top: calc(714 * var(--u));
+    --touren-stripe-bottom: calc(873 * var(--u));
+  }
+  .touren-type__panel {
+    position: absolute;
+    top: 0;
+    display: block;
+    height: var(--touren-stripe-top);
+    padding: calc(62 * var(--u)) calc(60 * var(--u));
+    font-size: max(12px, calc(25 * var(--u)));
+  }
+  .touren-type__panel--font {
+    left: 0;
+    width: var(--touren-split);
+  }
+  .touren-type__panel--weights {
+    left: var(--touren-split);
+    right: 0;
+    padding-left: calc(71 * var(--u));
+  }
+  .touren-type__alphabet {
+    position: absolute;
+    left: calc(457 * var(--u));
+    top: calc(62 * var(--u));
+    font-size: max(12px, calc(23 * var(--u)));
+    line-height: 1.6;
+  }
+  .touren-type__weights {
+    position: absolute;
+    left: calc(563 * var(--u));
+    top: calc(62 * var(--u));
+    font-size: max(12px, calc(23 * var(--u)));
+  }
+  .touren-type__name {
+    position: absolute;
+    right: calc(36 * var(--u));
+    top: calc(532 * var(--u));
+    font-size: calc(141 * var(--u));
+  }
+  .touren-type__specimen {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    height: auto;
+    background: none;
+    pointer-events: none;
+  }
+  .touren-type__stripes {
+    inset: var(--touren-stripe-top) auto auto 0;
+    width: var(--touren-split);
+  }
+  .touren-type__stripes li {
+    height: calc(51 * var(--u));
+  }
+  .touren-type__stripes li:first-child {
+    height: calc(75 * var(--u));
+  }
+  .touren-type__stripes li:last-child {
+    height: calc(33 * var(--u));
+  }
+  .touren-abc {
+    left: calc(-196 * var(--u));
+    top: calc(344 * var(--u));
+    bottom: auto;
+    font-size: calc(730 * var(--u));
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+  .touren-abc--soft,
+  .touren-abc--paper,
+  .touren-type__veil {
+    display: block;
+  }
+  .touren-abc--ink {
+    clip-path: inset(0 calc(100% - var(--touren-split) - 196 * var(--u)) 0 0);
+  }
+  .touren-abc--soft {
+    color: #949494;
+    clip-path: polygon(
+      calc(var(--touren-split) + 196 * var(--u)) 0,
+      100% 0,
+      100% calc(var(--touren-stripe-top) - 344 * var(--u)),
+      calc(var(--touren-split) + 196 * var(--u)) calc(var(--touren-stripe-top) - 344 * var(--u))
+    );
+  }
+  .touren-abc--paper {
+    color: #fff;
+    clip-path: polygon(
+      calc(var(--touren-split) + 196 * var(--u)) calc(var(--touren-stripe-bottom) - 344 * var(--u)),
+      100% calc(var(--touren-stripe-bottom) - 344 * var(--u)),
+      100% 100%,
+      calc(var(--touren-split) + 196 * var(--u)) 100%
+    );
+  }
+  /* The grey stripes over the black and grey swatches (on top of the letter) */
+  .touren-type__veil {
+    position: absolute;
+    left: var(--touren-split);
+    right: 0;
+    top: var(--touren-stripe-top);
+    height: calc(var(--touren-stripe-bottom) - var(--touren-stripe-top));
+    background:
+      linear-gradient(
+          180deg,
+          #424244 0 calc(75 * var(--u)),
+          #6f6e78 0 calc(126 * var(--u)),
+          #8a8992 0
+        )
+        0 0 / calc(var(--touren-grey-x) - var(--touren-split)) 100% no-repeat,
+      linear-gradient(180deg, #e5e5e5 0 calc(75 * var(--u)), #fff 0) 100% 0 /
+        calc(100% - var(--touren-grey-x) + var(--touren-split)) 100% no-repeat;
+  }
+  .touren-type__swatches {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--touren-stripe-bottom);
+    bottom: 0;
+    grid-template-columns: var(--touren-split) calc(365 * var(--u)) 1fr;
+  }
+  .touren-swatch {
+    justify-content: flex-start;
+    padding: calc(415 * var(--u)) 0 0 calc(60 * var(--u));
+  }
+  .touren-swatch__name {
+    font-size: max(20px, calc(49 * var(--u)));
+  }
+  .touren-swatch__hex {
+    margin-top: calc(188 * var(--u));
+    font-size: max(10px, calc(20 * var(--u)));
+  }
+  .touren-identity__icons {
+    margin-top: calc(26 * var(--u));
+  }
+
+  /* Feature scenes */
+  .touren-scene {
+    position: relative;
+    display: block;
+    height: var(--touren-scene-h, calc(745 * var(--u)));
+    margin-top: var(--touren-scene-top, calc(110 * var(--u)));
+  }
+  .touren-scene .touren-panel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+  }
+  .touren-scene .touren-shot {
+    position: absolute;
+    justify-self: auto;
+    padding: 0;
+    z-index: 1;
+  }
+  .touren-scene--split .touren-panel--left {
+    left: 0;
+    width: calc(721 * var(--u));
+  }
+  .touren-scene--split .touren-panel--right {
+    left: calc(721 * var(--u));
+    right: 0;
+  }
+
+  /* Home page */
+  .touren-home {
+    --touren-head-x: calc(59 * var(--u));
+    --touren-lead-w: calc(414 * var(--u));
+    --touren-note-w: calc(308 * var(--u));
+    --touren-intro-gap: calc(142 * var(--u));
+    --touren-scene-top: calc(91 * var(--u));
+    --touren-top: calc(184 * var(--u));
+  }
+  .touren-scene .touren-home__phone {
+    left: calc(93 * var(--u));
+    top: calc(55 * var(--u));
+    width: calc(564 * var(--u));
+  }
+  .touren-scene .touren-home__leaderboard {
+    left: calc(811 * var(--u));
+    top: calc(-109 * var(--u));
+    width: calc(548 * var(--u));
+  }
+
+  /* Community and profile: one picture on a panel to the right edge */
+  .touren-community,
+  .touren-profile {
+    --touren-head-x: calc(171 * var(--u));
+    --touren-lead-w: calc(654 * var(--u));
+    --touren-note-w: calc(300 * var(--u));
+    --touren-intro-gap: calc(128 * var(--u));
+  }
+  .touren-community {
+    --touren-top: calc(451 * var(--u));
+  }
+  .touren-profile {
+    --touren-top: calc(60 * var(--u));
+  }
+  .touren-wide-shot {
+    position: relative;
+    isolation: isolate;
+    width: calc(1269 * var(--u));
+    margin: calc(34 * var(--u)) 0 0 calc(171 * var(--u));
+  }
+  /* The panel behind the phones runs from their left edge to the window edge */
+  .touren-wide-shot::before {
+    content: '';
+    position: absolute;
+    inset: calc(120 * var(--u)) 0 0;
+    z-index: -1;
+    background: var(--touren-paper);
+    box-shadow: 0 0 0 100vmax var(--touren-paper);
+    clip-path: inset(0 -100vmax 0 0);
+  }
+  .touren-profile .touren-wide-shot {
+    margin-top: calc(70 * var(--u));
+  }
+
+  /* Explore page */
+  .touren-explore {
+    --touren-lead-w: calc(325 * var(--u));
+    --touren-note-w: calc(403 * var(--u));
+    --touren-intro-gap: calc(121 * var(--u));
+  }
+  .touren-explore__band {
+    margin-top: calc(79 * var(--u));
+  }
+
+  /* Trail navigation */
+  .touren-navigation {
+    --touren-head-x: calc(59 * var(--u));
+    --touren-intro-x: calc(61 * var(--u));
+    --touren-lead-w: calc(419 * var(--u));
+    --touren-note-w: calc(301 * var(--u));
+    --touren-intro-gap: calc(249 * var(--u));
+    --touren-scene-top: calc(96 * var(--u));
+    --touren-scene-h: calc(728 * var(--u));
+    --touren-top: calc(177 * var(--u));
+  }
+  .touren-scene--navigation .touren-navigation__panel {
+    left: 0;
+    width: calc(676 * var(--u));
+    padding: calc(53 * var(--u)) calc(60 * var(--u)) calc(76 * var(--u)) calc(61 * var(--u));
+  }
+  .touren-navigation__panel .touren-small {
+    max-width: calc(320 * var(--u));
+  }
+  .touren-navigation__panel .touren-tags {
+    max-width: calc(330 * var(--u));
+    margin-top: calc(66 * var(--u));
+  }
+  .touren-navigation__panel .touren-slogan {
+    margin-top: auto;
+  }
+  .touren-scene--navigation .touren-panel--right {
+    left: calc(676 * var(--u));
+    width: calc(705 * var(--u));
+    clip-path: none;
+    box-shadow: none;
+  }
+  .touren-scene--navigation .touren-shot {
+    left: calc(524 * var(--u));
+    top: calc(-19 * var(--u));
+    width: calc(839 * var(--u));
+  }
+
+  /* Missions and sections */
+  .touren-mission {
+    --touren-lead-w: calc(427 * var(--u));
+    --touren-note-w: calc(316 * var(--u));
+    --touren-intro-gap: calc(131 * var(--u));
+    --touren-scene-top: calc(113 * var(--u));
+    --touren-top: calc(248 * var(--u));
+  }
+  .touren-scene .touren-mission__section {
+    left: calc(101 * var(--u));
+    top: calc(80 * var(--u));
+    width: calc(528 * var(--u));
+  }
+  .touren-scene .touren-mission__level {
+    left: calc(822 * var(--u));
+    top: calc(-183 * var(--u));
+    width: calc(557 * var(--u));
+  }
+
+  /* Condition reports */
+  .touren-conditions {
+    --touren-lead-w: calc(453 * var(--u));
+    --touren-note-w: calc(425 * var(--u));
+    --touren-intro-gap: calc(130 * var(--u));
+    --touren-top: calc(452 * var(--u));
+  }
+  .touren-conditions__band {
+    margin-top: calc(105 * var(--u));
+  }
+
+  /* Hazard and safety alerts */
+  .touren-hazard {
+    --touren-lead-w: calc(419 * var(--u));
+    --touren-note-w: calc(302 * var(--u));
+    --touren-intro-gap: calc(248 * var(--u));
+    --touren-scene-top: calc(85 * var(--u));
+    --touren-scene-h: calc(808 * var(--u));
+    --touren-top: calc(-55 * var(--u));
+  }
+  .touren-scene--hazard .touren-panel--left {
+    left: 0;
+    width: calc(676 * var(--u));
+  }
+  .touren-scene .touren-hazard__phones {
+    left: calc(70 * var(--u));
+    top: calc(-18 * var(--u));
+    width: calc(685 * var(--u));
+  }
+  .touren-scene--hazard .touren-hazard__panel {
+    left: calc(676 * var(--u));
+    width: calc(705 * var(--u));
+    padding: calc(138 * var(--u)) calc(60 * var(--u)) 0 calc(162 * var(--u));
+    clip-path: none;
+    box-shadow: none;
+  }
+  .touren-hazard__panel .touren-small {
+    max-width: calc(320 * var(--u));
+    margin-top: calc(89 * var(--u));
+  }
+  .touren-hazard__panel .touren-tags {
+    max-width: calc(320 * var(--u));
+    margin-top: calc(23 * var(--u));
+  }
+
+  /* Website: the riders photo */
+  .touren-web {
+    --touren-head-x: calc(171 * var(--u));
+    --touren-lead-w: calc(589 * var(--u));
+    --touren-note-w: calc(300 * var(--u));
+    --touren-intro-gap: calc(193 * var(--u));
+    --touren-top: calc(244 * var(--u));
+  }
+  .touren-idea {
+    margin-top: calc(59 * var(--u));
+  }
+  .touren-idea__photo {
+    aspect-ratio: auto;
+  }
+  .touren-idea__body {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: min(100vw, 1440px);
+    margin-inline: auto;
+  }
+  .touren-idea__title {
+    left: calc(181 * var(--u));
+    right: auto;
+    top: calc(469 * var(--u));
+    translate: none;
+    font-size: max(36px, calc(64 * var(--u)));
+    line-height: 1.14;
+  }
+  .touren-idea__bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(635 * var(--u));
+    bottom: 0;
+    grid-template-columns: calc(394 * var(--u)) auto;
+    column-gap: calc(178 * var(--u));
+    align-content: start;
+    padding: calc(30 * var(--u)) 0 0 calc(181 * var(--u));
+    box-shadow: 0 0 0 100vmax rgb(16 14 10 / 0.42);
+    clip-path: inset(0 -100vmax);
+    background: rgb(16 14 10 / 0.42);
+  }
+  .touren-idea__text {
+    font-size: max(13px, calc(16 * var(--u)));
+    line-height: 1.7;
+  }
+  .touren-idea__steps {
+    grid-auto-flow: column;
+    grid-template-rows: repeat(4, calc(40 * var(--u)));
+    grid-template-columns: calc(309 * var(--u)) calc(309 * var(--u));
+    gap: 0;
+    font-size: max(13px, calc(15 * var(--u)));
+  }
+  .touren-web__laptop {
+    margin-top: calc(14 * var(--u));
+  }
+
+  /* Mobile website */
+  .touren-mobile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: calc(1237 * var(--u));
+    margin-top: calc(8 * var(--u));
+  }
+  .touren-mobile__stage {
+    position: relative;
+    isolation: isolate;
+    padding: 0;
+    background: none;
+  }
+  .touren-mobile__stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--touren-paper);
+    box-shadow: 0 0 0 100vmax var(--touren-paper);
+    clip-path: inset(0 0 0 -100vmax);
+  }
+  .touren-mobile__phone {
+    position: absolute;
+    left: calc(87 * var(--u));
+    top: calc(213 * var(--u));
+    width: calc(564 * var(--u));
+  }
+  .touren-mobile__dark {
+    padding: calc(180 * var(--u)) calc(100 * var(--u)) 0 calc(115 * var(--u));
+    box-shadow: 0 0 0 100vmax #000;
+    clip-path: inset(0 -100vmax 0 0);
+  }
+  .touren-mobile__title {
+    font-size: max(44px, calc(86 * var(--u)));
+  }
+  .touren-mobile__lead {
+    max-width: calc(458 * var(--u));
+    margin-top: calc(56 * var(--u));
+    font-size: max(16px, calc(24 * var(--u)));
+  }
+  .touren-mobile__note {
+    max-width: calc(470 * var(--u));
+    margin-top: calc(24 * var(--u));
+    font-size: max(13px, calc(15 * var(--u)));
+  }
+  .touren-mobile__year {
+    position: absolute;
+    left: calc(80 * var(--u));
+    top: calc(875 * var(--u));
+    margin: 0;
+    font-size: calc(354 * var(--u));
+    white-space: nowrap;
+  }
+
+  /* Website pages */
+  .touren-pages {
+    --touren-head-x: calc(171 * var(--u));
+    --touren-lead-w: calc(619 * var(--u));
+    --touren-note-w: calc(300 * var(--u));
+    --touren-intro-gap: calc(163 * var(--u));
+    --touren-top: calc(178 * var(--u));
+  }
+  .touren-pages__links {
+    gap: 0;
+    grid-auto-rows: calc(40 * var(--u));
+    font-size: max(13px, calc(15 * var(--u)));
+  }
+  .touren-pages__band {
+    margin-top: calc(47 * var(--u));
+  }
+
+  /* Project highlights */
+  .touren-highlights {
+    --touren-top: calc(185 * var(--u));
+  }
+  /* A strip of cards running past the right edge, as in the design: scroll sideways */
+  .touren-cards {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: calc(547 * var(--u));
+    gap: calc(24 * var(--u));
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: calc(60 * var(--u));
+    scrollbar-width: thin;
+    padding: 0 calc(60 * var(--u)) calc(16 * var(--u));
+    margin-top: calc(65 * var(--u));
+  }
+  .touren-card {
+    scroll-snap-align: start;
+  }
+  .touren-card {
+    min-height: calc(836 * var(--u));
+  }
+  .touren-card--story {
+    grid-column: auto;
+  }
+  .touren-card__inner {
+    padding: calc(47 * var(--u)) calc(48 * var(--u)) calc(64 * var(--u));
+  }
+  .touren-card__avatar {
+    width: calc(74 * var(--u));
+    height: calc(74 * var(--u));
+  }
+  .touren-card__person {
+    gap: calc(19 * var(--u));
+  }
+  .touren-card__name,
+  .touren-card__label {
+    font-size: max(17px, calc(24 * var(--u)));
+  }
+  .touren-card__flag {
+    width: calc(24 * var(--u));
+  }
+  .touren-card__role {
+    font-size: max(12px, calc(15 * var(--u)));
+  }
+  .touren-card__badge {
+    width: calc(72 * var(--u));
+    height: calc(72 * var(--u));
+  }
+  .touren-card__label {
+    gap: calc(19 * var(--u));
+  }
+  .touren-card__title {
+    max-width: calc(380 * var(--u));
+    margin-top: calc(110 * var(--u));
+    font-size: max(24px, calc(44 * var(--u)));
+  }
+  .touren-card__texts,
+  .touren-card__note {
+    font-size: max(12px, calc(14 * var(--u)));
+  }
+  .touren-card__texts {
+    grid-template-columns: calc(200 * var(--u)) calc(200 * var(--u));
+    gap: calc(30 * var(--u));
+  }
+  .touren-stat__value {
+    font-size: max(36px, calc(64 * var(--u)));
+  }
+  .touren-stats {
+    gap: calc(70 * var(--u));
+  }
+  .touren-stat__label {
+    font-size: max(11px, calc(14 * var(--u)));
+  }
+
+  /* Team */
+  .touren-outro {
+    grid-template-columns: calc(721 * var(--u)) 1fr;
+    height: calc(721 * var(--u));
+    margin-top: calc(181 * var(--u));
+  }
+  .touren-outro__circle {
+    padding: 0;
+    box-shadow: 0 0 0 100vmax var(--touren-paper);
+    clip-path: inset(0 0 0 -100vmax);
+  }
+  .touren-outro__title {
+    font-size: max(30px, calc(61 * var(--u)));
+    line-height: 1.14;
+  }
+  .touren-team {
+    grid-template-columns: repeat(3, calc(201 * var(--u)));
+    align-content: center;
+    gap: calc(24 * var(--u)) 0;
+    padding: 0 0 0 calc(65 * var(--u));
+  }
+  .touren-member__photo {
+    width: calc(106 * var(--u));
+    height: calc(106 * var(--u));
+    margin-bottom: calc(22 * var(--u));
+  }
+  .touren-member__role {
+    font-size: max(10px, calc(12.5 * var(--u)));
+  }
+  .touren-member__name {
+    font-size: max(12px, calc(16 * var(--u)));
+  }
+}
+
+/* ══ Motion ═════════════════════════════════════════════════════════════════════════
+ * Blocks below the hero are armed by touren-motion.tsx (`touren-r`, then `is-in` in view).
+ * Without JavaScript, or with "reduce motion", nothing is hidden.
+ */
+.touren-w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.12em 0.04em 0.2em;
+  margin: -0.12em -0.04em -0.2em;
+}
+.touren-w__in {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .touren-hero__photo {
+    animation: touren-settle 2.2s var(--touren-ease) both;
+  }
+  .touren-facts {
+    animation: touren-fade 1.2s var(--touren-ease) 0.3s both;
+  }
+  .touren-hero__phone {
+    animation: touren-rise 1.4s var(--touren-ease) 0.2s both;
+  }
+  .touren-request {
+    animation: touren-fade 1.2s var(--touren-ease) 0.6s both;
+  }
+
+  /* Words of the titles slide up out of their masks */
+  .touren-r .touren-w__in {
+    transition: translate 0.9s var(--touren-ease);
+    transition-delay: calc(var(--touren-w, 0) * 40ms);
+  }
+  .touren-armed .touren-r:not(.is-in) .touren-w__in {
+    translate: 0 110%;
+  }
+
+  /* Texts, lists and cards rise */
+  .touren-r .touren-badge,
+  .touren-r .touren-label,
+  .touren-r.touren-intro > *,
+  .touren-r.touren-process__intro > *,
+  .touren-r .touren-step,
+  .touren-r .touren-goal,
+  .touren-r .touren-brief__item,
+  .touren-r .touren-node,
+  .touren-r .touren-card,
+  .touren-r .touren-member,
+  .touren-r.touren-quote > *,
+  .touren-r .touren-swatch,
+  .touren-r .touren-type__panel,
+  .touren-r .touren-idea__bar > *,
+  .touren-r .touren-mobile__dark > * {
+    transition:
+      opacity 0.8s var(--touren-ease),
+      translate 0.9s var(--touren-ease),
+      scale 0.9s var(--touren-ease);
+  }
+  .touren-armed .touren-r:not(.is-in) .touren-badge {
+    opacity: 0;
+    scale: 0.6;
+  }
+  .touren-armed .touren-r:not(.is-in) .touren-label,
+  .touren-armed .touren-r.touren-intro:not(.is-in) > *,
+  .touren-armed .touren-r.touren-process__intro:not(.is-in) > *,
+  .touren-armed .touren-r:not(.is-in) .touren-step,
+  .touren-armed .touren-r:not(.is-in) .touren-goal,
+  .touren-armed .touren-r:not(.is-in) .touren-brief__item,
+  .touren-armed .touren-r:not(.is-in) .touren-card,
+  .touren-armed .touren-r:not(.is-in) .touren-member,
+  .touren-armed .touren-r.touren-quote:not(.is-in) > *,
+  .touren-armed .touren-r:not(.is-in) .touren-swatch,
+  .touren-armed .touren-r:not(.is-in) .touren-type__panel,
+  .touren-armed .touren-r:not(.is-in) .touren-idea__bar > *,
+  .touren-armed .touren-r:not(.is-in) .touren-mobile__dark > * {
+    opacity: 0;
+    translate: 0 2rem;
+  }
+  .touren-armed .touren-r:not(.is-in) .touren-node {
+    opacity: 0;
+    scale: 0.85;
+  }
+  .touren-r .touren-label {
+    transition-delay: 0.05s;
+  }
+  .touren-r.touren-intro > :nth-child(2),
+  .touren-r.touren-process__intro > :nth-child(2),
+  .touren-r.touren-quote > :nth-child(2) {
+    transition-delay: 0.15s;
+  }
+  .touren-r .touren-step:nth-child(2n),
+  .touren-r .touren-goal:nth-child(3n + 2),
+  .touren-r .touren-brief__item:nth-child(2),
+  .touren-r .touren-card:nth-child(2),
+  .touren-r .touren-member:nth-child(3n + 2),
+  .touren-r .touren-swatch:nth-child(2),
+  .touren-r .touren-type__panel:nth-child(2) {
+    transition-delay: 0.12s;
+  }
+  .touren-r .touren-goal:nth-child(3n),
+  .touren-r .touren-brief__item:nth-child(3),
+  .touren-r .touren-card:nth-child(3),
+  .touren-r .touren-member:nth-child(3n),
+  .touren-r .touren-swatch:nth-child(3) {
+    transition-delay: 0.24s;
+  }
+  .touren-r .touren-step:nth-child(n + 3),
+  .touren-r .touren-goal:nth-child(n + 4) {
+    transition-delay: calc(0.3s + var(--touren-i, 0s));
+  }
+  .touren-r .touren-node:nth-child(2) {
+    transition-delay: 0.08s;
+  }
+  .touren-r .touren-node:nth-child(3) {
+    transition-delay: 0.16s;
+  }
+  .touren-r .touren-node:nth-child(4) {
+    transition-delay: 0.24s;
+  }
+
+  /* Bands and wide pictures are uncovered from the bottom while the picture settles */
+  .touren-band.touren-r,
+  .touren-wide-shot.touren-r,
+  .touren-idea.touren-r {
+    transition: clip-path 1.2s var(--touren-ease);
+  }
+  .touren-band.touren-r .touren-img,
+  .touren-wide-shot.touren-r .touren-img,
+  .touren-idea.touren-r .touren-idea__photo {
+    transition: scale 1.6s var(--touren-ease);
+  }
+  .touren-armed .touren-band.touren-r:not(.is-in),
+  .touren-armed .touren-wide-shot.touren-r:not(.is-in),
+  .touren-armed .touren-idea.touren-r:not(.is-in) {
+    clip-path: inset(18% 0 0 0);
+  }
+  .touren-armed .touren-band.touren-r:not(.is-in) .touren-img,
+  .touren-armed .touren-wide-shot.touren-r:not(.is-in) .touren-img,
+  .touren-armed .touren-idea.touren-r:not(.is-in) .touren-idea__photo {
+    scale: 1.06;
+  }
+
+  /* Phones on the panels land one after the other, then drift with the scroll */
+  .touren-r .touren-shot,
+  .touren-brief__phones.touren-r,
+  .touren-r .touren-panel {
+    transition:
+      opacity 0.9s var(--touren-ease),
+      translate 1.2s var(--touren-ease);
+  }
+  .touren-r .touren-shot:nth-of-type(2) {
+    transition-delay: 0.18s;
+  }
+  .touren-armed .touren-r:not(.is-in) .touren-shot,
+  .touren-armed .touren-brief__phones.touren-r:not(.is-in) {
+    opacity: 0;
+    translate: 0 4rem;
+  }
+  .touren-armed .touren-r:not(.is-in) .touren-panel {
+    opacity: 0;
+  }
+
+  /* The big type of the specimen slides in, the swatches follow */
+  .touren-r .touren-abc {
+    transition: translate 1.4s var(--touren-ease);
+  }
+  .touren-armed .touren-r:not(.is-in) .touren-abc {
+    translate: -8% 0;
+  }
+
+  /* The big year drifts while the block passes */
+  @supports (animation-timeline: view()) {
+    .touren-mobile__year {
+      animation: touren-drift linear both;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes touren-settle {
+  from {
+    scale: 1.08;
+    opacity: 0.4;
+  }
+}
+@keyframes touren-rise {
+  from {
+    opacity: 0;
+    translate: 0 4rem;
+  }
+}
+@keyframes touren-fade {
+  from {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+}
+@keyframes touren-drift {
+  from {
+    translate: 6% 0;
+  }
+  to {
+    translate: -6% 0;
+  }
+}

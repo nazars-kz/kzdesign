@@ -78,3 +78,22 @@ const sigmaHand = localFont({
 
 /** Signal Sigma case study: Inter (titles, quote, specimen) and Kalam (handwritten notes). */
 export const signalSigmaFontVariables = [sigmaInter.variable, sigmaHand.variable].join(' ');
+
+const tourenUrbanist = localFont({
+  src: [{ path: './fonts/urbanist.woff2', weight: '100 900', style: 'normal' }],
+  variable: '--font-family-touren-urbanist',
+  display: 'swap',
+  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+const tourenInter = localFont({
+  src: [{ path: './fonts/inter.woff2', weight: '100 900', style: 'normal' }],
+  variable: '--font-family-touren-inter',
+  display: 'swap',
+  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+/** Touren case study: Urbanist (the whole page) and Inter (the app's type specimen). */
+export const tourenFontVariables = [tourenUrbanist.variable, tourenInter.variable].join(' ');

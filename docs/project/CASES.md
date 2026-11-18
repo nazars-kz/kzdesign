@@ -109,3 +109,24 @@ second reference.
   text field split in the view.
 - **Comparing with the design**: screenshot the page at 1920 in 6 000 px chunks with the site header
   hidden, then put design and page side by side per block (aligned on each block's top).
+
+## Lessons from Touren
+
+Touren (`src/content/cases/touren.ts`, `src/site/cases/touren/`, prefix `touren-`) is the third reference, a
+1440 px design.
+
+- **Mobile-first base, design layout from 1024 px.** The base rules are the phone/tablet layout; the scaled
+  design (`--u: calc(min(100vw, 1440px) / 1440)`) lives in one `@media (min-width: 64rem)` block, so nothing
+  absolute has to be undone on phones.
+- **Feature blocks** share one head (round icon, label, title), a lead with a side note and tags, then a
+  `.touren-scene`: panels (`.touren-panel--left/right`, extended to the window edge with
+  `box-shadow: 0 0 0 100vmax` + `clip-path`) and phone mockups placed by design coordinates. On phones the
+  scene becomes a grid where each phone sits on its own panel.
+- **Overlay phones** are cropped to their shadow (alpha > 6), placed by the opaque box, and saved at ~1.5× of
+  their displayed width: phones with soft shadows are the heaviest files of a case.
+- **A design-specific rule must beat the base rule**: a base selector like `.touren-scene .touren-shot`
+  outranks `.touren-home__phone`; prefix the positioned rules with the same parent.
+- **Site map** as data (entry screens, onboarding, screens with comma-separated pages): a CSS grid with dashed
+  pseudo-element connectors on desktop, a plain list on phones.
+- **Screenshots for comparison**: measure section positions only after scrolling through the page, lazy
+  images change the heights.
