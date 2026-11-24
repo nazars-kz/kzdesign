@@ -2,13 +2,14 @@
  * The case studies of the site, one unique page each. A new case is added here (and gets its own
  * route and view): see docs/project/CASES.md.
  */
+import { filmtoroCase } from './filmtoro';
 import { signalSigmaCase } from './signal-sigma';
 import { tachCase } from './tach';
 import { tourenCase } from './touren';
 
 export { CASE_CATEGORIES, INDUSTRIES } from './card';
 
-export const casePages = [tachCase, signalSigmaCase, tourenCase] as const;
+export const casePages = [tachCase, signalSigmaCase, tourenCase, filmtoroCase] as const;
 
 export type CasePage = (typeof casePages)[number];
 

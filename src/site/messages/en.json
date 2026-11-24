@@ -166,7 +166,9 @@
     "screens": "Screens",
     "previousCase": "Previous case",
     "nextCase": "Next case",
-    "otherCases": "Other case studies"
+    "otherCases": "Other case studies",
+    "hex": "Hex",
+    "rgb": "RGB"
   },
   "about": {
     "breadcrumb": "Breadcrumb",

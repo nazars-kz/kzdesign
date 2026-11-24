@@ -1,7 +1,7 @@
 import { expect, test } from './support/test';
 
 /** Every case page: the header (breadcrumbs, H1, details, feedback) and the SEO text at the end. */
-const CASES = ['tach', 'signal-sigma', 'touren'] as const;
+const CASES = ['tach', 'signal-sigma', 'touren', 'filmtoro'] as const;
 
 for (const slug of CASES) {
   test.describe(`case header and SEO text: ${slug}`, () => {

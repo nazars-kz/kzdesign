@@ -183,6 +183,8 @@ export const uiTexts = defineUiTexts({
         previousCase: 'Other cases slider: previous button (read by screen readers)',
         nextCase: 'Other cases slider: next button (read by screen readers)',
         otherCases: 'Other cases slider: name (read by screen readers)',
+        hex: 'Palette of a case: the label of the HEX code',
+        rgb: 'Palette of a case: the label of the RGB values',
       },
     },
     about: {
