@@ -373,6 +373,133 @@
   scroll-snap-align: start;
 }
 
+/* ── Case page: header (breadcrumbs, H1, details, client feedback) ───────── */
+.cd {
+  padding: 3.75rem 0 8.75rem;
+}
+.cd .crumbs {
+  padding-top: 3.0625rem;
+}
+.cd__title {
+  margin: 2.5rem 0 0;
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: 4.375rem;
+  color: var(--color-foreground);
+}
+.cd__group {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, 264fr) minmax(0, 1056fr);
+  margin-top: 5rem;
+}
+.cd__label {
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  color: var(--color-foreground);
+}
+.cd__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 0;
+}
+.cd__row {
+  display: grid;
+  grid-template-columns: minmax(0, 348fr) minmax(0, 696fr);
+  gap: 0.75rem;
+  padding-bottom: 2.5625rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.cd__row dt {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  line-height: 2.375rem;
+  color: var(--color-foreground);
+}
+.cd__row dd {
+  margin: 0;
+  font-size: 1.75rem;
+  line-height: 2.375rem;
+  color: var(--color-inverse-subtle);
+}
+.cd__quote {
+  margin: 0;
+}
+.cd__quote blockquote {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 2.375rem;
+  color: var(--color-foreground);
+}
+.cd__quote blockquote p {
+  margin: 0;
+}
+
+/* ── Case page: SEO text before "Related case studies" ───────────────────── */
+.cab {
+  padding: 7.5rem 0;
+  border-top: 1px solid var(--color-border);
+}
+.cab__inner {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, 264fr) minmax(0, 1056fr);
+  column-gap: 1.5rem;
+}
+.cab__title {
+  grid-column: 1 / -1;
+  max-width: 50rem;
+  margin: 0 0 3rem;
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 3rem;
+  color: var(--color-foreground);
+}
+.cab__body {
+  grid-column: 2;
+  display: grid;
+  gap: 1.25rem;
+  max-width: 50rem;
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+  color: var(--color-inverse-subtle);
+}
+.cab__body p {
+  margin: 0;
+}
+.cab__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.cab__link {
+  display: inline-flex;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  color: var(--color-foreground);
+  text-decoration: underline;
+  text-decoration-color: var(--color-border-subtle);
+  text-underline-offset: 0.3em;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+.cab__link:hover {
+  color: var(--color-primary);
+}
+.cab__arrow {
+  text-decoration: none;
+}
+
 /* ── Phones ──────────────────────────────────────────────────────────────── */
 @media (max-width: 47.9375rem) {
   .cs-hero {
@@ -425,6 +552,55 @@
     padding-bottom: 3.75rem;
   }
 
+  .cd {
+    padding: 5rem 0 3.5rem;
+  }
+  .cd .crumbs {
+    padding-top: 0;
+  }
+  .cd__title {
+    margin-top: 2.125rem;
+    font-size: 2rem;
+    line-height: 2.375rem;
+  }
+  .cd__group {
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+    margin-top: 2.5rem;
+  }
+  .cd__row {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    padding-bottom: 1.3125rem;
+  }
+  .cd__row dt {
+    font-size: 1.5rem;
+  }
+  .cd__row dd {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    text-align: right;
+  }
+  .cd__quote blockquote {
+    font-size: 1.375rem;
+    line-height: 2rem;
+  }
+  .cab {
+    padding: 4rem 0;
+  }
+  .cab__inner {
+    grid-template-columns: 1fr;
+  }
+  .cab__title {
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+  }
+  .cab__body {
+    grid-column: 1;
+    font-size: 1.0625rem;
+    line-height: 1.625rem;
+  }
   .author__name {
     font-size: 1.5rem;
     line-height: 2.25rem;

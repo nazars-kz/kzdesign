@@ -13,6 +13,7 @@ import { useShared } from '@/core/content/shared-section';
 
 import { relatedCasesShared } from '../shared/related-cases';
 import { caseCardSection } from './card';
+import { caseAboutSection, caseIntroSection } from './page-parts';
 
 const HIGHLIGHT_HELP = 'Words in *asterisks* are highlighted; a new line starts a new row.';
 
@@ -78,17 +79,12 @@ export const signalSigmaCase = definePage({
   ],
   sections: [
     caseCardSection(),
+    caseIntroSection(),
     defineSection({
       id: 'hero',
       label: 'Hero',
       description: 'The first screen: the tablet picture, the project facts and the intro.',
       fields: {
-        heading: f.text({
-          label: 'Page heading (H1)',
-          required: true,
-          max: 120,
-          help: 'The only H1 of the page, read by search engines and screen readers (not shown).',
-        }),
         image: picture('Picture', '1920×1920'),
         facts: f.list({
           label: 'Project facts',
@@ -345,6 +341,7 @@ export const signalSigmaCase = definePage({
         closing: f.text({ label: 'Closing line', max: 80 }),
       },
     }),
+    caseAboutSection(),
     useShared(relatedCasesShared),
   ],
   seed: {
@@ -372,8 +369,20 @@ export const signalSigmaCase = definePage({
         },
         industryOrder: 1,
       },
+      intro: {
+        title: 'Signal Sigma – Investment Strategy Platform',
+        details: [
+          { label: 'Industry', value: 'FinTech' },
+          { label: 'Platform', value: 'Web App' },
+          { label: 'Year', value: '2024' },
+        ],
+        quote:
+          'Post-launch, user engagement metrics showed a 40% increase in average session duration, reflecting the intuitive and engaging design of the frontend.\nUser onboarding completion rates improved by 25%, thanks to the streamlined UX that made complex financial tools accessible to both novice and expert users.\nThe app’s Net Promoter Score (NPS) jumped to 85, indicating high user satisfaction with the interface and functionality.\nDevelopment efficiency also saw a boost, with a 30% reduction in frontend implementation time due to the detailed Figma layouts and clear documentation provided by K&Z Design.',
+        author: 'Andrei Sota',
+        authorRole: 'Founder & CEO, Signal Sigma',
+        authorPhoto: { asset: 'case-signal-sigma-client-andrei.webp', alt: 'Andrei Sota' },
+      },
       hero: {
-        heading: 'Signal Sigma: UX/UI case study of an investment research platform',
         image: {
           asset: 'case-signal-sigma-hero.webp',
           alt: 'The Signal Sigma technical analysis screen of Apple stock on a tablet in a dark concrete room',
@@ -696,6 +705,14 @@ export const signalSigmaCase = definePage({
           },
         ],
         closing: 'See ya in the next case study',
+      },
+      'about-project': {
+        title: 'About the Signal Sigma project',
+        text: 'Signal Sigma is an investment research and portfolio tracking platform for individual traders and professional strategists. It is not a brokerage: investors use it to research stocks, test strategies with backtests, keep a trading journal and follow their portfolios before they place trades with their brokers.\nK&Z Design designed the web app from research to developer handoff: user flows and information architecture, the stock screener with custom metrics, watchlists, orders and trades, technical and fundamental analysis, the blog and journal, and a design system that keeps dense financial data easy to read.\nAfter launch, the average session grew 40% longer, onboarding completion rose by 25% and the product reached an NPS of 85.',
+        links: [
+          { label: 'SaaS and web app design services', href: '/services/saas', external: false },
+          { label: 'All case studies', href: '/cases', external: false },
+        ],
       },
     },
   },

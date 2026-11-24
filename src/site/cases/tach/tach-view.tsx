@@ -2,6 +2,8 @@
 import type { PageViewProps } from '@/core/content/page-route';
 
 import { tachFontVariables } from '../../theme/fonts';
+import { CaseAbout } from '../case-about';
+import { CaseIntro } from '../case-intro';
 import { RelatedCases } from '../related-cases';
 import { TachBrand } from './tach-brand';
 import { TachHero } from './tach-hero';
@@ -13,6 +15,7 @@ import { TachAssets, TachFinances, TachPlatform, TachVendors } from './tach-plat
 export function TachView({ content, locale }: PageViewProps<'case-tach'>) {
   return (
     <>
+      <CaseIntro content={content.intro} name={content.card.title} />
       <div className={`tach-case ${tachFontVariables}`}>
         <TachMotion />
         <TachHero hero={content.hero} avatar={content.card.industryThumb} />
@@ -29,6 +32,7 @@ export function TachView({ content, locale }: PageViewProps<'case-tach'>) {
           <TachOutro outro={content.outro} />
         </div>
       </div>
+      <CaseAbout content={content['about-project']} />
       <RelatedCases content={content.related} current="tach" locale={locale} />
     </>
   );

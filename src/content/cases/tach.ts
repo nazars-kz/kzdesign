@@ -12,6 +12,7 @@ import { useShared } from '@/core/content/shared-section';
 
 import { relatedCasesShared } from '../shared/related-cases';
 import { caseCardSection } from './card';
+import { caseAboutSection, caseIntroSection } from './page-parts';
 
 const HIGHLIGHT_HELP = 'A new line starts a new row; words in *asterisks* are highlighted.';
 
@@ -66,17 +67,12 @@ export const tachCase = definePage({
   ],
   sections: [
     caseCardSection(),
+    caseIntroSection(),
     defineSection({
       id: 'hero',
       label: 'Hero',
       description: 'The first screen: the photo, the lead text and two interface cards.',
       fields: {
-        heading: f.text({
-          label: 'Page heading (H1)',
-          required: true,
-          max: 120,
-          help: 'The only H1 of the page. It is read by search engines and screen readers; the logo is shown instead of it.',
-        }),
         lead: f.textarea({ label: 'Lead text', required: true, max: 300, rows: 4 }),
         photo: picture(
           'Background photo',
@@ -385,6 +381,7 @@ export const tachCase = definePage({
         }),
       },
     }),
+    caseAboutSection(),
     useShared(relatedCasesShared),
   ],
   seed: {
@@ -412,8 +409,18 @@ export const tachCase = definePage({
         },
         industryOrder: 1,
       },
+      intro: {
+        title: 'Tach – Banking & Operations Platform for Logistics',
+        details: [
+          { label: 'Industry', value: 'Logistics' },
+          { label: 'Platform', value: 'Mobile App, Web Portal' },
+          { label: 'Timeline', value: '4.5 months' },
+        ],
+        quote: '',
+        author: '',
+        authorRole: '',
+      },
       hero: {
-        heading: 'Tach: UX/UI case study of a logistics banking and operations platform',
         lead: 'TACH is a digital platform that helps simplify financial and operational tasks for Owner-Operators, Carriers, and Vendors in the logistics industry.',
         photo: {
           asset: 'case-tach-hero-wide.webp',
@@ -685,6 +692,15 @@ export const tachCase = definePage({
             name: 'Nazar Serhiiko',
             role: 'Web Designer\nCase Study Designer',
           },
+        ],
+      },
+      'about-project': {
+        title: 'About the Tach project',
+        text: 'Tach is a digital platform that simplifies financial and operational tasks for owner-operators, carriers and vendors in the logistics industry. It brings banking tools, earnings tracking, financial analytics, a vendor marketplace and asset management for trucks and trailers into one product.\nK&Z Design created the brand identity and designed the mobile app and the web portal for drivers, vendors and service providers: analysis and research, wireframes, UI/UX design, the website and product design support, in four and a half months.',
+        links: [
+          { label: 'Mobile app design services', href: '/services/mobile', external: false },
+          { label: 'SaaS and web app design services', href: '/services/saas', external: false },
+          { label: 'All case studies', href: '/cases', external: false },
         ],
       },
     },

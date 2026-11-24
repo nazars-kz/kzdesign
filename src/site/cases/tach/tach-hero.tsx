@@ -39,7 +39,7 @@ export function TachHero({
   avatar: Content['card']['industryThumb'];
 }) {
   return (
-    <section className="tach-hero" aria-labelledby="tach-title">
+    <section className="tach-hero">
       <div className="tach-hero__stage" aria-hidden="true">
         <SiteImage
           image={hero.photo}
@@ -67,9 +67,6 @@ export function TachHero({
         </div>
       </div>
       <div className="tach-hero__inner">
-        <h1 id="tach-title" className="sr-only">
-          {hero.heading}
-        </h1>
         <TachLogo className="tach-hero__logo" />
         <p className="tach-hero__lead">
           <Accent text={hero.lead} />

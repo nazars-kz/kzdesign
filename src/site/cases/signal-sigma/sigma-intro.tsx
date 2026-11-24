@@ -56,10 +56,7 @@ export function Overlay({
 
 export function SigmaHero({ hero }: { hero: SigmaContent['hero'] }) {
   return (
-    <section className="sigma-hero" aria-labelledby="sigma-title">
-      <h1 id="sigma-title" className="sr-only">
-        {hero.heading}
-      </h1>
+    <section className="sigma-hero">
       <div className="sigma-hero__stage">
         <SiteImage
           image={hero.image}

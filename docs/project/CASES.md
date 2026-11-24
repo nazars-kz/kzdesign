@@ -4,6 +4,12 @@ Every case study is a **unique page**: its own layout, built for that case, at `
 There is no case template and no `cases` collection. What every case page has in common:
 
 - the site **header and footer**;
+- the **case header** at the top: breadcrumbs, the H1, the project details (industry, platform,
+  year) and the client feedback (section `intro`, `caseIntroSection()`, component
+  `src/site/cases/case-intro.tsx`); the feedback is hidden while empty;
+- the **SEO text** at the end, before "Related case studies": an H2, a few paragraphs about the
+  product and the work, links to the related service pages and to all cases (section
+  `about-project`, `caseAboutSection()`, component `src/site/cases/case-about.tsx`);
 - the **"Related case studies"** slider just before the footer (shared section `related`,
   component `src/site/cases/related-cases.tsx`);
 - the **card data** (`caseCardSection()`): how the case looks on the Cases page, on Home, in the
@@ -13,17 +19,18 @@ Everything else (sections, grid, typography, colors, animation) is made for the 
 
 ## Where things live
 
-| What                       | Where                                                                                            |
-| -------------------------- | ------------------------------------------------------------------------------------------------ |
-| Content schema + seed text | `src/content/cases/<slug>.ts` (`definePage`, `adminGroup: 'Case studies'`, `parent: 'cases'`)    |
-| Case registry              | `src/content/cases/index.ts` (`casePages`)                                                       |
-| Shared card section        | `src/content/cases/card.ts` (`caseCardSection()`, `CASE_CATEGORIES`, `INDUSTRIES`)               |
-| View (the layout)          | `src/site/cases/<slug>/` (`<slug>-view.tsx` and its parts)                                       |
-| Styles                     | `src/site/theme/case-<slug>.css`, imported in `site.css`, every class prefixed `<slug>-`         |
-| Route                      | `src/app/(site)/[locale]/(pages)/cases/<slug>/page.tsx` (`createPageRoute('case-<slug>', View)`) |
-| Images                     | `src/content/seed/assets/case-<slug>-*.webp` (seed images, imported by `content:sync`)           |
-| Related block              | `src/content/shared/related-cases.ts`, `src/site/cases/related-cases.tsx` (do not copy)          |
-| Card loaders               | `src/site/case-cards.ts` (`getCaseCards`, `getListedCases`)                                      |
+| What                       | Where                                                                                                 |
+| -------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Content schema + seed text | `src/content/cases/<slug>.ts` (`definePage`, `adminGroup: 'Case studies'`, `parent: 'cases'`)         |
+| Case registry              | `src/content/cases/index.ts` (`casePages`)                                                            |
+| Header and SEO text        | `src/content/cases/page-parts.ts` (`caseIntroSection()`, `caseAboutSection()`), styles in `cases.css` |
+| Shared card section        | `src/content/cases/card.ts` (`caseCardSection()`, `CASE_CATEGORIES`, `INDUSTRIES`)                    |
+| View (the layout)          | `src/site/cases/<slug>/` (`<slug>-view.tsx` and its parts)                                            |
+| Styles                     | `src/site/theme/case-<slug>.css`, imported in `site.css`, every class prefixed `<slug>-`              |
+| Route                      | `src/app/(site)/[locale]/(pages)/cases/<slug>/page.tsx` (`createPageRoute('case-<slug>', View)`)      |
+| Images                     | `src/content/seed/assets/case-<slug>-*.webp` (seed images, imported by `content:sync`)                |
+| Related block              | `src/content/shared/related-cases.ts`, `src/site/cases/related-cases.tsx` (do not copy)               |
+| Card loaders               | `src/site/case-cards.ts` (`getCaseCards`, `getListedCases`)                                           |
 
 In the admin the case appears in the sidebar group **Case studies** (a page with `adminGroup`),
 not in the page tree. Editors change texts, replace images, edit the card and the SEO there.
@@ -48,14 +55,18 @@ The input is a full-page screenshot of the case and a folder of assets (`design/
    so they look sharp but stay light; keep originals out of `src/`. Give every image a real
    `alt` in the seed. Render with `next/image` (`SiteImage`): correct `sizes`, `priority` only
    for the first screen's image. Cover and card images are fields of the card section.
-6. **SEO.** `seo.title` = `{Name}: {product type} UX/UI Case Study | K&Z Design`, a 150-160
+6. **Header and SEO text.** Add `caseIntroSection()` after the card section and `caseAboutSection()`
+   before the Related block; render `<CaseIntro>` first and `<CaseAbout>` just before `<RelatedCases>`
+   in the view. The H1 is the header title: the case layout itself has no H1. The SEO text names the
+   product type, platforms and work done and links to the matching service pages and to `/cases`.
+7. **SEO.** `seo.title` = `{Name}: {product type} UX/UI Case Study | K&Z Design`, a 150-160
    character `seo.description`, one `h1`, ordered `h2`/`h3`, descriptive `alt` text, semantic
    landmarks and lists, link text that says where it goes. The page route exports
    `generateMetadata`; structured data is added through `structuredData` of the page.
-7. **Card.** Fill the card section seed (name, description, tags, categories (filters), cover and
+8. **Card.** Fill the card section seed (name, description, tags, categories (filters), cover and
    phone cover, Home flags, industries). Register the case in `src/content/cases/index.ts`. To
    show it on a service page add its slug to `caseSlugs` of that service.
-8. **Check.** `pnpm typecheck && pnpm lint && pnpm test && pnpm content:check && pnpm tokens:check`;
+9. **Check.** `pnpm typecheck && pnpm lint && pnpm test && pnpm content:check && pnpm tokens:check`;
    compare with the screenshot at 1440 and 375 (and 768); add `tests/e2e/case-<slug>.spec.ts`
    (one h1, sections, images have alt, mobile layout without horizontal scroll).
 
