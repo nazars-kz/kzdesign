@@ -9,25 +9,24 @@ import { CaseAbout } from '../case-about';
 import { CaseIntro } from '../case-intro';
 import { RelatedCases } from '../related-cases';
 import {
-  FilmtoroCreate,
-  FilmtoroHome,
-  FilmtoroLists,
-  FilmtoroOutro,
-  FilmtoroPosts,
-  FilmtoroProfile,
-  FilmtoroQuizzes,
-  FilmtoroReels,
-} from './filmtoro-app';
-import {
   FilmtoroAbout,
   FilmtoroArchitecture,
   FilmtoroBrand,
   FilmtoroCommunity,
+  FilmtoroCreate,
+  FilmtoroDetails,
+  FilmtoroDiscover,
   FilmtoroHero,
+  FilmtoroHome,
   FilmtoroIdentity,
+  FilmtoroLists,
+  FilmtoroPosts,
   FilmtoroProcess,
+  FilmtoroProfile,
+  FilmtoroQuizzes,
+  FilmtoroReels,
   FilmtoroShowcase,
-} from './filmtoro-intro';
+} from './filmtoro-blocks';
 import { FilmtoroMotion } from './filmtoro-motion';
 
 export function FilmtoroView({ content, locale }: PageViewProps<'case-filmtoro'>) {
@@ -36,22 +35,23 @@ export function FilmtoroView({ content, locale }: PageViewProps<'case-filmtoro'>
       <CaseIntro content={content.intro} name={content.card.title} />
       <div className={`filmtoro-case ${filmtoroFontVariables}`}>
         <FilmtoroMotion />
-        <FilmtoroHero hero={content.hero} />
-        <FilmtoroAbout about={content.about} />
-        <FilmtoroProcess process={content.process} />
-        <FilmtoroCommunity community={content.community} />
-        <FilmtoroBrand brand={content.brand} />
-        <FilmtoroArchitecture architecture={content.architecture} />
-        <FilmtoroShowcase showcase={content.showcase} />
-        <FilmtoroIdentity identity={content.identity} />
-        <FilmtoroHome home={content.home} />
-        <FilmtoroReels reels={content.reels} />
-        <FilmtoroPosts posts={content.posts} />
-        <FilmtoroProfile profile={content.profile} />
-        <FilmtoroCreate create={content.create} />
-        <FilmtoroLists lists={content.lists} />
-        <FilmtoroQuizzes quizzes={content.quizzes} />
-        <FilmtoroOutro outro={content.outro} />
+        <FilmtoroHero content={content.hero} />
+        <FilmtoroAbout content={content.about} />
+        <FilmtoroProcess content={content.process} />
+        <FilmtoroCommunity content={content.community} />
+        <FilmtoroBrand content={content.brand} />
+        <FilmtoroArchitecture content={content.architecture} />
+        <FilmtoroShowcase content={content.showcase} />
+        <FilmtoroIdentity content={content.identity} />
+        <FilmtoroHome content={content.home} />
+        <FilmtoroDiscover content={content.discover} />
+        <FilmtoroReels content={content.reels} />
+        <FilmtoroPosts content={content.posts} />
+        <FilmtoroProfile content={content.profile} />
+        <FilmtoroDetails content={content.details} />
+        <FilmtoroCreate content={content.create} />
+        <FilmtoroLists content={content.lists} />
+        <FilmtoroQuizzes content={content.quizzes} />
       </div>
       <CaseAbout content={content['about-project']} />
       <RelatedCases content={content.related} current="filmtoro" locale={locale} />

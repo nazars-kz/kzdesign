@@ -144,19 +144,25 @@ Touren (`src/content/cases/touren.ts`, `src/site/cases/touren/`, prefix `touren-
 
 ## Lessons from Filmtoro
 
-Filmtoro (`src/content/cases/filmtoro.ts`, `src/site/cases/filmtoro/`, prefix `filmtoro-`) is a dark 1440 px
-design delivered as a 2000 px wide export (1.39×): divide every measurement by 1.389 to get design pixels.
+Filmtoro (`src/content/cases/filmtoro.ts`, `src/site/cases/filmtoro/`, prefix `filmtoro-`) follows the case
+as it was on the old site: one export per block for desktop (`film-desk-*`, 1920 px canvas) and for phones
+(`film-mob-*`, 384 px canvas). It is built as **slides**.
 
-- **Find assets in the export by template matching** (downscale the 2× asset to the export scale, search
-  around a guess, compare opaque pixels): it gives the exact design position of every phone and overlay.
-- **Pre-composed groups.** Many assets are already arranged groups of phones on a transparent 1320 px
-  canvas: place them at the content width, no per-phone positioning needed.
-- **Missing assets.** A part that exists only in the export (here the phone held by the hand, the logo and
-  the menu tile) is cut from the export; for a scene, build it at 2× from the real assets (background, hand,
-  card) and paste the cut part with a feathered edge so the seam disappears.
-- **Transparent pictures without the blur placeholder**: `next/image` paints the blurred preview behind a
-  transparent PNG as a dark box until it loads, so the case's `Picture` drops `blurDataURL`.
-- **A diagram that is unreadable on a phone** (the info architecture map) is shown as a picture from 1024 px
-  and as a list (field data) below it.
-- **Screenshots without JavaScript**: Playwright's `addStyleTag` hangs when JavaScript is off; insert the
-  style with `page.evaluate`, scroll the viewport and capture it chunk by chunk.
+- **Slides.** Each block keeps the design's proportions: `--k` is one design pixel (384 px canvas up to
+  40rem below 1024 px, the 1920 px canvas from 1024 px). The picture of a slide is the export without its
+  texts; the texts are live HTML placed with design coordinates (`.filmtoro-t` with `--x`, `--y`, `--w`,
+  `--fs`, `--lh`). Text-only blocks (the challenge, process, colors, details pages) are fully coded.
+- **Erasing texts from an export**: every column of the text box is interpolated between the rows above and
+  below, then blurred; on flat, gradient and spark backgrounds the patch is invisible.
+- **Measured positions.** The text lines of the exports were measured (rows with ink), the page was
+  rendered at 1920 and 384 px and measured the same way, and the offsets were corrected until every text
+  sits within 1–2 px of the design. Keep the generated block between the `gen:start` / `gen:end` markers
+  in one piece.
+- **Fonts per block.** On the old site titles are Urbanist, most body texts on phones and some on desktop
+  are Satoshi (the site's body font, `--font-family-body`): check the double-storey `a`.
+- **Art direction** with `getImageProps` (one `<picture>`: the phone file by default, the desktop file
+  from 64rem), so a device downloads only its own picture.
+- **Seed images are capped at 2400 px on the longest edge** (`SEED_IMAGE_MAX_DIMENSION`): tall phone
+  pictures are saved at 2× (768 px) and cut into parts that the slide stacks again (`imagesMobile` list).
+- **Renamed files.** When a seed picture changes, give it a new file name: `content:sync` imports by file
+  name and keeps an already imported file.
