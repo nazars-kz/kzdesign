@@ -164,5 +164,9 @@ as it was on the old site: one export per block for desktop (`film-desk-*`, 1920
   from 64rem), so a device downloads only its own picture.
 - **Seed images are capped at 2400 px on the longest edge** (`SEED_IMAGE_MAX_DIMENSION`): tall phone
   pictures are saved at 2× (768 px) and cut into parts that the slide stacks again (`imagesMobile` list).
+- **Motion on slides.** The picture opens like a window (`clip-path` inset with rounded corners) while it
+  settles from a zoom, title rows slide up out of masks, texts rise out of a blur with a stagger, coral
+  highlights and labels fill in from the left, stage lines draw, the specimen rises into its tile. No
+  parallax: the texts sit on parts of the pictures and must stay aligned.
 - **Renamed files.** When a seed picture changes, give it a new file name: `content:sync` imports by file
   name and keeps an already imported file.

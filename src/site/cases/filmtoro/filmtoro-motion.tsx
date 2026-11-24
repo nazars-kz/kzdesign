@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 
 /** The slides play their entrance when they scroll into view (see "Motion" in the CSS). */
-const BLOCKS = '.filmtoro-slide';
+const BLOCKS = '.filmtoro-slide:not(.filmtoro-hero)';
 
 /** A block starts when its top passes this share of the viewport height (from the top). */
 const TRIGGER = 0.88;

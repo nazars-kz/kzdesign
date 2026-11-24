@@ -49,11 +49,16 @@ export function Marked({ text }: { text: string }) {
   );
 }
 
-/** A title written on several lines: every line is a row of its own. */
+/**
+ * A title written on several lines: every line is a row of its own, in a clipping mask and
+ * numbered (`--filmtoro-i`) so the rows can slide up one after another.
+ */
 export function Rows({ text }: { text: string }) {
-  return linesOf(text).map((row) => (
+  return linesOf(text).map((row, index) => (
     <span key={row} className="filmtoro-row">
-      {row}
+      <span className="filmtoro-row__in" style={cssVars({ '--filmtoro-i': index })}>
+        {row}
+      </span>
     </span>
   ));
 }
