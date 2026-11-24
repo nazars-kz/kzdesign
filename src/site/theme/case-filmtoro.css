@@ -1,0 +1,1331 @@
+/*
+ * Case study: Filmtoro (/cases/filmtoro). A unique page with its own palette and type; every
+ * selector starts with `filmtoro-` so nothing here can reach another page.
+ * Design: design/cases/filmtoro/Frame.png (1440 px wide at 1.39×, not committed).
+ * Fonts (Urbanist for the page, Geist for the app's type and the big words) come from fonts.ts
+ * (`filmtoroFontVariables`).
+ *
+ * Layout: the base rules are the phone and tablet layout (one column, rem). From 1024 px up the
+ * page is the 1440 px design scaled to the window: `--u` is one design pixel; phones on panels
+ * are placed with design coordinates. Text never goes below a readable minimum.
+ */
+.filmtoro-case {
+  --filmtoro-bg: #0e0e0e;
+  --filmtoro-tile: #161617;
+  --filmtoro-card: #1b1c1d;
+  --filmtoro-coral: #f15262;
+  --filmtoro-wine: #461f26;
+  --filmtoro-wine-deep: #2a1216;
+  --filmtoro-ghost: #521d29;
+  --filmtoro-ghost-team: #3a171d;
+  --filmtoro-ink: #111111;
+  --filmtoro-white: #ffffff;
+  --filmtoro-soft: #e6e6e6;
+  --filmtoro-muted: #a3a1a2;
+  --filmtoro-line: rgb(255 255 255 / 0.16);
+  --filmtoro-sans: var(--font-family-filmtoro-urbanist), system-ui, sans-serif;
+  --filmtoro-geist: var(--font-family-filmtoro-geist), system-ui, sans-serif;
+  --filmtoro-gutter: clamp(1rem, 5vw, 2.5rem);
+  --filmtoro-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  overflow-x: clip;
+  background: var(--filmtoro-bg);
+  color: var(--filmtoro-white);
+  font-family: var(--filmtoro-sans);
+  line-height: 1.45;
+}
+.filmtoro-case :where(h1, h2, h3, p, ul, ol, dl, dd, figure, blockquote) {
+  margin: 0;
+}
+.filmtoro-case :where(ul, ol) {
+  padding: 0;
+  list-style: none;
+}
+.filmtoro-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.filmtoro-pic {
+  position: relative;
+}
+.filmtoro-row,
+.filmtoro-line {
+  display: block;
+}
+.filmtoro-row {
+  overflow: clip;
+  overflow-clip-margin: 0.12em;
+}
+.filmtoro-row__in {
+  display: block;
+}
+.filmtoro-accent {
+  font-style: normal;
+  color: var(--filmtoro-coral);
+}
+
+/* ── Shared text ──────────────────────────────────────────────────────────────────── */
+.filmtoro-head {
+  display: grid;
+  gap: 1.25rem;
+  padding-inline: var(--filmtoro-gutter);
+}
+.filmtoro-title {
+  font-size: clamp(2.5rem, 8vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.filmtoro-lead {
+  max-width: 40rem;
+  font-size: 1.1875rem;
+  line-height: 1.45;
+  color: var(--filmtoro-white);
+}
+.filmtoro-note {
+  max-width: 34rem;
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--filmtoro-soft);
+}
+.filmtoro-kicker {
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--filmtoro-muted);
+}
+.filmtoro-tile {
+  overflow: hidden;
+  background: var(--filmtoro-tile);
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────────────────── */
+.filmtoro-hero {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  overflow: clip;
+  padding: 2rem var(--filmtoro-gutter) 3rem;
+  background:
+    radial-gradient(70% 40% at 50% 0%, var(--filmtoro-wine) 0%, transparent 100%),
+    radial-gradient(45% 30% at 0% 72%, var(--filmtoro-wine) 0%, transparent 100%),
+    radial-gradient(45% 35% at 92% 55%, var(--filmtoro-wine-deep) 0%, transparent 100%),
+    var(--filmtoro-bg);
+}
+.filmtoro-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.5rem;
+  justify-self: stretch;
+  font-size: 0.875rem;
+}
+.filmtoro-facts dd {
+  margin-top: 0.25rem;
+  color: var(--filmtoro-muted);
+}
+.filmtoro-hero__name {
+  margin-top: 2.5rem;
+  font-family: var(--filmtoro-geist);
+  font-size: 22vw;
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  color: var(--filmtoro-ghost);
+}
+.filmtoro-hero__phones {
+  width: min(88%, 26rem);
+  margin-top: -6vw;
+}
+
+/* ── About and process ────────────────────────────────────────────────────────────── */
+.filmtoro-about {
+  display: grid;
+  gap: 1.25rem;
+  padding: 3rem var(--filmtoro-gutter) 0;
+}
+.filmtoro-about__lead {
+  max-width: 54rem;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  line-height: 1.22;
+}
+.filmtoro-process {
+  position: relative;
+  display: grid;
+  gap: 3rem;
+  padding: 6rem 0 5rem;
+  background: radial-gradient(60% 50% at 80% 50%, rgb(241 82 98 / 0.16) 0%, transparent 100%);
+}
+.filmtoro-stages {
+  padding-inline: var(--filmtoro-gutter);
+}
+.filmtoro-stage {
+  position: relative;
+  padding-block: 1.5rem;
+}
+.filmtoro-stage:first-child {
+  padding-top: 0;
+}
+.filmtoro-stage:not(:last-child)::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: -100vw;
+  height: 1px;
+  background: var(--filmtoro-line);
+  content: '';
+}
+.filmtoro-stage__title {
+  font-size: 1.125rem;
+  font-weight: 400;
+}
+.filmtoro-stage__items {
+  display: grid;
+  gap: 0.375rem;
+  margin-top: 0.875rem;
+  font-size: 0.9375rem;
+  font-weight: 300;
+  color: var(--filmtoro-soft);
+}
+
+/* ── Community, logo, info architecture, profile screens ──────────────────────────── */
+.filmtoro-community {
+  position: relative;
+}
+.filmtoro-card {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+  margin: 1rem var(--filmtoro-gutter) 0;
+  padding: 1.25rem;
+  background: var(--filmtoro-card);
+}
+.filmtoro-card__icon {
+  width: 3rem;
+  margin-bottom: 0.5rem;
+}
+.filmtoro-card__title {
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.3;
+}
+.filmtoro-card__text {
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--filmtoro-soft);
+}
+.filmtoro-brand {
+  display: grid;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-inline: var(--filmtoro-gutter);
+}
+.filmtoro-brand__logo,
+.filmtoro-brand__menu {
+  position: relative;
+  aspect-ratio: 648 / 400;
+}
+.filmtoro-tile__label {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  z-index: 1;
+  font-size: 1rem;
+}
+.filmtoro-brand__logo-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32%;
+  translate: -50% -50%;
+}
+.filmtoro-brand__menu-img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 73.3%;
+}
+.filmtoro-architecture {
+  display: grid;
+  gap: 2rem;
+  padding-top: 5rem;
+}
+.filmtoro-architecture__map {
+  display: none;
+}
+.filmtoro-hubs {
+  display: grid;
+  gap: 1rem;
+  padding-inline: var(--filmtoro-gutter);
+}
+.filmtoro-hub {
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--filmtoro-line);
+  border-radius: 1.25rem;
+}
+.filmtoro-hub__name {
+  display: inline-block;
+  padding: 0.25rem 0.875rem;
+  border: 1px solid var(--filmtoro-muted);
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.filmtoro-hub__pages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem 1rem;
+  margin-top: 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: var(--filmtoro-muted);
+}
+.filmtoro-showcase {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 4rem;
+  padding-inline: var(--filmtoro-gutter);
+}
+
+/* ── Colors and typography ────────────────────────────────────────────────────────── */
+.filmtoro-identity {
+  display: grid;
+  gap: 2rem;
+  padding-top: 5rem;
+}
+.filmtoro-type {
+  display: grid;
+  margin-inline: var(--filmtoro-gutter);
+}
+.filmtoro-type__font {
+  display: grid;
+  gap: 2.5rem;
+  padding: 1.5rem;
+  background: var(--filmtoro-tile);
+  text-align: center;
+}
+.filmtoro-type__top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  font-size: 0.9375rem;
+  color: var(--filmtoro-soft);
+}
+.filmtoro-type__sizes {
+  display: flex;
+  gap: 0.875rem;
+}
+.filmtoro-type__family {
+  font-family: var(--filmtoro-geist);
+  font-size: 4rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.filmtoro-type__credit {
+  margin-top: 1rem;
+  font-family: var(--filmtoro-geist);
+  font-size: 0.9375rem;
+  color: var(--filmtoro-soft);
+}
+.filmtoro-type__alphabet {
+  font-family: var(--filmtoro-geist);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  letter-spacing: 0.12em;
+  color: var(--filmtoro-soft);
+  overflow-wrap: anywhere;
+}
+.filmtoro-type__specimen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 662 / 649;
+  background: var(--filmtoro-coral);
+  font-family: var(--filmtoro-geist);
+  font-size: 92vw;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--filmtoro-ink);
+}
+.filmtoro-type__specimen span {
+  position: absolute;
+  bottom: -0.24em;
+  left: -0.07em;
+}
+.filmtoro-swatches {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1rem var(--filmtoro-gutter) 0;
+}
+.filmtoro-swatch {
+  display: grid;
+  align-content: space-between;
+  gap: 2rem;
+  min-height: 9rem;
+  padding: 1rem;
+  background: var(--filmtoro-swatch);
+  color: var(--filmtoro-white);
+}
+.filmtoro-swatch--dark {
+  color: var(--filmtoro-ink);
+}
+.filmtoro-swatch__name {
+  font-size: 1.0625rem;
+}
+.filmtoro-swatch__codes {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+}
+.filmtoro-swatch__codes div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 0.5rem;
+}
+
+/* ── App features ─────────────────────────────────────────────────────────────────── */
+.filmtoro-home,
+.filmtoro-posts,
+.filmtoro-profile,
+.filmtoro-create,
+.filmtoro-lists,
+.filmtoro-quizzes {
+  display: grid;
+  gap: 2rem;
+  padding-top: 5rem;
+}
+.filmtoro-home__phones,
+.filmtoro-posts__phones,
+.filmtoro-reels__phones {
+  margin-inline: var(--filmtoro-gutter);
+}
+
+/* Two panels (coral and dark) with a phone on each, the small text under them */
+.filmtoro-split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-inline: var(--filmtoro-gutter);
+}
+.filmtoro-panel {
+  display: none;
+}
+.filmtoro-split > .filmtoro-pic {
+  padding: 1.5rem 12%;
+}
+.filmtoro-split > .filmtoro-pic:nth-of-type(1) {
+  background: var(--filmtoro-coral);
+}
+.filmtoro-split > .filmtoro-pic:nth-of-type(2) {
+  background: var(--filmtoro-tile);
+}
+.filmtoro-split__note {
+  grid-column: 1 / -1;
+  padding: 1.25rem;
+  background: var(--filmtoro-tile);
+}
+
+.filmtoro-reels {
+  position: relative;
+  display: grid;
+  gap: 2rem;
+  margin-top: 5rem;
+  padding-block: 3rem 0;
+}
+.filmtoro-reels__bg {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 0;
+}
+.filmtoro-reels__bg .filmtoro-img {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 80%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 80%, transparent);
+}
+.filmtoro-reels > :not(.filmtoro-reels__bg) {
+  position: relative;
+  z-index: 1;
+}
+
+/* A few phones side by side (create posts, quizzes) */
+.filmtoro-phones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 0.75rem;
+  padding-inline: var(--filmtoro-gutter);
+}
+.filmtoro-create__note,
+.filmtoro-quizzes__note {
+  grid-column: 1 / -1;
+}
+
+.filmtoro-lists__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+  padding-inline: var(--filmtoro-gutter);
+}
+.filmtoro-band {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1320 / 932;
+  margin-inline: var(--filmtoro-gutter);
+  background: var(--filmtoro-coral);
+}
+.filmtoro-band__phone {
+  position: absolute;
+  top: 4.08%;
+  left: 9.77%;
+  width: 74.55%;
+}
+
+/* ── Team ─────────────────────────────────────────────────────────────────────────── */
+.filmtoro-outro {
+  overflow: clip;
+  padding: 6rem 0 4rem;
+  background: radial-gradient(90% 70% at 40% 100%, var(--filmtoro-wine-deep) 0%, transparent 100%);
+}
+.filmtoro-outro__title {
+  padding-inline: var(--filmtoro-gutter);
+  font-size: clamp(1.75rem, 7vw, 3rem);
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.filmtoro-team {
+  position: relative;
+  display: grid;
+  margin-top: 3rem;
+}
+.filmtoro-team__word {
+  grid-area: 1 / 1;
+  align-self: center;
+  overflow: hidden;
+  font-family: var(--filmtoro-geist);
+  font-size: 6rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--filmtoro-ghost-team);
+}
+.filmtoro-team__faces {
+  position: relative;
+  grid-area: 1 / 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-inline: var(--filmtoro-gutter);
+}
+.filmtoro-team__faces li {
+  width: 3.75rem;
+  margin-inline: -0.125rem;
+}
+.filmtoro-team__photo {
+  border-radius: 50%;
+}
+.filmtoro-team__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 1rem;
+  margin-top: 2rem;
+  padding-inline: var(--filmtoro-gutter);
+}
+.filmtoro-member {
+  display: grid;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+}
+.filmtoro-member__role {
+  font-weight: 300;
+  color: var(--filmtoro-muted);
+}
+
+/* ══ Tablet ══════════════════════════════════════════════════════════════════════════ */
+@media (min-width: 48rem) {
+  .filmtoro-facts {
+    grid-template-columns: repeat(5, auto);
+    justify-content: space-between;
+  }
+  .filmtoro-process {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 20rem);
+    align-items: start;
+  }
+  .filmtoro-brand {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .filmtoro-brand__phone {
+    grid-row: span 2;
+  }
+  .filmtoro-hubs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .filmtoro-type {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .filmtoro-type__specimen {
+    font-size: 46vw;
+  }
+  .filmtoro-phones {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .filmtoro-team__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ══ Desktop: the 1440 px design, scaled ═════════════════════════════════════════════ */
+@media (min-width: 64rem) {
+  .filmtoro-case {
+    --u: calc(min(100vw, 1440px) / 1440);
+    --filmtoro-wide: calc(1320 * var(--u));
+  }
+  /* Everything in the content column is 1320 design px wide, centered */
+  .filmtoro-head,
+  .filmtoro-about,
+  .filmtoro-stages,
+  .filmtoro-brand,
+  .filmtoro-architecture__map,
+  .filmtoro-showcase,
+  .filmtoro-type,
+  .filmtoro-swatches,
+  .filmtoro-home__phones,
+  .filmtoro-reels__phones,
+  .filmtoro-posts__phones,
+  .filmtoro-lists__row,
+  .filmtoro-band,
+  .filmtoro-outro__title,
+  .filmtoro-team__list {
+    box-sizing: border-box;
+    width: var(--filmtoro-wide);
+    margin-inline: auto;
+    padding-inline: 0;
+  }
+  .filmtoro-title {
+    font-size: max(2.75rem, calc(80 * var(--u)));
+    line-height: 1;
+  }
+  .filmtoro-lead {
+    max-width: none;
+    font-size: max(1.0625rem, calc(18 * var(--u)));
+    line-height: 1.45;
+  }
+  .filmtoro-note {
+    max-width: none;
+    font-size: max(0.8125rem, calc(14 * var(--u)));
+    line-height: 1.45;
+  }
+  /* Title on the left, the texts in the column at x 847 */
+  .filmtoro-head {
+    grid-template-columns: calc(787 * var(--u)) calc(413 * var(--u));
+    gap: 0;
+  }
+  .filmtoro-head > :not(.filmtoro-title) {
+    grid-column: 2;
+  }
+  .filmtoro-head--split > :not(.filmtoro-title) {
+    grid-row: 1;
+  }
+  /* Title, then the bigger text on the left and the small text at x 622 */
+  .filmtoro-head--pair {
+    grid-template-columns: calc(530 * var(--u)) calc(307 * var(--u));
+    column-gap: calc(32 * var(--u));
+    row-gap: calc(54 * var(--u));
+  }
+  .filmtoro-head--pair > .filmtoro-title {
+    grid-column: 1 / -1;
+  }
+  .filmtoro-head--pair > .filmtoro-lead {
+    grid-column: 1;
+  }
+  /* Title, then the texts under it on the left */
+  .filmtoro-head--stack {
+    grid-template-columns: 1fr;
+  }
+  .filmtoro-head.filmtoro-head--stack > * {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  /* Hero */
+  .filmtoro-hero {
+    display: block;
+    height: calc(1420 * var(--u));
+    padding: 0;
+  }
+  .filmtoro-facts {
+    position: absolute;
+    top: calc(58 * var(--u));
+    left: calc(50% - 660 * var(--u));
+    width: var(--filmtoro-wide);
+    grid-template-columns:
+      calc(153 * var(--u)) calc(516 * var(--u)) calc(445 * var(--u))
+      calc(118 * var(--u)) auto;
+    justify-content: start;
+    gap: 0;
+    font-size: max(0.8125rem, calc(15 * var(--u)));
+  }
+  .filmtoro-facts dd {
+    margin-top: calc(8 * var(--u));
+  }
+  .filmtoro-hero__name {
+    position: absolute;
+    top: calc(196 * var(--u));
+    right: 0;
+    left: 0;
+    margin: 0;
+    font-size: calc(238 * var(--u));
+    text-align: center;
+  }
+  .filmtoro-hero__phones {
+    position: absolute;
+    top: calc(334 * var(--u));
+    left: calc(50% - 331 * var(--u));
+    width: calc(653 * var(--u));
+    margin: 0;
+  }
+
+  /* About */
+  .filmtoro-about {
+    gap: 0;
+    padding-top: calc(14 * var(--u));
+  }
+  .filmtoro-about .filmtoro-kicker {
+    font-size: max(0.8125rem, calc(15 * var(--u)));
+  }
+  .filmtoro-about__lead {
+    max-width: calc(880 * var(--u));
+    margin-top: calc(20 * var(--u));
+    font-size: calc(40 * var(--u));
+  }
+  .filmtoro-about__note {
+    max-width: calc(520 * var(--u));
+    margin-top: calc(34 * var(--u));
+  }
+
+  /* Design process: the texts on the left, the stages in a column at x 922 */
+  .filmtoro-process {
+    grid-template-columns: calc(862 * var(--u)) calc(338 * var(--u));
+    gap: 0;
+    width: var(--filmtoro-wide);
+    margin-inline: auto;
+    padding: calc(380 * var(--u)) 0 calc(196 * var(--u));
+    background: none;
+  }
+  .filmtoro-process::before {
+    position: absolute;
+    top: calc(36 * var(--u));
+    left: calc(540 * var(--u));
+    z-index: 0;
+    width: calc(1100 * var(--u));
+    height: calc(1100 * var(--u));
+    background: radial-gradient(
+      closest-side,
+      rgb(241 82 98 / 0.2) 0%,
+      rgb(241 82 98 / 0.06) 55%,
+      transparent 100%
+    );
+    content: '';
+    pointer-events: none;
+  }
+  .filmtoro-process > * {
+    position: relative;
+    z-index: 1;
+  }
+  .filmtoro-process .filmtoro-head {
+    width: auto;
+    margin: 0;
+  }
+  .filmtoro-process .filmtoro-lead {
+    max-width: calc(700 * var(--u));
+    margin-top: calc(44 * var(--u));
+    font-size: max(1.25rem, calc(30 * var(--u)));
+    line-height: 1.3;
+  }
+  .filmtoro-process .filmtoro-note {
+    max-width: calc(262 * var(--u));
+    margin-top: calc(22 * var(--u));
+    font-size: max(0.8125rem, calc(14 * var(--u)));
+  }
+  .filmtoro-stages {
+    width: auto;
+    margin: calc(14 * var(--u)) 0 0;
+  }
+  .filmtoro-stage {
+    padding-block: calc(36 * var(--u)) calc(34 * var(--u));
+  }
+  .filmtoro-stage__title {
+    font-size: max(0.9375rem, calc(18 * var(--u)));
+  }
+  .filmtoro-stage__items {
+    gap: calc(8 * var(--u));
+    margin-top: calc(18 * var(--u));
+    font-size: max(0.8125rem, calc(15 * var(--u)));
+  }
+
+  /* The phone in a hand: one picture, the card placed by design coordinates */
+  .filmtoro-community {
+    width: calc(1440 * var(--u));
+    margin-inline: auto;
+  }
+  .filmtoro-card {
+    position: absolute;
+    top: calc(822 * var(--u));
+    left: calc(961 * var(--u));
+    width: calc(306 * var(--u));
+    gap: 0;
+    margin: 0;
+    padding: calc(18 * var(--u)) calc(18 * var(--u)) calc(22 * var(--u));
+  }
+  .filmtoro-card__icon {
+    width: calc(48 * var(--u));
+    margin-bottom: calc(18 * var(--u));
+  }
+  .filmtoro-card__title {
+    font-size: max(0.8125rem, calc(15 * var(--u)));
+    line-height: 1.15;
+  }
+  .filmtoro-card__text {
+    margin-top: calc(12 * var(--u));
+    font-size: max(0.75rem, calc(13 * var(--u)));
+    line-height: 1.25;
+  }
+
+  /* Logo, menu view and the phone tile */
+  .filmtoro-brand {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: calc(25 * var(--u)) calc(24 * var(--u));
+    margin-top: calc(59 * var(--u));
+  }
+  .filmtoro-tile__label {
+    top: calc(26 * var(--u));
+    left: calc(24 * var(--u));
+    font-size: max(0.875rem, calc(18 * var(--u)));
+  }
+
+  /* Info architecture: the map picture from here (phones read the list) */
+  .filmtoro-architecture {
+    gap: 0;
+    padding-top: calc(138 * var(--u));
+  }
+  .filmtoro-architecture__map {
+    display: block;
+    margin-top: calc(40 * var(--u));
+  }
+  .filmtoro-hubs {
+    display: none;
+  }
+  .filmtoro-showcase {
+    gap: calc(12 * var(--u));
+    margin-top: calc(112 * var(--u));
+  }
+
+  /* Colors and typography */
+  .filmtoro-identity {
+    gap: 0;
+    padding-top: calc(134 * var(--u));
+  }
+  .filmtoro-identity .filmtoro-head {
+    align-items: end;
+  }
+  .filmtoro-type {
+    grid-template-columns: calc(658 * var(--u)) calc(662 * var(--u));
+    height: calc(649 * var(--u));
+    margin-top: calc(66 * var(--u));
+  }
+  .filmtoro-type__font {
+    grid-template-rows: auto 1fr auto;
+    gap: 0;
+    padding: calc(45 * var(--u)) calc(44 * var(--u)) calc(52 * var(--u));
+  }
+  .filmtoro-type__top {
+    font-size: max(0.8125rem, calc(16 * var(--u)));
+  }
+  .filmtoro-type__sizes {
+    gap: calc(14 * var(--u));
+  }
+  .filmtoro-type__name {
+    align-self: center;
+    margin-top: calc(-24 * var(--u));
+  }
+  .filmtoro-type__family {
+    font-size: calc(78 * var(--u));
+  }
+  .filmtoro-type__credit {
+    margin-top: calc(20 * var(--u));
+    font-size: max(0.8125rem, calc(17 * var(--u)));
+  }
+  .filmtoro-type__alphabet {
+    font-size: max(0.75rem, calc(16 * var(--u)));
+    line-height: 1.6;
+  }
+  .filmtoro-type__specimen {
+    aspect-ratio: auto;
+    font-size: calc(620 * var(--u));
+    letter-spacing: -0.07em;
+  }
+  .filmtoro-swatches {
+    margin-top: calc(32 * var(--u));
+  }
+  .filmtoro-swatch {
+    height: calc(196 * var(--u));
+    min-height: 0;
+    padding: calc(22 * var(--u)) calc(30 * var(--u)) calc(20 * var(--u));
+  }
+  .filmtoro-swatch__name {
+    font-size: max(0.9375rem, calc(21 * var(--u)));
+  }
+  .filmtoro-swatch__codes {
+    gap: calc(8 * var(--u));
+    font-size: max(0.75rem, calc(16 * var(--u)));
+  }
+
+  /* Feature blocks */
+  .filmtoro-home,
+  .filmtoro-posts,
+  .filmtoro-profile,
+  .filmtoro-create,
+  .filmtoro-lists,
+  .filmtoro-quizzes {
+    gap: 0;
+  }
+  .filmtoro-home {
+    padding-top: calc(128 * var(--u));
+  }
+  .filmtoro-home .filmtoro-head {
+    grid-template-columns: calc(787 * var(--u)) calc(510 * var(--u));
+    row-gap: calc(22 * var(--u));
+  }
+  .filmtoro-home .filmtoro-lead {
+    grid-row: 2;
+    margin-top: calc(34 * var(--u));
+  }
+  .filmtoro-home .filmtoro-note {
+    grid-row: 3;
+  }
+  .filmtoro-home .filmtoro-note {
+    max-width: calc(320 * var(--u));
+  }
+
+  /* Coral and dark panels; the phones stick out above them */
+  .filmtoro-split {
+    position: relative;
+    display: block;
+    width: calc(1440 * var(--u));
+    height: calc(718 * var(--u));
+    margin-inline: auto;
+  }
+  .filmtoro-panel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: block;
+  }
+  .filmtoro-panel--coral {
+    left: calc(60 * var(--u));
+    width: calc(658 * var(--u));
+    background: var(--filmtoro-coral);
+  }
+  .filmtoro-panel--dark {
+    left: calc(718 * var(--u));
+    width: calc(662 * var(--u));
+    background: var(--filmtoro-tile);
+  }
+  .filmtoro-split > .filmtoro-pic {
+    position: absolute;
+    padding: 0;
+  }
+  .filmtoro-split > .filmtoro-pic:nth-of-type(1),
+  .filmtoro-split > .filmtoro-pic:nth-of-type(2) {
+    background: none;
+  }
+  .filmtoro-split__note {
+    position: absolute;
+    top: calc(586 * var(--u));
+    left: calc(847 * var(--u));
+    width: calc(427 * var(--u));
+    padding: 0;
+    background: none;
+  }
+  .filmtoro-discover {
+    margin-top: calc(460 * var(--u));
+  }
+  .filmtoro-discover__search {
+    top: calc(-180 * var(--u));
+    left: calc(191 * var(--u));
+    width: calc(399 * var(--u));
+  }
+  .filmtoro-discover__notifications {
+    top: calc(-305 * var(--u));
+    left: calc(896 * var(--u));
+    width: calc(308.5 * var(--u));
+  }
+
+  .filmtoro-reels {
+    gap: 0;
+    margin-top: calc(152 * var(--u));
+    padding: calc(77 * var(--u)) 0 calc(61 * var(--u));
+  }
+  .filmtoro-reels__bg {
+    right: auto;
+    left: calc(50% - 720 * var(--u));
+    width: calc(1440 * var(--u));
+  }
+  .filmtoro-reels__phones {
+    margin-top: calc(82 * var(--u));
+  }
+
+  .filmtoro-posts {
+    padding-top: calc(66 * var(--u));
+  }
+  .filmtoro-posts__phones {
+    margin-top: calc(95 * var(--u));
+  }
+
+  .filmtoro-profile {
+    padding-top: calc(131 * var(--u));
+  }
+  .filmtoro-profile .filmtoro-lead {
+    max-width: calc(530 * var(--u));
+    margin-top: calc(48 * var(--u));
+  }
+  .filmtoro-profile__scene {
+    margin-top: calc(95 * var(--u));
+  }
+  .filmtoro-profile__posts {
+    top: calc(61 * var(--u));
+    left: calc(243 * var(--u));
+    width: calc(293 * var(--u));
+  }
+  .filmtoro-profile__followers {
+    top: calc(-304 * var(--u));
+    left: calc(883 * var(--u));
+    width: calc(308.5 * var(--u));
+  }
+  .filmtoro-profile .filmtoro-split__note {
+    top: calc(589 * var(--u));
+    width: calc(413 * var(--u));
+  }
+
+  /* Phones placed by design coordinates (create posts, quizzes) */
+  .filmtoro-phones {
+    position: relative;
+    display: block;
+    width: calc(1440 * var(--u));
+    margin-inline: auto;
+    padding: 0;
+  }
+  .filmtoro-phones > * {
+    position: absolute;
+    width: calc(347 * var(--u));
+  }
+  .filmtoro-create {
+    padding-top: calc(190 * var(--u));
+  }
+  .filmtoro-create__phones {
+    height: calc(1470 * var(--u));
+    margin-top: calc(105 * var(--u));
+  }
+  .filmtoro-create__post {
+    top: calc(274 * var(--u));
+    left: calc(60 * var(--u));
+  }
+  .filmtoro-create__list {
+    top: 0;
+    left: calc(487 * var(--u));
+  }
+  .filmtoro-create__review {
+    top: 0;
+    left: calc(1030 * var(--u));
+  }
+  .filmtoro-create__gif {
+    top: calc(759 * var(--u));
+    left: calc(487 * var(--u));
+  }
+  .filmtoro-phones > .filmtoro-create__note {
+    top: calc(896 * var(--u));
+    left: calc(1073 * var(--u));
+    width: calc(298 * var(--u));
+  }
+
+  .filmtoro-lists {
+    padding-top: calc(182 * var(--u));
+  }
+  .filmtoro-lists .filmtoro-head--pair {
+    row-gap: calc(57 * var(--u));
+  }
+  .filmtoro-lists__row {
+    position: relative;
+    display: block;
+    height: calc(931 * var(--u));
+    margin-top: calc(114 * var(--u));
+  }
+  .filmtoro-lists__tile {
+    width: calc(757.5 * var(--u));
+  }
+  .filmtoro-lists__phone {
+    position: absolute;
+    top: calc(110 * var(--u));
+    left: calc(864 * var(--u));
+    width: calc(347 * var(--u));
+  }
+  .filmtoro-band {
+    height: calc(932 * var(--u));
+    aspect-ratio: auto;
+    margin-top: calc(27 * var(--u));
+  }
+
+  .filmtoro-quizzes {
+    padding-top: calc(134 * var(--u));
+  }
+  .filmtoro-quizzes .filmtoro-head {
+    align-items: center;
+  }
+  .filmtoro-quizzes__phones {
+    height: calc(1476 * var(--u));
+    margin-top: calc(100 * var(--u));
+  }
+  .filmtoro-phones > .filmtoro-quizzes__intro,
+  .filmtoro-phones > .filmtoro-quizzes__ranking,
+  .filmtoro-phones > .filmtoro-quizzes__question,
+  .filmtoro-phones > .filmtoro-quizzes__result {
+    width: calc(349.5 * var(--u));
+  }
+  .filmtoro-quizzes__intro {
+    top: 0;
+    left: calc(60.5 * var(--u));
+  }
+  .filmtoro-quizzes__ranking {
+    top: 0;
+    left: calc(603.5 * var(--u));
+  }
+  .filmtoro-quizzes__result {
+    top: calc(379 * var(--u));
+    left: calc(1031 * var(--u));
+  }
+  .filmtoro-quizzes__question {
+    top: calc(759 * var(--u));
+    left: calc(603.5 * var(--u));
+  }
+  .filmtoro-phones > .filmtoro-quizzes__note {
+    top: calc(900 * var(--u));
+    left: calc(60 * var(--u));
+    width: calc(312 * var(--u));
+  }
+
+  /* Team */
+  .filmtoro-outro {
+    padding: calc(180 * var(--u)) 0 calc(78 * var(--u));
+  }
+  .filmtoro-outro__title {
+    font-size: calc(72 * var(--u));
+    line-height: 1.2;
+  }
+  .filmtoro-team {
+    margin-top: calc(88 * var(--u));
+  }
+  .filmtoro-team__word {
+    font-size: calc(150 * var(--u));
+    letter-spacing: -0.01em;
+  }
+  .filmtoro-team__faces {
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    width: var(--filmtoro-wide);
+    margin-inline: auto;
+    padding: 0;
+  }
+  .filmtoro-team__faces li {
+    width: calc(90 * var(--u));
+    margin: 0 0 0 calc(-7 * var(--u));
+  }
+  .filmtoro-team__list {
+    display: flex;
+    justify-content: space-between;
+    gap: 0;
+    margin-top: calc(58 * var(--u));
+  }
+  .filmtoro-member {
+    gap: calc(10 * var(--u));
+    padding-inline: calc(12 * var(--u));
+    border-left: 1px solid var(--filmtoro-line);
+    font-size: max(0.75rem, calc(14 * var(--u)));
+  }
+  .filmtoro-member:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+/* ══ Motion ═════════════════════════════════════════════════════════════════════════
+ * The hero plays on load (keyframes). Everything below is armed by FilmtoroMotion: blocks get
+ * `filmtoro-r` and, in view, `is-in`. Without JavaScript or with reduced motion nothing is
+ * hidden.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes filmtoro-rise {
+    from {
+      opacity: 0;
+      translate: 0 2.5rem;
+    }
+  }
+  @keyframes filmtoro-glow {
+    from {
+      opacity: 0;
+      scale: 1.08;
+      filter: blur(0.5rem);
+    }
+  }
+  .filmtoro-hero__name {
+    animation: filmtoro-glow 1.6s var(--filmtoro-ease) both;
+  }
+  .filmtoro-hero__phones {
+    animation: filmtoro-rise 1.3s 0.2s var(--filmtoro-ease) both;
+  }
+  .filmtoro-facts__item {
+    animation: filmtoro-rise 0.9s var(--filmtoro-ease) both;
+  }
+  .filmtoro-facts__item:nth-child(2) {
+    animation-delay: 0.06s;
+  }
+  .filmtoro-facts__item:nth-child(3) {
+    animation-delay: 0.12s;
+  }
+  .filmtoro-facts__item:nth-child(4) {
+    animation-delay: 0.18s;
+  }
+  .filmtoro-facts__item:nth-child(5) {
+    animation-delay: 0.24s;
+  }
+
+  /* Title rows slide up out of their masks */
+  .filmtoro-row__in {
+    transition: translate 0.9s calc(var(--filmtoro-i, 0) * 0.08s) var(--filmtoro-ease);
+  }
+  .filmtoro-armed .filmtoro-r:not(.is-in) .filmtoro-row__in {
+    translate: 0 110%;
+  }
+
+  /* Texts, lists, tiles and phones fade up */
+  .filmtoro-r :where(.filmtoro-lead, .filmtoro-note, .filmtoro-kicker, .filmtoro-about__lead),
+  .filmtoro-r .filmtoro-stage,
+  .filmtoro-r .filmtoro-hub,
+  .filmtoro-r .filmtoro-swatch,
+  .filmtoro-r .filmtoro-type__font,
+  .filmtoro-r .filmtoro-type__specimen,
+  .filmtoro-r.filmtoro-brand > *,
+  .filmtoro-r.filmtoro-phones > *,
+  .filmtoro-r.filmtoro-split > .filmtoro-pic,
+  .filmtoro-r.filmtoro-lists__row > *,
+  .filmtoro-r .filmtoro-member,
+  .filmtoro-r .filmtoro-team__faces li,
+  .filmtoro-r .filmtoro-card,
+  .filmtoro-r.filmtoro-tile,
+  .filmtoro-r.filmtoro-home__phones,
+  .filmtoro-r.filmtoro-reels__phones,
+  .filmtoro-r.filmtoro-posts__phones,
+  .filmtoro-r.filmtoro-architecture__map {
+    transition:
+      opacity 0.9s var(--filmtoro-ease),
+      translate 1.1s var(--filmtoro-ease);
+  }
+  .filmtoro-armed
+    .filmtoro-r:not(.is-in)
+    :where(.filmtoro-lead, .filmtoro-note, .filmtoro-kicker, .filmtoro-about__lead),
+  .filmtoro-armed .filmtoro-r:not(.is-in) .filmtoro-stage,
+  .filmtoro-armed .filmtoro-r:not(.is-in) .filmtoro-hub,
+  .filmtoro-armed .filmtoro-r:not(.is-in) .filmtoro-swatch,
+  .filmtoro-armed .filmtoro-r:not(.is-in) .filmtoro-type__font,
+  .filmtoro-armed .filmtoro-r:not(.is-in) .filmtoro-type__specimen,
+  .filmtoro-armed .filmtoro-r.filmtoro-brand:not(.is-in) > *,
+  .filmtoro-armed .filmtoro-r.filmtoro-phones:not(.is-in) > *,
+  .filmtoro-armed .filmtoro-r.filmtoro-split:not(.is-in) > .filmtoro-pic,
+  .filmtoro-armed .filmtoro-r.filmtoro-lists__row:not(.is-in) > *,
+  .filmtoro-armed .filmtoro-r:not(.is-in) .filmtoro-member,
+  .filmtoro-armed .filmtoro-r:not(.is-in) .filmtoro-team__faces li,
+  .filmtoro-armed .filmtoro-r:not(.is-in) .filmtoro-card,
+  .filmtoro-armed .filmtoro-r.filmtoro-tile:not(.is-in),
+  .filmtoro-armed .filmtoro-r.filmtoro-home__phones:not(.is-in),
+  .filmtoro-armed .filmtoro-r.filmtoro-reels__phones:not(.is-in),
+  .filmtoro-armed .filmtoro-r.filmtoro-posts__phones:not(.is-in),
+  .filmtoro-armed .filmtoro-r.filmtoro-architecture__map:not(.is-in) {
+    opacity: 0;
+    translate: 0 3rem;
+  }
+
+  /* Staggers */
+  .filmtoro-r :where(.filmtoro-note) {
+    transition-delay: 0.12s;
+  }
+  .filmtoro-r .filmtoro-stage:nth-child(2),
+  .filmtoro-r .filmtoro-swatch:nth-child(2),
+  .filmtoro-r.filmtoro-brand > :nth-child(2),
+  .filmtoro-r.filmtoro-phones > :nth-child(2),
+  .filmtoro-r.filmtoro-split > .filmtoro-pic:nth-of-type(2),
+  .filmtoro-r.filmtoro-lists__row > :nth-child(2),
+  .filmtoro-r .filmtoro-type__specimen {
+    transition-delay: 0.1s;
+  }
+  .filmtoro-r .filmtoro-stage:nth-child(3),
+  .filmtoro-r .filmtoro-swatch:nth-child(3),
+  .filmtoro-r.filmtoro-brand > :nth-child(3),
+  .filmtoro-r.filmtoro-phones > :nth-child(3) {
+    transition-delay: 0.2s;
+  }
+  .filmtoro-r .filmtoro-stage:nth-child(4),
+  .filmtoro-r .filmtoro-swatch:nth-child(4),
+  .filmtoro-r.filmtoro-phones > :nth-child(4) {
+    transition-delay: 0.3s;
+  }
+  .filmtoro-r.filmtoro-phones > :nth-child(5),
+  .filmtoro-r .filmtoro-card {
+    transition-delay: 0.4s;
+  }
+
+  /* The scene picture of the community settles from a zoom */
+  .filmtoro-community__scene {
+    overflow: hidden;
+  }
+  .filmtoro-community__scene .filmtoro-img {
+    transition: scale 1.6s var(--filmtoro-ease);
+  }
+  .filmtoro-armed
+    .filmtoro-r.filmtoro-community:not(.is-in)
+    .filmtoro-community__scene
+    .filmtoro-img {
+    scale: 1.08;
+  }
+
+  /* The phone on the coral band rises into it */
+  .filmtoro-band__phone {
+    transition:
+      translate 1.4s var(--filmtoro-ease),
+      rotate 1.4s var(--filmtoro-ease);
+  }
+  .filmtoro-armed .filmtoro-r.filmtoro-band:not(.is-in) .filmtoro-band__phone {
+    translate: 0 25%;
+    rotate: 6deg;
+  }
+
+  /* The word behind the team drifts with the scroll */
+  @supports (animation-timeline: view()) {
+    @keyframes filmtoro-drift {
+      from {
+        translate: 0 0;
+      }
+      to {
+        translate: -12% 0;
+      }
+    }
+    .filmtoro-team__word {
+      animation: filmtoro-drift linear both;
+      animation-timeline: view();
+    }
+  }
+}

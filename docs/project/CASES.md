@@ -141,3 +141,22 @@ Touren (`src/content/cases/touren.ts`, `src/site/cases/touren/`, prefix `touren-
   pseudo-element connectors on desktop, a plain list on phones.
 - **Screenshots for comparison**: measure section positions only after scrolling through the page, lazy
   images change the heights.
+
+## Lessons from Filmtoro
+
+Filmtoro (`src/content/cases/filmtoro.ts`, `src/site/cases/filmtoro/`, prefix `filmtoro-`) is a dark 1440 px
+design delivered as a 2000 px wide export (1.39×): divide every measurement by 1.389 to get design pixels.
+
+- **Find assets in the export by template matching** (downscale the 2× asset to the export scale, search
+  around a guess, compare opaque pixels): it gives the exact design position of every phone and overlay.
+- **Pre-composed groups.** Many assets are already arranged groups of phones on a transparent 1320 px
+  canvas: place them at the content width, no per-phone positioning needed.
+- **Missing assets.** A part that exists only in the export (here the phone held by the hand, the logo and
+  the menu tile) is cut from the export; for a scene, build it at 2× from the real assets (background, hand,
+  card) and paste the cut part with a feathered edge so the seam disappears.
+- **Transparent pictures without the blur placeholder**: `next/image` paints the blurred preview behind a
+  transparent PNG as a dark box until it loads, so the case's `Picture` drops `blurDataURL`.
+- **A diagram that is unreadable on a phone** (the info architecture map) is shown as a picture from 1024 px
+  and as a list (field data) below it.
+- **Screenshots without JavaScript**: Playwright's `addStyleTag` hangs when JavaScript is off; insert the
+  style with `page.evaluate`, scroll the viewport and capture it chunk by chunk.

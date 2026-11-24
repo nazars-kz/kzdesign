@@ -97,3 +97,22 @@ const tourenInter = localFont({
 
 /** Touren case study: Urbanist (the whole page) and Inter (the app's type specimen). */
 export const tourenFontVariables = [tourenUrbanist.variable, tourenInter.variable].join(' ');
+
+const filmtoroUrbanist = localFont({
+  src: [{ path: './fonts/urbanist.woff2', weight: '100 900', style: 'normal' }],
+  variable: '--font-family-filmtoro-urbanist',
+  display: 'swap',
+  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+const filmtoroGeist = localFont({
+  src: [{ path: './fonts/geist.woff2', weight: '100 900', style: 'normal' }],
+  variable: '--font-family-filmtoro-geist',
+  display: 'swap',
+  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+/** Filmtoro case study: Urbanist (the whole page) and Geist (the app's typeface, the big words). */
+export const filmtoroFontVariables = [filmtoroUrbanist.variable, filmtoroGeist.variable].join(' ');
