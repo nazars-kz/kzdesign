@@ -51,10 +51,7 @@ export function Shot({
 
 export function TourenHero({ hero }: { hero: TourenContent['hero'] }) {
   return (
-    <section className="touren-hero" aria-labelledby="touren-title">
-      <h1 id="touren-title" className="sr-only">
-        {hero.heading}
-      </h1>
+    <section className="touren-hero">
       <div className="touren-hero__stage">
         <SiteImage
           image={hero.photo}

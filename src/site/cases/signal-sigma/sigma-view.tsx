@@ -5,6 +5,8 @@
 import type { PageViewProps } from '@/core/content/page-route';
 
 import { signalSigmaFontVariables } from '../../theme/fonts';
+import { CaseAbout } from '../case-about';
+import { CaseIntro } from '../case-intro';
 import { RelatedCases } from '../related-cases';
 import {
   SigmaAbout,
@@ -42,6 +44,7 @@ export function SignalSigmaView({ content, locale }: PageViewProps<'case-signal-
   ];
   return (
     <>
+      <CaseIntro content={content.intro} name={content.card.title} />
       <div className={`sigma-case ${signalSigmaFontVariables}`}>
         <SigmaMotion />
         <SigmaHero hero={content.hero} />
@@ -61,6 +64,7 @@ export function SignalSigmaView({ content, locale }: PageViewProps<'case-signal-
         <SigmaSummary summary={content.summary} strip={[content.summary.chapter]} />
         <SigmaOutro outro={content.outro} />
       </div>
+      <CaseAbout content={content['about-project']} />
       <RelatedCases content={content.related} current="signal-sigma" locale={locale} />
     </>
   );

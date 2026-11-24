@@ -13,6 +13,7 @@ import { useShared } from '@/core/content/shared-section';
 
 import { relatedCasesShared } from '../shared/related-cases';
 import { caseCardSection } from './card';
+import { caseAboutSection, caseIntroSection } from './page-parts';
 
 const HIGHLIGHT_HELP = 'Words in *asterisks* are highlighted; a new line starts a new row.';
 
@@ -93,18 +94,13 @@ export const tourenCase = definePage({
   ],
   sections: [
     caseCardSection(),
+    caseIntroSection(),
     defineSection({
       id: 'hero',
       label: 'Hero',
       description:
         'The first screen: the rider photo, the project facts, the phone and the request.',
       fields: {
-        heading: f.text({
-          label: 'Page heading (H1)',
-          required: true,
-          max: 120,
-          help: 'The only H1 of the page, read by search engines and screen readers (not shown).',
-        }),
         photo: picture('Photo', '2880×1515', 'Fades to white at the bottom.'),
         phone: picture('Phone', '908×1779', TRANSPARENT),
         facts: f.list({
@@ -425,6 +421,7 @@ export const tourenCase = definePage({
         }),
       },
     }),
+    caseAboutSection(),
     useShared(relatedCasesShared),
   ],
   seed: {
@@ -452,8 +449,21 @@ export const tourenCase = definePage({
         },
         industryOrder: 1,
       },
+      intro: {
+        title: 'Touren – Off-Road Navigation & Community Platform',
+        details: [
+          { label: 'Industry', value: 'Sport' },
+          { label: 'Platform', value: 'Mobile App, Web' },
+          { label: 'Year', value: '2025' },
+        ],
+        quote:
+          'An excellent UX/UI designers from K&Z! Delivered a beautifully crafted, user-friendly mobile app design that exceeded expectations.\nCommunicative, detail-oriented, and quick to incorporate feedback. Highly recommend for any app design projects!',
+        author: 'Denis Bondar',
+        authorRole: 'Founder, Touren App',
+        authorPhoto: { asset: 'testi-denis-bondar.jpg', alt: 'Denis Bondar' },
+        authorFlag: { asset: 'flag-luxembourg.webp', alt: 'Luxembourg' },
+      },
       hero: {
-        heading: 'Touren: UX/UI case study of an off-road trail navigation app',
         photo: {
           asset: 'case-touren-hero.webp',
           alt: 'An adventure motorcyclist in a helmet riding through tall dry grass',
@@ -843,6 +853,15 @@ export const tourenCase = definePage({
             name: 'Anna Chagina',
             role: 'Case Study Designer',
           },
+        ],
+      },
+      'about-project': {
+        title: 'About the Touren project',
+        text: 'Touren is an off-road trail navigation app for adventure riders, outdoor enthusiasts and competitive racers, with a website that presents the app and invites riders to join it.\nK&Z Design designed the mobile app and the website: research, personas and competitor analysis, information architecture, a visual design system and support during development. Riders explore trails on an interactive map, follow routes with live tracking, join missions and skill sections, earn badges and TrailCoins, and share condition reports and hazard alerts with the community.\nThe project grew to more than 120 mobile screens and 16 user flows, delivered in two milestones.',
+        links: [
+          { label: 'Mobile app design services', href: '/services/mobile', external: false },
+          { label: 'Website design services', href: '/services/web', external: false },
+          { label: 'All case studies', href: '/cases', external: false },
         ],
       },
     },

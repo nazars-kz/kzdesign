@@ -5,6 +5,8 @@
 import type { PageViewProps } from '@/core/content/page-route';
 
 import { tourenFontVariables } from '../../theme/fonts';
+import { CaseAbout } from '../case-about';
+import { CaseIntro } from '../case-intro';
 import { RelatedCases } from '../related-cases';
 import {
   TourenCommunity,
@@ -32,6 +34,7 @@ import { TourenHighlights, TourenMobile, TourenOutro, TourenPages, TourenWeb } f
 export function TourenView({ content, locale }: PageViewProps<'case-touren'>) {
   return (
     <>
+      <CaseIntro content={content.intro} name={content.card.title} />
       <div className={`touren-case ${tourenFontVariables}`}>
         <TourenMotion />
         <TourenHero hero={content.hero} />
@@ -56,6 +59,7 @@ export function TourenView({ content, locale }: PageViewProps<'case-touren'>) {
         <TourenHighlights highlights={content.highlights} />
         <TourenOutro outro={content.outro} />
       </div>
+      <CaseAbout content={content['about-project']} />
       <RelatedCases content={content.related} current="touren" locale={locale} />
     </>
   );
