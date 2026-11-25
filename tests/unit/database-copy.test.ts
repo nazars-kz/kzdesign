@@ -16,9 +16,7 @@ import {
 import { runSeed } from '@/core/db/seed';
 import type { Database } from '@/core/db/types';
 
-import { createTestDb } from '../support/db';
-
-const SETUP_TIMEOUT_MS = 60_000;
+import { SEED_TIMEOUT_MS, createTestDb } from '../support/db';
 
 describe('Connect Supabase: data copy', () => {
   let source: { db: Database; close: () => Promise<void> };
@@ -41,7 +39,7 @@ describe('Connect Supabase: data copy', () => {
       data: { name: 'Ada', consent: true },
     });
     // Two migrated PGlite databases + the full seed (with image processing) take a while on CI.
-  }, SETUP_TIMEOUT_MS);
+  }, SEED_TIMEOUT_MS);
   afterAll(async () => {
     await source.close();
     await target.close();

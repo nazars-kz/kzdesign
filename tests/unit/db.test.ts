@@ -12,7 +12,7 @@ import { runSeed } from '@/core/db/seed';
 import type { Database } from '@/core/db/types';
 import { siteSettingsSchema } from '@/core/settings/schema';
 
-import { createTestDb } from '../support/db';
+import { SEED_TIMEOUT_MS, createTestDb } from '../support/db';
 
 describe('database (PGlite)', () => {
   let db: Database;
@@ -32,22 +32,26 @@ describe('database (PGlite)', () => {
   });
 
   // Seeding also syncs the project's content and its seed images, so it takes a while.
-  it('seeds default settings idempotently without overwriting', { timeout: 60_000 }, async () => {
-    await runSeed(db, { seedDevAdmin: false });
-    const [row] = await db.select().from(settings);
-    const parsed = siteSettingsSchema.parse(row?.data);
-    expect(parsed.general.enabledLocales).toEqual([...projectConfig.localeCodes]);
-    expect(parsed.status.indexing).toBe(true);
+  it(
+    'seeds default settings idempotently without overwriting',
+    { timeout: SEED_TIMEOUT_MS },
+    async () => {
+      await runSeed(db, { seedDevAdmin: false });
+      const [row] = await db.select().from(settings);
+      const parsed = siteSettingsSchema.parse(row?.data);
+      expect(parsed.general.enabledLocales).toEqual([...projectConfig.localeCodes]);
+      expect(parsed.status.indexing).toBe(true);
 
-    const edited = { ...parsed, general: { ...parsed.general, siteName: 'Edited' } };
-    await db.update(settings).set({ data: edited }).where(eq(settings.id, 1));
-    await runSeed(db, { seedDevAdmin: false });
+      const edited = { ...parsed, general: { ...parsed.general, siteName: 'Edited' } };
+      await db.update(settings).set({ data: edited }).where(eq(settings.id, 1));
+      await runSeed(db, { seedDevAdmin: false });
 
-    const [after] = await db.select().from(settings);
-    expect(siteSettingsSchema.parse(after?.data).general.siteName).toBe('Edited');
-    const localized = await db.select().from(settingsLocalized);
-    expect(localized.map((r) => r.locale).sort()).toEqual([...projectConfig.localeCodes].sort());
-  });
+      const [after] = await db.select().from(settings);
+      expect(siteSettingsSchema.parse(after?.data).general.siteName).toBe('Edited');
+      const localized = await db.select().from(settingsLocalized);
+      expect(localized.map((r) => r.locale).sort()).toEqual([...projectConfig.localeCodes].sort());
+    },
+  );
 
   it('enforces the settings singleton', async () => {
     await expect(db.insert(settings).values({ id: 2, data: {} })).rejects.toThrow();
@@ -71,7 +75,7 @@ describe('database (postgres-js driver over the Postgres wire protocol)', () => 
     await pg.close();
   });
 
-  it('migrates and queries through postgres-js', { timeout: 60_000 }, async () => {
+  it('migrates and queries through postgres-js', { timeout: SEED_TIMEOUT_MS }, async () => {
     await migratePostgres(url);
     const { db, close } = openPostgres(url, { max: 1 });
     try {

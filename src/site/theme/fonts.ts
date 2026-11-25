@@ -116,3 +116,26 @@ const filmtoroGeist = localFont({
 
 /** Filmtoro case study: Urbanist (the whole page) and Geist (the app's typeface, the big words). */
 export const filmtoroFontVariables = [filmtoroUrbanist.variable, filmtoroGeist.variable].join(' ');
+
+const printbuyInter = localFont({
+  src: [{ path: './fonts/inter.woff2', weight: '100 900', style: 'normal' }],
+  variable: '--font-family-printbuy-inter',
+  display: 'swap',
+  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+const printbuyHand = localFont({
+  src: [{ path: './fonts/kalam-300.woff2', weight: '300', style: 'normal' }],
+  variable: '--font-family-printbuy-hand',
+  display: 'swap',
+  preload: false,
+  fallback: ['cursive'],
+});
+
+/**
+ * PrintBuy case study: Inter (block titles and the app's type specimen) and Kalam (handwritten
+ * notes and team names). The body text is Helvetica Neue from the system (as in the design), with
+ * Inter as the fallback where it is missing (case-printbuy.css).
+ */
+export const printbuyFontVariables = [printbuyInter.variable, printbuyHand.variable].join(' ');
