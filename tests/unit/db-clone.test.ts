@@ -22,7 +22,7 @@ import { media, pageContent, users } from '@/core/db/schema';
 import { runSeed } from '@/core/db/seed';
 import type { Database } from '@/core/db/types';
 
-import { createTestDb } from '../support/db';
+import { SEED_TIMEOUT_MS, createTestDb } from '../support/db';
 import { runScriptFile, SCRIPT_TIMEOUT_MS } from '../support/script';
 import { memoryStorage } from '../support/storage';
 
@@ -200,7 +200,7 @@ describe('cloneDatabase', DB_TEST, () => {
       password: 'Maple-Signal-Harbor-73',
       mustChangePassword: false,
     });
-  }, 60_000);
+  }, SEED_TIMEOUT_MS);
   afterAll(async () => {
     await source.close();
     await target.close();
