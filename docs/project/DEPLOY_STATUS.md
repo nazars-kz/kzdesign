@@ -36,16 +36,18 @@ Never write secret values here.
 
 ## Launch
 
-| Item                                                          | Status | How we know                                   |
-| ------------------------------------------------------------- | ------ | --------------------------------------------- |
-| Live URL / custom domain                                      | no     | domain comes later (user said)                |
-| `NEXT_PUBLIC_SITE_URL` (custom domain)                        | no     | —                                             |
-| Client's admin account (developer mode off)                   | no     | —                                             |
-| Form emails (Settings → Integrations) and recipients          | no     | recipients to be added by the team            |
-| Google Analytics and Hotjar (Settings → Integrations)         | no     | to be connected by the team                   |
-| "Private site" off, "Show the site in Google" on (production) | no     | —                                             |
-| `pnpm audit --prod` clean of critical/high                    | yes    | verified 2026-10-28: no known vulnerabilities |
-| Database handed to the client (Neon transfer / Supabase org)  | no     | —                                             |
+| Item                                                                  | Status | How we know                                   |
+| --------------------------------------------------------------------- | ------ | --------------------------------------------- |
+| Live URL / custom domain                                              | no     | domain comes later (user said)                |
+| `NEXT_PUBLIC_SITE_URL` (custom domain)                                | no     | —                                             |
+| Client's admin account (developer mode off)                           | no     | —                                             |
+| Form emails (Settings → Integrations) and recipients                  | no     | recipients to be added by the team            |
+| Google Analytics and Hotjar (Settings → Integrations)                 | no     | to be connected by the team                   |
+| "Private site" off, "Show the site in Google" on (production)         | no     | —                                             |
+| 301 redirects from old Webflow URLs (`docs/project/SEO_MIGRATION.md`) | no     | issue #59, needs the old site's URL list      |
+| Search Console: new sitemap submitted, 404s watched for 4 weeks       | no     | issue #59                                     |
+| `pnpm audit --prod` clean of critical/high                            | yes    | verified 2026-10-28: no known vulnerabilities |
+| Database handed to the client (Neon transfer / Supabase org)          | no     | —                                             |
 
 ## Next step for the user
 

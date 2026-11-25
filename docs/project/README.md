@@ -22,6 +22,7 @@ links. Everything below was decided with the client: don't ask these questions a
    `design/KZ/kz-homepage/design-system/`) — the source of truth for how things look.
 6. `docs/project/CHANGES.md`: change requests from the client after review.
 7. `docs/project/DEPLOY_STATUS.md` and `CORE_CHANGES.md`: what is online, what differs from the template.
+8. `docs/project/SEO_MIGRATION.md`: how to move from the Webflow site without losing SEO (issue #59).
 
 ## Current state
 
