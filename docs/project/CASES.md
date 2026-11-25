@@ -170,3 +170,25 @@ as it was on the old site: one export per block for desktop (`film-desk-*`, 1920
   parallax: the texts sit on parts of the pictures and must stay aligned.
 - **Renamed files.** When a seed picture changes, give it a new file name: `content:sync` imports by file
   name and keeps an already imported file.
+
+## Lessons from PrintBuy
+
+PrintBuy (`src/content/cases/printbuy.ts`, `src/site/cases/printbuy/`, prefix `printbuy-`) has one full-page export
+(2364 px wide for a 1440 px design) and assets that only partly match it.
+
+- **Units of the export.** Every position is in pixels of the export: `--printbuy-s` (`100cqw / 2364`) for pictures
+  that reach the window edges and what sits on them, `--printbuy-u` (the same capped at a 1600 px page) for text
+  blocks and type sizes. The case root is the only size container (`container-type: inline-size`), so `cqw` never
+  resolves against another box.
+- **Scenes the assets do not have** (phones over 3D shapes that cross block borders) are cut from the export as
+  full-width slides; their texts are erased (each column interpolated between the rows above and below) and
+  placed again as HTML. Where a clean asset exists (the studio photo), the text box is patched from it instead.
+  Consecutive slides cut at the same row keep a shape that crosses them seamless.
+- **Measure, then correct the gaps.** A script reads the top of every block at 1440 px and prints the error and
+  the step against the design; fix the gap with the step, not the total.
+- **Page screenshots** for comparison: scroll and capture viewport frames. A Playwright `fullPage` capture
+  rendered the `cqw`-sized titles too small (the page itself was right).
+- **CSS added while `next dev` runs**: if `site.css` imports a new case file before it exists, Tailwind keeps the
+  failed resolution; change the import line once more to reload it.
+- **Card cover from the hero**: the monitor is masked by its four corners and laid over the case's purple shape,
+  cropped like the old site's card.
